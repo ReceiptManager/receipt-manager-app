@@ -1,0 +1,15 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="io.flutter.plugins.camera" >
+4
+5    <uses-sdk android:minSdkVersion="21" />
+5-->/home/deltax/.pub-cache/hosted/pub.dartlang.org/camera-0.5.8+7/android/src/main/AndroidManifest.xml
+6
+7    <uses-permission android:name="android.permission.CAMERA" />
+7-->/home/deltax/.pub-cache/hosted/pub.dartlang.org/camera-0.5.8+7/android/src/main/AndroidManifest.xml:3:5-64
+7-->/home/deltax/.pub-cache/hosted/pub.dartlang.org/camera-0.5.8+7/android/src/main/AndroidManifest.xml:3:22-62
+8    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+8-->/home/deltax/.pub-cache/hosted/pub.dartlang.org/camera-0.5.8+7/android/src/main/AndroidManifest.xml:4:5-70
+8-->/home/deltax/.pub-cache/hosted/pub.dartlang.org/camera-0.5.8+7/android/src/main/AndroidManifest.xml:4:22-68
+9
+10</manifest>
