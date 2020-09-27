@@ -1,0 +1,27 @@
+-- Merging decision tree log ---
+manifest
+ADDED from /home/deltax/.pub-cache/hosted/pub.dartlang.org/camera-0.5.8+7/android/src/main/AndroidManifest.xml:1:1-5:12
+INJECTED from /home/deltax/.pub-cache/hosted/pub.dartlang.org/camera-0.5.8+7/android/src/main/AndroidManifest.xml:1:1-5:12
+INJECTED from /home/deltax/.pub-cache/hosted/pub.dartlang.org/camera-0.5.8+7/android/src/main/AndroidManifest.xml:1:1-5:12
+	package
+		ADDED from /home/deltax/.pub-cache/hosted/pub.dartlang.org/camera-0.5.8+7/android/src/main/AndroidManifest.xml:2:3-38
+		INJECTED from /home/deltax/.pub-cache/hosted/pub.dartlang.org/camera-0.5.8+7/android/src/main/AndroidManifest.xml
+		INJECTED from /home/deltax/.pub-cache/hosted/pub.dartlang.org/camera-0.5.8+7/android/src/main/AndroidManifest.xml
+	xmlns:android
+		ADDED from /home/deltax/.pub-cache/hosted/pub.dartlang.org/camera-0.5.8+7/android/src/main/AndroidManifest.xml:1:11-69
+uses-permission#android.permission.CAMERA
+ADDED from /home/deltax/.pub-cache/hosted/pub.dartlang.org/camera-0.5.8+7/android/src/main/AndroidManifest.xml:3:5-64
+	android:name
+		ADDED from /home/deltax/.pub-cache/hosted/pub.dartlang.org/camera-0.5.8+7/android/src/main/AndroidManifest.xml:3:22-62
+uses-permission#android.permission.RECORD_AUDIO
+ADDED from /home/deltax/.pub-cache/hosted/pub.dartlang.org/camera-0.5.8+7/android/src/main/AndroidManifest.xml:4:5-70
+	android:name
+		ADDED from /home/deltax/.pub-cache/hosted/pub.dartlang.org/camera-0.5.8+7/android/src/main/AndroidManifest.xml:4:22-68
+uses-sdk
+INJECTED from /home/deltax/.pub-cache/hosted/pub.dartlang.org/camera-0.5.8+7/android/src/main/AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from /home/deltax/.pub-cache/hosted/pub.dartlang.org/camera-0.5.8+7/android/src/main/AndroidManifest.xml
+INJECTED from /home/deltax/.pub-cache/hosted/pub.dartlang.org/camera-0.5.8+7/android/src/main/AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from /home/deltax/.pub-cache/hosted/pub.dartlang.org/camera-0.5.8+7/android/src/main/AndroidManifest.xml
+		ADDED from /home/deltax/.pub-cache/hosted/pub.dartlang.org/camera-0.5.8+7/android/src/main/AndroidManifest.xml
+		INJECTED from /home/deltax/.pub-cache/hosted/pub.dartlang.org/camera-0.5.8+7/android/src/main/AndroidManifest.xml
