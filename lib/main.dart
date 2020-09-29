@@ -1,30 +1,27 @@
 import 'dart:async';
-import 'dart:io';
-
-import 'package:path/path.dart';
-import 'package:async/async.dart';
-import 'dart:io';
-import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'dart:io';
 
+import 'package:async/async.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'package:path/path.dart';
 import 'package:path/path.dart' show join;
 import 'package:path_provider/path_provider.dart';
 
+import "server.dart";
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  /* select the first camera */
-  final cameras = await availableCameras();
-  final firstCamera = cameras.first;
+  HttpOverrides.global = new MyHttpOverrides();
 
   runApp(
-    MaterialApp(
-      theme: ThemeData.dark(),
-      home: TakePictureScreen(
-        camera: firstCamera,
-      ),
-    ),
+    MaterialApp(theme: ThemeData.dark(), home: ServerForm()
+        //home: TakePictureScreen(
+        //camera: firstCamera,
+        //),
+        ),
   );
 }
 
@@ -75,7 +72,6 @@ class TakePictureScreenState extends State<TakePictureScreen> {
           }
         },
       ),
-
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.camera_rounded),
         backgroundColor: Colors.blue,
@@ -96,7 +92,6 @@ class TakePictureScreenState extends State<TakePictureScreen> {
                 builder: (context) => DisplayPictureScreen(imagePath: path),
               ),
             );
-
           } catch (e) {
             print(e);
           }
@@ -106,9 +101,10 @@ class TakePictureScreenState extends State<TakePictureScreen> {
   }
 
   sendImage(File imageFile) async {
-    var stream = new http.ByteStream(DelegatingStream.typed(imageFile.openRead()));
+    var stream =
+    new http.ByteStream(DelegatingStream.typed(imageFile.openRead()));
     var length = await imageFile.length();
-    var url = "http://192.168.0.11:5000/api/upload";
+    var url = "https://192.168.0.103:5000/api/upload/";
     var request = new http.MultipartRequest("POST", Uri.parse(url));
     var multipartFile = new http.MultipartFile('file', stream, length,
         filename: basename(imageFile.path));
@@ -133,5 +129,14 @@ class DisplayPictureScreen extends StatelessWidget {
       appBar: AppBar(title: Text('Receipt')),
       body: Image.file(File(imagePath)),
     );
+  }
+}
+
+class MyHttpOverrides extends HttpOverrides {
+  @override
+  HttpClient createHttpClient(SecurityContext context) {
+    return super.createHttpClient(context)
+      ..badCertificateCallback = (X509Certificate cert, String host,
+          int port) => true;
   }
 }

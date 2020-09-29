@@ -1,5 +1,5 @@
-name: receipt_scanner
-description: Receipt Scanner
+name: receipt_parser
+description: Receipt Parser
 
 # The following line prevents the package from being accidentally published to
 # pub.dev using `pub publish`. This is preferred for private packages.
