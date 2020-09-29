@@ -1,4 +1,0 @@
-#Sat Sep 26 22:15:19 CEST 2020
-base.0=/home/deltax/AndroidStudioProjects/receipt_scanner/build/app/intermediates/transforms/r8/release/0/classes.dex
-path.0=classes.dex
-renamed.0=classes.dex
