@@ -1,25 +1,22 @@
 library server;
 
-import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:receipt_scanner/main.dart';
+
+import 'util/color.dart';
+import 'util/input.dart';
 
 class ServerForm extends StatefulWidget {
   @override
   _ServerFormState createState() => _ServerFormState();
 }
 
-// Define a corresponding State class.
-// This class holds the data related to the Form.
 class _ServerFormState extends State<ServerForm> {
-  // Create a text controller and use it to retrieve the current value
-  // of the TextField.
   final textController = TextEditingController();
+  var ipv4 = "";
 
   @override
   void dispose() {
-    // Clean up the controller when the widget is disposed.
     textController.dispose();
     super.dispose();
   }
@@ -27,30 +24,38 @@ class _ServerFormState extends State<ServerForm> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Server IP'),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: TextField(
-          controller: textController,
+        appBar: AppBar(
+          title: Text('Settings'),
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () async {
-          /* select the first camera */
-          final cameras = await availableCameras();
-          final firstCamera = cameras.first;
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => TakePictureScreen(camera: firstCamera),
-            ),
-          );
-        },
-        tooltip: 'Show me the value!',
-        child: Icon(Icons.done_all),
-      ),
-    );
+        body: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Align(
+              alignment: Alignment.bottomCenter,
+              child: TextField(
+                  controller: textController,
+                  onChanged: (val) => ipv4 = val,
+                  inputFormatters: [
+                    DecimalTextInputFormatter(decimalRange: 19)
+                  ],
+                  keyboardType: TextInputType.numberWithOptions(decimal: true),
+                  decoration: new InputDecoration(
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: new BorderRadius.circular(25.0),
+                      borderSide:
+                          BorderSide(color: HexColor.fromHex("#BB86FC")),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: new BorderRadius.circular(25.0),
+                      borderSide:
+                          BorderSide(color: HexColor.fromHex("#BB86FC")),
+                    ),
+                    labelText: "Server IP",
+                    border: new OutlineInputBorder(
+                      borderRadius: new BorderRadius.circular(25.0),
+                      borderSide:
+                          new BorderSide(color: HexColor.fromHex("#BB86FC")),
+                    ),
+                  ))),
+        ));
   }
 }
