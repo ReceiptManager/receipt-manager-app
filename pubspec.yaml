@@ -27,8 +27,10 @@ dependencies:
   camera:
   path_provider:
   path:
-
-
+  curved_navigation_bar: ^0.3.4
+  flutter_statusbarcolor: ^0.2.3
+  shared_preferences:  ^0.5.8
+  moor_flutter: ^3.1.0
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -37,6 +39,8 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  moor_generator:
+  build_runner:
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
