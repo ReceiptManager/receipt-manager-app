@@ -1,0 +1,23 @@
+floatingActionButton: FloatingActionButton
+(
+child: Icon
+(
+Icons.camera_rounded),
+backgroundColor: Colors.blueAccent,onPressed: (
+)
+async {
+try {
+await _initializeControllerFuture;
+final path = join(
+(await getTemporaryDirectory()).path,
+'${DateTime.now()}.png',
+);
+
+await _controller.takePicture(path);
+sendImage(File(path));
+} catch (e) {
+print(e);
+}
+},
+)
+,
