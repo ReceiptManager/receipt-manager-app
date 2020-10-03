@@ -1,0 +1,47 @@
+new FloatingActionButton(
+                        onPressed: () async {
+                          final IPV4_REGEX =
+                              "^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\$";
+
+                          RegExp ipRegex = new RegExp(IPV4_REGEX,
+                              caseSensitive: false, multiLine: false);
+
+                          if (ipv4.isEmpty || !ipRegex.hasMatch(ipv4)) {
+                            showDialog(
+                                context: context,
+                                builder: (_) => AssetGiffyDialog(
+                                      image: Image.asset(
+                                        "assets/robot.gif",
+                                        fit: BoxFit.fill,
+                                      ),
+                                      title: Text(
+                                        'Invalid server ip',
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                            fontSize: 22.0,
+                                            fontWeight: FontWeight.w600),
+                                      ),
+                                      entryAnimation:
+                                          EntryAnimation.BOTTOM_RIGHT,
+                                      description: Text(
+                                        'The given submited server ip appear invalid. Please try again.',
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(),
+                                      ),
+                                      onCancelButtonPressed: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                      onOkButtonPressed: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                    ));
+                            return;
+                          } else {
+                            sharedPreferences.setString("ipv4", ipv4);
+                          }
+                        },
+
+                        child: Icon(Icons.done_all),
+                        backgroundColor: Colors.white,
+                        foregroundColor: Colors.blueAccent))),
+                        )

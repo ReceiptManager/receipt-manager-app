@@ -2,10 +2,10 @@ import 'dart:async';
 
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
 import 'package:receipt_parser/widgets/home.dart';
-import 'package:receipt_parser/widgets/home_old.dart';
+import 'package:receipt_parser/widgets/receipts.dart';
 import 'package:receipt_parser/widgets/settings.dart';
+import 'package:receipt_parser/widgets/template.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 SharedPreferences sharedPrefs;
@@ -13,8 +13,10 @@ SharedPreferences sharedPrefs;
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   sharedPrefs = await SharedPreferences.getInstance();
-  FlutterStatusbarcolor.setStatusBarColor(Colors.white);
-  runApp(MaterialApp(home: HomeScreen()));
+  runApp(MaterialApp(
+    home: HomeScreen(),
+    theme: ThemeData(primaryColor: Colors.blueAccent[900]),
+  ));
 }
 
 class HomeScreen extends StatefulWidget {
@@ -25,7 +27,7 @@ class HomeScreen extends StatefulWidget {
 class HomeScreenState extends State<HomeScreen> {
   final List<Widget> _children = [
     HomeWidget(sharedPrefs),
-    PlaceholderWidget(Colors.blueAccent),
+    HistoryWidget(),
     PlaceholderWidget(Colors.blueAccent),
     SettingsWidget(sharedPrefs)
   ];
