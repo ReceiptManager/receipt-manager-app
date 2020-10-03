@@ -7,11 +7,16 @@ class HomeWidget extends StatelessWidget {
   final _textController = TextEditingController();
   ScrollController scrollController;
   bool scrollVisible = true;
+  var appBarTitleText = new Text("3");
 
   HomeWidget(SharedPreferences sharedPrefs);
 
   @override
   void initState() {
+    setState() {
+      appBarTitleText = Text("e");
+    }
+
     scrollController = ScrollController()
       ..addListener(() {
         setDialVisible(scrollController.position.userScrollDirection ==
@@ -42,7 +47,7 @@ class HomeWidget extends StatelessWidget {
           MenuItem(
             child: Icon(
               Icons.camera_alt,
-              color: Colors.blueAccent,
+              color: Colors.black,
               size: 40,
             ),
             title: "Camera",
@@ -55,7 +60,7 @@ class HomeWidget extends StatelessWidget {
           MenuItem(
             child: Icon(
               Icons.edit,
-              color: Colors.blueAccent,
+              color: Colors.black,
               size: 40,
             ),
             title: "Manual",
