@@ -30,7 +30,10 @@ dependencies:
   curved_navigation_bar: ^0.3.4
   flutter_statusbarcolor: ^0.2.3
   shared_preferences:  ^0.5.8
-  moor_flutter: ^3.1.0
+  giffy_dialog: ^1.8.0
+  flutter_boom_menu: ^1.0.2
+  frefresh: ^1.1.0
+  fluttertoast: ^7.1.1
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -83,3 +86,5 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+  assets:
+    - robot.gif
