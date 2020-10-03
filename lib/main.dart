@@ -15,7 +15,8 @@ Future<void> main() async {
   sharedPrefs = await SharedPreferences.getInstance();
   runApp(MaterialApp(
     home: HomeScreen(),
-    theme: ThemeData(primaryColor: Colors.blueAccent[900]),
+    title: "Receipt parser",
+    theme: ThemeData(primaryColor: Colors.indigoAccent),
   ));
 }
 
