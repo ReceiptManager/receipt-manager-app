@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:giffy_dialog/giffy_dialog.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+// TODO toast message in settings.dart
 class SettingsWidget extends StatelessWidget {
   final _textController = TextEditingController();
   String ipv4 = "";
@@ -68,7 +70,7 @@ class SettingsWidget extends StatelessWidget {
                 alignment: Alignment.bottomRight,
                 child: Padding(
                     padding: const EdgeInsets.all(16.0),
-                    child: new FloatingActionButton(
+                    child: FloatingActionButton(
                         onPressed: () async {
                           final IPV4_REGEX =
                               "^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\$";
@@ -77,64 +79,42 @@ class SettingsWidget extends StatelessWidget {
                               caseSensitive: false, multiLine: false);
 
                           if (ipv4.isEmpty || !ipRegex.hasMatch(ipv4)) {
-                            Widget okButton = FlatButton(
-                              child: Text("Ok"),
-                              textColor: Colors.red,
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                              },
-                            );
-
-                            AlertDialog alert = AlertDialog(
-                              title: Text("IP invalid"),
-                              content: Text(
-                                  "The given ip address appears invalid. Please check the ip again."),
-                              actions: [okButton],
-                            );
-
                             showDialog(
-                              context: context,
-                              builder: (BuildContext context) {
-                                return alert;
-                              },
-                            );
-
+                                context: context,
+                                builder: (_) => AssetGiffyDialog(
+                                      image: Image.asset(
+                                        "assets/robot.gif",
+                                        fit: BoxFit.fill,
+                                      ),
+                                      title: Text(
+                                        'Invalid server ip',
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                            fontSize: 22.0,
+                                            fontWeight: FontWeight.w600),
+                                      ),
+                                      entryAnimation:
+                                          EntryAnimation.BOTTOM_RIGHT,
+                                      description: Text(
+                                        'The given submited server ip appear invalid. Please try again.',
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(),
+                                      ),
+                                      onCancelButtonPressed: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                      onOkButtonPressed: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                    ));
                             return;
+                          } else {
+                            sharedPreferences.setString("ipv4", ipv4);
                           }
-                          Widget no = FlatButton(
-                            child: Text("No"),
-                            textColor: Colors.grey,
-                            onPressed: () {
-                              Navigator.of(context).pop();
-                            },
-                          );
-
-                          Widget yes = FlatButton(
-                            child: Text("yes"),
-                            textColor: Colors.red,
-                            onPressed: () async {
-                              this.sharedPreferences.setString("ipv4", ipv4);
-                              Navigator.of(context).pop();
-                            },
-                          );
-
-                          AlertDialog alert = AlertDialog(
-                            title: Text("Validate the server ip"),
-                            content:
-                                Text("Is the following ip correct:" + ipv4),
-                            actions: [no, yes],
-                          );
-
-                          showDialog(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return alert;
-                            },
-                          );
                         },
                         child: Icon(Icons.done_all),
                         backgroundColor: Colors.white,
-                        foregroundColor: Colors.blueAccent))),
+                        foregroundColor: Colors.blueAccent)))
           ],
         ),
       ),
