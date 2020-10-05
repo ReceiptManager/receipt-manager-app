@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:receipt_parser/bloc/moor/bloc.dart';
 import 'package:receipt_parser/db/receipt_database.dart';
+import 'package:receipt_parser/util/date_manipulator.dart';
 
 class HistoryWidget extends StatefulWidget {
   @override
@@ -10,99 +11,127 @@ class HistoryWidget extends StatefulWidget {
 }
 
 class HistoryWidgetState extends State<HistoryWidget> {
-  bool showCompleted = false;
   DbBloc _bloc;
   List<Receipt> receipts;
-  DateTime newTaskDate;
-  TextEditingController _nameController;
+  DateTime receiptDate;
+
+  TextEditingController _controller = TextEditingController();
 
   @override
   void initState() {
-    _nameController = TextEditingController(text: "");
-    setState(() {
-      if (showCompleted == true) {
-        print("true :$showCompleted");
-      } else {
-        print("false :$showCompleted");
-      }
-    });
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     _bloc = BlocProvider.of<DbBloc>(context);
-    return Scaffold(
-        appBar: AppBar(
-          title: Text("HomePage"),
-          actions: <Widget>[_buildSwitchButton()],
-        ),
-        body: BlocBuilder(
-          bloc: _bloc,
-          builder: (BuildContext context, state) {
-            if (state is InitialState) {
-              return Center(
-                child: Text("Please Insert Record"),
-              );
-            }
-            if (state is LoadingState) {
-              return Center(
-                child: CircularProgressIndicator(),
-              );
-            }
-            if (state is ErrorState) {
-              return Center(
-                child: Text("Error Occur"),
-              );
-            }
-            if (state is LoadedState) {
-              final tasks = state.receipt;
-              return Column(
-                children: <Widget>[
-                  Expanded(child: _buildList(tasks)),
-                ],
-              );
-            }
-            return Container();
-          },
-        ));
+    _bloc.dispatch(ReceiptAllFetch());
+
+    return BlocBuilder(
+      bloc: _bloc,
+      builder: (BuildContext context, state) {
+        if (state is LoadingState) {
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+        if (state is ErrorState) {
+          return Center(
+            child: Text("Error Occur, could not load listview."),
+          );
+        }
+        if (state is LoadedState) {
+          final receipt = state.receipt;
+          return Column(
+            children: <Widget>[Expanded(child: _buildList(receipt))],
+          );
+        }
+        return Container(color: Colors.blueAccent);
+      },
+    );
   }
 
-  _buildList(tasks) {
-    return ListView.builder(
-        itemCount: tasks.length,
-        itemBuilder: (_, index) {
-          final itemTask = tasks[index];
-          return _buildListItems(itemTask);
-        });
+  _buildList(r) {
+    return new Container(
+        color: Colors.blueAccent,
+        child: ListView.builder(
+            padding: const EdgeInsets.all(8.0),
+            itemCount: r.length,
+            itemBuilder: (_, index) {
+              final receipt = r[index];
+              return _buildListItems(receipt);
+            }));
   }
 
   Widget _buildListItems(Receipt receipt) {
-    return Slidable(
-      actionPane: SlidableDrawerActionPane(),
-      closeOnScroll: true,
-      secondaryActions: <Widget>[
-        IconSlideAction(
-          caption: 'Delete',
-          color: Colors.red,
-          icon: Icons.delete,
-          onTap: () {
-            _bloc.dispatch(DeleteEvent(receipt: receipt));
+    String path = receipt.shopName.split(" ")[0].toLowerCase().trim() + ".png";
+    path = "groceries.png";
 
-            _bloc.dispatch(ReceiptAllFetch());
-          },
-        ),
-        IconSlideAction(
-          caption: 'Update',
-          color: Colors.green,
-          icon: Icons.update,
-          onTap: () {
-            _showDialog(controller: _nameController, task: receipt);
-          },
-        ),
-      ],
-      child: Container(),
-    );
+    return Slidable(
+        actionPane: SlidableDrawerActionPane(),
+        closeOnScroll: true,
+        secondaryActions: <Widget>[
+          IconSlideAction(
+            caption: 'Delete',
+            color: Colors.red,
+            icon: Icons.delete,
+            onTap: () {
+              _bloc.dispatch(DeleteEvent(receipt: receipt));
+              _bloc.dispatch(ReceiptAllFetch());
+            },
+          ),
+          IconSlideAction(
+            caption: 'Update',
+            color: Colors.blueAccent,
+            icon: Icons.update,
+            onTap: () {
+              _showDialog(controller: _controller, receipt: receipt);
+            },
+          ),
+        ],
+        child: Card(
+            elevation: 8.0,
+            margin: new EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
+            child: Container(
+                decoration: BoxDecoration(
+                    color: Colors.blueAccent,
+                    backgroundBlendMode: BlendMode.darken),
+                child: ListTile(
+                    leading: Container(
+                        width: 40,
+                        height: 40,
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(5.0),
+                          child: Image.asset(
+                            path,
+                            fit: BoxFit.fill,
+                          ),
+                        )),
+                    contentPadding:
+                        EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
+                    trailing: Text(
+                      "-" + receipt.receiptTotal + "€",
+                      style: TextStyle(
+                          color: Colors.redAccent,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16),
+                    ),
+                    subtitle: Row(
+                      children: <Widget>[
+                        Text(
+                            receipt.category +
+                                " at: " +
+                                DateManipulator.humanDate(receipt.receiptDate),
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w200))
+                      ],
+                    ),
+                    title: Text(
+                      receipt.shopName,
+                      style: TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.bold),
+                    )))));
   }
 
   Container buildTextField({hint, icon, controller}) {
@@ -125,7 +154,7 @@ class HistoryWidgetState extends State<HistoryWidget> {
             child: IconButton(
                 icon: Icon(icon),
                 onPressed: () async {
-                  newTaskDate = await showDatePicker(
+                  receiptDate = await showDatePicker(
                     context: context,
                     initialDate: DateTime.now(),
                     firstDate: DateTime(2010),
@@ -138,7 +167,7 @@ class HistoryWidgetState extends State<HistoryWidget> {
     );
   }
 
-  _showDialog({controller, task}) async {
+  _showDialog({controller, receipt}) async {
     await showDialog<String>(
       context: context,
       // false = user must tap button, true = tap outside dialog
@@ -147,7 +176,10 @@ class HistoryWidgetState extends State<HistoryWidget> {
           title: Text('Update Task'),
           content: Container(
             height: 300,
-            width: MediaQuery.of(context).size.width / 0.50,
+            width: MediaQuery
+                .of(context)
+                .size
+                .width / 0.50,
             child: Padding(
               padding: const EdgeInsets.all(16.0),
               child: Column(
@@ -172,14 +204,14 @@ class HistoryWidgetState extends State<HistoryWidget> {
             FlatButton(
               child: Text('Add'),
               onPressed: () {
-                if (_nameController.text.isNotEmpty) {
+                if (_controller.text.isNotEmpty) {
                   _bloc.dispatch(UpdateEvent(
-                      receipt: task.copyWith(
-                          name: _nameController.text,
-                          dueDate: newTaskDate ?? null)));
+                      receipt: receipt.copyWith(
+                          name: _controller.text,
+                          dueDate: receiptDate ?? null)));
                   _bloc.dispatch(ReceiptAllFetch());
-                  _nameController.clear();
-                  newTaskDate = null;
+                  _controller.clear();
+                  receiptDate = null;
                   Navigator.of(context).pop();
                 } else {
                   Scaffold.of(context)
@@ -194,27 +226,6 @@ class HistoryWidgetState extends State<HistoryWidget> {
           ],
         );
       },
-    );
-  }
-
-  Row _buildSwitchButton() {
-    return Row(
-      children: <Widget>[
-        Text("Completed Task"),
-        Switch(
-            activeColor: Colors.red,
-            value: showCompleted,
-            onChanged: (newValue) {
-              setState(() {
-                showCompleted = newValue;
-                if (showCompleted) {
-                  _bloc.dispatch(SwitchButtonEvent());
-                } else {
-                  _bloc.dispatch(ReceiptAllFetch());
-                }
-              });
-            })
-      ],
     );
   }
 }

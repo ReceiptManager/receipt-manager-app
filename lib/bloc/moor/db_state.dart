@@ -14,6 +14,7 @@ class LoadingState extends DbState {
   String toString() => "LoadingState";
 }
 
+// ignore: must_be_immutable
 class LoadedState extends DbState {
   List<Receipt> receipt;
 
