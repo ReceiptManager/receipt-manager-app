@@ -24,18 +24,40 @@ dependencies:
   http:
   flutter:
     sdk: flutter
+
+  # CAMERA MODULE
   camera:
   path_provider:
   path:
+
+  # AWESOME NAVIGATION BAR
   curved_navigation_bar: ^0.3.4
+
+  # COLOR STATUSBAR
   flutter_statusbarcolor: ^0.2.3
+
+  # SHARE PREFERENCES
   shared_preferences:  ^0.5.8
+
+  # AWESOME MESSAGE BOX
   giffy_dialog: ^1.8.0
+
+  # AWESOME MENU
   flutter_boom_menu: ^1.0.2
+
+  # MOOR DEPENDENCIES
+  moor_flutter:
+
+  # ONLY SINGLE DATABASE INSTANCE
+  provider: ^3.0.0+1
+  flutter_slidable: ^0.5.3
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.0
+
+  # DATE FORMAT
+  intl: ^0.16.1
 
 dev_dependencies:
   flutter_test:
