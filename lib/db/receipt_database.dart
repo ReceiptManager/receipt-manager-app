@@ -33,9 +33,9 @@ class ReceiptDao extends DatabaseAccessor<AppDatabase> with _$ReceiptDaoMixin {
 
   Stream<List<Receipt>> watchReceipts() => select(receipts).watch();
 
-  Future insertReceipt(Receipt task) => into(receipts).insert(task);
+  Future insertReceipt(Receipt receipt) => into(receipts).insert(receipt);
 
-  Future updateReceipt(Receipt task) => update(receipts).replace(task);
+  Future updateReceipt(Receipt receipt) => update(receipts).replace(receipt);
 
-  Future deleteReceipt(Receipt task) => delete(receipts).delete(task);
+  Future deleteReceipt(Receipt receipt) => delete(receipts).delete(receipt);
 }
