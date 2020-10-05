@@ -5,7 +5,6 @@ import 'package:intl/intl.dart';
 import 'package:receipt_parser/bloc/moor/bloc.dart';
 import 'package:receipt_parser/bloc/moor/db_bloc.dart';
 import 'package:receipt_parser/db/receipt_database.dart';
-import 'package:receipt_parser/model/receipt_category.dart';
 
 class EmptyReceiptForm extends StatefulWidget {
   @override
@@ -32,9 +31,9 @@ class ReceiptInputController extends State<EmptyReceiptForm> {
 
   // field variables
   String storeName;
-  double total;
+  String total;
+  String receiptCategory;
   DateTime receiptDate;
-  ReceiptCategory receiptCategory;
 
   @override
   void initState() {
@@ -94,8 +93,8 @@ class ReceiptInputController extends State<EmptyReceiptForm> {
 
             try {
               storeName = storeNameController.text;
-              total = 1;
-              receiptDate = DateTime.now();
+              total = receiptTotalController.text;
+              receiptCategory = categoryController.text;
             } catch (e) {
               print("Error at: " + context.toString());
               print(e.toString());
@@ -106,10 +105,9 @@ class ReceiptInputController extends State<EmptyReceiptForm> {
             final _bloc = BlocProvider.of<DbBloc>(context);
             final Receipt receipt = new Receipt(
                 shopName: storeName,
-                receiptTotal: "233.00" as String,
-                category: "d",
-                receiptDate: receiptDate,
-                id: 0);
+                receiptTotal: total,
+                category: receiptCategory,
+                receiptDate: receiptDate);
 
             _bloc.dispatch(InsertEvent(receipt: receipt));
             _bloc.dispatch(ReceiptAllFetch());
@@ -136,8 +134,7 @@ class ReceiptInputController extends State<EmptyReceiptForm> {
           context: context,
           initialDate: DateTime.now(),
           firstDate: DateTime(2010),
-          lastDate: DateTime(2050),
-        );
+            lastDate: DateTime(2050));
 
         setState(() {
           dateController.text = DateFormat("dd.MM.yyyy").format(receiptDate);
