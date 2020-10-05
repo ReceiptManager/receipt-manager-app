@@ -29,7 +29,7 @@ Future<void> main() async {
       child: HomeScreen(),
     ),
     title: "Receipt parser",
-    theme: ThemeData(primaryColor: Colors.indigoAccent),
+    theme: ThemeData(primaryColor: Colors.blueAccent),
   ));
 }
 
@@ -67,9 +67,8 @@ class HomeScreenState extends State<HomeScreen> {
     return Scaffold(
         appBar: AppBar(title: Text('Scan receipt')),
         bottomNavigationBar: CurvedNavigationBar(
-          backgroundColor: Colors.blueAccent,
+          backgroundColor: Colors.blueAccent[400],
           color: Colors.white,
-
           items: <Widget>[
             Icon(Icons.home, size: 30, color: Colors.black),
             Icon(Icons.history, size: 30, color: Colors.black),
