@@ -37,3 +37,6 @@ You can decide if you want to trust the compiled binaries our if you want to bui
 
 For detailed server information, read the server docs.
 
+## Sources
+https://de.wikipedia.org/wiki/Datei:Logo_REWE.svg
+
