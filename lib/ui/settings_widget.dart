@@ -10,7 +10,6 @@ class SettingsWidget extends StatelessWidget {
 
   SettingsWidget(this.sharedPreferences);
 
-  @override
   void dispose() {
     _textController.dispose();
   }
@@ -39,43 +38,17 @@ class SettingsWidget extends StatelessWidget {
                       primaryColor: Colors.white,
                       primaryColorDark: Colors.white,
                     ),
-                    child: new TextField(
-                      controller: _textController,
-                      style: TextStyle(color: Colors.white),
-                      onChanged: (value) {
-                        ipv4 = value;
-                      },
-                      decoration: new InputDecoration(
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: new BorderRadius.circular(25.0),
-                          borderSide: BorderSide(color: Colors.white),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: new BorderRadius.circular(25.0),
-                          borderSide: BorderSide(color: Colors.white),
-                        ),
-                        border: new OutlineInputBorder(
-                            borderSide: new BorderSide(color: Colors.white)),
-                        hintText: 'Server IP',
-                        helperText: 'Submit the receipt parser server adresse.',
-                        labelText: 'Server IP',
-                        prefixIcon: const Icon(
-                          Icons.network_wifi,
-                          color: Colors.white,
-                        ),
-                        prefixText: ' ',
-                      ),
-                    ))),
+                    child: serverTextfield())),
             new Align(
                 alignment: Alignment.bottomRight,
                 child: Padding(
                     padding: const EdgeInsets.all(16.0),
                     child: FloatingActionButton(
                         onPressed: () async {
-                          final IPV4_REGEX =
+                          final ipv4_regex =
                               "^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\$";
 
-                          RegExp ipRegex = new RegExp(IPV4_REGEX,
+                          RegExp ipRegex = new RegExp(ipv4_regex,
                               caseSensitive: false, multiLine: false);
 
                           if (ipv4.isEmpty || !ipRegex.hasMatch(ipv4)) {
@@ -117,6 +90,36 @@ class SettingsWidget extends StatelessWidget {
                         foregroundColor: Colors.blueAccent)))
           ],
         ),
+      ),
+    );
+  }
+
+  serverTextfield() {
+    return new TextField(
+      controller: _textController,
+      style: TextStyle(color: Colors.white),
+      onChanged: (value) {
+        ipv4 = value;
+      },
+      decoration: new InputDecoration(
+        enabledBorder: OutlineInputBorder(
+          borderRadius: new BorderRadius.circular(25.0),
+          borderSide: BorderSide(color: Colors.white),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: new BorderRadius.circular(25.0),
+          borderSide: BorderSide(color: Colors.white),
+        ),
+        border: new OutlineInputBorder(
+            borderSide: new BorderSide(color: Colors.white)),
+        hintText: 'Server IP',
+        helperText: 'Submit the receipt parser server adresse.',
+        labelText: 'Server IP',
+        prefixIcon: const Icon(
+          Icons.network_wifi,
+          color: Colors.white,
+        ),
+        prefixText: ' ',
       ),
     );
   }

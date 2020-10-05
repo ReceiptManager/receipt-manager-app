@@ -1,18 +1,7 @@
 import 'package:moor_flutter/moor_flutter.dart';
+import 'package:receipt_parser/model/receipt.dart';
 
 part 'receipt_database.g.dart';
-
-class Receipts extends Table {
-  IntColumn get id => integer().autoIncrement()();
-
-  TextColumn get receiptTotal => text()();
-
-  TextColumn get shopName => text()();
-
-  TextColumn get category => text()();
-
-  DateTimeColumn get receiptDate => dateTime().nullable()();
-}
 
 @UseMoor(tables: [Receipts], daos: [ReceiptDao])
 class AppDatabase extends _$AppDatabase {
@@ -29,7 +18,15 @@ class ReceiptDao extends DatabaseAccessor<AppDatabase> with _$ReceiptDaoMixin {
 
   ReceiptDao(this.db) : super(db);
 
-  Future<List<Receipt>> getReceipts() => select(receipts).get();
+  Future<List<Receipt>> getReceipts() {
+    return (select(receipts)
+          ..orderBy(([
+            (t) => OrderingTerm(
+                expression: t.receiptDate, mode: OrderingMode.desc),
+            (t) => OrderingTerm(expression: t.shopName),
+          ])))
+        .get();
+  }
 
   Stream<List<Receipt>> watchReceipts() => select(receipts).watch();
 
