@@ -45,13 +45,17 @@ dependencies:
   # AWESOME MENU
   flutter_boom_menu: ^1.0.2
 
-  # MOOR DEPENDENCIES
-  moor_flutter:
-
   # ONLY SINGLE DATABASE INSTANCE
-  provider: ^3.0.0+1
+  flutter_bloc: ^0.20.0
+
+  #
+  equatable: ^0.3.0
+
   flutter_slidable: ^0.5.3
-  bloc: ^6.0.3
+
+  # MOOR: AWESOME SQL WRAPPER
+  moor_flutter: ^1.6.0
+  moor: ^1.6.0
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.

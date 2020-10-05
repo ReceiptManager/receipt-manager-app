@@ -1,13 +1,14 @@
-import 'dart:async';
-
+import 'package:bloc/bloc.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:receipt_parser/db/receipt_database.dart';
-import 'package:receipt_parser/widget/history_widget.dart';
-import 'package:receipt_parser/widget/home_widget.dart';
-import 'package:receipt_parser/widget/settings_widget.dart';
-import 'package:receipt_parser/widget/stats_widget.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:receipt_parser/bloc/delegate/simple_delegate.dart';
+import 'package:receipt_parser/bloc/moor/bloc.dart';
+import 'package:receipt_parser/repository/repository.dart';
+import 'package:receipt_parser/ui/history_widget.dart';
+import 'package:receipt_parser/ui/home_widget.dart';
+import 'package:receipt_parser/ui/settings_widget.dart';
+import 'package:receipt_parser/ui/stats_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 SharedPreferences sharedPrefs;
@@ -15,8 +16,18 @@ SharedPreferences sharedPrefs;
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   sharedPrefs = await SharedPreferences.getInstance();
+  BlocSupervisor.delegate = SimpleDelegate();
+
+  DbBloc _bloc;
+  Repository _repository = Repository();
+  _bloc = DbBloc(repository: _repository);
+  BlocSupervisor.delegate = SimpleDelegate();
+
   runApp(MaterialApp(
-    home: HomeScreen(),
+    home: BlocProvider(
+      builder: (_) => _bloc,
+      child: HomeScreen(),
+    ),
     title: "Receipt parser",
     theme: ThemeData(primaryColor: Colors.indigoAccent),
   ));
@@ -36,9 +47,13 @@ class HomeScreenState extends State<HomeScreen> {
   ];
 
   int _curent_index = 0;
+  Repository _repository = Repository();
+  DbBloc _bloc;
 
   @override
   void initState() {
+    _bloc = DbBloc(repository: _repository);
+    _bloc.dispatch(ReceiptAllFetch());
     super.initState();
   }
 
@@ -49,29 +64,26 @@ class HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // USE multi provider
-    final db = AppDatabase();
-    return MultiProvider(
-        providers: [Provider(builder: (_) => db.receiptDao)],
-        child: Scaffold(
-            appBar: AppBar(title: Text('Scan receipt')),
-            bottomNavigationBar: CurvedNavigationBar(
-              backgroundColor: Colors.blueAccent,
-              color: Colors.white,
-              items: <Widget>[
-                Icon(Icons.home, size: 30, color: Colors.black),
-                Icon(Icons.history, size: 30, color: Colors.black),
-                Icon(Icons.pie_chart, size: 30, color: Colors.black),
-                Icon(Icons.settings, size: 30, color: Colors.black),
-              ],
-              animationCurve: Curves.easeInOut,
-              animationDuration: Duration(milliseconds: 600),
-              onTap: (index) {
-                setState(() {
-                  this._curent_index = index;
-                });
-              },
-            ),
-            body: _children[_curent_index]));
+    return Scaffold(
+        appBar: AppBar(title: Text('Scan receipt')),
+        bottomNavigationBar: CurvedNavigationBar(
+          backgroundColor: Colors.blueAccent,
+          color: Colors.white,
+
+          items: <Widget>[
+            Icon(Icons.home, size: 30, color: Colors.black),
+            Icon(Icons.history, size: 30, color: Colors.black),
+            Icon(Icons.pie_chart, size: 30, color: Colors.black),
+            Icon(Icons.settings, size: 30, color: Colors.black),
+          ],
+          animationCurve: Curves.easeInOut,
+          animationDuration: Duration(milliseconds: 600),
+          onTap: (index) {
+            setState(() {
+              this._curent_index = index;
+            });
+          },
+        ),
+        body: _children[_curent_index]);
   }
 }

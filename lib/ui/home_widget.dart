@@ -13,10 +13,6 @@ class HomeWidget extends StatelessWidget {
 
   @override
   void initState() {
-    setState() {
-      appBarTitleText = Text("e");
-    }
-
     scrollController = ScrollController()
       ..addListener(() {
         setDialVisible(scrollController.position.userScrollDirection ==
