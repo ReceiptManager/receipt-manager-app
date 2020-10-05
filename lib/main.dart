@@ -2,10 +2,12 @@ import 'dart:async';
 
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:receipt_parser/widgets/home.dart';
-import 'package:receipt_parser/widgets/receipts.dart';
-import 'package:receipt_parser/widgets/settings.dart';
-import 'package:receipt_parser/widgets/template.dart';
+import 'package:provider/provider.dart';
+import 'package:receipt_parser/db/receipt_database.dart';
+import 'package:receipt_parser/widget/history_widget.dart';
+import 'package:receipt_parser/widget/home_widget.dart';
+import 'package:receipt_parser/widget/settings_widget.dart';
+import 'package:receipt_parser/widget/stats_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 SharedPreferences sharedPrefs;
@@ -29,7 +31,7 @@ class HomeScreenState extends State<HomeScreen> {
   final List<Widget> _children = [
     HomeWidget(sharedPrefs),
     HistoryWidget(),
-    PlaceholderWidget(Colors.blueAccent),
+    StatsWidget(),
     SettingsWidget(sharedPrefs)
   ];
 
@@ -47,25 +49,29 @@ class HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(title: Text('Scan receipt')),
-        bottomNavigationBar: CurvedNavigationBar(
-          backgroundColor: Colors.blueAccent,
-          color: Colors.white,
-          items: <Widget>[
-            Icon(Icons.home, size: 30, color: Colors.black),
-            Icon(Icons.history, size: 30, color: Colors.black),
-            Icon(Icons.pie_chart, size: 30, color: Colors.black),
-            Icon(Icons.settings, size: 30, color: Colors.black),
-          ],
-          animationCurve: Curves.easeInOut,
-          animationDuration: Duration(milliseconds: 600),
-          onTap: (index) {
-            setState(() {
-              this._curent_index = index;
-            });
-          },
-        ),
-        body: _children[_curent_index]);
+    // USE multi provider
+    final db = AppDatabase();
+    return MultiProvider(
+        providers: [Provider(builder: (_) => db.receiptDao)],
+        child: Scaffold(
+            appBar: AppBar(title: Text('Scan receipt')),
+            bottomNavigationBar: CurvedNavigationBar(
+              backgroundColor: Colors.blueAccent,
+              color: Colors.white,
+              items: <Widget>[
+                Icon(Icons.home, size: 30, color: Colors.black),
+                Icon(Icons.history, size: 30, color: Colors.black),
+                Icon(Icons.pie_chart, size: 30, color: Colors.black),
+                Icon(Icons.settings, size: 30, color: Colors.black),
+              ],
+              animationCurve: Curves.easeInOut,
+              animationDuration: Duration(milliseconds: 600),
+              onTap: (index) {
+                setState(() {
+                  this._curent_index = index;
+                });
+              },
+            ),
+            body: _children[_curent_index]));
   }
 }
