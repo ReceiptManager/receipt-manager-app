@@ -1,0 +1,1 @@
+enum ReceiptCategory { SHOPPING, GROCERIES }
