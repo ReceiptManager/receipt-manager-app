@@ -3,20 +3,25 @@ import 'package:flutter/material.dart';
 
 class MyCustomForm extends StatefulWidget {
   @override
-  MyCustomFormState createState() {
-    return MyCustomFormState();
+  shopNameController createState() {
+    return shopNameController();
   }
 }
 
 // Create a corresponding State class.
 // This class holds data related to the form.
-class MyCustomFormState extends State<MyCustomForm> {
+class shopNameController extends State<MyCustomForm> {
   // Create a global key that uniquely identifies the Form widget
   // and allows validation of the form.
   //
   // Note: This is a GlobalKey<FormState>,
   // not a GlobalKey<MyCustomFormState>.
   final _formKey = GlobalKey<FormState>();
+
+  TextEditingController storeNameController = TextEditingController();
+  TextEditingController receiptTotalController = TextEditingController();
+  TextEditingController dateController = TextEditingController();
+  TextEditingController categoryController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -34,6 +39,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                     primaryColorDark: Colors.white,
                   ),
                   child: new TextField(
+                    controller: storeNameController,
                     style: TextStyle(color: Colors.white),
                     decoration: new InputDecoration(
                       enabledBorder: OutlineInputBorder(
@@ -64,6 +70,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                   primaryColorDark: Colors.white,
                 ),
                 child: new TextField(
+                  controller: receiptTotalController,
                   style: TextStyle(color: Colors.white),
                   decoration: new InputDecoration(
                     enabledBorder: OutlineInputBorder(
@@ -95,6 +102,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                   primaryColorDark: Colors.white,
                 ),
                 child: new TextField(
+                  controller: dateController,
                   style: TextStyle(color: Colors.white),
                   decoration: new InputDecoration(
                     enabledBorder: OutlineInputBorder(
@@ -126,6 +134,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                   primaryColorDark: Colors.white,
                 ),
                 child: new TextField(
+                  controller: categoryController,
                   style: TextStyle(color: Colors.white),
                   decoration: new InputDecoration(
                     enabledBorder: OutlineInputBorder(
@@ -154,7 +163,15 @@ class MyCustomFormState extends State<MyCustomForm> {
               child: Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: new FloatingActionButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        // TODO: fill required fields
+                        setState(() {
+                          receiptTotalController.clear();
+                          storeNameController.clear();
+                          categoryController.clear();
+                          dateController.clear();
+                        });
+                      },
                       child: Icon(Icons.done_all),
                       backgroundColor: Colors.white,
                       foregroundColor: Colors.blueAccent))),

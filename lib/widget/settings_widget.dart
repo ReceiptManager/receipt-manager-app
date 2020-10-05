@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:giffy_dialog/giffy_dialog.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-// TODO toast message in settings.dart
+// TODO toast message in settings_widget.dart
 class SettingsWidget extends StatelessWidget {
   final _textController = TextEditingController();
   String ipv4 = "";
