@@ -383,7 +383,6 @@ class ReceiptInputController extends State<EmptyReceiptForm> {
             initialDate: DateTime.now(),
             firstDate: DateTime(2010),
             lastDate: DateTime(2050));
-
         setState(() {
           dateController.text = DateFormat("dd.MM.yyyy").format(receiptDate);
         });
@@ -401,7 +400,6 @@ class ReceiptInputController extends State<EmptyReceiptForm> {
   void reset() {
     receiptTotalController.clear();
     storeNameController.clear();
-    categoryController.clear();
     dateController.clear();
   }
 }
