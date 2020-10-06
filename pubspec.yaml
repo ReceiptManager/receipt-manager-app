@@ -52,6 +52,9 @@ dependencies:
   flutter_slidable: ^0.5.3
   moor: ^1.6.0
 
+  # REFRESH
+  liquid_pull_to_refresh: ^1.1.0
+
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.0
@@ -111,4 +114,5 @@ flutter:
     - lidl.png
     - rewe.png
     - netto.png
-    - groceries.png
+    - grocery.png
+    - education.png
