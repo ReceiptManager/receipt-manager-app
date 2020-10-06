@@ -37,6 +37,12 @@ You can decide if you want to trust the compiled binaries our if you want to bui
 
 For detailed server information, read the server docs.
 
-## Sources
-https://de.wikipedia.org/wiki/Datei:Logo_REWE.svg
+## Logos used
+1. Education logo is made by Payungkead
+https://www.flaticon.com/free-icon/global-education_3379636?term=education&page=1&position=28
+
+
+2. Grocery logo is made by Freepik
+https://www.flaticon.com/free-icon/groceries_3050159?term=groceries&page=1&position=7
+
 
