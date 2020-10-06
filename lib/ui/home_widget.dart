@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_boom_menu/flutter_boom_menu.dart';
+import 'package:receipt_parser/ui/receipt_form.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeWidget extends StatelessWidget {
@@ -81,8 +82,7 @@ class HomeWidget extends StatelessWidget {
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(18.0),
                     side: BorderSide(color: Colors.white)),
-                child:
-                    const Text('New receipt', style: TextStyle(fontSize: 20)),
+                child: Column(children: [Icon(Icons.camera)]),
                 color: Colors.white,
                 textColor: Colors.blueAccent,
                 elevation: 5,
@@ -93,8 +93,7 @@ class HomeWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: buildBody(),
-      floatingActionButton: buildBoomMenu(),
+      body: EmptyReceiptForm(),
     );
   }
 }

@@ -64,8 +64,7 @@ class HistoryWidgetState extends State<HistoryWidget> {
   }
 
   Widget _buildListItems(Receipt receipt) {
-    String path = receipt.shopName.split(" ")[0].toLowerCase().trim() + ".png";
-    path = "groceries.png";
+    String path = receipt.category.split(" ")[0].toLowerCase().trim() + ".png";
 
     return Slidable(
         actionPane: SlidableDrawerActionPane(),
@@ -104,33 +103,35 @@ class HistoryWidgetState extends State<HistoryWidget> {
                           borderRadius: BorderRadius.circular(5.0),
                           child: Image.asset(
                             path,
+                            color: Colors.black,
                             fit: BoxFit.fill,
                           ),
                         )),
                     contentPadding:
-                        EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
+                    EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
                     trailing: Text(
                       "-" + receipt.receiptTotal + "€",
                       style: TextStyle(
                           color: Colors.redAccent,
                           fontWeight: FontWeight.bold,
-                          fontSize: 16),
+                          fontSize: 20),
                     ),
                     subtitle: Row(
                       children: <Widget>[
                         Text(
                             receipt.category +
-                                " at: " +
+                                ", " +
                                 DateManipulator.humanDate(receipt.receiptDate),
                             style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.w200))
+                                color: Colors.black))
                       ],
                     ),
                     title: Text(
                       receipt.shopName,
                       style: TextStyle(
-                          color: Colors.white, fontWeight: FontWeight.bold),
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18),
                     )))));
   }
 
