@@ -8,7 +8,6 @@ import 'package:receipt_parser/repository/repository.dart';
 import 'package:receipt_parser/ui/history_widget.dart';
 import 'package:receipt_parser/ui/home_widget.dart';
 import 'package:receipt_parser/ui/settings_widget.dart';
-import 'package:receipt_parser/ui/stats_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 SharedPreferences sharedPrefs;
@@ -42,7 +41,6 @@ class HomeScreenState extends State<HomeScreen> {
   final List<Widget> _children = [
     HomeWidget(sharedPrefs),
     HistoryWidget(),
-    StatsWidget(),
     SettingsWidget(sharedPrefs)
   ];
 
@@ -65,14 +63,14 @@ class HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: Text('Scan receipt')),
+        appBar: AppBar(title: Text('Receipt parser app')),
         bottomNavigationBar: CurvedNavigationBar(
           backgroundColor: Colors.blueAccent[400],
           color: Colors.white,
           items: <Widget>[
             Icon(Icons.home, size: 30, color: Colors.black),
             Icon(Icons.history, size: 30, color: Colors.black),
-            Icon(Icons.pie_chart, size: 30, color: Colors.black),
+            //Icon(Icons.pie_chart, size: 30, color: Colors.black),
             Icon(Icons.settings, size: 30, color: Colors.black),
           ],
           animationCurve: Curves.easeInOut,
