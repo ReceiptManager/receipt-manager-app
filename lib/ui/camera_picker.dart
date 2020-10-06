@@ -80,7 +80,7 @@ class TakePictureScreenState extends State<TakePictureScreen> {
               // Store the picture in the temp directory.
               // Find the temp directory using the `path_provider` plugin.
               (await getTemporaryDirectory()).path,
-              '${DateTime.now()}.png',
+              'receipt_${DateTime.now()}.png',
             );
 
             // Attempt to take a picture and log where it's been saved.
@@ -123,11 +123,15 @@ class DisplayPictureScreen extends StatelessWidget {
                       alignment: Alignment.topCenter,
                       child: ClipRRect(
                           borderRadius: BorderRadius.circular(32.0),
-                          child: Image.file(File(imagePath),
-                              fit: BoxFit.fill, height: 250, width: 250)))),
+                          child: Image.file(
+                            File(imagePath),
+                            fit: BoxFit.fill,
+                            height: 450,
+                          )))),
               Align(
-                alignment: Alignment.centerLeft,
+                alignment: Alignment.bottomLeft,
                 child: FloatingActionButton(
+                  heroTag: "btn1",
                   onPressed: () {
                     Navigator.pop(context);
                   },
@@ -139,8 +143,9 @@ class DisplayPictureScreen extends StatelessWidget {
                 ),
               ),
               Align(
-                alignment: Alignment.centerRight,
+                alignment: Alignment.bottomRight,
                 child: FloatingActionButton(
+                  heroTag: "btn2",
                   onPressed: () {},
                   backgroundColor: Colors.white,
                   child: Icon(

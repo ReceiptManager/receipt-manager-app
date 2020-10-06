@@ -102,35 +102,51 @@ class ReceiptInputController extends State<EmptyReceiptForm> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
-                            new Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: new Align(
-                                    alignment: Alignment.centerRight,
-                                    child: IconButton(
-                                      icon:
-                                          new Icon(Icons.camera_alt, size: 35),
-                                      color: Colors.white,
-                                      onPressed: () async {
-                                        WidgetsFlutterBinding
-                                            .ensureInitialized();
+                            Stack(children: <Widget>[
+                              new Padding(
+                                  padding:
+                                      const EdgeInsets.only(top: 16.0, left: 8),
+                                  child: new Align(
+                                    alignment: Alignment.bottomLeft,
+                                    child: const Text(
+                                      "Add new Receipt",
+                                      style: TextStyle(
+                                          fontSize: 25,
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.w300),
+                                    ),
+                                  )),
+                              new Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: new Align(
+                                      alignment: Alignment.topRight,
+                                      child: IconButton(
+                                        icon: new Icon(Icons.camera_alt,
+                                            size: 35),
+                                        color: Colors.white,
+                                        onPressed: () async {
+                                          WidgetsFlutterBinding
+                                              .ensureInitialized();
 
-                                        // Obtain a list of the available cameras on the device.
-                                        final cameras =
-                                            await availableCameras();
+                                          // Obtain a list of the available cameras on the device.
+                                          final cameras =
+                                              await availableCameras();
 
-                                        // Get a specific camera from the list of available cameras.
-                                        final firstCamera = cameras.first;
+                                          // Get a specific camera from the list of available cameras.
+                                          final firstCamera = cameras.first;
 
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) => TakePictureScreen(
-                                                // Pass the appropriate camera to the TakePictureScreen widget.
-                                                camera: firstCamera),
-                                          ),
-                                        );
-                                      },
-                                    ))),
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  TakePictureScreen(
+                                                      // Pass the appropriate camera to the TakePictureScreen widget.
+                                                      camera: firstCamera),
+                                            ),
+                                          );
+                                        },
+                                      )))
+                            ]),
                             new Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: new Theme(
