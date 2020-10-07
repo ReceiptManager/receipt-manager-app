@@ -1,15 +1,30 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:camera/camera.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:giffy_dialog/giffy_dialog.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:async/async.dart';
+import 'package:http/http.dart' as http;
+
+class MyHttpOverrides extends HttpOverrides{
+  @override
+  HttpClient createHttpClient(SecurityContext context){
+    return super.createHttpClient(context)
+      ..badCertificateCallback = (X509Certificate cert, String host, int port)=> true;
+  }
+}
 
 class TakePictureScreen extends StatefulWidget {
   final CameraDescription camera;
+  final SharedPreferences sharedPrefs;
 
   const TakePictureScreen({
+    @required this.sharedPrefs,
     Key key,
     @required this.camera,
   }) : super(key: key);
@@ -25,6 +40,9 @@ class TakePictureScreenState extends State<TakePictureScreen> {
   @override
   void initState() {
     super.initState();
+
+    HttpOverrides.global = new MyHttpOverrides();
+
     // To display the current output from the Camera,
     // create a CameraController.
     _controller = CameraController(
@@ -106,8 +124,10 @@ class TakePictureScreenState extends State<TakePictureScreen> {
 // A widget that displays the picture taken by the user.
 class DisplayPictureScreen extends StatelessWidget {
   final String imagePath;
+  final SharedPreferences sharedPrefs;
 
-  const DisplayPictureScreen({Key key, this.imagePath}) : super(key: key);
+  const DisplayPictureScreen({Key key, this.imagePath, this.sharedPrefs})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -146,7 +166,9 @@ class DisplayPictureScreen extends StatelessWidget {
                 alignment: Alignment.bottomRight,
                 child: FloatingActionButton(
                   heroTag: "btn2",
-                  onPressed: () {},
+                  onPressed: () {
+                    uploadImage(this.imagePath, context);
+                  },
                   backgroundColor: Colors.white,
                   child: Icon(
                     Icons.done,
@@ -157,5 +179,125 @@ class DisplayPictureScreen extends StatelessWidget {
             ],
           ),
         ));
+  }
+
+  sendServerAlert(BuildContext _context) {
+    showDialog(
+        context: _context,
+        builder: (_) => AssetGiffyDialog(
+              image: Image.asset(
+                "assets/robot.gif",
+                fit: BoxFit.fill,
+              ),
+              title: Text(
+                'No server ip set',
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 22.0, fontWeight: FontWeight.w600),
+              ),
+              entryAnimation: EntryAnimation.BOTTOM_RIGHT,
+              description: Text(
+                'No image server ip is defined. Please set a server ip in the settings',
+                textAlign: TextAlign.center,
+                style: TextStyle(),
+              ),
+              onCancelButtonPressed: () {
+                Navigator.of(_context).pop();
+              },
+              onOkButtonPressed: () {
+                Navigator.of(_context).pop();
+              },
+            ));
+  }
+
+  handshake_exception_msg(BuildContext _context) {
+    showDialog(
+        context: _context,
+        builder: (_) => AssetGiffyDialog(
+              image: Image.asset(
+                "assets/robot.gif",
+                fit: BoxFit.fill,
+              ),
+              title: Text(
+                'Invalid server certificate',
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 22.0, fontWeight: FontWeight.w600),
+              ),
+              entryAnimation: EntryAnimation.BOTTOM_RIGHT,
+              description: Text(
+                'Certificate verification failed. Please import your server certificate first.',
+                textAlign: TextAlign.center,
+                style: TextStyle(),
+              ),
+              onCancelButtonPressed: () {
+                Navigator.of(_context).pop();
+              },
+              onOkButtonPressed: () {
+                Navigator.of(_context).pop();
+              },
+            ));
+  }
+
+  socket_exception_msg(BuildContext _context) {
+    showDialog(
+        context: _context,
+        builder: (_) => AssetGiffyDialog(
+          image: Image.asset(
+            "assets/robot.gif",
+            fit: BoxFit.fill,
+          ),
+          title: Text(
+            'Cannot connect to the image server',
+            textAlign: TextAlign.center,
+            style: TextStyle(fontSize: 22.0, fontWeight: FontWeight.w600),
+          ),
+          entryAnimation: EntryAnimation.BOTTOM_RIGHT,
+          description: Text(
+            'The connection to the image server is refused. Please check if the server is running.',
+            textAlign: TextAlign.center,
+            style: TextStyle(),
+          ),
+          onCancelButtonPressed: () {
+            Navigator.of(_context).pop();
+          },
+          onOkButtonPressed: () {
+            Navigator.of(_context).pop();
+          },
+        ));
+  }
+
+  Future<void> uploadImage(String imagePath, BuildContext context) async {
+    SharedPreferences sharedPrefs = await SharedPreferences.getInstance();
+    String ip = sharedPrefs.getString("ipv4");
+    if (ip == null || ip.isEmpty) {
+      sendServerAlert(context);
+      print("No ip is set.");
+    }
+
+    print("Try to upload image at image at: " + ip);
+    var im = File(imagePath);
+    var stream = new http.ByteStream(DelegatingStream.typed(im.openRead()));
+    var length = await im.length();
+
+    var uri = Uri.parse("https://" + ip + ":8721/api/upload");
+
+    var request = new http.MultipartRequest("POST", uri);
+    var multipartFile = new http.MultipartFile('file', stream, length,
+        filename: basename(im.path));
+
+    request.files.add(multipartFile);
+    try {
+      var response = await request.send();
+      print(response.statusCode);
+      response.stream.transform(utf8.decoder).listen((value) {
+        print(value);
+      });
+    } catch (e) {
+      print("[ERROR]" + e.toString());
+      if (e == SocketException) {
+        socket_exception_msg(context);
+      } else if (e  == HandshakeException) {
+        handshake_exception_msg(context);
+      }
+    }
   }
 }
