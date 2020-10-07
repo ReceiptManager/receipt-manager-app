@@ -9,31 +9,13 @@ import 'package:receipt_parser/bloc/moor/db_bloc.dart';
 import 'package:receipt_parser/db/receipt_database.dart';
 import 'package:receipt_parser/model/receipt_category.dart';
 
+import '../main.dart';
 import 'camera_picker.dart';
 
 class EmptyReceiptForm extends StatefulWidget {
   @override
   ReceiptInputController createState() {
     return ReceiptInputController();
-  }
-}
-
-class SecondRoute extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Second Route"),
-      ),
-      body: Center(
-        child: RaisedButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          child: Text('Go back!'),
-        ),
-      ),
-    );
   }
 }
 
@@ -140,6 +122,7 @@ class ReceiptInputController extends State<EmptyReceiptForm> {
                                             MaterialPageRoute(
                                               builder: (context) =>
                                                   TakePictureScreen(
+                                                      sharedPrefs: sharedPrefs,
                                                       // Pass the appropriate camera to the TakePictureScreen widget.
                                                       camera: firstCamera),
                                             ),

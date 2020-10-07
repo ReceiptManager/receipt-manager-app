@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:giffy_dialog/giffy_dialog.dart';
+import 'package:ping_discover_network/ping_discover_network.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 // TODO toast message in settings_widget.dart
@@ -82,7 +83,39 @@ class SettingsWidget extends StatelessWidget {
                                     ));
                             return;
                           } else {
-                            sharedPreferences.setString("ipv4", ipv4);
+                            const port = 8721;
+                            final stream = NetworkAnalyzer.discover2(
+                              "192.168.0",
+                              port,
+                              timeout: Duration(milliseconds: 5000),
+                            );
+
+                            bool found = false;
+                            stream.listen((NetworkAddress addr) {
+                              if (addr.exists) {
+                                if (addr.ip.trim() == ipv4.trim()) {
+                                  sharedPreferences.setString("ipv4", ipv4);
+                                  Scaffold.of(context)
+                                    ..hideCurrentSnackBar()
+                                    ..showSnackBar(SnackBar(
+                                      content: Text("Server ip is set."),
+                                      backgroundColor: Colors.green,
+                                    ));
+                                  found = true;
+                                }
+                              }
+                            }).onDone(() {
+                              if (!found) sendServerAlert(context);
+                              // TODO remove
+                              sharedPreferences.setString("ipv4", ipv4);
+
+                              Scaffold.of(context)
+                                ..hideCurrentSnackBar()
+                                ..showSnackBar(SnackBar(
+                                  content: Text("Server ip could not be set."),
+                                  backgroundColor: Colors.red,
+                                ));
+                            });
                           }
                         },
                         child: Icon(Icons.done_all),
@@ -94,27 +127,54 @@ class SettingsWidget extends StatelessWidget {
     );
   }
 
+  sendServerAlert(BuildContext _context) {
+    showDialog(
+        context: _context,
+        builder: (_) => AssetGiffyDialog(
+              image: Image.asset(
+                "assets/robot.gif",
+                fit: BoxFit.fill,
+              ),
+              title: Text(
+                'No server responding',
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 22.0, fontWeight: FontWeight.w600),
+              ),
+              entryAnimation: EntryAnimation.BOTTOM_RIGHT,
+              description: Text(
+                'No server is responding on this ip address. Please check if the server is running.',
+                textAlign: TextAlign.center,
+                style: TextStyle(),
+              ),
+              onCancelButtonPressed: () {
+                Navigator.of(_context).pop();
+              },
+              onOkButtonPressed: () {
+                Navigator.of(_context).pop();
+              },
+            ));
+  }
+
   serverTextfield() {
-    return new TextField(
+    return new TextFormField(
       controller: _textController,
       style: TextStyle(color: Colors.white),
       onChanged: (value) {
         ipv4 = value;
       },
+      keyboardType: TextInputType.number,
       decoration: new InputDecoration(
         enabledBorder: OutlineInputBorder(
-          borderRadius: new BorderRadius.circular(25.0),
           borderSide: BorderSide(color: Colors.white),
         ),
         focusedBorder: OutlineInputBorder(
-          borderRadius: new BorderRadius.circular(25.0),
           borderSide: BorderSide(color: Colors.white),
         ),
         border: new OutlineInputBorder(
             borderSide: new BorderSide(color: Colors.white)),
-        hintText: 'Server IP',
-        helperText: 'Submit the receipt parser server adresse.',
-        labelText: 'Server IP',
+        hintText: 'Server ip',
+        labelText: 'Server ip address',
+        helperText: "Set the image server ip.",
         prefixIcon: const Icon(
           Icons.network_wifi,
           color: Colors.white,
