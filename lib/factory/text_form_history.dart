@@ -1,0 +1,3 @@
+class TextFormFactory {
+  static create() {}
+}
