@@ -8,6 +8,7 @@ import 'package:receipt_parser/bloc/moor/bloc.dart';
 import 'package:receipt_parser/bloc/moor/db_bloc.dart';
 import 'package:receipt_parser/db/receipt_database.dart';
 import 'package:receipt_parser/model/receipt_category.dart';
+import 'package:receipt_parser/theme/theme_manager.dart';
 
 import '../main.dart';
 import 'camera_picker.dart';
@@ -35,7 +36,6 @@ class ReceiptInputController extends State<EmptyReceiptForm> {
   TextEditingController storeNameController;
   TextEditingController receiptTotalController;
   TextEditingController dateController;
-  TextEditingController categoryController;
 
   // field variables
   String storeName;
@@ -50,8 +50,10 @@ class ReceiptInputController extends State<EmptyReceiptForm> {
     const ReceiptCategory('Education', Icon(Icons.school, color: Colors.white)),
     const ReceiptCategory(
         'Books', Icon(Icons.book_rounded, color: Colors.white)),
-    const ReceiptCategory(
-        'Sport', Icon(Icons.mobile_screen_share, color: Colors.white)),
+    const ReceiptCategory('Entertainment',
+        Icon(Icons.accessibility_new_outlined, color: Colors.white)),
+    const ReceiptCategory('Health', Icon(Icons.healing, color: Colors.white)),
+    const ReceiptCategory('Car', Icon(Icons.car_repair, color: Colors.white)),
   ];
 
   @override
@@ -110,11 +112,8 @@ class ReceiptInputController extends State<EmptyReceiptForm> {
                                           WidgetsFlutterBinding
                                               .ensureInitialized();
 
-                                          // Obtain a list of the available cameras on the device.
                                           final cameras =
                                               await availableCameras();
-
-                                          // Get a specific camera from the list of available cameras.
                                           final firstCamera = cameras.first;
 
                                           Navigator.push(
@@ -123,7 +122,6 @@ class ReceiptInputController extends State<EmptyReceiptForm> {
                                               builder: (context) =>
                                                   TakePictureScreen(
                                                       sharedPrefs: sharedPrefs,
-                                                      // Pass the appropriate camera to the TakePictureScreen widget.
                                                       camera: firstCamera),
                                             ),
                                           );
@@ -133,17 +131,17 @@ class ReceiptInputController extends State<EmptyReceiptForm> {
                             new Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: new Theme(
-                                    data: getTheme(),
+                                    data: ThemeManager.getTheme(),
                                     child: TextFormField(
                                       style: TextStyle(color: Colors.white),
                                       decoration: new InputDecoration(
                                         enabledBorder: OutlineInputBorder(
                                           borderSide:
-                                              BorderSide(color: Colors.white),
+                                          BorderSide(color: Colors.white),
                                         ),
                                         focusedBorder: OutlineInputBorder(
                                           borderSide:
-                                              BorderSide(color: Colors.white),
+                                          BorderSide(color: Colors.white),
                                         ),
                                         border: new OutlineInputBorder(
                                             borderSide: new BorderSide(
@@ -168,14 +166,14 @@ class ReceiptInputController extends State<EmptyReceiptForm> {
                             new Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: new Theme(
-                                    data: getTheme(),
+                                    data: ThemeManager.getTheme(),
                                     child: TextFormField(
                                       style: TextStyle(color: Colors.white),
                                       keyboardType: TextInputType.number,
                                       decoration: new InputDecoration(
                                         enabledBorder: OutlineInputBorder(
                                           borderSide:
-                                              BorderSide(color: Colors.white),
+                                          BorderSide(color: Colors.white),
                                         ),
                                         focusedBorder: OutlineInputBorder(
                                           borderSide:
@@ -213,14 +211,14 @@ class ReceiptInputController extends State<EmptyReceiptForm> {
                             new Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: new Theme(
-                                    data: getTheme(),
+                                    data: ThemeManager.getTheme(),
                                     child: TextFormField(
                                       style: TextStyle(color: Colors.white),
                                       keyboardType: TextInputType.number,
                                       decoration: new InputDecoration(
                                           enabledBorder: OutlineInputBorder(
                                             borderSide:
-                                                BorderSide(color: Colors.white),
+                                            BorderSide(color: Colors.white),
                                           ),
                                           focusedBorder: OutlineInputBorder(
                                             borderSide:
@@ -373,12 +371,6 @@ class ReceiptInputController extends State<EmptyReceiptForm> {
     );
   }
 
-  ThemeData getTheme() {
-    return new ThemeData(
-      primaryColor: Colors.white,
-      primaryColorDark: Colors.white,
-    );
-  }
 
   void reset() {
     receiptTotalController.clear();
