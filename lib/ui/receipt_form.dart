@@ -6,7 +6,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:receipt_parser/bloc/moor/bloc.dart';
 import 'package:receipt_parser/bloc/moor/db_bloc.dart';
-import 'package:receipt_parser/db/receipt_database.dart';
+import 'package:receipt_parser/database//receipt_database.dart';
+import 'package:receipt_parser/factory/categories_factory.dart';
 import 'package:receipt_parser/model/receipt_category.dart';
 import 'package:receipt_parser/theme/theme_manager.dart';
 
@@ -20,41 +21,21 @@ class EmptyReceiptForm extends StatefulWidget {
   }
 }
 
-// Create a corresponding State class.
-// This class holds data related to the form.
 class ReceiptInputController extends State<EmptyReceiptForm> {
-  // Create a global key that uniquely identifies the Form widget
-  // and allows validation of the form.
-  //
-  // Note: This is a GlobalKey<FormState>,
-  // not a GlobalKey<MyCustomFormState>.
   final _formKey = GlobalKey<FormState>();
-
   final _dropKey = GlobalKey<FormState>();
 
-  // Main field controller handle every input in the form
   TextEditingController storeNameController;
   TextEditingController receiptTotalController;
   TextEditingController dateController;
 
-  // field variables
   String storeName;
   String total;
   String receiptCategory;
   DateTime receiptDate;
 
   ReceiptCategory selectedCategory;
-  List<ReceiptCategory> categories = <ReceiptCategory>[
-    const ReceiptCategory(
-        'Grocery', Icon(Icons.shopping_bag_outlined, color: Colors.white)),
-    const ReceiptCategory('Education', Icon(Icons.school, color: Colors.white)),
-    const ReceiptCategory(
-        'Books', Icon(Icons.book_rounded, color: Colors.white)),
-    const ReceiptCategory('Entertainment',
-        Icon(Icons.accessibility_new_outlined, color: Colors.white)),
-    const ReceiptCategory('Health', Icon(Icons.healing, color: Colors.white)),
-    const ReceiptCategory('Car', Icon(Icons.car_repair, color: Colors.white)),
-  ];
+  List<ReceiptCategory> categories = ReceiptCategoryFactory.get();
 
   @override
   void initState() {
@@ -67,7 +48,6 @@ class ReceiptInputController extends State<EmptyReceiptForm> {
 
   @override
   Widget build(BuildContext context) {
-    // Build a Form widget using the _formKey created above.
     return getMenu();
   }
 
