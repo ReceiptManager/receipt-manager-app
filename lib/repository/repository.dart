@@ -1,4 +1,4 @@
-import 'package:receipt_parser/db/receipt_database.dart';
+import 'package:receipt_parser/database//receipt_database.dart';
 
 class Repository {
   ReceiptDao _dao = ReceiptDao(AppDatabase());
