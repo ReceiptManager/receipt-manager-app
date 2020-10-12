@@ -12,11 +12,13 @@ class Receipt extends DataClass implements Insertable<Receipt> {
   final String shopName;
   final String category;
   final DateTime receiptDate;
+
   Receipt(
       {@required this.receiptTotal,
       @required this.shopName,
       @required this.category,
       this.receiptDate});
+
   factory Receipt.fromData(Map<String, dynamic> data, GeneratedDatabase db,
       {String prefix}) {
     final effectivePrefix = prefix ?? '';
@@ -33,6 +35,7 @@ class Receipt extends DataClass implements Insertable<Receipt> {
           .mapFromDatabaseResponse(data['${effectivePrefix}receipt_date']),
     );
   }
+
   factory Receipt.fromJson(Map<String, dynamic> json,
       {ValueSerializer serializer = const ValueSerializer.defaults()}) {
     return Receipt(
@@ -42,6 +45,7 @@ class Receipt extends DataClass implements Insertable<Receipt> {
       receiptDate: serializer.fromJson<DateTime>(json['receiptDate']),
     );
   }
+
   @override
   Map<String, dynamic> toJson(
       {ValueSerializer serializer = const ValueSerializer.defaults()}) {
@@ -71,16 +75,18 @@ class Receipt extends DataClass implements Insertable<Receipt> {
     ) as T;
   }
 
-  Receipt copyWith({String receiptTotal,
-    String shopName,
-    String category,
-    DateTime receiptDate}) =>
+  Receipt copyWith(
+          {String receiptTotal,
+          String shopName,
+          String category,
+          DateTime receiptDate}) =>
       Receipt(
         receiptTotal: receiptTotal ?? this.receiptTotal,
         shopName: shopName ?? this.shopName,
         category: category ?? this.category,
         receiptDate: receiptDate ?? this.receiptDate,
       );
+
   @override
   String toString() {
     return (StringBuffer('Receipt(')
@@ -93,12 +99,11 @@ class Receipt extends DataClass implements Insertable<Receipt> {
   }
 
   @override
-  int get hashCode =>
-      $mrjf($mrjc(
-          receiptTotal.hashCode,
-          $mrjc(
-              shopName.hashCode,
-              $mrjc(category.hashCode, receiptDate.hashCode))));
+  int get hashCode => $mrjf($mrjc(
+      receiptTotal.hashCode,
+      $mrjc(
+          shopName.hashCode, $mrjc(category.hashCode, receiptDate.hashCode))));
+
   @override
   bool operator ==(other) =>
       identical(this, other) ||
@@ -114,12 +119,14 @@ class ReceiptsCompanion extends UpdateCompanion<Receipt> {
   final Value<String> shopName;
   final Value<String> category;
   final Value<DateTime> receiptDate;
+
   const ReceiptsCompanion({
     this.receiptTotal = const Value.absent(),
     this.shopName = const Value.absent(),
     this.category = const Value.absent(),
     this.receiptDate = const Value.absent(),
   });
+
   ReceiptsCompanion copyWith({Value<String> receiptTotal,
     Value<String> shopName,
     Value<String> category,
@@ -136,13 +143,17 @@ class ReceiptsCompanion extends UpdateCompanion<Receipt> {
 class $ReceiptsTable extends Receipts with TableInfo<$ReceiptsTable, Receipt> {
   final GeneratedDatabase _db;
   final String _alias;
+
   $ReceiptsTable(this._db, [this._alias]);
+
   final VerificationMeta _receiptTotalMeta =
       const VerificationMeta('receiptTotal');
   GeneratedTextColumn _receiptTotal;
+
   @override
   GeneratedTextColumn get receiptTotal =>
       _receiptTotal ??= _constructReceiptTotal();
+
   GeneratedTextColumn _constructReceiptTotal() {
     return GeneratedTextColumn(
       'receipt_total',
@@ -153,8 +164,10 @@ class $ReceiptsTable extends Receipts with TableInfo<$ReceiptsTable, Receipt> {
 
   final VerificationMeta _shopNameMeta = const VerificationMeta('shopName');
   GeneratedTextColumn _shopName;
+
   @override
   GeneratedTextColumn get shopName => _shopName ??= _constructShopName();
+
   GeneratedTextColumn _constructShopName() {
     return GeneratedTextColumn(
       'shop_name',
@@ -165,8 +178,10 @@ class $ReceiptsTable extends Receipts with TableInfo<$ReceiptsTable, Receipt> {
 
   final VerificationMeta _categoryMeta = const VerificationMeta('category');
   GeneratedTextColumn _category;
+
   @override
   GeneratedTextColumn get category => _category ??= _constructCategory();
+
   GeneratedTextColumn _constructCategory() {
     return GeneratedTextColumn(
       'category',
@@ -178,9 +193,11 @@ class $ReceiptsTable extends Receipts with TableInfo<$ReceiptsTable, Receipt> {
   final VerificationMeta _receiptDateMeta =
       const VerificationMeta('receiptDate');
   GeneratedDateTimeColumn _receiptDate;
+
   @override
   GeneratedDateTimeColumn get receiptDate =>
       _receiptDate ??= _constructReceiptDate();
+
   GeneratedDateTimeColumn _constructReceiptDate() {
     return GeneratedDateTimeColumn(
       'receipt_date',
@@ -192,12 +209,15 @@ class $ReceiptsTable extends Receipts with TableInfo<$ReceiptsTable, Receipt> {
   @override
   List<GeneratedColumn> get $columns =>
       [receiptTotal, shopName, category, receiptDate];
+
   @override
   $ReceiptsTable get asDslTable => this;
+
   @override
   String get $tableName => _alias ?? 'receipts';
   @override
   final String actualTableName = 'receipts';
+
   @override
   VerificationContext validateIntegrity(ReceiptsCompanion d,
       {bool isInserting = false}) {
@@ -233,6 +253,7 @@ class $ReceiptsTable extends Receipts with TableInfo<$ReceiptsTable, Receipt> {
 
   @override
   Set<GeneratedColumn> get $primaryKey => {receiptDate};
+
   @override
   Receipt map(Map<String, dynamic> data, {String tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : null;
@@ -267,9 +288,12 @@ class $ReceiptsTable extends Receipts with TableInfo<$ReceiptsTable, Receipt> {
 abstract class _$AppDatabase extends GeneratedDatabase {
   _$AppDatabase(QueryExecutor e) : super(const SqlTypeSystem.withDefaults(), e);
   $ReceiptsTable _receipts;
+
   $ReceiptsTable get receipts => _receipts ??= $ReceiptsTable(this);
   ReceiptDao _receiptDao;
+
   ReceiptDao get receiptDao => _receiptDao ??= ReceiptDao(this as AppDatabase);
+
   @override
   List<TableInfo> get allTables => [receipts];
 }
