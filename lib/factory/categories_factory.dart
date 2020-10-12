@@ -5,15 +5,23 @@ class ReceiptCategoryFactory {
   static List<ReceiptCategory> get() {
     return <ReceiptCategory>[
       const ReceiptCategory(
-          'Grocery', Icon(Icons.shopping_bag_outlined, color: Colors.white)),
+          'Grocery', Icon(Icons.shopping_bag_outlined, color: Colors.black)),
       const ReceiptCategory(
-          'Education', Icon(Icons.school, color: Colors.white)),
+          'Education', Icon(Icons.school, color: Colors.black)),
       const ReceiptCategory(
-          'Books', Icon(Icons.book_rounded, color: Colors.white)),
+          'Book', Icon(Icons.book_rounded, color: Colors.black)),
       const ReceiptCategory('Entertainment',
-          Icon(Icons.accessibility_new_outlined, color: Colors.white)),
-      const ReceiptCategory('Health', Icon(Icons.healing, color: Colors.white)),
-      const ReceiptCategory('Car', Icon(Icons.car_repair, color: Colors.white)),
+          Icon(Icons.accessibility_new_outlined, color: Colors.black)),
+      const ReceiptCategory('Health', Icon(Icons.healing, color: Colors.black)),
+      const ReceiptCategory(
+          'Restaurant', Icon(Icons.fastfood, color: Colors.black)),
+      const ReceiptCategory(
+          'Transport', Icon(Icons.train, color: Colors.black)),
+      const ReceiptCategory('Sell', Icon(Icons.train, color: Colors.black)),
+      const ReceiptCategory(
+          'Other', Icon(Icons.add_to_photos_rounded, color: Colors.black)),
+      const ReceiptCategory(
+          'Drugstore', Icon(Icons.shopping_cart_outlined, color: Colors.black)),
     ];
   }
 }
