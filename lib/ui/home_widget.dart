@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:flutter_boom_menu/flutter_boom_menu.dart';
+import 'package:receipt_parser/database/receipt_database.dart';
 import 'package:receipt_parser/ui/receipt_form.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeWidget extends StatelessWidget {
   final _textController = TextEditingController();
   ScrollController scrollController;
   bool scrollVisible = true;
-  var appBarTitleText = new Text("3");
+  Receipt receipt;
+  bool sendImage;
 
-  HomeWidget(SharedPreferences sharedPrefs);
+  HomeWidget(this.receipt, this.sendImage);
 
   @override
-  void initState() {
+  void init() {
     scrollController = ScrollController()
       ..addListener(() {
         setDialVisible(scrollController.position.userScrollDirection ==
@@ -30,49 +30,9 @@ class HomeWidget extends StatelessWidget {
     _textController.dispose();
   }
 
-  BoomMenu buildBoomMenu() {
-    return BoomMenu(
-        animatedIcon: AnimatedIcons.menu_close,
-        animatedIconTheme: IconThemeData(size: 22.0),
-        //child: Icon(Icons.add),
-        onOpen: () => print('OPENING DIAL'),
-        onClose: () => print('DIAL CLOSED'),
-        scrollVisible: scrollVisible,
-        overlayColor: Colors.black,
-        overlayOpacity: 0.7,
-        children: [
-          MenuItem(
-            child: Icon(
-              Icons.camera_alt,
-              color: Colors.black,
-              size: 40,
-            ),
-            title: "Camera",
-            titleColor: Colors.blueAccent,
-            subtitle: "Use your camera to scan your receipt.",
-            subTitleColor: Colors.black,
-            backgroundColor: Colors.white,
-            // TODO: implement clicker
-          ),
-          MenuItem(
-            child: Icon(
-              Icons.edit,
-              color: Colors.black,
-              size: 40,
-            ),
-            title: "Manual",
-            titleColor: Colors.blueAccent,
-            subtitle: "Track your receipt manually.",
-            subTitleColor: Colors.black,
-            backgroundColor: Colors.white,
-            // TODO: implement clicker
-          ),
-        ]);
-  }
-
   Widget buildBody() {
     return Container(
-      color: Colors.blueAccent,
+      color: Colors.grey,
       child: Align(
           alignment: Alignment.bottomCenter,
           child: Padding(
@@ -84,7 +44,7 @@ class HomeWidget extends StatelessWidget {
                     side: BorderSide(color: Colors.white)),
                 child: Column(children: [Icon(Icons.camera)]),
                 color: Colors.white,
-                textColor: Colors.blueAccent,
+                textColor: Colors.white,
                 elevation: 5,
               ))),
     );
@@ -93,7 +53,7 @@ class HomeWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: EmptyReceiptForm(),
+      body: ReceiptForm(receipt, sendImage),
     );
   }
 }
