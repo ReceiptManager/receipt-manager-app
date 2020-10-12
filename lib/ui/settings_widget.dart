@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:giffy_dialog/giffy_dialog.dart';
-import 'package:ping_discover_network/ping_discover_network.dart';
+import 'package:receipt_parser/converter/color_converter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 // TODO toast message in settings_widget.dart
@@ -28,7 +28,7 @@ class SettingsWidget extends StatelessWidget {
     }
 
     return Container(
-      color: Colors.blueAccent,
+      color: Colors.white,
       child: Center(
         child: Column(
           children: <Widget>[
@@ -65,12 +65,13 @@ class SettingsWidget extends StatelessWidget {
                                         textAlign: TextAlign.center,
                                         style: TextStyle(
                                             fontSize: 22.0,
+                                            color: Colors.black,
                                             fontWeight: FontWeight.w600),
                                       ),
                                       entryAnimation:
                                           EntryAnimation.BOTTOM_RIGHT,
                                       description: Text(
-                                        'The given submited server ip appear invalid. Please try again.',
+                                        'The given submitted server ip appear invalid. Please try again.',
                                         textAlign: TextAlign.center,
                                         style: TextStyle(),
                                       ),
@@ -82,45 +83,19 @@ class SettingsWidget extends StatelessWidget {
                                       },
                                     ));
                             return;
-                          } else {
-                            const port = 8721;
-                            final stream = NetworkAnalyzer.discover2(
-                              "192.168.0",
-                              port,
-                              timeout: Duration(milliseconds: 5000),
-                            );
-
-                            bool found = false;
-                            stream.listen((NetworkAddress addr) {
-                              if (addr.exists) {
-                                if (addr.ip.trim() == ipv4.trim()) {
-                                  sharedPreferences.setString("ipv4", ipv4);
-                                  Scaffold.of(context)
-                                    ..hideCurrentSnackBar()
-                                    ..showSnackBar(SnackBar(
-                                      content: Text("Server ip is set."),
-                                      backgroundColor: Colors.green,
-                                    ));
-                                  found = true;
-                                }
-                              }
-                            }).onDone(() {
-                              if (!found) sendServerAlert(context);
-                              // TODO remove
-                              sharedPreferences.setString("ipv4", ipv4);
-
-                              Scaffold.of(context)
-                                ..hideCurrentSnackBar()
-                                ..showSnackBar(SnackBar(
-                                  content: Text("Server ip could not be set."),
-                                  backgroundColor: Colors.red,
-                                ));
-                            });
                           }
+
+                          sharedPreferences.setString("ipv4", ipv4);
+                          Scaffold.of(context)
+                            ..hideCurrentSnackBar()
+                            ..showSnackBar(SnackBar(
+                              content: Text("Server ip is set."),
+                              backgroundColor: Colors.green,
+                            ));
                         },
                         child: Icon(Icons.done_all),
-                        backgroundColor: Colors.white,
-                        foregroundColor: Colors.blueAccent)))
+                        backgroundColor: HexColor.fromHex("#232F34"),
+                        foregroundColor: HexColor.fromHex("#F9AA33"))))
           ],
         ),
       ),
@@ -158,26 +133,26 @@ class SettingsWidget extends StatelessWidget {
   serverTextfield() {
     return new TextFormField(
       controller: _textController,
-      style: TextStyle(color: Colors.white),
+      style: TextStyle(color: Colors.black),
       onChanged: (value) {
         ipv4 = value;
       },
       keyboardType: TextInputType.number,
       decoration: new InputDecoration(
         enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.white),
+          borderSide: BorderSide(color: HexColor.fromHex("#232F34")),
         ),
         focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.white),
+          borderSide: BorderSide(color: HexColor.fromHex("#232F34")),
         ),
         border: new OutlineInputBorder(
-            borderSide: new BorderSide(color: Colors.white)),
+            borderSide: new BorderSide(color: HexColor.fromHex("#232F34"))),
         hintText: 'Server ip',
         labelText: 'Server ip address',
         helperText: "Set the image server ip.",
         prefixIcon: const Icon(
           Icons.network_wifi,
-          color: Colors.white,
+          color: Colors.black,
         ),
         prefixText: ' ',
       ),
