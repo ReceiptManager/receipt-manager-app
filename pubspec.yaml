@@ -113,9 +113,4 @@ flutter:
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
   assets:
-    - robot.gif
-    - lidl.png
-    - rewe.png
-    - netto.png
-    - grocery.png
-    - education.png
+    - assets/

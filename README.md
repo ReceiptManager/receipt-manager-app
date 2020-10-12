@@ -45,4 +45,8 @@ https://www.flaticon.com/free-icon/global-education_3379636?term=education&page=
 2. Grocery logo is made by Freepik
 https://www.flaticon.com/free-icon/groceries_3050159?term=groceries&page=1&position=7
 
+3. ICON pack
+https://www.flaticon.com/packs/retail-59?k=1602359120540
 
+4. Health icon is made by Eucalypt
+https://www.flaticon.com/free-icon/health-check_2463800?term=health&page=1&position=6
