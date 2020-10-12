@@ -4,11 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:receipt_parser/bloc/delegate/simple_delegate.dart';
 import 'package:receipt_parser/bloc/moor/bloc.dart';
+import 'package:receipt_parser/converter/color_converter.dart';
 import 'package:receipt_parser/repository/repository.dart';
 import 'package:receipt_parser/ui/history_widget.dart';
 import 'package:receipt_parser/ui/home_widget.dart';
 import 'package:receipt_parser/ui/settings_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import 'database/receipt_database.dart';
 
 SharedPreferences sharedPrefs;
 
@@ -25,33 +28,37 @@ Future<void> main() async {
   runApp(MaterialApp(
     home: BlocProvider(
       builder: (_) => _bloc,
-      child: HomeScreen(),
+      child: HomeScreen(null, false),
     ),
     title: "Receipt parser",
-    theme: ThemeData(primaryColor: Colors.blueAccent),
+    theme: ThemeData(primaryColor: HexColor.fromHex("#F9AA33")),
   ));
 }
 
 class HomeScreen extends StatefulWidget {
+  Receipt receipt;
+  bool sendImage;
+
+  HomeScreen(this.receipt,this.sendImage);
+
   @override
-  HomeScreenState createState() => HomeScreenState();
+  HomeScreenState createState() => HomeScreenState(receipt, sendImage);
 }
 
 class HomeScreenState extends State<HomeScreen> {
-  final List<Widget> _children = [
-    HomeWidget(sharedPrefs),
-    HistoryWidget(),
-    SettingsWidget(sharedPrefs)
-  ];
+  Receipt receipt;
+  bool sendImage;
 
-  int _curent_index = 0;
-  Repository _repository = Repository();
-  DbBloc _bloc;
+  HomeScreenState(this.receipt, this.sendImage);
+
+  int currentIndex = 0;
+  Repository repository = Repository();
+  DbBloc bloc;
 
   @override
   void initState() {
-    _bloc = DbBloc(repository: _repository);
-    _bloc.dispatch(ReceiptAllFetch());
+    bloc = DbBloc(repository: repository);
+    bloc.dispatch(ReceiptAllFetch());
     super.initState();
   }
 
@@ -62,25 +69,30 @@ class HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final List<Widget> _children = [
+      HomeWidget(this.receipt, sendImage),
+      HistoryWidget(),
+      SettingsWidget(sharedPrefs)
+    ];
+
     return Scaffold(
         appBar: AppBar(title: Text('Receipt parser app')),
         bottomNavigationBar: CurvedNavigationBar(
-          backgroundColor: Colors.blueAccent[400],
-          color: Colors.white,
+          backgroundColor: Colors.white,
+          color: HexColor.fromHex("#232F34"),
           items: <Widget>[
-            Icon(Icons.home, size: 30, color: Colors.black),
-            Icon(Icons.history, size: 30, color: Colors.black),
-            //Icon(Icons.pie_chart, size: 30, color: Colors.black),
-            Icon(Icons.settings, size: 30, color: Colors.black),
+            Icon(Icons.home, size: 30, color: HexColor.fromHex("#F9AA33")),
+            Icon(Icons.history, size: 30, color: HexColor.fromHex("#F9AA33")),
+            Icon(Icons.settings, size: 30, color: HexColor.fromHex("#F9AA33")),
           ],
           animationCurve: Curves.easeInOut,
           animationDuration: Duration(milliseconds: 600),
           onTap: (index) {
             setState(() {
-              this._curent_index = index;
+              this.currentIndex = index;
             });
           },
         ),
-        body: _children[_curent_index]);
+        body: _children[currentIndex]);
   }
 }
