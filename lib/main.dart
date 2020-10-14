@@ -6,32 +6,34 @@ import 'package:receipt_parser/bloc/delegate/simple_delegate.dart';
 import 'package:receipt_parser/bloc/moor/bloc.dart';
 import 'package:receipt_parser/converter/color_converter.dart';
 import 'package:receipt_parser/repository/repository.dart';
+import 'package:receipt_parser/theme/theme_manager.dart';
 import 'package:receipt_parser/ui/history_widget.dart';
 import 'package:receipt_parser/ui/home_widget.dart';
 import 'package:receipt_parser/ui/settings_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'database/receipt_database.dart';
+import 'package:receipt_parser/database//receipt_database.dart';
 
 SharedPreferences sharedPrefs;
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   sharedPrefs = await SharedPreferences.getInstance();
-  BlocSupervisor.delegate = SimpleDelegate();
+  Bloc.observer = SimpleDelegate();
 
   DbBloc _bloc;
   Repository _repository = Repository();
   _bloc = DbBloc(repository: _repository);
-  BlocSupervisor.delegate = SimpleDelegate();
+  Bloc.observer = SimpleDelegate();
 
   runApp(MaterialApp(
     home: BlocProvider(
-      builder: (_) => _bloc,
+      create: (_) => _bloc,
       child: HomeScreen(null, false),
     ),
     title: "Receipt parser",
-    theme: ThemeData(primaryColor: HexColor.fromHex("#F9AA33")),
+    theme: ThemeManager.getTheme(),
+    darkTheme: ThemeManager.getDarkTheme(),
   ));
 }
 
@@ -58,7 +60,7 @@ class HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     bloc = DbBloc(repository: repository);
-    bloc.dispatch(ReceiptAllFetch());
+    bloc.add(ReceiptAllFetch());
     super.initState();
   }
 
