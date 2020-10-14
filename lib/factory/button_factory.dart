@@ -9,17 +9,25 @@ class ButtonFactory {
   static IconButton buildDateButton(DateTime receiptDate,
       TextEditingController dateController, BuildContext context) {
     return IconButton(
-        color: HexColor.fromHex("#232F34"),
         icon: Icon(
           Icons.calendar_today,
           color: Colors.purple,
         ),
+        splashColor: ThemeManager.getYellow(),
+
+        color: Colors.black,
         onPressed: () async {
           receiptDate = await showDatePicker(
               builder: (BuildContext context, Widget child) {
                 return Theme(
-                  data: ThemeManager.getTheme(),
-                  child: child,
+                  data: ThemeData.light().copyWith(
+                    primaryColor: ThemeManager.getYellow(),
+                    accentColor: ThemeManager.getYellow(),
+                    colorScheme: ColorScheme.light(primary: const Color(0XFFF9AA33)),
+                    buttonTheme: ButtonThemeData(
+                        textTheme: ButtonTextTheme.primary
+                    ),
+                  ),child: child,
                 );
               },
               context: context,

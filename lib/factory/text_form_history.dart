@@ -18,7 +18,7 @@ class TextFormFactory {
           ),
           border: new OutlineInputBorder(
               borderSide: new BorderSide(color: HexColor.fromHex("#232F34"))),
-          hintText: 'Receipt date',
+          hintText: 'dd.MM.YYYY',
           labelText: 'Receipt date',
           helperText: "Set the receipt date",
           prefixIcon: ButtonFactory.buildDateButton(
@@ -60,7 +60,6 @@ class TextFormFactory {
         helperText: "Set the receipt total",
         prefixIcon: const Icon(
           Icons.attach_money,
-          color: Colors.black,
         ),
         prefixText: ' ',
       ),
@@ -97,8 +96,7 @@ class TextFormFactory {
         labelText: 'Store name',
         helperText: "Set the store name",
         prefixIcon: const Icon(
-          Icons.storefront_outlined,
-          color: Colors.black,
+          Icons.storefront_outlined
         ),
         prefixText: ' ',
       ),
