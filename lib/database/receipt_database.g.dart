@@ -6,19 +6,17 @@ part of 'receipt_database.dart';
 // MoorGenerator
 // **************************************************************************
 
-// ignore_for_file: unnecessary_brace_in_string_interps
+// ignore_for_file: unnecessary_brace_in_string_interps, unnecessary_this
 class Receipt extends DataClass implements Insertable<Receipt> {
   final String receiptTotal;
   final String shopName;
   final String category;
   final DateTime receiptDate;
-
   Receipt(
       {@required this.receiptTotal,
       @required this.shopName,
       @required this.category,
       this.receiptDate});
-
   factory Receipt.fromData(Map<String, dynamic> data, GeneratedDatabase db,
       {String prefix}) {
     final effectivePrefix = prefix ?? '';
@@ -35,30 +33,25 @@ class Receipt extends DataClass implements Insertable<Receipt> {
           .mapFromDatabaseResponse(data['${effectivePrefix}receipt_date']),
     );
   }
-
-  factory Receipt.fromJson(Map<String, dynamic> json,
-      {ValueSerializer serializer = const ValueSerializer.defaults()}) {
-    return Receipt(
-      receiptTotal: serializer.fromJson<String>(json['receiptTotal']),
-      shopName: serializer.fromJson<String>(json['shopName']),
-      category: serializer.fromJson<String>(json['category']),
-      receiptDate: serializer.fromJson<DateTime>(json['receiptDate']),
-    );
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (!nullToAbsent || receiptTotal != null) {
+      map['receipt_total'] = Variable<String>(receiptTotal);
+    }
+    if (!nullToAbsent || shopName != null) {
+      map['shop_name'] = Variable<String>(shopName);
+    }
+    if (!nullToAbsent || category != null) {
+      map['category'] = Variable<String>(category);
+    }
+    if (!nullToAbsent || receiptDate != null) {
+      map['receipt_date'] = Variable<DateTime>(receiptDate);
+    }
+    return map;
   }
 
-  @override
-  Map<String, dynamic> toJson(
-      {ValueSerializer serializer = const ValueSerializer.defaults()}) {
-    return {
-      'receiptTotal': serializer.toJson<String>(receiptTotal),
-      'shopName': serializer.toJson<String>(shopName),
-      'category': serializer.toJson<String>(category),
-      'receiptDate': serializer.toJson<DateTime>(receiptDate),
-    };
-  }
-
-  @override
-  T createCompanion<T extends UpdateCompanion<Receipt>>(bool nullToAbsent) {
+  ReceiptsCompanion toCompanion(bool nullToAbsent) {
     return ReceiptsCompanion(
       receiptTotal: receiptTotal == null && nullToAbsent
           ? const Value.absent()
@@ -72,7 +65,28 @@ class Receipt extends DataClass implements Insertable<Receipt> {
       receiptDate: receiptDate == null && nullToAbsent
           ? const Value.absent()
           : Value(receiptDate),
-    ) as T;
+    );
+  }
+
+  factory Receipt.fromJson(Map<String, dynamic> json,
+      {ValueSerializer serializer}) {
+    serializer ??= moorRuntimeOptions.defaultSerializer;
+    return Receipt(
+      receiptTotal: serializer.fromJson<String>(json['receiptTotal']),
+      shopName: serializer.fromJson<String>(json['shopName']),
+      category: serializer.fromJson<String>(json['category']),
+      receiptDate: serializer.fromJson<DateTime>(json['receiptDate']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer serializer}) {
+    serializer ??= moorRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'receiptTotal': serializer.toJson<String>(receiptTotal),
+      'shopName': serializer.toJson<String>(shopName),
+      'category': serializer.toJson<String>(category),
+      'receiptDate': serializer.toJson<DateTime>(receiptDate),
+    };
   }
 
   Receipt copyWith(
@@ -86,7 +100,6 @@ class Receipt extends DataClass implements Insertable<Receipt> {
         category: category ?? this.category,
         receiptDate: receiptDate ?? this.receiptDate,
       );
-
   @override
   String toString() {
     return (StringBuffer('Receipt(')
@@ -103,15 +116,14 @@ class Receipt extends DataClass implements Insertable<Receipt> {
       receiptTotal.hashCode,
       $mrjc(
           shopName.hashCode, $mrjc(category.hashCode, receiptDate.hashCode))));
-
   @override
-  bool operator ==(other) =>
+  bool operator ==(dynamic other) =>
       identical(this, other) ||
       (other is Receipt &&
-          other.receiptTotal == receiptTotal &&
-          other.shopName == shopName &&
-          other.category == category &&
-          other.receiptDate == receiptDate);
+          other.receiptTotal == this.receiptTotal &&
+          other.shopName == this.shopName &&
+          other.category == this.category &&
+          other.receiptDate == this.receiptDate);
 }
 
 class ReceiptsCompanion extends UpdateCompanion<Receipt> {
@@ -119,18 +131,39 @@ class ReceiptsCompanion extends UpdateCompanion<Receipt> {
   final Value<String> shopName;
   final Value<String> category;
   final Value<DateTime> receiptDate;
-
   const ReceiptsCompanion({
     this.receiptTotal = const Value.absent(),
     this.shopName = const Value.absent(),
     this.category = const Value.absent(),
     this.receiptDate = const Value.absent(),
   });
+  ReceiptsCompanion.insert({
+    @required String receiptTotal,
+    @required String shopName,
+    @required String category,
+    this.receiptDate = const Value.absent(),
+  })  : receiptTotal = Value(receiptTotal),
+        shopName = Value(shopName),
+        category = Value(category);
+  static Insertable<Receipt> custom({
+    Expression<String> receiptTotal,
+    Expression<String> shopName,
+    Expression<String> category,
+    Expression<DateTime> receiptDate,
+  }) {
+    return RawValuesInsertable({
+      if (receiptTotal != null) 'receipt_total': receiptTotal,
+      if (shopName != null) 'shop_name': shopName,
+      if (category != null) 'category': category,
+      if (receiptDate != null) 'receipt_date': receiptDate,
+    });
+  }
 
-  ReceiptsCompanion copyWith({Value<String> receiptTotal,
-    Value<String> shopName,
-    Value<String> category,
-    Value<DateTime> receiptDate}) {
+  ReceiptsCompanion copyWith(
+      {Value<String> receiptTotal,
+      Value<String> shopName,
+      Value<String> category,
+      Value<DateTime> receiptDate}) {
     return ReceiptsCompanion(
       receiptTotal: receiptTotal ?? this.receiptTotal,
       shopName: shopName ?? this.shopName,
@@ -138,22 +171,47 @@ class ReceiptsCompanion extends UpdateCompanion<Receipt> {
       receiptDate: receiptDate ?? this.receiptDate,
     );
   }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (receiptTotal.present) {
+      map['receipt_total'] = Variable<String>(receiptTotal.value);
+    }
+    if (shopName.present) {
+      map['shop_name'] = Variable<String>(shopName.value);
+    }
+    if (category.present) {
+      map['category'] = Variable<String>(category.value);
+    }
+    if (receiptDate.present) {
+      map['receipt_date'] = Variable<DateTime>(receiptDate.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ReceiptsCompanion(')
+          ..write('receiptTotal: $receiptTotal, ')
+          ..write('shopName: $shopName, ')
+          ..write('category: $category, ')
+          ..write('receiptDate: $receiptDate')
+          ..write(')'))
+        .toString();
+  }
 }
 
 class $ReceiptsTable extends Receipts with TableInfo<$ReceiptsTable, Receipt> {
   final GeneratedDatabase _db;
   final String _alias;
-
   $ReceiptsTable(this._db, [this._alias]);
-
   final VerificationMeta _receiptTotalMeta =
       const VerificationMeta('receiptTotal');
   GeneratedTextColumn _receiptTotal;
-
   @override
   GeneratedTextColumn get receiptTotal =>
       _receiptTotal ??= _constructReceiptTotal();
-
   GeneratedTextColumn _constructReceiptTotal() {
     return GeneratedTextColumn(
       'receipt_total',
@@ -164,10 +222,8 @@ class $ReceiptsTable extends Receipts with TableInfo<$ReceiptsTable, Receipt> {
 
   final VerificationMeta _shopNameMeta = const VerificationMeta('shopName');
   GeneratedTextColumn _shopName;
-
   @override
   GeneratedTextColumn get shopName => _shopName ??= _constructShopName();
-
   GeneratedTextColumn _constructShopName() {
     return GeneratedTextColumn(
       'shop_name',
@@ -178,10 +234,8 @@ class $ReceiptsTable extends Receipts with TableInfo<$ReceiptsTable, Receipt> {
 
   final VerificationMeta _categoryMeta = const VerificationMeta('category');
   GeneratedTextColumn _category;
-
   @override
   GeneratedTextColumn get category => _category ??= _constructCategory();
-
   GeneratedTextColumn _constructCategory() {
     return GeneratedTextColumn(
       'category',
@@ -193,11 +247,9 @@ class $ReceiptsTable extends Receipts with TableInfo<$ReceiptsTable, Receipt> {
   final VerificationMeta _receiptDateMeta =
       const VerificationMeta('receiptDate');
   GeneratedDateTimeColumn _receiptDate;
-
   @override
   GeneratedDateTimeColumn get receiptDate =>
       _receiptDate ??= _constructReceiptDate();
-
   GeneratedDateTimeColumn _constructReceiptDate() {
     return GeneratedDateTimeColumn(
       'receipt_date',
@@ -209,74 +261,52 @@ class $ReceiptsTable extends Receipts with TableInfo<$ReceiptsTable, Receipt> {
   @override
   List<GeneratedColumn> get $columns =>
       [receiptTotal, shopName, category, receiptDate];
-
   @override
   $ReceiptsTable get asDslTable => this;
-
   @override
   String get $tableName => _alias ?? 'receipts';
   @override
   final String actualTableName = 'receipts';
-
   @override
-  VerificationContext validateIntegrity(ReceiptsCompanion d,
+  VerificationContext validateIntegrity(Insertable<Receipt> instance,
       {bool isInserting = false}) {
     final context = VerificationContext();
-    if (d.receiptTotal.present) {
+    final data = instance.toColumns(true);
+    if (data.containsKey('receipt_total')) {
       context.handle(
           _receiptTotalMeta,
-          receiptTotal.isAcceptableValue(
-              d.receiptTotal.value, _receiptTotalMeta));
-    } else if (receiptTotal.isRequired && isInserting) {
+          receiptTotal.isAcceptableOrUnknown(
+              data['receipt_total'], _receiptTotalMeta));
+    } else if (isInserting) {
       context.missing(_receiptTotalMeta);
     }
-    if (d.shopName.present) {
+    if (data.containsKey('shop_name')) {
       context.handle(_shopNameMeta,
-          shopName.isAcceptableValue(d.shopName.value, _shopNameMeta));
-    } else if (shopName.isRequired && isInserting) {
+          shopName.isAcceptableOrUnknown(data['shop_name'], _shopNameMeta));
+    } else if (isInserting) {
       context.missing(_shopNameMeta);
     }
-    if (d.category.present) {
+    if (data.containsKey('category')) {
       context.handle(_categoryMeta,
-          category.isAcceptableValue(d.category.value, _categoryMeta));
-    } else if (category.isRequired && isInserting) {
+          category.isAcceptableOrUnknown(data['category'], _categoryMeta));
+    } else if (isInserting) {
       context.missing(_categoryMeta);
     }
-    if (d.receiptDate.present) {
-      context.handle(_receiptDateMeta,
-          receiptDate.isAcceptableValue(d.receiptDate.value, _receiptDateMeta));
-    } else if (receiptDate.isRequired && isInserting) {
-      context.missing(_receiptDateMeta);
+    if (data.containsKey('receipt_date')) {
+      context.handle(
+          _receiptDateMeta,
+          receiptDate.isAcceptableOrUnknown(
+              data['receipt_date'], _receiptDateMeta));
     }
     return context;
   }
 
   @override
   Set<GeneratedColumn> get $primaryKey => {receiptDate};
-
   @override
   Receipt map(Map<String, dynamic> data, {String tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : null;
     return Receipt.fromData(data, _db, prefix: effectivePrefix);
-  }
-
-  @override
-  Map<String, Variable> entityToSql(ReceiptsCompanion d) {
-    final map = <String, Variable>{};
-    if (d.receiptTotal.present) {
-      map['receipt_total'] = Variable<String, StringType>(d.receiptTotal.value);
-    }
-    if (d.shopName.present) {
-      map['shop_name'] = Variable<String, StringType>(d.shopName.value);
-    }
-    if (d.category.present) {
-      map['category'] = Variable<String, StringType>(d.category.value);
-    }
-    if (d.receiptDate.present) {
-      map['receipt_date'] =
-          Variable<DateTime, DateTimeType>(d.receiptDate.value);
-    }
-    return map;
   }
 
   @override
@@ -286,16 +316,15 @@ class $ReceiptsTable extends Receipts with TableInfo<$ReceiptsTable, Receipt> {
 }
 
 abstract class _$AppDatabase extends GeneratedDatabase {
-  _$AppDatabase(QueryExecutor e) : super(const SqlTypeSystem.withDefaults(), e);
+  _$AppDatabase(QueryExecutor e) : super(SqlTypeSystem.defaultInstance, e);
   $ReceiptsTable _receipts;
-
   $ReceiptsTable get receipts => _receipts ??= $ReceiptsTable(this);
   ReceiptDao _receiptDao;
-
   ReceiptDao get receiptDao => _receiptDao ??= ReceiptDao(this as AppDatabase);
-
   @override
-  List<TableInfo> get allTables => [receipts];
+  Iterable<TableInfo> get allTables => allSchemaEntities.whereType<TableInfo>();
+  @override
+  List<DatabaseSchemaEntity> get allSchemaEntities => [receipts];
 }
 
 // **************************************************************************
@@ -303,5 +332,5 @@ abstract class _$AppDatabase extends GeneratedDatabase {
 // **************************************************************************
 
 mixin _$ReceiptDaoMixin on DatabaseAccessor<AppDatabase> {
-  $ReceiptsTable get receipts => db.receipts;
+  $ReceiptsTable get receipts => attachedDatabase.receipts;
 }
