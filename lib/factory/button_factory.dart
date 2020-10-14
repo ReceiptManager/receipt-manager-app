@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:receipt_parser/converter/color_converter.dart';
 import 'package:receipt_parser/theme/theme_manager.dart';
 
 /// Since most of the buttons use the same style
@@ -14,7 +13,6 @@ class ButtonFactory {
           color: Colors.purple,
         ),
         splashColor: ThemeManager.getYellow(),
-
         color: Colors.black,
         onPressed: () async {
           receiptDate = await showDatePicker(
@@ -23,11 +21,12 @@ class ButtonFactory {
                   data: ThemeData.light().copyWith(
                     primaryColor: ThemeManager.getYellow(),
                     accentColor: ThemeManager.getYellow(),
-                    colorScheme: ColorScheme.light(primary: const Color(0XFFF9AA33)),
-                    buttonTheme: ButtonThemeData(
-                        textTheme: ButtonTextTheme.primary
-                    ),
-                  ),child: child,
+                    colorScheme:
+                        ColorScheme.light(primary: const Color(0XFFF9AA33)),
+                    buttonTheme:
+                        ButtonThemeData(textTheme: ButtonTextTheme.primary),
+                  ),
+                  child: child,
                 );
               },
               context: context,
