@@ -1,26 +1,56 @@
 import 'package:flutter/material.dart';
 
 class ThemeManager {
-  static ThemeData getTheme() {
-    Map<int, Color> colorCodes = {
-      50: Color.fromRGBO(147, 205, 72, .1),
-      100: Color.fromRGBO(147, 205, 72, .2),
-      200: Color.fromRGBO(147, 205, 72, .3),
-      300: Color.fromRGBO(147, 205, 72, .4),
-      400: Color.fromRGBO(147, 205, 72, .5),
-      500: Color.fromRGBO(147, 205, 72, .6),
-      600: Color.fromRGBO(147, 205, 72, .7),
-      700: Color.fromRGBO(147, 205, 72, .8),
-      800: Color.fromRGBO(147, 205, 72, .9),
-      900: Color.fromRGBO(147, 205, 72, 1),
+  static MaterialColor getYellow() {
+    Map<int, Color> accentYellow = {
+      50: Color.fromRGBO(249, 170, 51, .1),
+      100: Color.fromRGBO(249, 170, 51, .2),
+      200: Color.fromRGBO(249, 170, 51, .3),
+      300: Color.fromRGBO(249, 170, 51, .4),
+      400: Color.fromRGBO(249, 170, 51, .5),
+      500: Color.fromRGBO(249, 170, 51, .6),
+      600: Color.fromRGBO(249, 170, 51, .7),
+      700: Color.fromRGBO(249, 170, 51, .8),
+      800: Color.fromRGBO(249, 170, 51, .9),
+      900: Color.fromRGBO(249, 170, 51, 1),
     };
 
-    MaterialColor accentYellow = MaterialColor(0xF9AA33, colorCodes);
+    return MaterialColor(0XFFF9AA33, accentYellow);
+  }
 
+  static MaterialColor getGray() {
+    Map<int, Color> accentGray = {
+      50: Color.fromRGBO(35, 47, 62, .1),
+      100: Color.fromRGBO(35, 47, 62, .2),
+      200: Color.fromRGBO(35, 47, 62, .3),
+      300: Color.fromRGBO(35, 47, 62, .4),
+      400: Color.fromRGBO(35, 47, 62, .5),
+      500: Color.fromRGBO(35, 47, 62, .6),
+      600: Color.fromRGBO(35, 47, 62, .7),
+      700: Color.fromRGBO(35, 47, 62, .8),
+      800: Color.fromRGBO(35, 47, 62, .9),
+      900: Color.fromRGBO(35, 47, 62, 1),
+    };
+
+    return MaterialColor(0XFF232F3E, accentGray);
+  }
+
+  static ThemeData getTheme() {
     return new ThemeData(
-      primaryColor: Colors.black,
-      primaryColorDark: Colors.black,
-      primarySwatch: Colors.yellow,
-    );
+        primaryColor: getGray(),
+        primaryColorDark: Colors.white,
+        primarySwatch: getYellow(),
+        accentColor: getYellow(),
+        focusColor: Colors.white,
+        brightness: Brightness.light,
+        primaryColorBrightness: Brightness.light,
+        bottomAppBarColor: Colors.white,
+        primaryTextTheme: TextTheme(
+            // ignore: deprecated_member_use
+            title: TextStyle(
+                color: Colors.white
+            )
+        ),
+        backgroundColor: Colors.white);
   }
 }

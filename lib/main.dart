@@ -5,14 +5,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:receipt_parser/bloc/delegate/simple_delegate.dart';
 import 'package:receipt_parser/bloc/moor/bloc.dart';
 import 'package:receipt_parser/converter/color_converter.dart';
+import 'package:receipt_parser/database//receipt_database.dart';
 import 'package:receipt_parser/repository/repository.dart';
 import 'package:receipt_parser/theme/theme_manager.dart';
 import 'package:receipt_parser/ui/history_widget.dart';
 import 'package:receipt_parser/ui/home_widget.dart';
-import 'package:receipt_parser/ui/settings_widget.dart';
+import 'package:receipt_parser/ui/settings/settings_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
-import 'package:receipt_parser/database//receipt_database.dart';
 
 SharedPreferences sharedPrefs;
 
@@ -27,14 +26,15 @@ Future<void> main() async {
   Bloc.observer = SimpleDelegate();
 
   runApp(MaterialApp(
-    home: BlocProvider(
-      create: (_) => _bloc,
-      child: HomeScreen(null, false),
-    ),
-    title: "Receipt parser",
-    theme: ThemeManager.getTheme(),
-    darkTheme: ThemeManager.getDarkTheme(),
-  ));
+      home: BlocProvider(
+        create: (_) => _bloc,
+        child: HomeScreen(null, false),
+      ),
+      color: Colors.white,
+      title: Text('Saved Suggestions', style: TextStyle(
+          color: Colors.white
+      )).toStringShort(),
+      theme: ThemeManager.getTheme()));
 }
 
 class HomeScreen extends StatefulWidget {
@@ -74,11 +74,11 @@ class HomeScreenState extends State<HomeScreen> {
     final List<Widget> _children = [
       HomeWidget(this.receipt, sendImage),
       HistoryWidget(),
-      SettingsWidget(sharedPrefs)
+      SettingsScreen()
     ];
 
     return Scaffold(
-        appBar: AppBar(title: Text('Receipt parser app')),
+        appBar: AppBar(title: Text('Receipt manager')),
         bottomNavigationBar: CurvedNavigationBar(
           backgroundColor: Colors.white,
           color: HexColor.fromHex("#232F34"),
