@@ -4,14 +4,19 @@ import 'package:receipt_parser/database//receipt_database.dart';
 
 @immutable
 abstract class DbEvent extends Equatable {
-  DbEvent([List props = const []]) : super(props);
+  DbEvent([List props = const []]);
 }
 
 class StartAppEvent extends DbEvent {
   @override
   String toString() => "StartAppEvent";
+
+  @override
+  // TODO: implement props
+  List<Object> get props => throw UnimplementedError();
 }
 
+// ignore: must_be_immutable
 class InsertEvent extends DbEvent {
   Receipt receipt;
 
@@ -19,8 +24,13 @@ class InsertEvent extends DbEvent {
 
   @override
   String toString() => "InsertEvent : $receipt";
+
+  @override
+  // TODO: implement props
+  List<Object> get props => throw UnimplementedError();
 }
 
+// ignore: must_be_immutable
 class UpdateEvent extends DbEvent {
   Receipt receipt;
 
@@ -28,11 +38,19 @@ class UpdateEvent extends DbEvent {
 
   @override
   String toString() => "UpdateEvent";
+
+  @override
+  // TODO: implement props
+  List<Object> get props => throw UnimplementedError();
 }
 
 class SwitchButtonEvent extends DbEvent {
   @override
   String toString() => "SwitchButtonEvent";
+
+  @override
+  // TODO: implement props
+  List<Object> get props => throw UnimplementedError();
 }
 
 // ignore: must_be_immutable
@@ -43,6 +61,10 @@ class DeleteEvent extends DbEvent {
 
   @override
   String toString() => "DeleteEvent - $receipt";
+
+  @override
+  // TODO: implement props
+  List<Object> get props => throw UnimplementedError();
 }
 
 class ReceiptWatchEvent {
@@ -54,4 +76,8 @@ class ReceiptWatchEvent {
 class ReceiptAllFetch extends DbEvent {
   @override
   String toString() => "ReceiptAllFetch";
+
+  @override
+  // TODO: implement props
+  List<Object> get props => throw UnimplementedError();
 }
