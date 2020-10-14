@@ -1,7 +1,9 @@
+<p align="center">
+  <img src="https://i.imgur.com/wkWHO3u.png">
+</p>
+
+
 # Receipt manager
-
-![alt text](https://i.imgur.com/wkWHO3u.png)
-
 Keep track of your receipt is pretty hard. You need to update the shop names, 
 receipt date and total of every receipt.
 
