@@ -95,9 +95,7 @@ class TextFormFactory {
         hintText: 'Store name',
         labelText: 'Store name',
         helperText: "Set the store name",
-        prefixIcon: const Icon(
-          Icons.storefront_outlined
-        ),
+        prefixIcon: const Icon(Icons.storefront_outlined),
         prefixText: ' ',
       ),
       controller: storeNameController,
