@@ -1,12 +1,15 @@
-import 'dart:io';
 import 'dart:async';
+import 'dart:io';
 
 import 'package:camera/camera.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:giffy_dialog/giffy_dialog.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:receipt_parser/bloc/moor/db_bloc.dart';
+import 'package:receipt_parser/converter/color_converter.dart';
 import 'package:receipt_parser/network/network_client.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -65,23 +68,28 @@ class TakePictureScreenState extends State<TakePictureScreen> {
         },
       ),
       floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.camera_alt),
+        backgroundColor: HexColor.fromHex("#232F34"),
+        child: Icon(
+          Icons.camera_alt,
+        ),
+        foregroundColor: HexColor.fromHex("#F9AA33"),
         onPressed: () async {
-          try {
-            await _initializeControllerFuture;
+          await _initializeControllerFuture;
 
-            final path = join(
-              (await getTemporaryDirectory()).path,
-              'receipt_${DateTime.now()}.png',
-            );
+          final path = join(
+            (await getTemporaryDirectory()).path,
+            'receipt_${DateTime.now()}.png',
+          );
 
-            await _controller.takePicture(path);
-            Navigator.pop(context);
-            NetworkClient.sendImage(File(path), context);
+          // Take an picture with the best resolution
+          await _controller.takePicture(path);
 
-          } catch (e) {
-            print(e);
-          }
+          // Get current ip which is given by the user
+          SharedPreferences sharedPrefs = await SharedPreferences.getInstance();
+          String ip = sharedPrefs.get("ipv4");
+
+          // parse server response and fill form
+          await NetworkClient.sendImage(File(path), ip, context);
         },
       ),
     );
@@ -100,7 +108,7 @@ class DisplayPictureScreen extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(title: Text('Receipt')),
         body: Container(
-          color: Colors.blueAccent,
+          color: HexColor.fromHex("#232F34"),
           padding: EdgeInsets.all(32),
           child: Stack(
             children: <Widget>[
@@ -132,8 +140,7 @@ class DisplayPictureScreen extends StatelessWidget {
                 alignment: Alignment.bottomRight,
                 child: FloatingActionButton(
                   heroTag: "btn2",
-                  onPressed: () {
-                  },
+                  onPressed: () {},
                   backgroundColor: Colors.white,
                   child: Icon(
                     Icons.done,
@@ -150,28 +157,28 @@ class DisplayPictureScreen extends StatelessWidget {
     showDialog(
         context: _context,
         builder: (_) => AssetGiffyDialog(
-              image: Image.asset(
-                "assets/robot.gif",
-                fit: BoxFit.fill,
-              ),
-              title: Text(
-                'No server ip set',
-                textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 22.0, fontWeight: FontWeight.w600),
-              ),
-              entryAnimation: EntryAnimation.BOTTOM_RIGHT,
-              description: Text(
-                'No image server ip is defined. Please set a server ip in the settings',
-                textAlign: TextAlign.center,
-                style: TextStyle(),
-              ),
-              onCancelButtonPressed: () {
-                Navigator.of(_context).pop();
-              },
-              onOkButtonPressed: () {
-                Navigator.of(_context).pop();
-              },
-            ));
+          image: Image.asset(
+            "assets/robot.gif",
+            fit: BoxFit.fill,
+          ),
+          title: Text(
+            'No server ip set',
+            textAlign: TextAlign.center,
+            style: TextStyle(fontSize: 22.0, fontWeight: FontWeight.w600),
+          ),
+          entryAnimation: EntryAnimation.BOTTOM_RIGHT,
+          description: Text(
+            'No image server ip is defined. Please set a server ip in the settings',
+            textAlign: TextAlign.center,
+            style: TextStyle(),
+          ),
+          onCancelButtonPressed: () {
+            Navigator.of(_context).pop();
+          },
+          onOkButtonPressed: () {
+            Navigator.of(_context).pop();
+          },
+        ));
   }
 
   handshakeExceptionAlert(BuildContext _context) {
