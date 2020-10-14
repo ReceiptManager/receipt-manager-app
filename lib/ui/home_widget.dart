@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:receipt_parser/database/receipt_database.dart';
+import 'package:receipt_parser/database//receipt_database.dart';
 import 'package:receipt_parser/ui/receipt_form.dart';
 
 class HomeWidget extends StatelessWidget {
