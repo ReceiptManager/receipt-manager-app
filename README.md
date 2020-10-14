@@ -52,6 +52,7 @@ worry about that.
 ## Credits
 I use free logos.
 | Logo | Creator | Url |
+| --- | --- | --- |
 | Educator logo | Payungkead | https://www.flaticon.com/free-icon/global-education_3379636?term=education&page=1&position=28 |
 | Grocery logo | Freepik | https://www.flaticon.com/free-icon/groceries_3050159?term=groceries&page=1&position=7 |
 | Icon pack | unknown | https://www.flaticon.com/packs/retail-59?k=1602359120540 |
