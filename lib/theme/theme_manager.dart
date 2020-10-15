@@ -38,10 +38,10 @@ class ThemeManager {
   static ThemeData getTheme() {
     return new ThemeData(
         primaryColor: getGray(),
-        primaryColorDark: Colors.white,
+        primaryColorDark: Colors.black,
         primarySwatch: getYellow(),
         accentColor: getYellow(),
-        focusColor: Colors.white,
+        focusColor: Colors.black,
         brightness: Brightness.light,
         primaryColorBrightness: Brightness.light,
         bottomAppBarColor: Colors.white,

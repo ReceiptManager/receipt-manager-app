@@ -53,6 +53,8 @@ class _ServerSettingsState extends State<ServerSettings> {
     );
   }
 
+  final GlobalKey<ScaffoldState> _scaffoldKey2 = GlobalKey<ScaffoldState>();
+
   @override
   Widget build(BuildContext context) {
     if (sharedPreferences.getString("ipv4") != null) {
@@ -64,8 +66,8 @@ class _ServerSettingsState extends State<ServerSettings> {
         ),
       );
     }
-
     return Scaffold(
+        key: _scaffoldKey2,
         appBar: AppBar(title: Text('Server Settings')),
         body: Column(children: [
           Padding(
@@ -92,36 +94,36 @@ class _ServerSettingsState extends State<ServerSettings> {
                           showDialog(
                               context: context,
                               builder: (_) => AssetGiffyDialog(
-                                    image: Image.asset(
-                                      "assets/robot.gif",
-                                      fit: BoxFit.fill,
-                                    ),
-                                    title: Text(
-                                      'Invalid server ip',
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                          fontSize: 22.0,
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.w600),
-                                    ),
-                                    entryAnimation: EntryAnimation.BOTTOM_RIGHT,
-                                    description: Text(
-                                      'The given submitted server ip appear invalid. Please try again.',
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(),
-                                    ),
-                                    onCancelButtonPressed: () {
-                                      Navigator.of(context).pop();
-                                    },
-                                    onOkButtonPressed: () {
-                                      Navigator.of(context).pop();
-                                    },
-                                  ));
+                                image: Image.asset(
+                                  "assets/robot.gif",
+                                  fit: BoxFit.fill,
+                                ),
+                                title: Text(
+                                  'Invalid server ip',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                      fontSize: 22.0,
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.w600),
+                                ),
+                                entryAnimation: EntryAnimation.BOTTOM_RIGHT,
+                                description: Text(
+                                  'The given submitted server ip appear invalid. Please try again.',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(),
+                                ),
+                                onCancelButtonPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                                onOkButtonPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                              ));
                           return;
                         }
 
                         sharedPreferences.setString("ipv4", ipv4);
-                        Scaffold.of(context)
+                        _scaffoldKey2.currentState
                           ..hideCurrentSnackBar()
                           ..showSnackBar(SnackBar(
                             content: Text("Server ip is set."),

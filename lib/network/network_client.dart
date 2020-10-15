@@ -83,6 +83,7 @@ class NetworkClient {
           .listen((value) {
             Map<String, dynamic> r = jsonDecode(value);
             receipt = Receipt(
+                id: 0,
                 receiptTotal: r['receiptTotal'],
                 shopName: r['storeName'],
                 category: '',
