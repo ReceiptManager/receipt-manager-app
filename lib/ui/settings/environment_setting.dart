@@ -17,17 +17,17 @@ class _EnvironmentSettingState extends State<EnvironmentSetting> {
         sections: [
           SettingsSection(tiles: [
             SettingsTile(
-              title: "Debug",
-              leading: trailingWidget(0),
+                title: "Debug",
+                leading: trailingWidget(0),
+                onTap: () {
+                  changeEnvironment(0);
+                }),
+            SettingsTile(
+              title: "Production",
+              leading: trailingWidget(1),
               onTap: () {
-                changeEnvironment(0);
-              }),
-          SettingsTile(
-            title: "Production",
-            leading: trailingWidget(1),
-            onTap: () {
-              changeEnvironment(1);
-            },
+                changeEnvironment(1);
+              },
             ),
           ]),
         ],

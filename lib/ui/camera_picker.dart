@@ -4,11 +4,9 @@ import 'dart:io';
 import 'package:camera/camera.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:giffy_dialog/giffy_dialog.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:receipt_parser/bloc/moor/db_bloc.dart';
 import 'package:receipt_parser/converter/color_converter.dart';
 import 'package:receipt_parser/network/network_client.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -157,28 +155,28 @@ class DisplayPictureScreen extends StatelessWidget {
     showDialog(
         context: _context,
         builder: (_) => AssetGiffyDialog(
-          image: Image.asset(
-            "assets/robot.gif",
-            fit: BoxFit.fill,
-          ),
-          title: Text(
-            'No server ip set',
-            textAlign: TextAlign.center,
-            style: TextStyle(fontSize: 22.0, fontWeight: FontWeight.w600),
-          ),
-          entryAnimation: EntryAnimation.BOTTOM_RIGHT,
-          description: Text(
-            'No image server ip is defined. Please set a server ip in the settings',
-            textAlign: TextAlign.center,
-            style: TextStyle(),
-          ),
-          onCancelButtonPressed: () {
-            Navigator.of(_context).pop();
-          },
-          onOkButtonPressed: () {
-            Navigator.of(_context).pop();
-          },
-        ));
+              image: Image.asset(
+                "assets/robot.gif",
+                fit: BoxFit.fill,
+              ),
+              title: Text(
+                'No server ip set',
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 22.0, fontWeight: FontWeight.w600),
+              ),
+              entryAnimation: EntryAnimation.BOTTOM_RIGHT,
+              description: Text(
+                'No image server ip is defined. Please set a server ip in the settings',
+                textAlign: TextAlign.center,
+                style: TextStyle(),
+              ),
+              onCancelButtonPressed: () {
+                Navigator.of(_context).pop();
+              },
+              onOkButtonPressed: () {
+                Navigator.of(_context).pop();
+              },
+            ));
   }
 
   handshakeExceptionAlert(BuildContext _context) {

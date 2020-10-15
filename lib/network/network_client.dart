@@ -34,6 +34,11 @@ class NetworkClient {
     return protocol + ip + ":" + port + path;
   }
 
+  static toNavigationBar(BuildContext context) {
+    Navigator.push(context,
+        MaterialPageRoute(builder: (context) => HomeScreen(null, true)));
+  }
+
   /// Send image via post request to the server and capture the response.
   static sendImage(File imageFile, String ip, BuildContext context) async {
     init();
@@ -63,8 +68,7 @@ class NetworkClient {
         },
       );
 
-      if (response == null)
-        return;
+      if (response == null) return;
 
       int ret = response.statusCode;
       if (ret != null && ret == 200) {
@@ -98,10 +102,16 @@ class NetworkClient {
               });
     } on TimeoutException catch (_) {
       log("[EXCEPTION] get timeout exception" + _.toString());
+      toNavigationBar(context);
     } on SocketException catch (_) {
       log("[EXCEPTION] get socket exception" + _.toString());
+      toNavigationBar(context);
     } on HandshakeException catch (_) {
       log("[EXCEPTION] get handshake exception" + _.toString());
+      toNavigationBar(context);
+    } catch (_) {
+      log("[EXCEPTION] get general exception" + _.toString());
+      toNavigationBar(context);
     }
   }
 }

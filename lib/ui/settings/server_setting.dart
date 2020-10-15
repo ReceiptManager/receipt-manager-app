@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:settings_ui/settings_ui.dart';
 
 class ServerSetting extends StatefulWidget {
   @override
@@ -7,12 +6,9 @@ class ServerSetting extends StatefulWidget {
 }
 
 class _ServerSettingState extends State<ServerSetting> {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Server settings')),
-      body: Container()
-    );
+        appBar: AppBar(title: Text('Server settings')), body: Container());
   }
 }

@@ -38,7 +38,7 @@ change the server ip. In the application go to Settings/Server/ and edit the ser
 If the server is running, the server ip is shown in the server console. That's it.
 
 ## Architecture
-Parsing receipts is not only time consuming, it is moreover a very powerhungry task. 
+Parsing receipts is not only time consuming, it is moreover a very powerful task. 
 Since mobile devices have a unacceptable performance, the parser uses a (traditional) client server architecture.
 
 #### How it works

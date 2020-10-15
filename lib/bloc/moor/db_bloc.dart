@@ -10,7 +10,8 @@ class DbBloc extends Bloc<DbEvent, DbState> {
 
   DbBloc({Repository repository})
       : assert(repository != null),
-        _repository = repository, super(null);
+        _repository = repository,
+        super(null);
 
   @override
   DbState get initialState => InitialState();

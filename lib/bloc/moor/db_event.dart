@@ -12,7 +12,6 @@ class StartAppEvent extends DbEvent {
   String toString() => "StartAppEvent";
 
   @override
-  // TODO: implement props
   List<Object> get props => throw UnimplementedError();
 }
 
@@ -26,7 +25,6 @@ class InsertEvent extends DbEvent {
   String toString() => "InsertEvent : $receipt";
 
   @override
-  // TODO: implement props
   List<Object> get props => throw UnimplementedError();
 }
 
@@ -40,7 +38,6 @@ class UpdateEvent extends DbEvent {
   String toString() => "UpdateEvent";
 
   @override
-  // TODO: implement props
   List<Object> get props => throw UnimplementedError();
 }
 
@@ -49,7 +46,6 @@ class SwitchButtonEvent extends DbEvent {
   String toString() => "SwitchButtonEvent";
 
   @override
-  // TODO: implement props
   List<Object> get props => throw UnimplementedError();
 }
 
@@ -63,7 +59,6 @@ class DeleteEvent extends DbEvent {
   String toString() => "DeleteEvent - $receipt";
 
   @override
-  // TODO: implement props
   List<Object> get props => throw UnimplementedError();
 }
 
@@ -78,6 +73,5 @@ class ReceiptAllFetch extends DbEvent {
   String toString() => "ReceiptAllFetch";
 
   @override
-  // TODO: implement props
   List<Object> get props => throw UnimplementedError();
 }

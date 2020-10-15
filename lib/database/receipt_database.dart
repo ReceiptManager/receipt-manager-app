@@ -30,7 +30,20 @@ class ReceiptDao extends DatabaseAccessor<AppDatabase> with _$ReceiptDaoMixin {
 
   Stream<List<Receipt>> watchReceipts() => select(receipts).watch();
 
-  Future insertReceipt(Receipt receipt) => into(receipts).insert(receipt);
+  Future insertReceipt(Receipt receipt) {
+    (select(receipts)
+          ..orderBy(
+              [(t) => OrderingTerm(expression: t.id, mode: OrderingMode.desc)]))
+        .get()
+        .then((value) {
+      int id = 0;
+      if (value != null && value.isNotEmpty) {
+        id = value.first.id + 1;
+      }
+
+      into(receipts).insert(receipt.copyWith(id: id));
+    });
+  }
 
   Future updateReceipt(Receipt receipt) => update(receipts).replace(receipt);
 

@@ -10,7 +10,7 @@ import 'package:receipt_parser/repository/repository.dart';
 import 'package:receipt_parser/theme/theme_manager.dart';
 import 'package:receipt_parser/ui/history_widget.dart';
 import 'package:receipt_parser/ui/home_widget.dart';
-import 'package:receipt_parser/ui/settings/settings_screen.dart';
+import 'package:receipt_parser/ui/settings_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 SharedPreferences sharedPrefs;
@@ -31,9 +31,8 @@ Future<void> main() async {
         child: HomeScreen(null, false),
       ),
       color: Colors.white,
-      title: Text('Saved Suggestions', style: TextStyle(
-          color: Colors.white
-      )).toStringShort(),
+      title: Text('Saved Suggestions', style: TextStyle(color: Colors.white))
+          .toStringShort(),
       theme: ThemeManager.getTheme()));
 }
 
@@ -41,7 +40,7 @@ class HomeScreen extends StatefulWidget {
   Receipt receipt;
   bool sendImage;
 
-  HomeScreen(this.receipt,this.sendImage);
+  HomeScreen(this.receipt, this.sendImage);
 
   @override
   HomeScreenState createState() => HomeScreenState(receipt, sendImage);
@@ -74,7 +73,7 @@ class HomeScreenState extends State<HomeScreen> {
     final List<Widget> _children = [
       HomeWidget(this.receipt, sendImage),
       HistoryWidget(),
-      SettingsScreen()
+      SettingsScreen(sharedPrefs)
     ];
 
     return Scaffold(
