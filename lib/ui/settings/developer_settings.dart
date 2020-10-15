@@ -1,9 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:receipt_parser/bloc/moor/db_bloc.dart';
-import 'package:receipt_parser/bloc/moor/db_event.dart';
-import 'package:receipt_parser/database//receipt_database.dart';
 
 class DeveloperSettings extends StatefulWidget {
   @override
@@ -24,8 +20,24 @@ List<StaggeredTile> _staggeredTiles = const <StaggeredTile>[
 ];
 
 List<Widget> _tiles = const <Widget>[
-  const _DeveloperOperationTile(Colors.black, Icons.add, add),
-  const _DeveloperOperationTile(Colors.black, Icons.clear, nuke),
+  const _DeveloperOperationTile(Colors.green, Icons.add, add),
+  const _DeveloperOperationTile(Colors.red, Icons.delete, nuke),
+  const _DeveloperOperationTile(
+      Color.fromARGB(255, 35, 47, 62), Icons.panorama_wide_angle, todo),
+  const _DeveloperOperationTile(
+      Color.fromARGB(255, 35, 47, 62), Icons.map, todo),
+  const _DeveloperOperationTile(
+      Color.fromARGB(255, 35, 47, 62), Icons.send, todo),
+  const _DeveloperOperationTile(
+      Color.fromARGB(255, 35, 47, 62), Icons.airline_seat_flat, todo),
+  const _DeveloperOperationTile(
+      Color.fromARGB(255, 35, 47, 62), Icons.bluetooth, todo),
+  const _DeveloperOperationTile(
+      Color.fromARGB(255, 35, 47, 62), Icons.battery_alert, todo),
+  const _DeveloperOperationTile(
+      Color.fromARGB(255, 35, 47, 62), Icons.desktop_windows, todo),
+  const _DeveloperOperationTile(
+      Color.fromARGB(255, 35, 47, 62), Icons.radio, todo),
 ];
 
 class _DeveloperOperationTile extends StatelessWidget {
@@ -81,16 +93,28 @@ class _DeveloperSettingsState extends State<DeveloperSettings> {
 }
 
 add(BuildContext context) {
-  final _bloc = BlocProvider.of<DbBloc>(context);
-  _bloc.add(InsertEvent(
-      receipt: Receipt(
-          receiptDate: DateTime.now(),
-          receiptTotal: "14.21",
-          category: "Grocery",
-          shopName: "Rewe Karlsruhe",
-          id: 0)));
-  _bloc.add(ReceiptAllFetch());
-  _bloc.close();
+  Scaffold.of(context)
+    ..hideCurrentSnackBar()
+    ..showSnackBar(SnackBar(
+      content: Text("Add debug entry in database."),
+      backgroundColor: Colors.green,
+    ));
 }
 
-nuke() {}
+nuke(BuildContext context) {
+  Scaffold.of(context)
+    ..hideCurrentSnackBar()
+    ..showSnackBar(SnackBar(
+      content: Text("Erase all entries in database."),
+      backgroundColor: Colors.red,
+    ));
+}
+
+todo(BuildContext context) {
+  Scaffold.of(context)
+    ..hideCurrentSnackBar()
+    ..showSnackBar(SnackBar(
+      content: Text("Feature is not implemented."),
+      backgroundColor: Colors.orange,
+    ));
+}

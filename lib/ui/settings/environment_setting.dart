@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:receipt_parser/theme/theme_manager.dart';
 import 'package:settings_ui/settings_ui.dart';
 
 class EnvironmentSetting extends StatefulWidget {
@@ -22,13 +23,6 @@ class _EnvironmentSettingState extends State<EnvironmentSetting> {
                 onTap: () {
                   changeEnvironment(0);
                 }),
-            SettingsTile(
-              title: "Production",
-              leading: trailingWidget(1),
-              onTap: () {
-                changeEnvironment(1);
-              },
-            ),
           ]),
         ],
       ),
@@ -37,7 +31,7 @@ class _EnvironmentSettingState extends State<EnvironmentSetting> {
 
   Widget trailingWidget(int index) {
     return (environmentIndex == index)
-        ? Icon(Icons.check, color: Colors.blue)
+        ? Icon(Icons.check, color: ThemeManager.getYellow())
         : Icon(null);
   }
 
