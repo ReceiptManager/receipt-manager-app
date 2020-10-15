@@ -285,9 +285,12 @@ class HistoryWidgetState extends State<HistoryWidget> {
                           id: receipt.id)));
                   _bloc.add(ReceiptAllFetch());
 
-                  Scaffold.of(context).showSnackBar(
-                      SnackBar(content: Text('Update successfully'),
-                        backgroundColor: Colors.green,));
+                  Scaffold.of(context)
+                    ..hideCurrentSnackBar()
+                    ..showSnackBar(SnackBar(
+                      content: Text('Update successfully'),
+                      backgroundColor: Colors.green,
+                    ));
 
                   _controller.clear();
                   receiptDate = null;

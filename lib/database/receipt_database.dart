@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:moor_flutter/moor_flutter.dart';
 import 'package:receipt_parser/model/receipt.dart';
 
@@ -20,22 +22,30 @@ class ReceiptDao extends DatabaseAccessor<AppDatabase> with _$ReceiptDaoMixin {
 
   Future<List<Receipt>> getReceipts() {
     return (select(receipts)
-          ..orderBy(([
-            (t) => OrderingTerm(
+      ..orderBy(([
+            (t) =>
+            OrderingTerm(
                 expression: t.receiptDate, mode: OrderingMode.desc),
             (t) => OrderingTerm(expression: t.shopName),
-          ])))
+      ])))
         .get();
   }
 
   Stream<List<Receipt>> watchReceipts() => select(receipts).watch();
 
-  int max;
   Future insertReceipt(Receipt receipt) {
-    if (receipt.id == max) {
-      max = max + 1;
-    }
+    int max = 0;
+    (select(receipts)
+      ..orderBy(
+          [(t) => OrderingTerm(expression: t.id, mode: OrderingMode.desc)]))
+        .get()
+        .then((value) {
+      if (value != null && value.isNotEmpty) {
+        max = value.first.id + 1;
+      }
+    });
 
+    log("Insert receipt at id" + max.toString());
     return into(receipts).insert(receipt.copyWith(id: max));
   }
 
@@ -47,16 +57,6 @@ class ReceiptDao extends DatabaseAccessor<AppDatabase> with _$ReceiptDaoMixin {
   MigrationStrategy get migration {
     return MigrationStrategy(onCreate: (Migrator m) {
       return m.createAll();
-    }, beforeOpen: (details) async {
-      List<Receipt> r = await (select(receipts)
-        ..orderBy([
-              (t) => OrderingTerm(expression: t.id, mode: OrderingMode.desc)
-        ]))
-          .get();
-      max = 0;
-      if (r != null && r.isNotEmpty) {
-        max = r.first.id;
-      }
-    });
+    }, beforeOpen: (details) async {});
   }
 }

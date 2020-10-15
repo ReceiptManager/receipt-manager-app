@@ -15,14 +15,20 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 SharedPreferences sharedPrefs;
 
+Repository _repository;
+
+Repository repo() {
+  if (_repository == null) _repository = Repository();
+  return _repository;
+}
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   sharedPrefs = await SharedPreferences.getInstance();
   Bloc.observer = SimpleDelegate();
 
   DbBloc _bloc;
-  Repository _repository = Repository();
-  _bloc = DbBloc(repository: _repository);
+  _bloc = DbBloc(repository: repo());
   Bloc.observer = SimpleDelegate();
 
   runApp(MaterialApp(
@@ -34,6 +40,8 @@ Future<void> main() async {
       title: Text('Saved Suggestions', style: TextStyle(color: Colors.white))
           .toStringShort(),
       theme: ThemeManager.getTheme()));
+
+  _bloc.close();
 }
 
 class HomeScreen extends StatefulWidget {
@@ -76,6 +84,10 @@ class HomeScreenState extends State<HomeScreen> {
       SettingsWidget(sharedPrefs)
     ];
 
+    Bloc.observer = SimpleDelegate();
+
+    final DbBloc _bloc = DbBloc(repository: repo());
+
     return Scaffold(
         appBar: AppBar(title: Text('Receipt manager')),
         bottomNavigationBar: CurvedNavigationBar(
@@ -94,6 +106,10 @@ class HomeScreenState extends State<HomeScreen> {
             });
           },
         ),
-        body: _children[currentIndex]);
+        //  body: _children[currentIndex]);
+        body: BlocProvider(
+          create: (_) => _bloc,
+          child: _children[currentIndex],
+        ));
   }
 }
