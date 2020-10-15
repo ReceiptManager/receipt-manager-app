@@ -208,7 +208,7 @@ class HistoryWidgetState extends State<HistoryWidget> {
       builder: (BuildContext dialogContext) {
         return AlertDialog(
           titleTextStyle: TextStyle(
-              color: Colors.white, fontWeight: FontWeight.w400, fontSize: 22),
+              color: Colors.black, fontWeight: FontWeight.w400, fontSize: 22),
           backgroundColor: Colors.white,
           title: Text('Update Task'),
           content: Container(
