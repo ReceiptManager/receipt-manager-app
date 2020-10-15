@@ -311,6 +311,8 @@ class ReceiptInputController extends State<ReceiptForm> {
         foregroundColor: HexColor.fromHex("#F9AA33"));
   }
 
+  int i = 0;
+
   void showUpdateSuccess() {
     if (sendImage) {
       if (parsedReceipt == null) {
@@ -321,12 +323,15 @@ class ReceiptInputController extends State<ReceiptForm> {
             backgroundColor: Colors.red,
           ));
       } else {
-        Scaffold.of(context)
-          ..hideCurrentSnackBar()
-          ..showSnackBar(SnackBar(
-            content: Text("Image successfully uploaded."),
-            backgroundColor: Colors.green,
-          ));
+        if (i < 1) {
+          Scaffold.of(context)
+            ..hideCurrentSnackBar()
+            ..showSnackBar(SnackBar(
+              content: Text("Image successfully uploaded."),
+              backgroundColor: Colors.green,
+            ));
+          i++;
+        }
       }
     }
   }

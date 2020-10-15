@@ -40,7 +40,8 @@ class NetworkClient {
   }
 
   /// Send image via post request to the server and capture the response.
-  static sendImage(File imageFile, String ip, BuildContext context) async {
+  static sendImage(File imageFile, String ip, BuildContext context,
+      [GlobalKey<ScaffoldState> key]) async {
     init();
 
     log("Try to upload new image.");
@@ -57,10 +58,20 @@ class NetworkClient {
         filename: basename(imageFile.path));
     request.files.add(multipartFile);
 
+    key.currentState
+      ..hideCurrentSnackBar()
+      ..showSnackBar(SnackBar(
+          content: Text("Send to: " + uri.toString()),
+          backgroundColor: Colors.green));
+
     try {
       var response = await request.send().timeout(
-        Duration(seconds: 1),
-        onTimeout: () {
+        Duration(seconds: 3),
+        onTimeout: () async {
+          key.currentState
+            ..showSnackBar(SnackBar(
+                content: Text("Server timeout."), backgroundColor: Colors.red));
+          await Future.delayed(const Duration(seconds: 2), () {});
           Navigator.push(context,
               MaterialPageRoute(builder: (context) => HomeScreen(null, true)));
 
@@ -68,7 +79,12 @@ class NetworkClient {
         },
       );
 
-      if (response == null) return;
+      if (response == null) {
+        await Future.delayed(const Duration(seconds: 2), () {});
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => HomeScreen(null, true)));
+        return;
+      }
 
       int ret = response.statusCode;
       if (ret != null && ret == 200) {
@@ -92,27 +108,53 @@ class NetworkClient {
             print('StoreName:  ${r['storeName']} ');
             print('ReceiptTotal:  ${r['receiptTotal']} ');
             print('ReceiptDate:  ${r['receiptDate']} ');
-          })
+      })
           .asFuture()
-          .then((_) => {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => HomeScreen(receipt, true)),
-                )
-              });
+          .then((_) async =>
+      {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => HomeScreen(receipt, true)))
+      });
+
+      await Future.delayed(const Duration(seconds: 2), () {});
+      Navigator.push(context,
+          MaterialPageRoute(builder: (context) => HomeScreen(null, true)));
     } on TimeoutException catch (_) {
       log("[EXCEPTION] get timeout exception" + _.toString());
-      toNavigationBar(context);
+      key.currentState
+        ..showSnackBar(SnackBar(
+            content: Text("Server timeout."), backgroundColor: Colors.red));
+      Navigator.push(context,
+          MaterialPageRoute(builder: (context) => HomeScreen(null, true)));
     } on SocketException catch (_) {
       log("[EXCEPTION] get socket exception" + _.toString());
-      toNavigationBar(context);
+      key.currentState
+        ..hideCurrentSnackBar()
+        ..showSnackBar(SnackBar(
+            content: Text("SocketException" + _.message.toString()),
+            backgroundColor: Colors.red));
+      await Future.delayed(const Duration(seconds: 2), () {});
+      Navigator.push(context,
+          MaterialPageRoute(builder: (context) => HomeScreen(null, true)));
     } on HandshakeException catch (_) {
-      log("[EXCEPTION] get handshake exception" + _.toString());
-      toNavigationBar(context);
+      key.currentState
+        ..hideCurrentSnackBar()
+        ..showSnackBar(SnackBar(
+            content: Text("HandshakeException" + _.message.toString()),
+            backgroundColor: Colors.red));
+      Navigator.push(context,
+          MaterialPageRoute(builder: (context) => HomeScreen(null, true)));
     } catch (_) {
       log("[EXCEPTION] get general exception" + _.toString());
-      toNavigationBar(context);
+      key.currentState
+        ..hideCurrentSnackBar()
+        ..showSnackBar(SnackBar(
+            content: Text("GeneralException" + _.message.toString()),
+            backgroundColor: Colors.red));
+      Navigator.push(context,
+          MaterialPageRoute(builder: (context) => HomeScreen(null, true)));
     }
   }
 }

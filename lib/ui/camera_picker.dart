@@ -8,6 +8,7 @@ import 'package:giffy_dialog/giffy_dialog.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:receipt_parser/converter/color_converter.dart';
+import 'package:receipt_parser/main.dart';
 import 'package:receipt_parser/network/network_client.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -47,13 +48,10 @@ class TakePictureScreenState extends State<TakePictureScreen> {
     _controller.dispose();
     super.dispose();
   }
-
   @override
   Widget build(BuildContext context) {
-    var cure = GlobalKey();
-
     return Scaffold(
-      key: cure,
+      key: key,
       appBar: AppBar(title: Text('Take a receipt')),
       body: FutureBuilder<void>(
         future: _initializeControllerFuture,
@@ -87,16 +85,19 @@ class TakePictureScreenState extends State<TakePictureScreen> {
           String ip = sharedPrefs.get("ipv4");
 
           // parse server response and fill form
-          await NetworkClient.sendImage(File(path), ip, context);
+          await NetworkClient.sendImage(File(path), ip, context, key);
         },
       ),
     );
   }
 }
 
+final GlobalKey<ScaffoldState> key = GlobalKey<ScaffoldState>();
+
 class DisplayPictureScreen extends StatelessWidget {
   final String imagePath;
   final SharedPreferences sharedPrefs;
+
 
   const DisplayPictureScreen({Key key, this.imagePath, this.sharedPrefs})
       : super(key: key);
@@ -104,6 +105,7 @@ class DisplayPictureScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        key: key,
         appBar: AppBar(title: Text('Receipt')),
         body: Container(
           color: HexColor.fromHex("#232F34"),
