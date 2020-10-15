@@ -128,7 +128,7 @@ class HistoryWidgetState extends State<HistoryWidget> {
                           ),
                         )),
                     contentPadding:
-                    EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
+                        EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
                     trailing: Text(
                       "-" + receipt.receiptTotal + "€",
                       style: TextStyle(
@@ -281,11 +281,13 @@ class HistoryWidgetState extends State<HistoryWidget> {
                           category: category,
                           shopName: storeName,
                           receiptTotal: receiptTotal,
-                          receiptDate: receiptDate)));
+                          receiptDate: receiptDate,
+                          id: receipt.id)));
                   _bloc.add(ReceiptAllFetch());
 
                   Scaffold.of(context).showSnackBar(
-                      SnackBar(content: Text('Update successfully')));
+                      SnackBar(content: Text('Update successfully'),
+                        backgroundColor: Colors.green,));
 
                   _controller.clear();
                   receiptDate = null;

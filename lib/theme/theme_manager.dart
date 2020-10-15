@@ -45,12 +45,10 @@ class ThemeManager {
         brightness: Brightness.light,
         primaryColorBrightness: Brightness.light,
         bottomAppBarColor: Colors.white,
+        typography: Typography.material2018(),
         primaryTextTheme: TextTheme(
             // ignore: deprecated_member_use
-            title: TextStyle(
-                color: Colors.white
-            )
-        ),
+            title: TextStyle(color: Colors.white)),
         backgroundColor: Colors.white);
   }
 }

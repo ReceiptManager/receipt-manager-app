@@ -1,90 +1,96 @@
 import 'package:flutter/material.dart';
-import 'package:giffy_dialog/giffy_dialog.dart';
-import 'package:receipt_parser/converter/color_converter.dart';
-import 'package:receipt_parser/ui/settings/settings_screen.dart';
+import 'package:receipt_parser/ui/settings/environment_setting.dart';
+import 'package:receipt_parser/ui/settings/server_setting.dart';
+import 'package:settings_ui/settings_ui.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-// TODO toast message in settings_widget.dart
-class SettingsWidget extends StatelessWidget {
-  final _textController = TextEditingController();
-  String ipv4 = "";
+import 'settings/language_setting.dart';
+
+class SettingsScreen extends StatefulWidget {
   final SharedPreferences sharedPreferences;
 
-  SettingsWidget(this.sharedPreferences);
+  SettingsScreen(this.sharedPreferences);
 
-  void dispose() {
-    _textController.dispose();
-  }
+  @override
+  _SettingsScreenState createState() => _SettingsScreenState(sharedPreferences);
+}
+
+class _SettingsScreenState extends State<SettingsScreen> {
+  bool enableDebugOutput = true;
+  bool notificationsEnabled = true;
+
+  final SharedPreferences sharedPreferences;
+
+  _SettingsScreenState(this.sharedPreferences);
 
   @override
   Widget build(BuildContext context) {
-    if (sharedPreferences.getString("ipv4") != null) {
-      ipv4 = sharedPreferences.getString("ipv4");
-      _textController.value = TextEditingValue(
-        text: ipv4,
-        selection: TextSelection.fromPosition(
-          TextPosition(offset: ipv4.length),
-        ),
-      );
-    }
-
-    bool value = true;
-    return SettingsScreen();
-  }
-
-  sendServerAlert(BuildContext _context) {
-    showDialog(
-        context: _context,
-        builder: (_) => AssetGiffyDialog(
-              image: Image.asset(
-                "assets/robot.gif",
-                fit: BoxFit.fill,
+    return Container(
+      color: Colors.white,
+      child: SettingsList(
+        sections: [
+          SettingsSection(
+            title: 'Common',
+            // titleTextStyle: TextStyle(fontSize: 30),
+            tiles: [
+              SettingsTile(
+                title: 'Language',
+                subtitle: 'English',
+                leading: Icon(Icons.language),
+                onTap: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (BuildContext context) => LanguageSetting()));
+                },
               ),
-              title: Text(
-                'No server responding',
-                textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 22.0, fontWeight: FontWeight.w600),
+              SettingsTile(
+                title: 'Environment',
+                subtitle: 'Production',
+                leading: Icon(Icons.cloud_queue),
+                onTap: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (BuildContext context) => EnvironmentSetting()));
+                },
               ),
-              entryAnimation: EntryAnimation.BOTTOM_RIGHT,
-              description: Text(
-                'No server is responding on this ip address. Please check if the server is running.',
-                textAlign: TextAlign.center,
-                style: TextStyle(),
+            ],
+          ),
+          SettingsSection(
+            title: 'Network',
+            tiles: [
+              SettingsTile(
+                title: 'Server',
+                leading: Icon(Icons.wifi),
+                onTap: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (BuildContext context) => ServerSetting()));
+                },
               ),
-              onCancelButtonPressed: () {
-                Navigator.of(_context).pop();
-              },
-              onOkButtonPressed: () {
-                Navigator.of(_context).pop();
-              },
-            ));
-  }
-
-  serverTextfield() {
-    return new TextFormField(
-      controller: _textController,
-      style: TextStyle(color: Colors.black),
-      onChanged: (value) {
-        ipv4 = value;
-      },
-      keyboardType: TextInputType.number,
-      decoration: new InputDecoration(
-        enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: HexColor.fromHex("#232F34")),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: HexColor.fromHex("#232F34")),
-        ),
-        border: new OutlineInputBorder(
-            borderSide: new BorderSide(color: HexColor.fromHex("#232F34"))),
-        hintText: 'Server ip',
-        labelText: 'Server ip address',
-        helperText: "Set the image server ip.",
-        prefixIcon: const Icon(
-          Icons.network_wifi,
-          color: Colors.black,
-        ),
-        prefixText: ' ',
+            ],
+          ),
+          SettingsSection(
+            title: 'Development',
+            tiles: [
+              SettingsTile.switchTile(
+                title: 'Enable debug output',
+                leading: Icon(Icons.bug_report),
+                switchValue: enableDebugOutput,
+                onToggle: (bool value) {
+                  setState(() {
+                    enableDebugOutput = value;
+                    notificationsEnabled = value;
+                  });
+                },
+              ),
+            ],
+          ),
+          SettingsSection(
+            title: 'Misc',
+            tiles: [
+              SettingsTile(
+                  title: 'Open source licenses',
+                  leading: Icon(Icons.collections_bookmark)),
+            ],
+          )
+        ],
       ),
     );
   }

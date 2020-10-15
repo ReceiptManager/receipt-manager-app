@@ -1,5 +1,3 @@
-
-
 // ignore: must_be_immutable
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
@@ -198,8 +196,10 @@ class ReceiptInputController extends State<ReceiptForm> {
               receiptCategory != null &&
               receiptCategory.isNotEmpty) {
             try {
-              Scaffold.of(context)
-                  .showSnackBar(SnackBar(content: Text('Insert new receipt'),backgroundColor: Colors.green,));
+              Scaffold.of(context).showSnackBar(SnackBar(
+                content: Text('Insert new receipt'),
+                backgroundColor: Colors.green,
+              ));
               shopName = storeNameController.text;
               total = receiptTotalController.text;
             } catch (e) {
@@ -209,11 +209,16 @@ class ReceiptInputController extends State<ReceiptForm> {
 
             // ignore: close_sinks
             final _bloc = BlocProvider.of<DbBloc>(context);
-            _bloc.add(InsertEvent(receipt: Receipt(receiptTotal: total, category: receiptCategory, shopName: shopName)));
+            _bloc.add(InsertEvent(
+                receipt: Receipt(
+                    receiptDate: receiptDate,
+                    receiptTotal: total,
+                    category: receiptCategory,
+                    shopName: shopName,
+                    id: 1)));
             _bloc.add(ReceiptAllFetch());
             _bloc.close();
             reset();
-
           } else {
             if (receiptCategory.isEmpty) {
               Scaffold.of(context).showSnackBar(SnackBar(
@@ -230,7 +235,6 @@ class ReceiptInputController extends State<ReceiptForm> {
         backgroundColor: HexColor.fromHex("#232F34"),
         foregroundColor: HexColor.fromHex("#F9AA33"));
   }
-
 
   void showUpdateSuccess() {
     if (sendImage) {
