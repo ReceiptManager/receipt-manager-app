@@ -1,27 +1,28 @@
 import 'package:flutter/material.dart';
+import 'package:receipt_parser/ui/settings/developer_settings.dart';
 import 'package:receipt_parser/ui/settings/environment_setting.dart';
-import 'package:receipt_parser/ui/settings/server_setting.dart';
+import 'package:receipt_parser/ui/settings/server_settings.dart';
 import 'package:settings_ui/settings_ui.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'settings/language_setting.dart';
 
-class SettingsScreen extends StatefulWidget {
+class SettingsWidget extends StatefulWidget {
   final SharedPreferences sharedPreferences;
 
-  SettingsScreen(this.sharedPreferences);
+  SettingsWidget(this.sharedPreferences);
 
   @override
-  _SettingsScreenState createState() => _SettingsScreenState(sharedPreferences);
+  _SettingsWidgetState createState() => _SettingsWidgetState(sharedPreferences);
 }
 
-class _SettingsScreenState extends State<SettingsScreen> {
+class _SettingsWidgetState extends State<SettingsWidget> {
   bool enableDebugOutput = true;
   bool notificationsEnabled = true;
 
   final SharedPreferences sharedPreferences;
 
-  _SettingsScreenState(this.sharedPreferences);
+  _SettingsWidgetState(this.sharedPreferences);
 
   @override
   Widget build(BuildContext context) {
@@ -51,6 +52,15 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       builder: (BuildContext context) => EnvironmentSetting()));
                 },
               ),
+              SettingsTile(
+                title: 'Developer',
+                subtitle: 'Developer utils to manipulate the database',
+                leading: Icon(Icons.adb_rounded),
+                onTap: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (BuildContext context) => DeveloperSettings()));
+                },
+              ),
             ],
           ),
           SettingsSection(
@@ -61,7 +71,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 leading: Icon(Icons.wifi),
                 onTap: () {
                   Navigator.of(context).push(MaterialPageRoute(
-                      builder: (BuildContext context) => ServerSetting()));
+                      builder: (BuildContext context) =>
+                          ServerSettings(sharedPreferences)));
                 },
               ),
             ],

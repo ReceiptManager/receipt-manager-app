@@ -2,6 +2,7 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 import 'package:receipt_parser/bloc/moor/bloc.dart';
 import 'package:receipt_parser/converter/color_converter.dart';
 import 'package:receipt_parser/database//receipt_database.dart';
@@ -134,8 +135,82 @@ class ReceiptInputController extends State<ReceiptForm> {
                                     receiptTotalController))),
                             PaddingFactory.create(new Theme(
                                 data: ThemeManager.getTheme(),
-                                child: TextFormFactory.date(
-                                    dateController, receiptDate, context))),
+                                child: TextFormField(
+                                  style: TextStyle(
+                                      color: HexColor.fromHex("#232F34")),
+                                  keyboardType: TextInputType.number,
+                                  decoration: new InputDecoration(
+                                      enabledBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                            color: HexColor.fromHex("#232F34")),
+                                      ),
+                                      focusedBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                            color: HexColor.fromHex("#232F34")),
+                                      ),
+                                      border: new OutlineInputBorder(
+                                          borderSide: new BorderSide(
+                                              color:
+                                                  HexColor.fromHex("#232F34"))),
+                                      hintText: 'dd.MM.YYYY',
+                                      labelText: 'Receipt date',
+                                      helperText: "Set the receipt date",
+                                      prefixIcon: IconButton(
+                                          icon: Icon(
+                                            Icons.calendar_today,
+                                            color: Colors.purple,
+                                          ),
+                                          splashColor: ThemeManager.getYellow(),
+                                          color: Colors.black,
+                                          onPressed: () async {
+                                            receiptDate = await showDatePicker(
+                                                builder: (BuildContext context,
+                                                    Widget child) {
+                                                  return Theme(
+                                                    data: ThemeData.light()
+                                                        .copyWith(
+                                                      primaryColor: ThemeManager
+                                                          .getYellow(),
+                                                      accentColor: ThemeManager
+                                                          .getYellow(),
+                                                      colorScheme:
+                                                          ColorScheme.light(
+                                                              primary: const Color(
+                                                                  0XFFF9AA33)),
+                                                      buttonTheme:
+                                                          ButtonThemeData(
+                                                              textTheme:
+                                                                  ButtonTextTheme
+                                                                      .primary),
+                                                    ),
+                                                    child: child,
+                                                  );
+                                                },
+                                                context: context,
+                                                initialDate: DateTime.now(),
+                                                firstDate: DateTime(2010),
+                                                lastDate: DateTime(2050));
+                                            dateController.text =
+                                                DateFormat("dd.MM.yyyy")
+                                                    .format(receiptDate);
+                                          })),
+                                  controller: dateController,
+                                  validator: (value) {
+                                    if (value.isEmpty) {
+                                      return 'Please enter some date';
+                                    }
+                                    RegExp totalRegex = new RegExp(
+                                        "^(0?[1-9]|[12][0-9]|3[01])[.\\/ ]?(0?[1-9]|1[0-2])[./ ]?(?:19|20)[0-9]{2}\$",
+                                        caseSensitive: false,
+                                        multiLine: false);
+
+                                    if (!totalRegex.hasMatch(value.trim())) {
+                                      return "Date is not formatted (dd.MM.YYYY).";
+                                    }
+
+                                    return null;
+                                  },
+                                ))),
                             PaddingFactory.create(Container(
                                 padding: const EdgeInsets.only(
                                     left: 8.0, right: 8.0),
@@ -215,7 +290,7 @@ class ReceiptInputController extends State<ReceiptForm> {
                     receiptTotal: total,
                     category: receiptCategory,
                     shopName: shopName,
-                    id: 1)));
+                    id: 0)));
             _bloc.add(ReceiptAllFetch());
             _bloc.close();
             reset();
@@ -226,7 +301,7 @@ class ReceiptInputController extends State<ReceiptForm> {
                   backgroundColor: Colors.red));
             } else {
               Scaffold.of(context).showSnackBar(SnackBar(
-                  content: Text('Input appears invaid.'),
+                  content: Text('Input appears invalid.'),
                   backgroundColor: Colors.red));
             }
           }

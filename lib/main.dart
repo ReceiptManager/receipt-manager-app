@@ -73,7 +73,7 @@ class HomeScreenState extends State<HomeScreen> {
     final List<Widget> _children = [
       HomeWidget(this.receipt, sendImage),
       HistoryWidget(),
-      SettingsScreen(sharedPrefs)
+      SettingsWidget(sharedPrefs)
     ];
 
     return Scaffold(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:receipt_parser/theme/theme_manager.dart';
 import 'package:settings_ui/settings_ui.dart';
 
 class LanguageSetting extends StatefulWidget {
@@ -31,7 +32,7 @@ class _LanguageSettingState extends State<LanguageSetting> {
 
   Widget trailingWidget(int index) {
     return (languageIndex == index)
-        ? Icon(Icons.check, color: Colors.blue)
+        ? Icon(Icons.check, color: ThemeManager.getYellow())
         : Icon(null);
   }
 
