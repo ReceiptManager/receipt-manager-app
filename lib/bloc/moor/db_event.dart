@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
-import 'package:receipt_parser/database//receipt_database.dart';
+import 'package:receipt_parser/database/receipt_database.dart';
 
 @immutable
 abstract class DbEvent extends Equatable {
@@ -17,7 +17,7 @@ class StartAppEvent extends DbEvent {
 
 // ignore: must_be_immutable
 class InsertEvent extends DbEvent {
-  Receipt receipt;
+  ReceiptsCompanion receipt;
 
   InsertEvent({this.receipt}) : super([receipt]);
 
