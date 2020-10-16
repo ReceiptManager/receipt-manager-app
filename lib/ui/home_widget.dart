@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:receipt_parser/database//receipt_database.dart';
+import 'package:receipt_parser/database/receipt_database.dart';
 import 'package:receipt_parser/ui/receipt_form.dart';
 
 class HomeWidget extends StatelessWidget {
   final _textController = TextEditingController();
   ScrollController scrollController;
   bool scrollVisible = true;
-  Receipt receipt;
+  ReceiptsCompanion receipt;
   bool sendImage;
 
   HomeWidget(this.receipt, this.sendImage);

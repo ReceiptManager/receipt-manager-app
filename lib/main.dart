@@ -5,7 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:receipt_parser/bloc/delegate/simple_delegate.dart';
 import 'package:receipt_parser/bloc/moor/bloc.dart';
 import 'package:receipt_parser/converter/color_converter.dart';
-import 'package:receipt_parser/database//receipt_database.dart';
+import 'package:receipt_parser/database/receipt_database.dart';
 import 'package:receipt_parser/repository/repository.dart';
 import 'package:receipt_parser/theme/theme_manager.dart';
 import 'package:receipt_parser/ui/history_widget.dart';
@@ -22,14 +22,22 @@ Repository repo() {
   return _repository;
 }
 
+bool executed = false;
+
+initialiseDepo() {
+  if (executed == false) {
+    Bloc.observer = SimpleDelegate();
+    executed = true;
+  }
+}
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   sharedPrefs = await SharedPreferences.getInstance();
-  Bloc.observer = SimpleDelegate();
 
   DbBloc _bloc;
   _bloc = DbBloc(repository: repo());
-  Bloc.observer = SimpleDelegate();
+  initialiseDepo();
 
   runApp(MaterialApp(
       home: BlocProvider(
@@ -45,7 +53,7 @@ Future<void> main() async {
 }
 
 class HomeScreen extends StatefulWidget {
-  Receipt receipt;
+  ReceiptsCompanion receipt;
   bool sendImage;
 
   HomeScreen(this.receipt, this.sendImage);
@@ -55,13 +63,13 @@ class HomeScreen extends StatefulWidget {
 }
 
 class HomeScreenState extends State<HomeScreen> {
-  Receipt receipt;
+  ReceiptsCompanion receipt;
   bool sendImage;
 
   HomeScreenState(this.receipt, this.sendImage);
 
   int currentIndex = 0;
-  Repository repository = Repository();
+  Repository repository = repo();
   DbBloc bloc;
 
   @override
@@ -87,7 +95,6 @@ class HomeScreenState extends State<HomeScreen> {
     Bloc.observer = SimpleDelegate();
 
     final DbBloc _bloc = DbBloc(repository: repo());
-
     return Scaffold(
         appBar: AppBar(title: Text('Receipt manager')),
         bottomNavigationBar: CurvedNavigationBar(
