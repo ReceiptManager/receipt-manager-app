@@ -30,7 +30,7 @@ class NetworkClient {
   }
 
   static String buildUrl(final ip) {
-    return protocol + ip + ":" + port + path;
+    if (ip != null) return protocol + ip + ":" + port + path;
   }
 
   static toNavigationBar(BuildContext context) {
@@ -46,6 +46,13 @@ class NetworkClient {
     log("Try to upload new image.");
     if (ip == null || ip.isEmpty) {
       log("ip appears invalid.");
+      key.currentState
+        ..showSnackBar(SnackBar(
+            content: Text("Server ip is not set."),
+            backgroundColor: Colors.red));
+      Navigator.push(context,
+          MaterialPageRoute(builder: (context) => HomeScreen(null, true)));
+      return;
     }
 
     var stream = new http.ByteStream(imageFile.openRead());
@@ -119,11 +126,14 @@ class NetworkClient {
       await Future.delayed(const Duration(seconds: 2), () {});
       Navigator.push(context,
           MaterialPageRoute(builder: (context) => HomeScreen(null, true)));
+      return;
     } on TimeoutException catch (_) {
       log("[EXCEPTION] get timeout exception" + _.toString());
       key.currentState
         ..showSnackBar(SnackBar(
             content: Text("Server timeout."), backgroundColor: Colors.red));
+
+      return;
       Navigator.push(context,
           MaterialPageRoute(builder: (context) => HomeScreen(null, true)));
     } on SocketException catch (_) {
@@ -136,14 +146,19 @@ class NetworkClient {
       await Future.delayed(const Duration(seconds: 2), () {});
       Navigator.push(context,
           MaterialPageRoute(builder: (context) => HomeScreen(null, true)));
+      return;
+      return;
     } on HandshakeException catch (_) {
       key.currentState
         ..hideCurrentSnackBar()
         ..showSnackBar(SnackBar(
             content: Text("HandshakeException" + _.message.toString()),
             backgroundColor: Colors.red));
+
       Navigator.push(context,
           MaterialPageRoute(builder: (context) => HomeScreen(null, true)));
+
+      return;
     } catch (_) {
       log("[EXCEPTION] get general exception" + _.toString());
       key.currentState
@@ -153,6 +168,8 @@ class NetworkClient {
             backgroundColor: Colors.red));
       Navigator.push(context,
           MaterialPageRoute(builder: (context) => HomeScreen(null, true)));
+
+      return;
     }
   }
 }
