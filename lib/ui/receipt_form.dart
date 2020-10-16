@@ -17,8 +17,8 @@ import '../main.dart';
 import 'camera_picker.dart';
 
 class ReceiptForm extends StatefulWidget {
-  ReceiptsCompanion receipt;
-  bool sendImage;
+  final ReceiptsCompanion receipt;
+  final bool sendImage;
 
   ReceiptForm(this.receipt, this.sendImage);
 

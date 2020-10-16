@@ -8,7 +8,6 @@ import 'package:giffy_dialog/giffy_dialog.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:receipt_parser/converter/color_converter.dart';
-import 'package:receipt_parser/main.dart';
 import 'package:receipt_parser/network/network_client.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -48,6 +47,7 @@ class TakePictureScreenState extends State<TakePictureScreen> {
     _controller.dispose();
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -97,7 +97,6 @@ final GlobalKey<ScaffoldState> key = GlobalKey<ScaffoldState>();
 class DisplayPictureScreen extends StatelessWidget {
   final String imagePath;
   final SharedPreferences sharedPrefs;
-
 
   const DisplayPictureScreen({Key key, this.imagePath, this.sharedPrefs})
       : super(key: key);
@@ -184,8 +183,7 @@ class DisplayPictureScreen extends StatelessWidget {
   handshakeExceptionAlert(BuildContext _context) {
     showDialog(
         context: _context,
-        builder: (_) =>
-            AssetGiffyDialog(
+        builder: (_) => AssetGiffyDialog(
               image: Image.asset(
                 "assets/robot.gif",
                 fit: BoxFit.fill,

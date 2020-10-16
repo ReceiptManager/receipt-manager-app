@@ -3,6 +3,7 @@ import 'package:flutter/rendering.dart';
 import 'package:receipt_parser/database/receipt_database.dart';
 import 'package:receipt_parser/ui/receipt_form.dart';
 
+// ignore: must_be_immutable
 class HomeWidget extends StatelessWidget {
   final _textController = TextEditingController();
   ScrollController scrollController;
@@ -12,7 +13,6 @@ class HomeWidget extends StatelessWidget {
 
   HomeWidget(this.receipt, this.sendImage);
 
-  @override
   void init() {
     scrollController = ScrollController()
       ..addListener(() {
@@ -25,7 +25,6 @@ class HomeWidget extends StatelessWidget {
     scrollVisible = value;
   }
 
-  @override
   void dispose() {
     _textController.dispose();
   }
@@ -52,6 +51,8 @@ class HomeWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    init();
+
     return Scaffold(
       body: ReceiptForm(receipt, sendImage),
     );

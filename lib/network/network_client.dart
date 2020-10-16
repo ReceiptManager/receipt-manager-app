@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 
-import 'package:async/async.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
@@ -49,8 +48,9 @@ class NetworkClient {
       log("ip appears invalid.");
     }
 
-    var stream =
-        new http.ByteStream(DelegatingStream.typed(imageFile.openRead()));
+    var stream = new http.ByteStream(imageFile.openRead());
+    stream.cast();
+
     var length = await imageFile.length();
     var uri = Uri.parse(buildUrl(ip));
     var request = new http.MultipartRequest("POST", uri);
