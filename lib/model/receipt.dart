@@ -1,16 +1,13 @@
 import 'package:moor/moor.dart';
 
 class Receipts extends Table {
-  IntColumn get id => integer().autoIncrement()();
+ IntColumn get id => integer().autoIncrement()();
 
-  TextColumn get receiptTotal => text()();
+  TextColumn get total => text()();
 
-  TextColumn get shopName => text()();
+ TextColumn get shop => text()();
 
   TextColumn get category => text()();
 
-  DateTimeColumn get receiptDate => dateTime()();
-
-  @override
-  Set<Column> get primaryKey => {id};
+ DateTimeColumn get date => dateTime()();
 }

@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:receipt_parser/bloc/moor/bloc.dart';
 import 'package:receipt_parser/converter/color_converter.dart';
-import 'package:receipt_parser/database//receipt_database.dart';
+import 'package:receipt_parser/database/receipt_database.dart';
 import 'package:receipt_parser/date/date_manipulator.dart';
 import 'package:receipt_parser/factory/categories_factory.dart';
 import 'package:receipt_parser/factory/padding_factory.dart';
@@ -130,7 +130,7 @@ class HistoryWidgetState extends State<HistoryWidget> {
                     contentPadding:
                         EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
                     trailing: Text(
-                      "-" + receipt.receiptTotal + "€",
+                      "-" + receipt.total + "€",
                       style: TextStyle(
                           color: Colors.redAccent,
                           fontWeight: FontWeight.w300,
@@ -141,12 +141,12 @@ class HistoryWidgetState extends State<HistoryWidget> {
                         Text(
                             receipt.category +
                                 ", " +
-                                DateManipulator.humanDate(receipt.receiptDate),
+                                DateManipulator.humanDate(receipt.date),
                             style: TextStyle(color: Colors.black))
                       ],
                     ),
                     title: Text(
-                      receipt.shopName,
+                      receipt.shop,
                       style: TextStyle(
                           color: Colors.black,
                           fontWeight: FontWeight.w300,
@@ -193,9 +193,9 @@ class HistoryWidgetState extends State<HistoryWidget> {
   String category;
 
   _showDialog({controller, Receipt receipt}) async {
-    storeName = receipt.shopName;
-    receiptTotal = receipt.receiptTotal;
-    currentReceiptDate = DateManipulator.humanDate(receipt.receiptDate);
+    storeName = receipt.shop;
+    receiptTotal = receipt.total;
+    currentReceiptDate = DateManipulator.humanDate(receipt.date);
     category = receipt.category;
 
     storeNameController.text = storeName;
@@ -279,9 +279,9 @@ class HistoryWidgetState extends State<HistoryWidget> {
                   _bloc.add(UpdateEvent(
                       receipt: Receipt(
                           category: category,
-                          shopName: storeName,
-                          receiptTotal: receiptTotal,
-                          receiptDate: receiptDate,
+                          shop: storeName,
+                          total: receiptTotal,
+                          date: receiptDate,
                           id: receipt.id)));
                   _bloc.add(ReceiptAllFetch());
 

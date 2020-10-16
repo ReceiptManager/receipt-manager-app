@@ -1,4 +1,4 @@
-import 'package:receipt_parser/database//receipt_database.dart';
+import 'package:receipt_parser/database/receipt_database.dart';
 
 class Repository {
   ReceiptDao _dao = ReceiptDao(AppDatabase());
@@ -7,7 +7,8 @@ class Repository {
 
   Stream<List<Receipt>> watchReceipts() => _dao.watchReceipts();
 
-  Future insertReceipt(Receipt receipt) => _dao.insertReceipt(receipt);
+  Future insertReceipt(ReceiptsCompanion receipt) =>
+      _dao.insertReceipt(receipt);
 
   Future updateReceipt(Receipt receipt) => _dao.updateReceipt(receipt);
 

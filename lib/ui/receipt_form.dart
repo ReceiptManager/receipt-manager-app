@@ -5,7 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:receipt_parser/bloc/moor/bloc.dart';
 import 'package:receipt_parser/converter/color_converter.dart';
-import 'package:receipt_parser/database//receipt_database.dart';
+import 'package:receipt_parser/database/receipt_database.dart';
 import 'package:receipt_parser/date/date_manipulator.dart';
 import 'package:receipt_parser/factory/categories_factory.dart';
 import 'package:receipt_parser/factory/padding_factory.dart';
@@ -17,7 +17,7 @@ import '../main.dart';
 import 'camera_picker.dart';
 
 class ReceiptForm extends StatefulWidget {
-  Receipt receipt;
+  ReceiptsCompanion receipt;
   bool sendImage;
 
   ReceiptForm(this.receipt, this.sendImage);
@@ -40,7 +40,7 @@ class ReceiptInputController extends State<ReceiptForm> {
   String total;
   String receiptCategory;
   DateTime receiptDate;
-  Receipt parsedReceipt;
+  ReceiptsCompanion parsedReceipt;
   bool sendImage;
 
   ReceiptCategory selectedCategory;
@@ -54,10 +54,10 @@ class ReceiptInputController extends State<ReceiptForm> {
     String initialTotalName = "";
     String initialDateController = "";
     if (parsedReceipt != null) {
-      initialStoreName = parsedReceipt.shopName ?? '';
-      initialTotalName = parsedReceipt.receiptTotal ?? '';
+      initialStoreName = parsedReceipt.shop ?? '';
+      initialTotalName = parsedReceipt.total ?? '';
       initialDateController =
-          DateManipulator.humanDate(parsedReceipt.receiptDate);
+          DateManipulator.humanDate(parsedReceipt.date.value);
     }
 
     storeNameController = TextEditingController(text: initialStoreName);
@@ -285,12 +285,11 @@ class ReceiptInputController extends State<ReceiptForm> {
             // ignore: close_sinks
             final _bloc = BlocProvider.of<DbBloc>(context);
             _bloc.add(InsertEvent(
-                receipt: Receipt(
-                    receiptDate: receiptDate,
-                    receiptTotal: total,
-                    category: receiptCategory,
-                    shopName: shopName,
-                    id: 0)));
+                receipt: ReceiptsCompanion(
+                    date: Value(receiptDate),
+                    total: Value(total),
+                    category: Value(receiptCategory),
+                    shop: Value(shopName))));
             _bloc.add(ReceiptAllFetch());
             _bloc.close();
             reset();

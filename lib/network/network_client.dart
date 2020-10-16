@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:path/path.dart';
-import 'package:receipt_parser/database//receipt_database.dart';
+import 'package:receipt_parser/database/receipt_database.dart';
 
 import '../main.dart';
 
@@ -93,30 +93,28 @@ class NetworkClient {
         log("Could not upload image.");
       }
 
-      Receipt receipt;
+      ReceiptsCompanion receipt;
       response.stream
           .transform(utf8.decoder)
           .listen((value) {
             Map<String, dynamic> r = jsonDecode(value);
-            receipt = Receipt(
-                id: 0,
-                receiptTotal: r['receiptTotal'],
-                shopName: r['storeName'],
-                category: '',
-                receiptDate: DateFormat("dd.MM.yyyy").parse(r['receiptDate']));
+            receipt = ReceiptsCompanion(
+                total: Value(r['receiptTotal']),
+                shop: Value(r['storeName']),
+                category: Value(" 2"),
+                date: Value(DateFormat("dd.MM.yyyy").parse(r['receiptDate'])));
 
             print('StoreName:  ${r['storeName']} ');
             print('ReceiptTotal:  ${r['receiptTotal']} ');
             print('ReceiptDate:  ${r['receiptDate']} ');
-      })
+          })
           .asFuture()
-          .then((_) async =>
-      {
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => HomeScreen(receipt, true)))
-      });
+          .then((_) async => {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => HomeScreen(receipt, true)))
+              });
 
       await Future.delayed(const Duration(seconds: 2), () {});
       Navigator.push(context,
