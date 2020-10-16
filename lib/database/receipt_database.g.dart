@@ -30,14 +30,15 @@ class Receipt extends DataClass implements Insertable<Receipt> {
     return Receipt(
       id: intType.mapFromDatabaseResponse(data['${effectivePrefix}id']),
       total:
-      stringType.mapFromDatabaseResponse(data['${effectivePrefix}total']),
+          stringType.mapFromDatabaseResponse(data['${effectivePrefix}total']),
       shop: stringType.mapFromDatabaseResponse(data['${effectivePrefix}shop']),
       category: stringType
           .mapFromDatabaseResponse(data['${effectivePrefix}category']),
       date:
-      dateTimeType.mapFromDatabaseResponse(data['${effectivePrefix}date']),
+          dateTimeType.mapFromDatabaseResponse(data['${effectivePrefix}date']),
     );
   }
+
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
@@ -83,6 +84,7 @@ class Receipt extends DataClass implements Insertable<Receipt> {
       date: serializer.fromJson<DateTime>(json['date']),
     );
   }
+
   @override
   Map<String, dynamic> toJson({ValueSerializer serializer}) {
     serializer ??= moorRuntimeOptions.defaultSerializer;
@@ -123,6 +125,7 @@ class Receipt extends DataClass implements Insertable<Receipt> {
           id.hashCode,
           $mrjc(total.hashCode,
               $mrjc(shop.hashCode, $mrjc(category.hashCode, date.hashCode)))));
+
   @override
   bool operator ==(dynamic other) =>
       identical(this, other) ||
@@ -160,6 +163,7 @@ class ReceiptsCompanion extends UpdateCompanion<Receipt> {
         shop = Value(shop),
         category = Value(category),
         date = Value(date);
+
   static Insertable<Receipt> custom({
     Expression<int> id,
     Expression<String> total,
@@ -299,10 +303,12 @@ class $ReceiptsTable extends Receipts with TableInfo<$ReceiptsTable, Receipt> {
 
   @override
   $ReceiptsTable get asDslTable => this;
+
   @override
   String get $tableName => _alias ?? 'receipts';
   @override
   final String actualTableName = 'receipts';
+
   @override
   VerificationContext validateIntegrity(Insertable<Receipt> instance,
       {bool isInserting = false}) {
@@ -340,6 +346,7 @@ class $ReceiptsTable extends Receipts with TableInfo<$ReceiptsTable, Receipt> {
 
   @override
   Set<GeneratedColumn> get $primaryKey => {id};
+
   @override
   Receipt map(Map<String, dynamic> data, {String tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : null;
@@ -355,11 +362,15 @@ class $ReceiptsTable extends Receipts with TableInfo<$ReceiptsTable, Receipt> {
 abstract class _$AppDatabase extends GeneratedDatabase {
   _$AppDatabase(QueryExecutor e) : super(SqlTypeSystem.defaultInstance, e);
   $ReceiptsTable _receipts;
+
   $ReceiptsTable get receipts => _receipts ??= $ReceiptsTable(this);
   ReceiptDao _receiptDao;
+
   ReceiptDao get receiptDao => _receiptDao ??= ReceiptDao(this as AppDatabase);
+
   @override
   Iterable<TableInfo> get allTables => allSchemaEntities.whereType<TableInfo>();
+
   @override
   List<DatabaseSchemaEntity> get allSchemaEntities => [receipts];
 }

@@ -52,6 +52,7 @@ Future<void> main() async {
   _bloc.close();
 }
 
+// ignore: must_be_immutable
 class HomeScreen extends StatefulWidget {
   ReceiptsCompanion receipt;
   bool sendImage;
@@ -94,6 +95,7 @@ class HomeScreenState extends State<HomeScreen> {
 
     Bloc.observer = SimpleDelegate();
 
+    // ignore: close_sinks
     final DbBloc _bloc = DbBloc(repository: repo());
     return Scaffold(
         appBar: AppBar(title: Text('Receipt manager')),

@@ -22,12 +22,10 @@ class ReceiptDao extends DatabaseAccessor<AppDatabase> with _$ReceiptDaoMixin {
 
   Future<List<Receipt>> getReceipts() {
     return (select(receipts)
-      ..orderBy(([
-            (t) =>
-            OrderingTerm(
-                expression: t.date, mode: OrderingMode.desc),
+          ..orderBy(([
+            (t) => OrderingTerm(expression: t.date, mode: OrderingMode.desc),
             (t) => OrderingTerm(expression: t.shop),
-      ])))
+          ])))
         .get();
   }
 

@@ -13,7 +13,6 @@ class DbBloc extends Bloc<DbEvent, DbState> {
         _repository = repository,
         super(null);
 
-  @override
   DbState get initialState => InitialState();
 
   @override
