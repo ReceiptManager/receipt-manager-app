@@ -12,13 +12,17 @@ import 'package:receipt_parser/model/receipt_category.dart';
 import 'package:receipt_parser/theme/theme_manager.dart';
 
 class HistoryWidget extends StatefulWidget {
+  final DbBloc _bloc;
+
+  HistoryWidget(this._bloc);
+
   @override
-  State<StatefulWidget> createState() => HistoryWidgetState();
+  State<StatefulWidget> createState() => HistoryWidgetState(_bloc);
 }
 
 class HistoryWidgetState extends State<HistoryWidget> {
   final _editFormKey = GlobalKey<FormState>();
-  DbBloc _bloc;
+  final DbBloc _bloc;
   List<Receipt> receipts;
   DateTime receiptDate;
 
@@ -32,6 +36,8 @@ class HistoryWidgetState extends State<HistoryWidget> {
   String receiptCategory;
   ReceiptCategory selectedCategory;
 
+  HistoryWidgetState(this._bloc);
+
   @override
   void initState() {
     storeNameController = TextEditingController();
@@ -43,9 +49,6 @@ class HistoryWidgetState extends State<HistoryWidget> {
 
   @override
   Widget build(BuildContext context) {
-    _bloc = BlocProvider.of<DbBloc>(context);
-    _bloc.add(ReceiptAllFetch());
-
     return BlocBuilder(
       cubit: _bloc,
       builder: (BuildContext context, state) {

@@ -1,17 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:receipt_parser/bloc/moor/db_bloc.dart';
 import 'package:receipt_parser/database/receipt_database.dart';
 import 'package:receipt_parser/ui/receipt_form.dart';
 
 // ignore: must_be_immutable
 class HomeWidget extends StatelessWidget {
   final _textController = TextEditingController();
+  final sharedPrefs;
   ScrollController scrollController;
   bool scrollVisible = true;
   ReceiptsCompanion receipt;
   bool sendImage;
 
-  HomeWidget(this.receipt, this.sendImage);
+  final DbBloc _bloc;
+
+  HomeWidget(this.receipt, this.sendImage, this.sharedPrefs, this._bloc);
 
   void init() {
     scrollController = ScrollController()
@@ -54,7 +58,7 @@ class HomeWidget extends StatelessWidget {
     init();
 
     return Scaffold(
-      body: ReceiptForm(receipt, sendImage),
+      body: ReceiptForm(receipt, sendImage, sharedPrefs, _bloc),
     );
   }
 }
