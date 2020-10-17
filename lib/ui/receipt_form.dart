@@ -107,7 +107,7 @@ class ReceiptInputController extends State<ReceiptForm> {
                                                             DateTime.now()),
                                                         total: Value("99.99"),
                                                         category:
-                                                        Value("Grocery"),
+                                                            Value("Grocery"),
                                                         shop: Value(
                                                             "Insert EVENT"))));
                                                 _bloc.add(ReceiptAllFetch());
@@ -342,8 +342,6 @@ class ReceiptInputController extends State<ReceiptForm> {
         foregroundColor: HexColor.fromHex("#F9AA33"));
   }
 
-  int i = 0;
-
   void showUpdateSuccess() {
     if (sendImage) {
       if (parsedReceipt == null) {
@@ -354,15 +352,12 @@ class ReceiptInputController extends State<ReceiptForm> {
             backgroundColor: Colors.red,
           ));
       } else {
-        if (i < 1) {
-          Scaffold.of(context)
-            ..hideCurrentSnackBar()
-            ..showSnackBar(SnackBar(
-              content: Text("Image successfully uploaded."),
-              backgroundColor: Colors.green,
-            ));
-          i++;
-        }
+        Scaffold.of(context)
+          ..hideCurrentSnackBar()
+          ..showSnackBar(SnackBar(
+            content: Text("Image successfully uploaded."),
+            backgroundColor: Colors.green,
+          ));
       }
     }
   }

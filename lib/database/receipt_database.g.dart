@@ -97,11 +97,12 @@ class Receipt extends DataClass implements Insertable<Receipt> {
     };
   }
 
-  Receipt copyWith({int id,
-    String total,
-    String shop,
-    String category,
-    DateTime date}) =>
+  Receipt copyWith(
+          {int id,
+          String total,
+          String shop,
+          String category,
+          DateTime date}) =>
       Receipt(
         id: id ?? this.id,
         total: total ?? this.total,
