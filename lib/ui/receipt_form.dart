@@ -39,26 +39,38 @@ class ReceiptInputController extends State<ReceiptForm> {
   TextEditingController receiptTotalController;
   TextEditingController dateController;
 
+  // ---------------------------------------------------------------------------
   String shopName;
   String total;
+  bool sendImage;
   String receiptCategory;
+
+  // ---------------------------------------------------------------------------
+
+  // VARS
+  // ---------------------------------------------------------------------------
+  // current bloc device
+  final DbBloc _bloc;
+
+  // Get current date information
   DateTime receiptDate;
   ReceiptsCompanion parsedReceipt;
-  bool sendImage;
-
   ReceiptCategory selectedCategory;
+
+  // Get all receipt categories
   List<ReceiptCategory> categories = ReceiptCategoryFactory.get();
+
+  // ---------------------------------------------------------------------------
 
   ReceiptInputController(
       this.parsedReceipt, this.sendImage, this.sharedPrefs, this._bloc);
-
-  final DbBloc _bloc;
 
   @override
   void initState() {
     String initialStoreName = "";
     String initialTotalName = "";
     String initialDateController = "";
+
     if (parsedReceipt != null) {
       initialStoreName = parsedReceipt.shop.value ?? '';
       initialTotalName = parsedReceipt.total.value ?? '';

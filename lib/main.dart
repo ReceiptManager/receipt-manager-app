@@ -10,9 +10,15 @@ import 'package:receipt_parser/ui/home_widget.dart';
 import 'package:receipt_parser/ui/settings_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+// -----------------------------------------------------------------------------
+// Initialise shared preferences which handle all basic
+// settings
 SharedPreferences sharedPrefs;
+
+// Database repository to access the database
 final Repository _repository = Repository();
 DbBloc _bloc;
+// -----------------------------------------------------------------------------
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -28,10 +34,9 @@ Future<void> main() async {
       theme: ThemeManager.getTheme()));
 }
 
-// ignore: must_be_immutable
 class HomeScreen extends StatefulWidget {
-  ReceiptsCompanion receipt;
-  bool sendImage;
+  final ReceiptsCompanion receipt;
+  final bool sendImage;
 
   HomeScreen(this.receipt, this.sendImage);
 
@@ -40,12 +45,14 @@ class HomeScreen extends StatefulWidget {
 }
 
 class HomeScreenState extends State<HomeScreen> {
+  // current receipt
   final ReceiptsCompanion receipt;
   final bool sendImage;
 
-  HomeScreenState(this.receipt, this.sendImage);
-
+  // set current body index
   int currentIndex = 0;
+
+  HomeScreenState(this.receipt, this.sendImage);
 
   @override
   Widget build(BuildContext context) {

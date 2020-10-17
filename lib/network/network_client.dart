@@ -19,6 +19,8 @@ class NetworkClient {
   static final protocol = "https://";
   static final path = "/api/upload/";
   static final port = "8721";
+  static final maxDuration = 30;
+  static final transactionDuration = 2;
 
   static init() {
     /// override the agent to provide support for self signed
@@ -73,7 +75,7 @@ class NetworkClient {
 
     try {
       var response = await request.send().timeout(
-        Duration(seconds: 3),
+        Duration(seconds: maxDuration),
         onTimeout: () async {
           key.currentState
             ..showSnackBar(SnackBar(
