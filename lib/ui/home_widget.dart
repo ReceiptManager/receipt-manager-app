@@ -6,14 +6,15 @@ import 'package:receipt_parser/ui/receipt_form.dart';
 
 // ignore: must_be_immutable
 class HomeWidget extends StatelessWidget {
-  final _textController = TextEditingController();
   final sharedPrefs;
-  ScrollController scrollController;
-  bool scrollVisible = true;
-  ReceiptsCompanion receipt;
-  bool sendImage;
-
   final DbBloc _bloc;
+  final _textController = TextEditingController();
+
+  ScrollController scrollController;
+  ReceiptsCompanion receipt;
+
+  bool sendImage;
+  bool scrollVisible = true;
 
   HomeWidget(this.receipt, this.sendImage, this.sharedPrefs, this._bloc);
 
