@@ -211,8 +211,7 @@ class DisplayPictureScreen extends StatelessWidget {
   socketExceptionAlert(BuildContext _context) {
     showDialog(
         context: _context,
-        builder: (_) =>
-            AssetGiffyDialog(
+        builder: (_) => AssetGiffyDialog(
               image: Image.asset(
                 "assets/robot.gif",
                 fit: BoxFit.fill,
