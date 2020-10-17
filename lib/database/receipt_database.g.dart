@@ -64,7 +64,7 @@ class Receipt extends DataClass implements Insertable<Receipt> {
     return ReceiptsCompanion(
       id: id == null && nullToAbsent ? const Value.absent() : Value(id),
       total:
-      total == null && nullToAbsent ? const Value.absent() : Value(total),
+          total == null && nullToAbsent ? const Value.absent() : Value(total),
       shop: shop == null && nullToAbsent ? const Value.absent() : Value(shop),
       category: category == null && nullToAbsent
           ? const Value.absent()

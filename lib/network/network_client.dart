@@ -30,7 +30,7 @@ class NetworkClient {
   }
 
   static String buildUrl(final ip) {
-    if (ip != null) return protocol + ip + ":" + port + path;
+    return protocol + ip + ":" + port + path;
   }
 
   static toNavigationBar(BuildContext context) {
@@ -122,10 +122,6 @@ class NetworkClient {
                     MaterialPageRoute(
                         builder: (context) => HomeScreen(receipt, true)))
               });
-
-      await Future.delayed(const Duration(seconds: 2), () {});
-      Navigator.push(context,
-          MaterialPageRoute(builder: (context) => HomeScreen(null, true)));
       return;
     } on TimeoutException catch (_) {
       log("[EXCEPTION] get timeout exception" + _.toString());
@@ -133,9 +129,10 @@ class NetworkClient {
         ..showSnackBar(SnackBar(
             content: Text("Server timeout."), backgroundColor: Colors.red));
 
-      return;
       Navigator.push(context,
           MaterialPageRoute(builder: (context) => HomeScreen(null, true)));
+
+      return;
     } on SocketException catch (_) {
       log("[EXCEPTION] get socket exception" + _.toString());
       key.currentState
@@ -146,7 +143,6 @@ class NetworkClient {
       await Future.delayed(const Duration(seconds: 2), () {});
       Navigator.push(context,
           MaterialPageRoute(builder: (context) => HomeScreen(null, true)));
-      return;
       return;
     } on HandshakeException catch (_) {
       key.currentState
