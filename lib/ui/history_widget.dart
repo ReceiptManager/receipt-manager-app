@@ -59,7 +59,7 @@ class HistoryWidgetState extends State<HistoryWidget> {
         }
         if (state is ErrorState) {
           return Center(
-            child: Text("Error Occur, could not load listview."),
+            child: Text("Error Occur, could not load list view."),
           );
         }
         if (state is LoadedState) {
@@ -194,12 +194,15 @@ class HistoryWidgetState extends State<HistoryWidget> {
   String receiptTotal;
   String currentReceiptDate;
   String category;
+  Receipt currentReceipt;
 
   _showDialog({controller, Receipt receipt}) async {
     storeName = receipt.shop;
     receiptTotal = receipt.total;
     currentReceiptDate = DateManipulator.humanDate(receipt.date);
     category = receipt.category;
+    receiptDate = receipt.date;
+    this.currentReceipt = receipt;
 
     storeNameController.text = storeName;
     receiptTotalController.text = receiptTotal;
@@ -267,7 +270,8 @@ class HistoryWidgetState extends State<HistoryWidget> {
                 style: TextStyle(color: HexColor.fromHex("#F9AA33")),
               ),
               onPressed: () {
-                if (_editFormKey.currentState.validate()) {
+                if (_editFormKey.currentState.validate() &&
+                    receiptDate != null) {
                   try {
                     storeName = storeNameController.text;
                     receiptTotal = receiptTotalController.text;
@@ -280,12 +284,12 @@ class HistoryWidgetState extends State<HistoryWidget> {
                   }
 
                   _bloc.add(UpdateEvent(
-                      receipt: Receipt(
-                          category: category,
-                          shop: storeName,
-                          total: receiptTotal,
-                          date: receiptDate,
-                          id: receipt.id)));
+                      receipt: currentReceipt.copyWith(
+                          category: (category),
+                          shop: (storeName),
+                          total: (receiptTotal),
+                          date: (receiptDate))));
+
                   _bloc.add(ReceiptAllFetch());
 
                   Scaffold.of(context)
