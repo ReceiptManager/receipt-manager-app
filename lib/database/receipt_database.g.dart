@@ -114,9 +114,12 @@ class Receipt extends DataClass implements Insertable<Receipt> {
   @override
   String toString() {
     return (StringBuffer('Receipt(')
-      ..write('id: $id, ')..write('total: $total, ')..write(
-          'shop: $shop, ')..write('category: $category, ')..write(
-          'date: $date')..write(')'))
+          ..write('id: $id, ')
+          ..write('total: $total, ')
+          ..write('shop: $shop, ')
+          ..write('category: $category, ')
+          ..write('date: $date')
+          ..write(')'))
         .toString();
   }
 

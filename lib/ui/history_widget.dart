@@ -6,6 +6,7 @@ import 'package:receipt_parser/converter/color_converter.dart';
 import 'package:receipt_parser/database/receipt_database.dart';
 import 'package:receipt_parser/date/date_manipulator.dart';
 import 'package:receipt_parser/factory/categories_factory.dart';
+import 'package:receipt_parser/factory/logo_factory.dart';
 import 'package:receipt_parser/factory/padding_factory.dart';
 import 'package:receipt_parser/factory/text_form_history.dart';
 import 'package:receipt_parser/model/receipt_category.dart';
@@ -68,14 +69,19 @@ class HistoryWidgetState extends State<HistoryWidget> {
             children: <Widget>[Expanded(child: _buildList(receipt))],
           );
         }
-        return Container(color: Colors.white);
+        return Container(
+            color: Colors.white,
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.all(Radius.circular(20)),
+                boxShadow: <BoxShadow>[
+                  BoxShadow(offset: Offset(0, 5), blurRadius: 10)
+                ]));
       },
     );
   }
 
   _buildList(r) {
     return new Container(
-        color: Colors.white,
         child: ListView.builder(
             padding: const EdgeInsets.all(8.0),
             itemCount: r.length,
@@ -86,9 +92,8 @@ class HistoryWidgetState extends State<HistoryWidget> {
   }
 
   Widget _buildListItems(Receipt receipt) {
-    String path = "assets/" +
-        receipt.category.split(" ")[0].toLowerCase().trim() +
-        ".png";
+    LogoFactory _factory = LogoFactory(receipt, context);
+    String path = _factory.buildPath().toString();
 
     return Slidable(
         actionPane: SlidableDrawerActionPane(),
@@ -114,11 +119,9 @@ class HistoryWidgetState extends State<HistoryWidget> {
           ),
         ],
         child: Card(
-            elevation: 8.0,
-            margin: new EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
+            color: Colors.white,
             child: Container(
-                decoration: BoxDecoration(
-                    color: Colors.white, backgroundBlendMode: BlendMode.darken),
+                color: Colors.white,
                 child: ListTile(
                     leading: Container(
                         width: 40,
@@ -159,10 +162,8 @@ class HistoryWidgetState extends State<HistoryWidget> {
 
   Container createEditMenu({hint, icon, controller}) {
     return Container(
-      margin: EdgeInsets.all(10),
-      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(30),
+        borderRadius: BorderRadius.circular(20),
         color: Colors.blueAccent,
       ),
       child: TextFormField(
@@ -173,7 +174,7 @@ class HistoryWidgetState extends State<HistoryWidget> {
           suffixIcon: Container(
             decoration: BoxDecoration(
                 color: Colors.grey[200],
-                borderRadius: BorderRadius.all(Radius.circular(30))),
+                borderRadius: BorderRadius.all(Radius.circular(0))),
             child: IconButton(
                 icon: Icon(icon),
                 onPressed: () async {
@@ -233,15 +234,15 @@ class HistoryWidgetState extends State<HistoryWidget> {
                               child: PaddingFactory.create(Column(
                                 children: <Widget>[
                                   PaddingFactory.create(new Theme(
-                                      data: ThemeManager.getTheme(),
+                                      data: AppTheme.lightTheme,
                                       child: TextFormFactory.storeName(
                                           storeNameController))),
                                   PaddingFactory.create(new Theme(
-                                      data: ThemeManager.getTheme(),
+                                      data: AppTheme.lightTheme,
                                       child: TextFormFactory.total(
                                           receiptTotalController))),
                                   PaddingFactory.create(new Theme(
-                                      data: ThemeManager.getTheme(),
+                                      data: AppTheme.lightTheme,
                                       child: TextFormFactory.date(
                                           dateController,
                                           receiptDate,

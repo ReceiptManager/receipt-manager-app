@@ -28,7 +28,6 @@ class _ServerSettingsState extends State<ServerSettings> {
   serverTextfield() {
     return new TextFormField(
       controller: _textController,
-      style: TextStyle(color: Colors.black),
       onChanged: (value) {
         ipv4 = value;
       },
@@ -47,7 +46,6 @@ class _ServerSettingsState extends State<ServerSettings> {
         helperText: "Set the image server ip.",
         prefixIcon: const Icon(
           Icons.network_wifi,
-          color: Colors.black,
         ),
         prefixText: ' ',
       ),
@@ -73,12 +71,8 @@ class _ServerSettingsState extends State<ServerSettings> {
         body: Column(children: [
           Padding(
               padding: const EdgeInsets.all(16.0),
-              child: new Theme(
-                  data: new ThemeData(
-                    primaryColor: Colors.white,
-                    primaryColorDark: Colors.white,
-                  ),
-                  child: serverTextfield())),
+              child:
+                  new Theme(data: ThemeData.light(), child: serverTextfield())),
           new Align(
               alignment: Alignment.bottomRight,
               child: Padding(
@@ -131,9 +125,7 @@ class _ServerSettingsState extends State<ServerSettings> {
                             backgroundColor: Colors.green,
                           ));
                       },
-                      child: Icon(Icons.done_all),
-                      backgroundColor: HexColor.fromHex("#232F34"),
-                      foregroundColor: HexColor.fromHex("#F9AA33"))))
+                      child: Icon(Icons.done_all))))
         ]));
   }
 }

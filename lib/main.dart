@@ -1,9 +1,9 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:receipt_parser/bloc/moor/bloc.dart';
-import 'package:receipt_parser/converter/color_converter.dart';
 import 'package:receipt_parser/database/receipt_database.dart';
 import 'package:receipt_parser/repository/repository.dart';
+import 'package:receipt_parser/theme/color/color.dart';
 import 'package:receipt_parser/theme/theme_manager.dart';
 import 'package:receipt_parser/ui/history_widget.dart';
 import 'package:receipt_parser/ui/home_widget.dart';
@@ -26,12 +26,8 @@ Future<void> main() async {
   _bloc = DbBloc(repository: _repository);
   _bloc.add(ReceiptAllFetch());
 
-  runApp(MaterialApp(
-      home: HomeScreen(null, false),
-      color: Colors.white,
-      title: Text('Saved Suggestions', style: TextStyle(color: Colors.white))
-          .toStringShort(),
-      theme: ThemeManager.getTheme()));
+  runApp(
+      MaterialApp(home: HomeScreen(null, false), theme: AppTheme.lightTheme));
 }
 
 class HomeScreen extends StatefulWidget {
@@ -44,7 +40,9 @@ class HomeScreen extends StatefulWidget {
   HomeScreenState createState() => HomeScreenState(receipt, sendImage);
 }
 
-class HomeScreenState extends State<HomeScreen> {
+class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
+  final GlobalKey _bottomNavigationKey = GlobalKey();
+
   // current receipt
   final ReceiptsCompanion receipt;
   final bool sendImage;
@@ -59,29 +57,30 @@ class HomeScreenState extends State<HomeScreen> {
     final List<Widget> _children = [
       HomeWidget(this.receipt, sendImage, sharedPrefs, _bloc),
       HistoryWidget(_bloc),
-      SettingsWidget(sharedPrefs)
+      SettingsWidget(sharedPrefs, _bloc)
     ];
 
     return Scaffold(
-      appBar: AppBar(title: Text('Receipt manager')),
-      bottomNavigationBar: CurvedNavigationBar(
-        backgroundColor: Colors.white,
-        color: HexColor.fromHex("#232F34"),
-        items: <Widget>[
-          Icon(Icons.home, size: 30, color: HexColor.fromHex("#F9AA33")),
-          Icon(Icons.history, size: 30, color: HexColor.fromHex("#F9AA33")),
-          Icon(Icons.settings, size: 30, color: HexColor.fromHex("#F9AA33")),
-        ],
-        animationCurve: Curves.easeInOut,
-        animationDuration: Duration(milliseconds: 200),
-        onTap: (index) {
-          setState(() {
-            this.currentIndex = index;
-          });
-        },
-      ),
-      //  body: _children[currentIndex]);
-      body: _children[currentIndex],
-    );
+        appBar: AppBar(title: Text('Receipt manager')),
+        bottomNavigationBar: CurvedNavigationBar(
+          key: _bottomNavigationKey,
+          index: 0,
+          height: 60.0,
+          items: <Widget>[
+            Icon(Icons.add, color: Colors.white, size: 30),
+            Icon(Icons.history, color: Colors.white, size: 30),
+            Icon(Icons.settings, color: Colors.white, size: 30),
+          ],
+          color: LightColor.brighter,
+          backgroundColor: Colors.white,
+          animationCurve: Curves.easeInOut,
+          animationDuration: Duration(milliseconds: 600),
+          onTap: (index) {
+            setState(() {
+              currentIndex = index;
+            });
+          },
+        ),
+        body: _children[currentIndex]);
   }
 }

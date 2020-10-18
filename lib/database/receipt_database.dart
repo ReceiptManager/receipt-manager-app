@@ -12,7 +12,7 @@ part 'receipt_database.g.dart';
 class AppDatabase extends _$AppDatabase {
   AppDatabase()
       : super(FlutterQueryExecutor.inDatabaseFolder(
-      path: "db.sql", logStatements: true));
+            path: "db.sql", logStatements: true));
 
   int get schemaVersion => 1;
 }
