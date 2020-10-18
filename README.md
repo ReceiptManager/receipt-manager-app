@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://i.imgur.com/wkWHO3u.png">
+  <img src="https://raw.githubusercontent.com/ReceiptParser/Application/master/docs/assets/dash_app.png">
 </p>
 
 
@@ -53,6 +53,13 @@ Since mobile devices have a unacceptable performance, the parser uses a (traditi
 A lot of companies store and sell your data. This is the main reason why I started this project. 
 I want to control my private data. Since you are hosting your own server, your don't have to
 worry about that.
+
+### Screenshots
+<p align="left">
+  <img src="https://raw.githubusercontent.com/ReceiptParser/Application/master/docs/assets/history_app.png">
+  <img src="https://raw.githubusercontent.com/ReceiptParser/Application/master/docs/assets/edit_app.png">
+  <img src="https://raw.githubusercontent.com/ReceiptParser/Application/master/docs/assets/settings_app.png">
+</p>
 
 ## Credits
 I use free logos.
