@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:receipt_parser/bloc/moor/bloc.dart';
-import 'package:receipt_parser/converter/color_converter.dart';
 import 'package:receipt_parser/database/receipt_database.dart';
 import 'package:receipt_parser/date/date_manipulator.dart';
 import 'package:receipt_parser/factory/categories_factory.dart';
@@ -10,6 +9,7 @@ import 'package:receipt_parser/factory/logo_factory.dart';
 import 'package:receipt_parser/factory/padding_factory.dart';
 import 'package:receipt_parser/factory/text_form_history.dart';
 import 'package:receipt_parser/model/receipt_category.dart';
+import 'package:receipt_parser/theme/color/color.dart';
 import 'package:receipt_parser/theme/theme_manager.dart';
 
 class HistoryWidget extends StatefulWidget {
@@ -110,9 +110,8 @@ class HistoryWidgetState extends State<HistoryWidget> {
           ),
           IconSlideAction(
             caption: 'Update',
-            foregroundColor: HexColor.fromHex("#F9AA33"),
-            color: HexColor.fromHex("#232F34"),
             icon: Icons.update,
+            color: LightColor.brighter,
             onTap: () {
               _showDialog(controller: _controller, receipt: receipt);
             },
@@ -268,7 +267,6 @@ class HistoryWidgetState extends State<HistoryWidget> {
             FlatButton(
               child: Text(
                 'Update',
-                style: TextStyle(color: HexColor.fromHex("#F9AA33")),
               ),
               onPressed: () {
                 if (_editFormKey.currentState.validate() &&
