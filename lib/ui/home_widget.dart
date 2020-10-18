@@ -46,7 +46,7 @@ class HomeWidget extends StatelessWidget {
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(18.0),
                     side: BorderSide(color: Colors.white)),
-                child: Column(children: [Icon(Icons.camera)]),
+                child: Column(children: [Icon(Icons.camera_enhance_outlined)]),
                 color: Colors.white,
                 textColor: Colors.white,
                 elevation: 5,

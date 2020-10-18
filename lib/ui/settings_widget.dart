@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:receipt_parser/bloc/moor/bloc.dart';
 import 'package:receipt_parser/ui/settings/developer_settings.dart';
 import 'package:receipt_parser/ui/settings/environment_setting.dart';
 import 'package:receipt_parser/ui/settings/server_settings.dart';
@@ -9,20 +10,23 @@ import 'settings/language_setting.dart';
 
 class SettingsWidget extends StatefulWidget {
   final SharedPreferences sharedPreferences;
+  final DbBloc _bloc;
 
-  SettingsWidget(this.sharedPreferences);
+  SettingsWidget(this.sharedPreferences, this._bloc);
 
   @override
-  _SettingsWidgetState createState() => _SettingsWidgetState(sharedPreferences);
+  _SettingsWidgetState createState() =>
+      _SettingsWidgetState(sharedPreferences, _bloc);
 }
 
 class _SettingsWidgetState extends State<SettingsWidget> {
   bool enableDebugOutput = true;
   bool notificationsEnabled = true;
 
+  final DbBloc _bloc;
   final SharedPreferences sharedPreferences;
 
-  _SettingsWidgetState(this.sharedPreferences);
+  _SettingsWidgetState(this.sharedPreferences, this._bloc);
 
   @override
   Widget build(BuildContext context) {
@@ -54,11 +58,12 @@ class _SettingsWidgetState extends State<SettingsWidget> {
               ),
               SettingsTile(
                 title: 'Developer',
-                subtitle: 'Developer utils to manipulate the database',
+                subtitle: 'Developer utils',
                 leading: Icon(Icons.adb_rounded),
                 onTap: () {
                   Navigator.of(context).push(MaterialPageRoute(
-                      builder: (BuildContext context) => DeveloperSettings()));
+                      builder: (BuildContext context) =>
+                          DeveloperSettings(_bloc)));
                 },
               ),
             ],
