@@ -226,18 +226,20 @@ class ReceiptInputController extends State<ReceiptForm> {
                             decoration: BoxDecoration(
                                 color: Colors.white,
                                 border: Border.all(color: Colors.black)),
-                            child: DropdownButton<ReceiptCategory>(
-                                key: _dropKey,
-                                hint: Text("Select receipt category"),
-                                value: selectedCategory,
-                                isExpanded: true,
-                                onChanged: (ReceiptCategory value) {
-                                  setState(() {
-                                    receiptCategory = value.name;
-                                    selectedCategory = value;
-                                  });
-                                },
-                                items: categories.map((ReceiptCategory user) {
+                            child: Theme(
+                                data: AppTheme.lightTheme,
+                                child: DropdownButton<ReceiptCategory>(
+                                    key: _dropKey,
+                                    hint: Text("Select receipt category"),
+                                    value: selectedCategory,
+                                    isExpanded: true,
+                                    onChanged: (ReceiptCategory value) {
+                                      setState(() {
+                                        receiptCategory = value.name;
+                                        selectedCategory = value;
+                                      });
+                                    },
+                                    items: categories.map((ReceiptCategory user) {
                                   return DropdownMenuItem<ReceiptCategory>(
                                     value: user,
                                     child: Row(
@@ -250,7 +252,7 @@ class ReceiptInputController extends State<ReceiptForm> {
                                       ],
                                     ),
                                   );
-                                }).toList()))),
+                                }).toList())))),
                         new Align(
                             alignment: Alignment.bottomRight,
                             child: Padding(
