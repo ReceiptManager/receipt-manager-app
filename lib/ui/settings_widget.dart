@@ -49,7 +49,7 @@ class _SettingsWidgetState extends State<SettingsWidget> {
               ),
               SettingsTile(
                 title: 'Environment',
-                subtitle: 'Production',
+                subtitle: 'Developer',
                 leading: Icon(Icons.cloud_queue),
                 onTap: () {
                   Navigator.of(context).push(MaterialPageRoute(
