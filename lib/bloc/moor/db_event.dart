@@ -62,6 +62,14 @@ class DeleteEvent extends DbEvent {
   List<Object> get props => throw UnimplementedError();
 }
 
+class DeleteAllEvent extends DbEvent {
+  @override
+  String toString() => "DeleteAllEvent";
+
+  @override
+  List<Object> get props => throw UnimplementedError();
+}
+
 class ReceiptWatchEvent {
   @override
   String toString() => "ReceiptWatchEvent";

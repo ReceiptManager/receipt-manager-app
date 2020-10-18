@@ -21,6 +21,8 @@ class DbBloc extends Bloc<DbEvent, DbState> {
   ) async* {
     if (event is InsertEvent) {
       yield* _mapInsertEventToState(event);
+    } else if (event is DeleteAllEvent) {
+      yield* _mapDeleteAllEventToState();
     } else if (event is ReceiptAllFetch) {
       yield* _mapTaskAllFetchToState();
     } else if (event is DeleteEvent) {
@@ -49,6 +51,10 @@ class DbBloc extends Bloc<DbEvent, DbState> {
 
   Stream<DbState> _mapDeleteEventToState(DeleteEvent event) async* {
     await _repository.deleteReceipt(event.receipt);
+  }
+
+  Stream<DbState> _mapDeleteAllEventToState() async* {
+    await _repository.deleteDatabase();
   }
 
   Stream<DbState> _mapUpdateEventToState(UpdateEvent event) async* {
