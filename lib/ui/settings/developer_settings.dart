@@ -130,6 +130,9 @@ add(BuildContext context) {
 }
 
 nuke(BuildContext context) {
+  bloc.add(DeleteAllEvent());
+  bloc.add(ReceiptAllFetch());
+
   Scaffold.of(context)
     ..hideCurrentSnackBar()
     ..showSnackBar(SnackBar(

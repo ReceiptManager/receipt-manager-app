@@ -13,4 +13,6 @@ class Repository {
   Future updateReceipt(Receipt receipt) => _dao.updateReceipt(receipt);
 
   Future deleteReceipt(Receipt receipt) => _dao.deleteReceipt(receipt);
+
+  Future deleteDatabase() => _dao.deleteDatabase();
 }
