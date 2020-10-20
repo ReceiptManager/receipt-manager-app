@@ -1,3 +1,19 @@
+/*
+ * Copyright (c) 2020 William Todt
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -12,17 +28,9 @@ import 'package:receipt_parser/ui/home_widget.dart';
 import 'package:receipt_parser/ui/settings_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-// -----------------------------------------------------------------------------
-
-// Initialise shared preferences which handle all basic
-// settings
-SharedPreferences sharedPrefs;
-
-// Database repository to access the database
 final Repository _repository = Repository();
+SharedPreferences sharedPrefs;
 DbBloc _bloc;
-
-// -----------------------------------------------------------------------------
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -32,9 +40,7 @@ Future<void> main() async {
 
   runApp(MaterialApp(
       localizationsDelegates: [
-        // 1
         S.delegate,
-        // 2
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
@@ -53,8 +59,6 @@ class HomeScreen extends StatefulWidget {
   @override
   HomeScreenState createState() => HomeScreenState(receipt, sendImage);
 }
-
-// -----------------------------------------------------------------------------
 
 class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   final GlobalKey _bottomNavigationKey = GlobalKey();
@@ -100,5 +104,3 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
         body: _children[currentIndex]);
   }
 }
-
-// -----------------------------------------------------------------------------

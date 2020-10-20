@@ -1,3 +1,19 @@
+/*
+ * Copyright (c) 2020 William Todt
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 // DO NOT EDIT. This is code generated via package:intl/generate_localized.dart
 // This is a library that looks up messages for specific locales by
 // delegating to the appropriate library.
@@ -38,8 +54,9 @@ MessageLookupByLibrary _findExact(String localeName) {
 /// User programs should call this before using [localeName] for messages.
 Future<bool> initializeMessages(String localeName) async {
   var availableLocale = Intl.verifiedLocale(
-      localeName, (locale) => _deferredLibraries[locale] != null,
-      onFailure: (_) => null);
+    localeName,
+    (locale) => _deferredLibraries[locale] != null,
+    onFailure: (_) => null);
   if (availableLocale == null) {
     return new Future.value(false);
   }
