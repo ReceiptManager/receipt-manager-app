@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -25,61 +26,60 @@ class LanguageSetting extends StatefulWidget {
 }
 
 class _LanguageSettingState extends State<LanguageSetting> {
+  String currentLanguage = Intl.getCurrentLocale();
   int languageIndex = 0;
+
+  List<Locale> locales = S.delegate.supportedLocales;
+  List<Locale> sortedLocals;
 
   @override
   void initState() {
-    getLanguagePosition();
-  }
+    log(Intl.getCurrentLocale());
+    sortedLocals = List.from(locales);
+    sortedLocals
+        .sort((Locale a, Locale b) => a.toString().compareTo(b.toString()));
 
-  getLanguagePosition() {
-    int pos = 0;
-    for (Locale l in S.delegate.supportedLocales) {
-      if (l.toString() == Intl.getCurrentLocale()) {
-        languageIndex = pos;
-        return;
-      }
-      pos++;
-    }
-  }
-
-  SettingsList generateLanguageList() {
-    return SettingsList(
-      sections: [
-        SettingsSection(tiles: [
-          SettingsTile(
-            title: "English (US)",
-            leading: trailingWidget(0),
-            onTap: () {
-              S.load((Locale('en', 'US')));
-              changeLanguage(0);
-            },
-          ),
-          SettingsTile(
-            title: "English (GB)",
-            leading: trailingWidget(1),
-            onTap: () {
-              S.load((Locale('en', 'GB')));
-              changeLanguage(1);
-            },
-          ),
-          SettingsTile(
-            title: "German",
-            leading: trailingWidget(2),
-            onTap: () {
-              S.load((Locale('de', 'DE')));
-              changeLanguage(2);
-            },
-          ),
-        ]),
-      ],
-    );
+    languageIndex = sortedLocals
+        .indexWhere((element) => element.toString() == currentLanguage);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: Text('Languages')), body: generateLanguageList());
+      appBar: AppBar(title: Text(S.of(context).language)),
+      body: SettingsList(
+        sections: [
+          SettingsSection(tiles: [
+            SettingsTile(
+              title: "German ",
+              leading: trailingWidget(0),
+              onTap: () {
+                changeLanguage(0);
+                S.load(sortedLocals[0]);
+              },
+            ),
+            /*
+            SettingsTile(
+              title: "English (GB)",
+              leading: trailingWidget(1),
+              onTap: () {
+                changeLanguage(1);
+                S.load(sortedLocals[1]);
+              },
+            )
+             */
+            SettingsTile(
+              title: "English (US)",
+              leading: trailingWidget(2),
+              onTap: () {
+                changeLanguage(2);
+                S.load(sortedLocals[2]);
+              },
+            ),
+          ]),
+        ],
+      ),
+    );
   }
 
   Widget trailingWidget(int index) {
@@ -88,9 +88,9 @@ class _LanguageSettingState extends State<LanguageSetting> {
         : Icon(null);
   }
 
-  void changeLanguage(int index) {
+  void changeLanguage(int pos) {
     setState(() {
-      languageIndex = index;
+      languageIndex = pos;
     });
   }
 }

@@ -61,6 +61,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "The given submitted server IP appear invalid. Please try again."),
         "invalidTotal":
             MessageLookupByLibrary.simpleMessage("Total is invalid."),
+        "language": MessageLookupByLibrary.simpleMessage("Language"),
         "openSourceLicence":
             MessageLookupByLibrary.simpleMessage("Open source licenses"),
         "receiptDateDialog":
@@ -80,18 +81,27 @@ class MessageLookup extends MessageLookupByLibrary {
             "Error Occur, could not load receipts"),
         "receiptSelectCategory":
             MessageLookupByLibrary.simpleMessage("Select receipt category"),
-        "serverIP" : MessageLookupByLibrary.simpleMessage("Server ip"),
-    "serverIPHelpText" : MessageLookupByLibrary.simpleMessage("Set the image server ip"),
-    "serverIPLabelText" : MessageLookupByLibrary.simpleMessage("Server ip address"),
-    "serverSettings" : MessageLookupByLibrary.simpleMessage("Server Settings"),
-    "settingsDeveloperSubtitle" : MessageLookupByLibrary.simpleMessage("Developer utils"),
-    "settingsDeveloperTitle" : MessageLookupByLibrary.simpleMessage("Developer"),
-    "settingsDevelopmentTitle" : MessageLookupByLibrary.simpleMessage("Development"),
-    "settingsGeneralCategory" : MessageLookupByLibrary.simpleMessage("Common"),
-    "settingsLanguageTitle" : MessageLookupByLibrary.simpleMessage("Language"),
-    "settingsMiscTitle" : MessageLookupByLibrary.simpleMessage("Misc"),
-    "settingsNetworkCategory" : MessageLookupByLibrary.simpleMessage("Network"),
-    "settingsServerTitle" : MessageLookupByLibrary.simpleMessage("Server"),
+        "serverIP": MessageLookupByLibrary.simpleMessage("Server ip"),
+        "serverIPHelpText":
+            MessageLookupByLibrary.simpleMessage("Set the image server ip"),
+        "serverIPLabelText":
+            MessageLookupByLibrary.simpleMessage("Server ip address"),
+        "serverSettings":
+            MessageLookupByLibrary.simpleMessage("Server Settings"),
+        "settingsDeveloperSubtitle":
+            MessageLookupByLibrary.simpleMessage("Developer utils"),
+        "settingsDeveloperTitle":
+            MessageLookupByLibrary.simpleMessage("Developer"),
+        "settingsDevelopmentTitle":
+            MessageLookupByLibrary.simpleMessage("Development"),
+        "settingsGeneralCategory":
+            MessageLookupByLibrary.simpleMessage("Common"),
+        "settingsLanguageTitle":
+            MessageLookupByLibrary.simpleMessage("Language"),
+        "settingsMiscTitle": MessageLookupByLibrary.simpleMessage("Misc"),
+        "settingsNetworkCategory":
+            MessageLookupByLibrary.simpleMessage("Network"),
+        "settingsServerTitle" : MessageLookupByLibrary.simpleMessage("Server"),
     "storeNameHelper" : MessageLookupByLibrary.simpleMessage("Set the store name"),
     "storeNameHint" : MessageLookupByLibrary.simpleMessage("Store name"),
     "storeNameTitle" : MessageLookupByLibrary.simpleMessage("Store name"),
