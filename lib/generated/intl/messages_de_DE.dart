@@ -36,21 +36,30 @@ class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'de_DE';
 
   final messages = _notInlinedMessages(_notInlinedMessages);
-  static _notInlinedMessages(_) => <String, Function> {
-    "addReceipt" : MessageLookupByLibrary.simpleMessage("Kassenbeleg hinzufügen"),
-    "appBarTitle" : MessageLookupByLibrary.simpleMessage("Mein Haushaltsbuch"),
-    "cancel" : MessageLookupByLibrary.simpleMessage("Abbrechen"),
-    "deleteReceipt" : MessageLookupByLibrary.simpleMessage("Löschen"),
-    "editReceipt" : MessageLookupByLibrary.simpleMessage("Editieren"),
-    "emptyStoreName" : MessageLookupByLibrary.simpleMessage("\'Bitte gebe einen Shop Namen an."),
-    "emptyTotal" : MessageLookupByLibrary.simpleMessage("Bitte geben einen Betrag an"),
-    "enableDebugOutput" : MessageLookupByLibrary.simpleMessage("Entwicklerinformationen anzeigen"),
-    "failedUpdateReceipt" : MessageLookupByLibrary.simpleMessage("Beleg wurde nicht aktualisiert"),
-    "groceryCategory" : MessageLookupByLibrary.simpleMessage("Lebensmittel"),
-    "healthCategory" : MessageLookupByLibrary.simpleMessage("Gesundheit"),
-    "invalidInput" : MessageLookupByLibrary.simpleMessage("Eingabe is ungültig"),
-    "invalidServerIP" : MessageLookupByLibrary.simpleMessage("Die eingegebene IP war falsch. Bitte versuchen Sie es erneut"),
-    "invalidTotal" : MessageLookupByLibrary.simpleMessage("Betrag ist ungültig"),
+  static _notInlinedMessages(_) => <String, Function>{
+        "addReceipt":
+            MessageLookupByLibrary.simpleMessage("Kassenbeleg hinzufügen"),
+        "appBarTitle":
+            MessageLookupByLibrary.simpleMessage("Mein Haushaltsbuch"),
+        "cancel": MessageLookupByLibrary.simpleMessage("Abbrechen"),
+        "currency": MessageLookupByLibrary.simpleMessage("€"),
+        "deleteReceipt": MessageLookupByLibrary.simpleMessage("Löschen"),
+        "editReceipt": MessageLookupByLibrary.simpleMessage("Editieren"),
+        "emptyStoreName": MessageLookupByLibrary.simpleMessage(
+            "\'Bitte gebe einen Shop Namen an."),
+        "emptyTotal":
+            MessageLookupByLibrary.simpleMessage("Bitte geben einen Betrag an"),
+        "enableDebugOutput": MessageLookupByLibrary.simpleMessage(
+            "Entwicklerinformationen anzeigen"),
+        "failedUpdateReceipt": MessageLookupByLibrary.simpleMessage(
+            "Beleg wurde nicht aktualisiert"),
+        "groceryCategory": MessageLookupByLibrary.simpleMessage("Lebensmittel"),
+        "healthCategory": MessageLookupByLibrary.simpleMessage("Gesundheit"),
+        "invalidInput":
+            MessageLookupByLibrary.simpleMessage("Eingabe is ungültig"),
+        "invalidServerIP": MessageLookupByLibrary.simpleMessage(
+            "Die eingegebene IP war falsch. Bitte versuchen Sie es erneut"),
+        "invalidTotal" : MessageLookupByLibrary.simpleMessage("Betrag ist ungültig"),
     "openSourceLicence" : MessageLookupByLibrary.simpleMessage("Open-Source Lizenzen"),
     "receiptDateDialog" : MessageLookupByLibrary.simpleMessage("Please enter some date"),
     "receiptDateFormat" : MessageLookupByLibrary.simpleMessage("dd.MM.YYYY"),

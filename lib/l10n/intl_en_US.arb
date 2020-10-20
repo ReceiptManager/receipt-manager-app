@@ -47,5 +47,6 @@
   "totalLabelText": "Receipt total",
   "totalHelperText": "Receipt total",
   "emptyTotal": "Please enter the total.",
-  "invalidTotal": "Total is invalid."
+  "invalidTotal": "Total is invalid.",
+  "currency": "$"
 }
