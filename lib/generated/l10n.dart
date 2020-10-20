@@ -145,10 +145,10 @@ class S {
     );
   }
 
-  /// `Open source Lizenzen`
+  /// `Open-Source Lizenzen`
   String get openSourceLicence {
     return Intl.message(
-      'Open source Lizenzen',
+      'Open-Source Lizenzen',
       name: 'openSourceLicence',
       desc: '',
       args: [],
@@ -160,6 +160,16 @@ class S {
     return Intl.message(
       'Kassenbeleg hinzufügen',
       name: 'addReceipt',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Bitte geben Sie ein Datum ein`
+  String get receiptEmpty {
+    return Intl.message(
+      'Bitte geben Sie ein Datum ein',
+      name: 'receiptEmpty',
       desc: '',
       args: [],
     );
@@ -180,6 +190,16 @@ class S {
     return Intl.message(
       'Datum',
       name: 'receiptDateLabelText',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Receipt date is invalid, format:`
+  String get receiptDateInvalid {
+    return Intl.message(
+      'Receipt date is invalid, format:',
+      name: 'receiptDateInvalid',
       desc: '',
       args: [],
     );
@@ -394,6 +414,116 @@ class S {
       args: [],
     );
   }
+
+  /// `Lebensmittel`
+  String get groceryCategory {
+    return Intl.message(
+      'Lebensmittel',
+      name: 'groceryCategory',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Gesundheit`
+  String get healthCategory {
+    return Intl.message(
+      'Gesundheit',
+      name: 'healthCategory',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Shop Name`
+  String get storeNameTitle {
+    return Intl.message(
+      'Shop Name',
+      name: 'storeNameTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Shop Name`
+  String get storeNameHint {
+    return Intl.message(
+      'Shop Name',
+      name: 'storeNameHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Füge einen Shop Namen hinzu`
+  String get storeNameHelper {
+    return Intl.message(
+      'Füge einen Shop Namen hinzu',
+      name: 'storeNameHelper',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `'Bitte gebe einen Shop Namen an.`
+  String get emptyStoreName {
+    return Intl.message(
+      '\'Bitte gebe einen Shop Namen an.',
+      name: 'emptyStoreName',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Betrag`
+  String get totalTitle {
+    return Intl.message(
+      'Betrag',
+      name: 'totalTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Betrag`
+  String get totalLabelText {
+    return Intl.message(
+      'Betrag',
+      name: 'totalLabelText',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Füge den Betrag des Beleges hinzu`
+  String get totalHelperText {
+    return Intl.message(
+      'Füge den Betrag des Beleges hinzu',
+      name: 'totalHelperText',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Bitte geben einen Betrag an`
+  String get emptyTotal {
+    return Intl.message(
+      'Bitte geben einen Betrag an',
+      name: 'emptyTotal',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Betrag ist ungültig`
+  String get invalidTotal {
+    return Intl.message(
+      'Betrag ist ungültig',
+      name: 'invalidTotal',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
@@ -409,10 +539,8 @@ class AppLocalizationDelegate extends LocalizationsDelegate<S> {
 
   @override
   bool isSupported(Locale locale) => _isSupported(locale);
-
   @override
   Future<S> load(Locale locale) => S.load(locale);
-
   @override
   bool shouldReload(AppLocalizationDelegate old) => false;
 

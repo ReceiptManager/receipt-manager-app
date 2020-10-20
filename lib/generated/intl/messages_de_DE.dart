@@ -29,24 +29,36 @@ class MessageLookup extends MessageLookupByLibrary {
         "cancel": MessageLookupByLibrary.simpleMessage("Abbrechen"),
         "deleteReceipt": MessageLookupByLibrary.simpleMessage("Löschen"),
         "editReceipt": MessageLookupByLibrary.simpleMessage("Editieren"),
+        "emptyStoreName": MessageLookupByLibrary.simpleMessage(
+            "\'Bitte gebe einen Shop Namen an."),
+        "emptyTotal":
+            MessageLookupByLibrary.simpleMessage("Bitte geben einen Betrag an"),
         "enableDebugOutput": MessageLookupByLibrary.simpleMessage(
             "Entwicklerinformationen anzeigen"),
         "failedUpdateReceipt": MessageLookupByLibrary.simpleMessage(
             "Beleg wurde nicht aktualisiert"),
+        "groceryCategory": MessageLookupByLibrary.simpleMessage("Lebensmittel"),
+        "healthCategory": MessageLookupByLibrary.simpleMessage("Gesundheit"),
         "invalidInput":
             MessageLookupByLibrary.simpleMessage("Eingabe is ungültig"),
         "invalidServerIP": MessageLookupByLibrary.simpleMessage(
             "Die eingegebene IP war falsch. Bitte versuchen Sie es erneut"),
+        "invalidTotal":
+            MessageLookupByLibrary.simpleMessage("Betrag ist ungültig"),
         "openSourceLicence":
-            MessageLookupByLibrary.simpleMessage("Open source Lizenzen"),
+            MessageLookupByLibrary.simpleMessage("Open-Source Lizenzen"),
         "receiptDateDialog":
             MessageLookupByLibrary.simpleMessage("Please enter some date"),
         "receiptDateFormat": MessageLookupByLibrary.simpleMessage("dd.MM.YYYY"),
         "receiptDateHelperText": MessageLookupByLibrary.simpleMessage(
             "Füge das Datum das Kassenbeleg hinzu"),
+        "receiptDateInvalid": MessageLookupByLibrary.simpleMessage(
+            "Receipt date is invalid, format:"),
         "receiptDateLabelText": MessageLookupByLibrary.simpleMessage("Datum"),
         "receiptDateNotFormatted":
             MessageLookupByLibrary.simpleMessage("Eingabeformat ungültig"),
+        "receiptEmpty": MessageLookupByLibrary.simpleMessage(
+            "Bitte geben Sie ein Datum ein"),
         "receiptLoadFailed": MessageLookupByLibrary.simpleMessage(
             "Ein Fehler ist aufgetreten, Kassenbelege konnten nicht geladen werden"),
         "receiptSelectCategory":
@@ -76,6 +88,14 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Netzwerk"),
         "settingsServerTitle":
             MessageLookupByLibrary.simpleMessage("Netzwerk Einstellungen"),
+        "storeNameHelper":
+            MessageLookupByLibrary.simpleMessage("Füge einen Shop Namen hinzu"),
+        "storeNameHint": MessageLookupByLibrary.simpleMessage("Shop Name"),
+        "storeNameTitle": MessageLookupByLibrary.simpleMessage("Shop Name"),
+        "totalHelperText": MessageLookupByLibrary.simpleMessage(
+            "Füge den Betrag des Beleges hinzu"),
+        "totalLabelText": MessageLookupByLibrary.simpleMessage("Betrag"),
+        "totalTitle": MessageLookupByLibrary.simpleMessage("Betrag"),
         "update": MessageLookupByLibrary.simpleMessage("Aktualisieren"),
         "updateReceipt":
             MessageLookupByLibrary.simpleMessage("Kassenbeleg aktualisieren"),
