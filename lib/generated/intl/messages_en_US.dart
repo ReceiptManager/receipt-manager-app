@@ -27,14 +27,22 @@ class MessageLookup extends MessageLookupByLibrary {
         "cancel": MessageLookupByLibrary.simpleMessage("Cancel"),
         "deleteReceipt": MessageLookupByLibrary.simpleMessage("Delete"),
         "editReceipt": MessageLookupByLibrary.simpleMessage("Update"),
+        "emptyStoreName": MessageLookupByLibrary.simpleMessage(
+            "\'Please enter a store name."),
+        "emptyTotal":
+            MessageLookupByLibrary.simpleMessage("Please enter the total."),
         "enableDebugOutput":
             MessageLookupByLibrary.simpleMessage("Enable debug output"),
         "failedUpdateReceipt":
             MessageLookupByLibrary.simpleMessage("Failed to update receipt"),
+        "groceryCategory": MessageLookupByLibrary.simpleMessage("Grocery"),
+        "healthCategory": MessageLookupByLibrary.simpleMessage("Health"),
         "invalidInput":
             MessageLookupByLibrary.simpleMessage("Input appears invalid."),
         "invalidServerIP": MessageLookupByLibrary.simpleMessage(
             "The given submitted server IP appear invalid. Please try again."),
+        "invalidTotal":
+            MessageLookupByLibrary.simpleMessage("Total is invalid."),
         "openSourceLicence":
             MessageLookupByLibrary.simpleMessage("Open source licenses"),
         "receiptDateDialog":
@@ -42,10 +50,14 @@ class MessageLookup extends MessageLookupByLibrary {
         "receiptDateFormat": MessageLookupByLibrary.simpleMessage("dd.MM.YYYY"),
         "receiptDateHelperText":
             MessageLookupByLibrary.simpleMessage("Set the receipt date"),
+        "receiptDateInvalid": MessageLookupByLibrary.simpleMessage(
+            "Receipt date is invalid, format:"),
         "receiptDateLabelText":
             MessageLookupByLibrary.simpleMessage("Receipt date"),
         "receiptDateNotFormatted":
             MessageLookupByLibrary.simpleMessage("Date is not formatted"),
+        "receiptEmpty":
+            MessageLookupByLibrary.simpleMessage("Please enter some date"),
         "receiptLoadFailed": MessageLookupByLibrary.simpleMessage(
             "Error Occur, could not load receipts"),
         "receiptSelectCategory":
@@ -73,6 +85,14 @@ class MessageLookup extends MessageLookupByLibrary {
         "settingsNetworkCategory":
             MessageLookupByLibrary.simpleMessage("Network"),
         "settingsServerTitle": MessageLookupByLibrary.simpleMessage("Server"),
+        "storeNameHelper":
+            MessageLookupByLibrary.simpleMessage("Set the store name"),
+        "storeNameHint": MessageLookupByLibrary.simpleMessage("Store name"),
+        "storeNameTitle": MessageLookupByLibrary.simpleMessage("Store name"),
+        "totalHelperText":
+            MessageLookupByLibrary.simpleMessage("Receipt total"),
+        "totalLabelText": MessageLookupByLibrary.simpleMessage("Receipt total"),
+        "totalTitle": MessageLookupByLibrary.simpleMessage("Receipt total"),
         "update": MessageLookupByLibrary.simpleMessage("Update"),
         "updateReceipt": MessageLookupByLibrary.simpleMessage("Update Receipt"),
         "updateReceiptSuccessful":

@@ -13,6 +13,8 @@
   "settingsMiscTitle": "Misc",
   "openSourceLicence": "Open source licenses",
   "addReceipt": "Add receipt",
+  "receiptDateInvalid": "Receipt date is invalid, format:",
+  "receiptEmpty": "Please enter some date",
   "receiptDateFormat": "dd.MM.YYYY",
   "receiptDateLabelText": "Receipt date",
   "receiptDateHelperText": "Set the receipt date",
@@ -34,5 +36,16 @@
   "serverIPLabelText": "Server ip address",
   "serverIPHelpText": "Set the image server ip",
   "invalidServerIP": "The given submitted server IP appear invalid. Please try again.",
-  "updateServerIP": "Server ip is set."
+  "updateServerIP": "Server ip is set.",
+  "groceryCategory": "Grocery",
+  "healthCategory": "Health",
+  "storeNameTitle": "Store name",
+  "storeNameHint": "Store name",
+  "storeNameHelper": "Set the store name",
+  "emptyStoreName": "'Please enter a store name.",
+  "totalTitle": "Receipt total",
+  "totalLabelText": "Receipt total",
+  "totalHelperText": "Receipt total",
+  "emptyTotal": "Please enter the total.",
+  "invalidTotal": "Total is invalid."
 }

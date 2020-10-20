@@ -4,7 +4,6 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:receipt_parser/bloc/moor/bloc.dart';
 import 'package:receipt_parser/database/receipt_database.dart';
 import 'package:receipt_parser/date/date_manipulator.dart';
-import 'package:receipt_parser/factory/categories_factory.dart';
 import 'package:receipt_parser/factory/logo_factory.dart';
 import 'package:receipt_parser/factory/padding_factory.dart';
 import 'package:receipt_parser/factory/text_form_history.dart';
@@ -32,8 +31,6 @@ class HistoryWidgetState extends State<HistoryWidget> {
   TextEditingController receiptTotalController;
   TextEditingController dateController;
   TextEditingController _controller = TextEditingController();
-
-  List<ReceiptCategory> categories = ReceiptCategoryFactory.get();
 
   String receiptCategory;
   ReceiptCategory selectedCategory;
@@ -242,11 +239,11 @@ class HistoryWidgetState extends State<HistoryWidget> {
                                   PaddingFactory.create(new Theme(
                                       data: AppTheme.lightTheme,
                                       child: TextFormFactory.storeName(
-                                          storeNameController))),
+                                          storeNameController, context))),
                                   PaddingFactory.create(new Theme(
                                       data: AppTheme.lightTheme,
                                       child: TextFormFactory.total(
-                                          receiptTotalController))),
+                                          receiptTotalController, context))),
                                   PaddingFactory.create(new Theme(
                                       data: AppTheme.lightTheme,
                                       child: TextFormFactory.date(

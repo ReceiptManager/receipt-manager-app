@@ -49,9 +49,6 @@ class ReceiptInputController extends State<ReceiptForm> {
   ReceiptsCompanion parsedReceipt;
   ReceiptCategory selectedCategory;
 
-  // Get all receipt categories
-  List<ReceiptCategory> categories = ReceiptCategoryFactory.get();
-
   ReceiptInputController(
       this.parsedReceipt, this.sendImage, this.sharedPrefs, this._bloc);
 
@@ -132,11 +129,11 @@ class ReceiptInputController extends State<ReceiptForm> {
                         PaddingFactory.create(new Theme(
                             data: AppTheme.lightTheme,
                             child: TextFormFactory.storeName(
-                                storeNameController))),
+                                storeNameController, context))),
                         PaddingFactory.create(new Theme(
                             data: AppTheme.lightTheme,
-                            child:
-                                TextFormFactory.total(receiptTotalController))),
+                            child: TextFormFactory.total(
+                                receiptTotalController, context))),
                         PaddingFactory.create(new Theme(
                             data: AppTheme.lightTheme,
                             child: TextFormField(
@@ -155,15 +152,10 @@ class ReceiptInputController extends State<ReceiptForm> {
                                   border: new OutlineInputBorder(
                                       borderSide: new BorderSide(
                                           color: HexColor.fromHex("#232F34"))),
-                                  hintText: S
-                                      .of(context)
-                                      .receiptDateFormat,
-                                  labelText: S
-                                      .of(context)
-                                      .receiptDateLabelText,
-                                  helperText: S
-                                      .of(context)
-                                      .receiptDateHelperText,
+                                  hintText: S.of(context).receiptDateFormat,
+                                  labelText: S.of(context).receiptDateLabelText,
+                                  helperText:
+                                      S.of(context).receiptDateHelperText,
                                   prefixIcon: IconButton(
                                       icon: Icon(
                                         Icons.calendar_today,
@@ -187,7 +179,7 @@ class ReceiptInputController extends State<ReceiptForm> {
                                                   buttonTheme: ButtonThemeData(
                                                       textTheme: ButtonTextTheme
                                                           .primary),
-                                                ),
+                                                    ),
                                                 child: child,
                                               );
                                             },
@@ -195,11 +187,11 @@ class ReceiptInputController extends State<ReceiptForm> {
                                             initialDate: DateTime.now(),
                                             firstDate: DateTime(2010),
                                             lastDate: DateTime(2050));
-                                        dateController.text =
-                                            DateFormat(S
+                                        dateController.text = DateFormat(
+                                            S
                                                 .of(context)
                                                 .receiptDateFormat)
-                                                .format(receiptDate);
+                                            .format(receiptDate);
                                       })),
                               controller: dateController,
                               validator: (value) {
@@ -216,9 +208,11 @@ class ReceiptInputController extends State<ReceiptForm> {
                                 if (!totalRegex.hasMatch(value.trim())) {
                                   return S
                                       .of(context)
-                                      .receiptDateNotFormatted + " " + S
-                                      .of(context)
-                                      .receiptDateFormat;
+                                      .receiptDateNotFormatted +
+                                      " " +
+                                      S
+                                          .of(context)
+                                          .receiptDateFormat;
                                 }
 
                                 return null;
@@ -234,9 +228,10 @@ class ReceiptInputController extends State<ReceiptForm> {
                                 data: AppTheme.lightTheme,
                                 child: DropdownButton<ReceiptCategory>(
                                     key: _dropKey,
-                                    hint: Text(S
-                                        .of(context)
-                                        .receiptSelectCategory),
+                                    hint: Text(
+                                        S
+                                            .of(context)
+                                            .receiptSelectCategory),
                                     value: selectedCategory,
                                     isExpanded: true,
                                     onChanged: (ReceiptCategory value) {
@@ -245,8 +240,8 @@ class ReceiptInputController extends State<ReceiptForm> {
                                         selectedCategory = value;
                                       });
                                     },
-                                    items: categories.map((
-                                        ReceiptCategory user) {
+                                    items: ReceiptCategoryFactory.get(context)
+                                        .map((ReceiptCategory user) {
                                       return DropdownMenuItem<ReceiptCategory>(
                                         value: user,
                                         child: Row(
@@ -258,8 +253,8 @@ class ReceiptInputController extends State<ReceiptForm> {
                                             Text(user.name),
                                           ],
                                         ),
-                                  );
-                                }).toList())))),
+                                      );
+                                    }).toList())))),
                         new Align(
                             alignment: Alignment.bottomRight,
                             child: Padding(
