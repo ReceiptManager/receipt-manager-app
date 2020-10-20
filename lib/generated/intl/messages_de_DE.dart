@@ -63,6 +63,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "Die eingegebene IP war falsch. Bitte versuchen Sie es erneut"),
         "invalidTotal":
             MessageLookupByLibrary.simpleMessage("Betrag ist ungültig"),
+        "language": MessageLookupByLibrary.simpleMessage("Sprache"),
         "openSourceLicence":
             MessageLookupByLibrary.simpleMessage("Open-Source Lizenzen"),
         "receiptDateDialog":
@@ -81,18 +82,28 @@ class MessageLookup extends MessageLookupByLibrary {
             "Ein Fehler ist aufgetreten, Kassenbelege konnten nicht geladen werden"),
         "receiptSelectCategory":
             MessageLookupByLibrary.simpleMessage("Wähle eine Kategorie"),
-        "serverIP" : MessageLookupByLibrary.simpleMessage("Server ip"),
-    "serverIPHelpText" : MessageLookupByLibrary.simpleMessage("Zugangs-Server Addresse "),
-    "serverIPLabelText" : MessageLookupByLibrary.simpleMessage("Server ip Addresse"),
-    "serverSettings" : MessageLookupByLibrary.simpleMessage("Server Einstellungen"),
-    "settingsDeveloperSubtitle" : MessageLookupByLibrary.simpleMessage("Entwickelerwerkzeuge"),
-    "settingsDeveloperTitle" : MessageLookupByLibrary.simpleMessage("Entwickler"),
-    "settingsDevelopmentTitle" : MessageLookupByLibrary.simpleMessage("Entwicklung"),
-    "settingsGeneralCategory" : MessageLookupByLibrary.simpleMessage("Allgemein"),
-    "settingsLanguageTitle" : MessageLookupByLibrary.simpleMessage("Sprache"),
-    "settingsMiscTitle" : MessageLookupByLibrary.simpleMessage("Verschiedenes"),
-    "settingsNetworkCategory" : MessageLookupByLibrary.simpleMessage("Netzwerk"),
-    "settingsServerTitle" : MessageLookupByLibrary.simpleMessage("Netzwerk Einstellungen"),
+        "serverIP": MessageLookupByLibrary.simpleMessage("Server ip"),
+        "serverIPHelpText":
+            MessageLookupByLibrary.simpleMessage("Zugangs-Server Addresse "),
+        "serverIPLabelText":
+            MessageLookupByLibrary.simpleMessage("Server ip Addresse"),
+        "serverSettings":
+            MessageLookupByLibrary.simpleMessage("Server Einstellungen"),
+        "settingsDeveloperSubtitle":
+            MessageLookupByLibrary.simpleMessage("Entwickelerwerkzeuge"),
+        "settingsDeveloperTitle":
+            MessageLookupByLibrary.simpleMessage("Entwickler"),
+        "settingsDevelopmentTitle":
+            MessageLookupByLibrary.simpleMessage("Entwicklung"),
+        "settingsGeneralCategory":
+            MessageLookupByLibrary.simpleMessage("Allgemein"),
+        "settingsLanguageTitle":
+            MessageLookupByLibrary.simpleMessage("Sprache"),
+        "settingsMiscTitle":
+            MessageLookupByLibrary.simpleMessage("Verschiedenes"),
+        "settingsNetworkCategory":
+            MessageLookupByLibrary.simpleMessage("Netzwerk"),
+        "settingsServerTitle" : MessageLookupByLibrary.simpleMessage("Netzwerk Einstellungen"),
     "storeNameHelper" : MessageLookupByLibrary.simpleMessage("Füge einen Shop Namen hinzu"),
     "storeNameHint" : MessageLookupByLibrary.simpleMessage("Shop Name"),
     "storeNameTitle" : MessageLookupByLibrary.simpleMessage("Shop Name"),
