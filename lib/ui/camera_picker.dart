@@ -4,10 +4,8 @@ import 'dart:io';
 import 'package:camera/camera.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:giffy_dialog/giffy_dialog.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:receipt_parser/converter/color_converter.dart';
 import 'package:receipt_parser/network/network_client.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -28,6 +26,7 @@ class TakePictureScreen extends StatefulWidget {
 class TakePictureScreenState extends State<TakePictureScreen> {
   CameraController _controller;
   Future<void> _initializeControllerFuture;
+  final GlobalKey<ScaffoldState> key = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
@@ -64,11 +63,9 @@ class TakePictureScreenState extends State<TakePictureScreen> {
         },
       ),
       floatingActionButton: FloatingActionButton(
-        backgroundColor: HexColor.fromHex("#232F34"),
         child: Icon(
           Icons.camera_alt,
         ),
-        foregroundColor: HexColor.fromHex("#F9AA33"),
         onPressed: () async {
           await _initializeControllerFuture;
 
@@ -89,150 +86,5 @@ class TakePictureScreenState extends State<TakePictureScreen> {
         },
       ),
     );
-  }
-}
-
-final GlobalKey<ScaffoldState> key = GlobalKey<ScaffoldState>();
-
-class DisplayPictureScreen extends StatelessWidget {
-  final String imagePath;
-  final SharedPreferences sharedPrefs;
-
-  const DisplayPictureScreen({Key key, this.imagePath, this.sharedPrefs})
-      : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-        key: key,
-        appBar: AppBar(title: Text('Receipt')),
-        body: Container(
-          color: HexColor.fromHex("#232F34"),
-          padding: EdgeInsets.all(32),
-          child: Stack(
-            children: <Widget>[
-              Positioned.fill(
-                  child: Align(
-                      alignment: Alignment.topCenter,
-                      child: ClipRRect(
-                          borderRadius: BorderRadius.circular(32.0),
-                          child: Image.file(
-                            File(imagePath),
-                            fit: BoxFit.fill,
-                            height: 450,
-                          )))),
-              Align(
-                alignment: Alignment.bottomLeft,
-                child: FloatingActionButton(
-                  heroTag: "btn1",
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  backgroundColor: Colors.white,
-                  child: Icon(
-                    Icons.clear,
-                    color: Colors.red,
-                  ),
-                ),
-              ),
-              Align(
-                alignment: Alignment.bottomRight,
-                child: FloatingActionButton(
-                  heroTag: "btn2",
-                  onPressed: () {},
-                  backgroundColor: Colors.white,
-                  child: Icon(
-                    Icons.done,
-                    color: Colors.blueAccent,
-                  ),
-                ),
-              )
-            ],
-          ),
-        ));
-  }
-
-  sendServerAlert(BuildContext _context) {
-    showDialog(
-        context: _context,
-        builder: (_) => AssetGiffyDialog(
-              image: Image.asset(
-                "assets/robot.gif",
-                fit: BoxFit.fill,
-              ),
-              title: Text(
-                'No server ip set',
-                textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 22.0, fontWeight: FontWeight.w600),
-              ),
-              entryAnimation: EntryAnimation.BOTTOM_RIGHT,
-              description: Text(
-                'No image server ip is defined. Please set a server ip in the settings',
-                textAlign: TextAlign.center,
-                style: TextStyle(),
-              ),
-              onCancelButtonPressed: () {
-                Navigator.of(_context).pop();
-              },
-              onOkButtonPressed: () {
-                Navigator.of(_context).pop();
-              },
-            ));
-  }
-
-  handshakeExceptionAlert(BuildContext _context) {
-    showDialog(
-        context: _context,
-        builder: (_) => AssetGiffyDialog(
-              image: Image.asset(
-                "assets/robot.gif",
-                fit: BoxFit.fill,
-              ),
-              title: Text(
-                'Invalid server certificate',
-                textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 22.0, fontWeight: FontWeight.w600),
-              ),
-              entryAnimation: EntryAnimation.BOTTOM_RIGHT,
-              description: Text(
-                'Certificate verification failed. Please import your server certificate first.',
-                textAlign: TextAlign.center,
-                style: TextStyle(),
-              ),
-              onCancelButtonPressed: () {
-                Navigator.of(_context).pop();
-              },
-              onOkButtonPressed: () {
-                Navigator.of(_context).pop();
-              },
-            ));
-  }
-
-  socketExceptionAlert(BuildContext _context) {
-    showDialog(
-        context: _context,
-        builder: (_) => AssetGiffyDialog(
-              image: Image.asset(
-                "assets/robot.gif",
-                fit: BoxFit.fill,
-              ),
-              title: Text(
-                'Cannot connect to the image server',
-                textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 22.0, fontWeight: FontWeight.w600),
-              ),
-              entryAnimation: EntryAnimation.BOTTOM_RIGHT,
-              description: Text(
-                'The connection to the image server is refused. Please check if the server is running.',
-                textAlign: TextAlign.center,
-                style: TextStyle(),
-              ),
-              onCancelButtonPressed: () {
-                Navigator.of(_context).pop();
-              },
-              onOkButtonPressed: () {
-                Navigator.of(_context).pop();
-              },
-            ));
   }
 }

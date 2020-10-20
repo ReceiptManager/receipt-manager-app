@@ -9,6 +9,7 @@ import 'package:receipt_parser/date/date_manipulator.dart';
 import 'package:receipt_parser/factory/categories_factory.dart';
 import 'package:receipt_parser/factory/padding_factory.dart';
 import 'package:receipt_parser/factory/text_form_history.dart';
+import 'package:receipt_parser/generated/l10n.dart';
 import 'package:receipt_parser/model/receipt_category.dart';
 import 'package:receipt_parser/theme/theme_manager.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -19,7 +20,6 @@ class ReceiptForm extends StatefulWidget {
   final ReceiptsCompanion receipt;
   final sharedPrefs;
   final bool sendImage;
-
   final DbBloc _bloc;
 
   ReceiptForm(this.receipt, this.sendImage, this.sharedPrefs, this._bloc);
@@ -34,33 +34,23 @@ class ReceiptInputController extends State<ReceiptForm> {
   final _formKey = GlobalKey<FormState>();
   final _dropKey = GlobalKey<FormState>();
   final SharedPreferences sharedPrefs;
+  final DbBloc _bloc;
 
   TextEditingController storeNameController;
   TextEditingController receiptTotalController;
   TextEditingController dateController;
 
-  // ---------------------------------------------------------------------------
   String shopName;
   String total;
   bool sendImage;
   String receiptCategory;
 
-  // ---------------------------------------------------------------------------
-
-  // VARS
-  // ---------------------------------------------------------------------------
-  // current bloc device
-  final DbBloc _bloc;
-
-  // Get current date information
   DateTime receiptDate;
   ReceiptsCompanion parsedReceipt;
   ReceiptCategory selectedCategory;
 
   // Get all receipt categories
   List<ReceiptCategory> categories = ReceiptCategoryFactory.get();
-
-  // ---------------------------------------------------------------------------
 
   ReceiptInputController(
       this.parsedReceipt, this.sendImage, this.sharedPrefs, this._bloc);
@@ -109,8 +99,8 @@ class ReceiptInputController extends State<ReceiptForm> {
                                   const EdgeInsets.only(top: 16.0, left: 8),
                               child: new Align(
                                   alignment: Alignment.bottomLeft,
-                                  child: const Text(
-                                    "Add new Receipt",
+                                  child: Text(
+                                    S.of(context).addReceipt,
                                     style: TextStyle(
                                         fontSize: 25,
                                         color: Colors.black,
@@ -165,9 +155,15 @@ class ReceiptInputController extends State<ReceiptForm> {
                                   border: new OutlineInputBorder(
                                       borderSide: new BorderSide(
                                           color: HexColor.fromHex("#232F34"))),
-                                  hintText: 'dd.MM.YYYY',
-                                  labelText: 'Receipt date',
-                                  helperText: "Set the receipt date",
+                                  hintText: S
+                                      .of(context)
+                                      .receiptDateFormat,
+                                  labelText: S
+                                      .of(context)
+                                      .receiptDateLabelText,
+                                  helperText: S
+                                      .of(context)
+                                      .receiptDateHelperText,
                                   prefixIcon: IconButton(
                                       icon: Icon(
                                         Icons.calendar_today,
@@ -200,13 +196,17 @@ class ReceiptInputController extends State<ReceiptForm> {
                                             firstDate: DateTime(2010),
                                             lastDate: DateTime(2050));
                                         dateController.text =
-                                            DateFormat("dd.MM.yyyy")
+                                            DateFormat(S
+                                                .of(context)
+                                                .receiptDateFormat)
                                                 .format(receiptDate);
                                       })),
                               controller: dateController,
                               validator: (value) {
                                 if (value.isEmpty) {
-                                  return 'Please enter some date';
+                                  return S
+                                      .of(context)
+                                      .receiptDateDialog;
                                 }
                                 RegExp totalRegex = new RegExp(
                                     "^(0?[1-9]|[12][0-9]|3[01])[.\\/ ]?(0?[1-9]|1[0-2])[./ ]?(?:19|20)[0-9]{2}\$",
@@ -214,7 +214,11 @@ class ReceiptInputController extends State<ReceiptForm> {
                                     multiLine: false);
 
                                 if (!totalRegex.hasMatch(value.trim())) {
-                                  return "Date is not formatted (dd.MM.YYYY).";
+                                  return S
+                                      .of(context)
+                                      .receiptDateNotFormatted + " " + S
+                                      .of(context)
+                                      .receiptDateFormat;
                                 }
 
                                 return null;
@@ -230,7 +234,9 @@ class ReceiptInputController extends State<ReceiptForm> {
                                 data: AppTheme.lightTheme,
                                 child: DropdownButton<ReceiptCategory>(
                                     key: _dropKey,
-                                    hint: Text("Select receipt category"),
+                                    hint: Text(S
+                                        .of(context)
+                                        .receiptSelectCategory),
                                     value: selectedCategory,
                                     isExpanded: true,
                                     onChanged: (ReceiptCategory value) {
@@ -239,18 +245,19 @@ class ReceiptInputController extends State<ReceiptForm> {
                                         selectedCategory = value;
                                       });
                                     },
-                                    items: categories.map((ReceiptCategory user) {
-                                  return DropdownMenuItem<ReceiptCategory>(
-                                    value: user,
-                                    child: Row(
-                                      children: <Widget>[
-                                        user.icon,
-                                        SizedBox(
-                                          width: 10,
+                                    items: categories.map((
+                                        ReceiptCategory user) {
+                                      return DropdownMenuItem<ReceiptCategory>(
+                                        value: user,
+                                        child: Row(
+                                          children: <Widget>[
+                                            user.icon,
+                                            SizedBox(
+                                              width: 10,
+                                            ),
+                                            Text(user.name),
+                                          ],
                                         ),
-                                        Text(user.name),
-                                      ],
-                                    ),
                                   );
                                 }).toList())))),
                         new Align(
@@ -276,7 +283,9 @@ class ReceiptInputController extends State<ReceiptForm> {
               receiptCategory.isNotEmpty) {
             try {
               Scaffold.of(context).showSnackBar(SnackBar(
-                content: Text('Insert new receipt'),
+                content: Text(S
+                    .of(context)
+                    .addReceipt),
                 backgroundColor: Colors.green,
               ));
               shopName = storeNameController.text;
@@ -296,11 +305,15 @@ class ReceiptInputController extends State<ReceiptForm> {
           } else {
             if (receiptCategory.isEmpty) {
               Scaffold.of(context).showSnackBar(SnackBar(
-                  content: Text('Please select a category.'),
+                  content: Text(S
+                      .of(context)
+                      .receiptSelectCategory),
                   backgroundColor: Colors.red));
             } else {
               Scaffold.of(context).showSnackBar(SnackBar(
-                  content: Text('Input appears invalid.'),
+                  content: Text(S
+                      .of(context)
+                      .invalidInput),
                   backgroundColor: Colors.red));
             }
           }
@@ -314,14 +327,18 @@ class ReceiptInputController extends State<ReceiptForm> {
         Scaffold.of(context)
           ..hideCurrentSnackBar()
           ..showSnackBar(SnackBar(
-            content: Text("Failed to upload image."),
+            content: Text(S
+                .of(context)
+                .uploadFailed),
             backgroundColor: Colors.red,
           ));
       } else {
         Scaffold.of(context)
           ..hideCurrentSnackBar()
           ..showSnackBar(SnackBar(
-            content: Text("Image successfully uploaded."),
+            content: Text(S
+                .of(context)
+                .uploadSuccess),
             backgroundColor: Colors.green,
           ));
       }

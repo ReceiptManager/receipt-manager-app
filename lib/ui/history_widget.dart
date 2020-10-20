@@ -8,6 +8,7 @@ import 'package:receipt_parser/factory/categories_factory.dart';
 import 'package:receipt_parser/factory/logo_factory.dart';
 import 'package:receipt_parser/factory/padding_factory.dart';
 import 'package:receipt_parser/factory/text_form_history.dart';
+import 'package:receipt_parser/generated/l10n.dart';
 import 'package:receipt_parser/model/receipt_category.dart';
 import 'package:receipt_parser/theme/color/color.dart';
 import 'package:receipt_parser/theme/theme_manager.dart';
@@ -60,7 +61,7 @@ class HistoryWidgetState extends State<HistoryWidget> {
         }
         if (state is ErrorState) {
           return Center(
-            child: Text("Error Occur, could not load list view."),
+            child: Text(S.of(context).receiptLoadFailed),
           );
         }
         if (state is LoadedState) {
@@ -100,7 +101,9 @@ class HistoryWidgetState extends State<HistoryWidget> {
         closeOnScroll: true,
         secondaryActions: <Widget>[
           IconSlideAction(
-            caption: 'Delete',
+            caption: S
+                .of(context)
+                .deleteReceipt,
             color: Colors.red,
             icon: Icons.delete,
             onTap: () {
@@ -109,7 +112,9 @@ class HistoryWidgetState extends State<HistoryWidget> {
             },
           ),
           IconSlideAction(
-            caption: 'Update',
+            caption: S
+                .of(context)
+                .editReceipt,
             icon: Icons.update,
             color: LightColor.brighter,
             onTap: () {
@@ -216,7 +221,9 @@ class HistoryWidgetState extends State<HistoryWidget> {
           titleTextStyle: TextStyle(
               color: Colors.black, fontWeight: FontWeight.w400, fontSize: 22),
           backgroundColor: Colors.white,
-          title: Text('Update Task'),
+          title: Text(S
+              .of(context)
+              .updateReceipt),
           content: Container(
             height: 300,
             width: 250,
@@ -257,7 +264,9 @@ class HistoryWidgetState extends State<HistoryWidget> {
           actions: <Widget>[
             FlatButton(
               child: Text(
-                'Cancel',
+                S
+                    .of(context)
+                    .cancel,
                 style: TextStyle(color: Colors.red),
               ),
               onPressed: () {
@@ -266,7 +275,9 @@ class HistoryWidgetState extends State<HistoryWidget> {
             ),
             FlatButton(
               child: Text(
-                'Update',
+                S
+                    .of(context)
+                    .update,
               ),
               onPressed: () {
                 if (_editFormKey.currentState.validate() &&
@@ -294,7 +305,9 @@ class HistoryWidgetState extends State<HistoryWidget> {
                   Scaffold.of(context)
                     ..hideCurrentSnackBar()
                     ..showSnackBar(SnackBar(
-                      content: Text('Update successfully'),
+                      content: Text(S
+                          .of(context)
+                          .updateReceiptSuccessful),
                       backgroundColor: Colors.green,
                     ));
 
@@ -306,11 +319,12 @@ class HistoryWidgetState extends State<HistoryWidget> {
                   Scaffold.of(context)
                     ..hideCurrentSnackBar()
                     ..showSnackBar(SnackBar(
-                      content: Text("Failed to update receipt"),
+                      content: Text(S
+                          .of(context)
+                          .failedUpdateReceipt),
                       backgroundColor: Colors.red,
                     ));
                 }
-
                 Navigator.pop(context);
               },
             ),
