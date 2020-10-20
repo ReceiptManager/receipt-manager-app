@@ -36,11 +36,13 @@ class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'en_US';
 
   final messages = _notInlinedMessages(_notInlinedMessages);
+
   static _notInlinedMessages(_) => <String, Function>{
         "addReceipt": MessageLookupByLibrary.simpleMessage("Add receipt"),
         "appBarTitle": MessageLookupByLibrary.simpleMessage("Receipt manager"),
         "cancel": MessageLookupByLibrary.simpleMessage("Cancel"),
         "currency": MessageLookupByLibrary.simpleMessage("\$"),
+        "currentLanguage": MessageLookupByLibrary.simpleMessage("English"),
         "deleteReceipt": MessageLookupByLibrary.simpleMessage("Delete"),
         "editReceipt": MessageLookupByLibrary.simpleMessage("Update"),
         "emptyStoreName": MessageLookupByLibrary.simpleMessage(
@@ -57,18 +59,28 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Input appears invalid."),
         "invalidServerIP": MessageLookupByLibrary.simpleMessage(
             "The given submitted server IP appear invalid. Please try again."),
-        "invalidTotal" : MessageLookupByLibrary.simpleMessage("Total is invalid."),
-    "openSourceLicence" : MessageLookupByLibrary.simpleMessage("Open source licenses"),
-    "receiptDateDialog" : MessageLookupByLibrary.simpleMessage("Please enter some date"),
-    "receiptDateFormat" : MessageLookupByLibrary.simpleMessage("dd.MM.YYYY"),
-    "receiptDateHelperText" : MessageLookupByLibrary.simpleMessage("Set the receipt date"),
-    "receiptDateInvalid" : MessageLookupByLibrary.simpleMessage("Receipt date is invalid, format:"),
-    "receiptDateLabelText" : MessageLookupByLibrary.simpleMessage("Receipt date"),
-    "receiptDateNotFormatted" : MessageLookupByLibrary.simpleMessage("Date is not formatted"),
-    "receiptEmpty" : MessageLookupByLibrary.simpleMessage("Please enter some date"),
-    "receiptLoadFailed" : MessageLookupByLibrary.simpleMessage("Error Occur, could not load receipts"),
-    "receiptSelectCategory" : MessageLookupByLibrary.simpleMessage("Select receipt category"),
-    "serverIP" : MessageLookupByLibrary.simpleMessage("Server ip"),
+        "invalidTotal":
+            MessageLookupByLibrary.simpleMessage("Total is invalid."),
+        "openSourceLicence":
+            MessageLookupByLibrary.simpleMessage("Open source licenses"),
+        "receiptDateDialog":
+            MessageLookupByLibrary.simpleMessage("Please enter some date"),
+        "receiptDateFormat": MessageLookupByLibrary.simpleMessage("dd.MM.YYYY"),
+        "receiptDateHelperText":
+            MessageLookupByLibrary.simpleMessage("Set the receipt date"),
+        "receiptDateInvalid": MessageLookupByLibrary.simpleMessage(
+            "Receipt date is invalid, format:"),
+        "receiptDateLabelText":
+            MessageLookupByLibrary.simpleMessage("Receipt date"),
+        "receiptDateNotFormatted":
+            MessageLookupByLibrary.simpleMessage("Date is not formatted"),
+        "receiptEmpty":
+            MessageLookupByLibrary.simpleMessage("Please enter some date"),
+        "receiptLoadFailed": MessageLookupByLibrary.simpleMessage(
+            "Error Occur, could not load receipts"),
+        "receiptSelectCategory":
+            MessageLookupByLibrary.simpleMessage("Select receipt category"),
+        "serverIP" : MessageLookupByLibrary.simpleMessage("Server ip"),
     "serverIPHelpText" : MessageLookupByLibrary.simpleMessage("Set the image server ip"),
     "serverIPLabelText" : MessageLookupByLibrary.simpleMessage("Server ip address"),
     "serverSettings" : MessageLookupByLibrary.simpleMessage("Server Settings"),
@@ -76,7 +88,6 @@ class MessageLookup extends MessageLookupByLibrary {
     "settingsDeveloperTitle" : MessageLookupByLibrary.simpleMessage("Developer"),
     "settingsDevelopmentTitle" : MessageLookupByLibrary.simpleMessage("Development"),
     "settingsGeneralCategory" : MessageLookupByLibrary.simpleMessage("Common"),
-    "settingsLanguageSubtitle" : MessageLookupByLibrary.simpleMessage("English"),
     "settingsLanguageTitle" : MessageLookupByLibrary.simpleMessage("Language"),
     "settingsMiscTitle" : MessageLookupByLibrary.simpleMessage("Misc"),
     "settingsNetworkCategory" : MessageLookupByLibrary.simpleMessage("Network"),

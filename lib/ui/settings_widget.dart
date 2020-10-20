@@ -55,7 +55,7 @@ class _SettingsWidgetState extends State<SettingsWidget> {
             tiles: [
               SettingsTile(
                 title: S.of(context).settingsLanguageTitle,
-                subtitle: S.of(context).settingsLanguageSubtitle,
+                subtitle: S.of(context).currentLanguage,
                 leading: Icon(Icons.language),
                 onTap: () {
                   Navigator.of(context).push(MaterialPageRoute(

@@ -3,7 +3,7 @@
   "appBarTitle": "Receipt manager",
   "settingsGeneralCategory": "Common",
   "settingsLanguageTitle": "Language",
-  "settingsLanguageSubtitle": "English",
+  "currentLanguage": "English",
   "settingsDeveloperTitle": "Developer",
   "settingsDeveloperSubtitle": "Developer utils",
   "settingsNetworkCategory": "Network",

@@ -3,7 +3,7 @@
   "appBarTitle": "Mein Haushaltsbuch",
   "settingsGeneralCategory": "Allgemein",
   "settingsLanguageTitle": "Sprache",
-  "settingsLanguageSubtitle": "Deutsch",
+  "currentLanguage": "Deutsch",
   "settingsDeveloperTitle": "Entwickler",
   "settingsDeveloperSubtitle": "Entwickelerwerkzeuge",
   "settingsNetworkCategory": "Netzwerk",
