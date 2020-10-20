@@ -17,6 +17,7 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+
 import 'intl/messages_all.dart';
 
 // **************************************************************************
@@ -534,6 +535,16 @@ class S {
     return Intl.message(
       'Betrag ist ungültig',
       name: 'invalidTotal',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `€`
+  String get currency {
+    return Intl.message(
+      '€',
+      name: 'currency',
       desc: '',
       args: [],
     );

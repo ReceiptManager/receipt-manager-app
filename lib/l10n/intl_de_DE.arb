@@ -48,5 +48,6 @@
   "totalLabelText": "Betrag",
   "totalHelperText": "Füge den Betrag des Beleges hinzu",
   "emptyTotal": "Bitte geben einen Betrag an",
-  "invalidTotal": "Betrag ist ungültig"
+  "invalidTotal": "Betrag ist ungültig",
+  "currency": "€"
 }
