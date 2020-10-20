@@ -24,6 +24,8 @@ dependencies:
   http:
   flutter:
     sdk: flutter
+  flutter_localizations: # added
+    sdk: flutter
 
   # CAMERA MODULE
   camera: ^0.5.8+9
@@ -50,9 +52,11 @@ dev_dependencies:
     sdk: flutter
   moor_generator:
   build_runner:
+  intl_translation:
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
+
 
 # The following section is specific to Flutter.
 flutter:
@@ -94,3 +98,6 @@ flutter:
   # see https://flutter.dev/custom-fonts/#from-packages
   assets:
     - assets/
+flutter_intl:
+  main_locale: de_DE
+  enabled: true

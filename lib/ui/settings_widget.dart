@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:receipt_parser/bloc/moor/bloc.dart';
+import 'package:receipt_parser/generated/l10n.dart';
 import 'package:receipt_parser/ui/settings/developer_settings.dart';
-import 'package:receipt_parser/ui/settings/environment_setting.dart';
 import 'package:receipt_parser/ui/settings/server_settings.dart';
 import 'package:settings_ui/settings_ui.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -35,12 +35,12 @@ class _SettingsWidgetState extends State<SettingsWidget> {
       child: SettingsList(
         sections: [
           SettingsSection(
-            title: 'Common',
+            title: S.of(context).settingsGeneralCategory,
             // titleTextStyle: TextStyle(fontSize: 30),
             tiles: [
               SettingsTile(
-                title: 'Language',
-                subtitle: 'English',
+                title: S.of(context).settingsLanguageTitle,
+                subtitle: S.of(context).settingsLanguageSubtitle,
                 leading: Icon(Icons.language),
                 onTap: () {
                   Navigator.of(context).push(MaterialPageRoute(
@@ -48,17 +48,12 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                 },
               ),
               SettingsTile(
-                title: 'Environment',
-                subtitle: 'Developer',
-                leading: Icon(Icons.cloud_queue),
-                onTap: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (BuildContext context) => EnvironmentSetting()));
-                },
-              ),
-              SettingsTile(
-                title: 'Developer',
-                subtitle: 'Developer utils',
+                title: S
+                    .of(context)
+                    .settingsDeveloperTitle,
+                subtitle: S
+                    .of(context)
+                    .settingsDeveloperSubtitle,
                 leading: Icon(Icons.adb_rounded),
                 onTap: () {
                   Navigator.of(context).push(MaterialPageRoute(
@@ -69,10 +64,14 @@ class _SettingsWidgetState extends State<SettingsWidget> {
             ],
           ),
           SettingsSection(
-            title: 'Network',
+            title: S
+                .of(context)
+                .settingsNetworkCategory,
             tiles: [
               SettingsTile(
-                title: 'Server',
+                title: S
+                    .of(context)
+                    .settingsServerTitle,
                 leading: Icon(Icons.wifi),
                 onTap: () {
                   Navigator.of(context).push(MaterialPageRoute(
@@ -83,10 +82,14 @@ class _SettingsWidgetState extends State<SettingsWidget> {
             ],
           ),
           SettingsSection(
-            title: 'Development',
+            title: S
+                .of(context)
+                .settingsDevelopmentTitle,
             tiles: [
               SettingsTile.switchTile(
-                title: 'Enable debug output',
+                title: S
+                    .of(context)
+                    .enableDebugOutput,
                 leading: Icon(Icons.bug_report),
                 switchValue: enableDebugOutput,
                 onToggle: (bool value) {
@@ -99,10 +102,14 @@ class _SettingsWidgetState extends State<SettingsWidget> {
             ],
           ),
           SettingsSection(
-            title: 'Misc',
+            title: S
+                .of(context)
+                .settingsMiscTitle,
             tiles: [
               SettingsTile(
-                  title: 'Open source licenses',
+                  title: S
+                      .of(context)
+                      .openSourceLicence,
                   leading: Icon(Icons.collections_bookmark)),
             ],
           )

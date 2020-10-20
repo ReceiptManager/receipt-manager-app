@@ -1,23 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:giffy_dialog/giffy_dialog.dart';
 import 'package:receipt_parser/converter/color_converter.dart';
+import 'package:receipt_parser/generated/l10n.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ServerSettings extends StatefulWidget {
+  final SharedPreferences sharedPreferences;
+
   @override
   _ServerSettingsState createState() => _ServerSettingsState(sharedPreferences);
-
-  final SharedPreferences sharedPreferences;
 
   ServerSettings(this.sharedPreferences);
 }
 
 class _ServerSettingsState extends State<ServerSettings> {
+  final _textController = TextEditingController();
   SharedPreferences sharedPreferences;
 
   _ServerSettingsState(this.sharedPreferences);
 
-  final _textController = TextEditingController();
   String ipv4 = "";
 
   void dispose() {
@@ -41,9 +42,9 @@ class _ServerSettingsState extends State<ServerSettings> {
         ),
         border: new OutlineInputBorder(
             borderSide: new BorderSide(color: HexColor.fromHex("#232F34"))),
-        hintText: 'Server ip',
-        labelText: 'Server ip address',
-        helperText: "Set the image server ip.",
+        hintText: S.of(context).serverIP,
+        labelText: S.of(context).serverIPLabelText,
+        helperText: S.of(context).serverIPHelpText,
         prefixIcon: const Icon(
           Icons.network_wifi,
         ),
@@ -67,12 +68,14 @@ class _ServerSettingsState extends State<ServerSettings> {
     }
     return Scaffold(
         key: _scaffoldKey2,
-        appBar: AppBar(title: Text('Server Settings')),
+        appBar: AppBar(title: Text(S
+            .of(context)
+            .serverSettings)),
         body: Column(children: [
           Padding(
               padding: const EdgeInsets.all(16.0),
               child:
-                  new Theme(data: ThemeData.light(), child: serverTextfield())),
+              new Theme(data: ThemeData.light(), child: serverTextfield())),
           new Align(
               alignment: Alignment.bottomRight,
               child: Padding(
@@ -88,7 +91,8 @@ class _ServerSettingsState extends State<ServerSettings> {
                         if (ipv4.isEmpty || !ipRegex.hasMatch(ipv4)) {
                           showDialog(
                               context: context,
-                              builder: (_) => AssetGiffyDialog(
+                              builder: (_) =>
+                                  AssetGiffyDialog(
                                     image: Image.asset(
                                       "assets/robot.gif",
                                       fit: BoxFit.fill,
@@ -103,7 +107,9 @@ class _ServerSettingsState extends State<ServerSettings> {
                                     ),
                                     entryAnimation: EntryAnimation.BOTTOM_RIGHT,
                                     description: Text(
-                                      'The given submitted server ip appear invalid. Please try again.',
+                                      S
+                                          .of(context)
+                                          .invalidServerIP,
                                       textAlign: TextAlign.center,
                                       style: TextStyle(),
                                     ),
@@ -121,7 +127,9 @@ class _ServerSettingsState extends State<ServerSettings> {
                         _scaffoldKey2.currentState
                           ..hideCurrentSnackBar()
                           ..showSnackBar(SnackBar(
-                            content: Text("Server ip is set."),
+                            content: Text(S
+                                .of(context)
+                                .updateServerIP),
                             backgroundColor: Colors.green,
                           ));
                       },
