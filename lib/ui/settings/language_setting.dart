@@ -15,6 +15,8 @@
  */
 
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:receipt_parser/generated/l10n.dart';
 import 'package:settings_ui/settings_ui.dart';
 
 class LanguageSetting extends StatefulWidget {
@@ -26,23 +28,58 @@ class _LanguageSettingState extends State<LanguageSetting> {
   int languageIndex = 0;
 
   @override
+  void initState() {
+    getLanguagePosition();
+  }
+
+  getLanguagePosition() {
+    int pos = 0;
+    for (Locale l in S.delegate.supportedLocales) {
+      if (l.toString() == Intl.getCurrentLocale()) {
+        languageIndex = pos;
+        return;
+      }
+      pos++;
+    }
+  }
+
+  SettingsList generateLanguageList() {
+    return SettingsList(
+      sections: [
+        SettingsSection(tiles: [
+          SettingsTile(
+            title: "English (US)",
+            leading: trailingWidget(0),
+            onTap: () {
+              S.load((Locale('en', 'US')));
+              changeLanguage(0);
+            },
+          ),
+          SettingsTile(
+            title: "English (GB)",
+            leading: trailingWidget(1),
+            onTap: () {
+              S.load((Locale('en', 'GB')));
+              changeLanguage(1);
+            },
+          ),
+          SettingsTile(
+            title: "German",
+            leading: trailingWidget(2),
+            onTap: () {
+              S.load((Locale('de', 'DE')));
+              changeLanguage(2);
+            },
+          ),
+        ]),
+      ],
+    );
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Languages')),
-      body: SettingsList(
-        sections: [
-          SettingsSection(tiles: [
-            SettingsTile(
-              title: "English",
-              leading: trailingWidget(0),
-              onTap: () {
-                changeLanguage(0);
-              },
-            ),
-          ]),
-        ],
-      ),
-    );
+        appBar: AppBar(title: Text('Languages')), body: generateLanguageList());
   }
 
   Widget trailingWidget(int index) {

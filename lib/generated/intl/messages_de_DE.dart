@@ -36,6 +36,7 @@ class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'de_DE';
 
   final messages = _notInlinedMessages(_notInlinedMessages);
+
   static _notInlinedMessages(_) => <String, Function>{
         "addReceipt":
             MessageLookupByLibrary.simpleMessage("Kassenbeleg hinzufügen"),
@@ -43,6 +44,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Mein Haushaltsbuch"),
         "cancel": MessageLookupByLibrary.simpleMessage("Abbrechen"),
         "currency": MessageLookupByLibrary.simpleMessage("€"),
+        "currentLanguage": MessageLookupByLibrary.simpleMessage("Deutsch"),
         "deleteReceipt": MessageLookupByLibrary.simpleMessage("Löschen"),
         "editReceipt": MessageLookupByLibrary.simpleMessage("Editieren"),
         "emptyStoreName": MessageLookupByLibrary.simpleMessage(
@@ -59,18 +61,27 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Eingabe is ungültig"),
         "invalidServerIP": MessageLookupByLibrary.simpleMessage(
             "Die eingegebene IP war falsch. Bitte versuchen Sie es erneut"),
-        "invalidTotal" : MessageLookupByLibrary.simpleMessage("Betrag ist ungültig"),
-    "openSourceLicence" : MessageLookupByLibrary.simpleMessage("Open-Source Lizenzen"),
-    "receiptDateDialog" : MessageLookupByLibrary.simpleMessage("Please enter some date"),
-    "receiptDateFormat" : MessageLookupByLibrary.simpleMessage("dd.MM.YYYY"),
-    "receiptDateHelperText" : MessageLookupByLibrary.simpleMessage("Füge das Datum das Kassenbeleg hinzu"),
-    "receiptDateInvalid" : MessageLookupByLibrary.simpleMessage("Receipt date is invalid, format:"),
-    "receiptDateLabelText" : MessageLookupByLibrary.simpleMessage("Datum"),
-    "receiptDateNotFormatted" : MessageLookupByLibrary.simpleMessage("Eingabeformat ungültig"),
-    "receiptEmpty" : MessageLookupByLibrary.simpleMessage("Bitte geben Sie ein Datum ein"),
-    "receiptLoadFailed" : MessageLookupByLibrary.simpleMessage("Ein Fehler ist aufgetreten, Kassenbelege konnten nicht geladen werden"),
-    "receiptSelectCategory" : MessageLookupByLibrary.simpleMessage("Wähle eine Kategorie"),
-    "serverIP" : MessageLookupByLibrary.simpleMessage("Server ip"),
+        "invalidTotal":
+            MessageLookupByLibrary.simpleMessage("Betrag ist ungültig"),
+        "openSourceLicence":
+            MessageLookupByLibrary.simpleMessage("Open-Source Lizenzen"),
+        "receiptDateDialog":
+            MessageLookupByLibrary.simpleMessage("Please enter some date"),
+        "receiptDateFormat": MessageLookupByLibrary.simpleMessage("dd.MM.YYYY"),
+        "receiptDateHelperText": MessageLookupByLibrary.simpleMessage(
+            "Füge das Datum das Kassenbeleg hinzu"),
+        "receiptDateInvalid": MessageLookupByLibrary.simpleMessage(
+            "Receipt date is invalid, format:"),
+        "receiptDateLabelText": MessageLookupByLibrary.simpleMessage("Datum"),
+        "receiptDateNotFormatted":
+            MessageLookupByLibrary.simpleMessage("Eingabeformat ungültig"),
+        "receiptEmpty": MessageLookupByLibrary.simpleMessage(
+            "Bitte geben Sie ein Datum ein"),
+        "receiptLoadFailed": MessageLookupByLibrary.simpleMessage(
+            "Ein Fehler ist aufgetreten, Kassenbelege konnten nicht geladen werden"),
+        "receiptSelectCategory":
+            MessageLookupByLibrary.simpleMessage("Wähle eine Kategorie"),
+        "serverIP" : MessageLookupByLibrary.simpleMessage("Server ip"),
     "serverIPHelpText" : MessageLookupByLibrary.simpleMessage("Zugangs-Server Addresse "),
     "serverIPLabelText" : MessageLookupByLibrary.simpleMessage("Server ip Addresse"),
     "serverSettings" : MessageLookupByLibrary.simpleMessage("Server Einstellungen"),
@@ -78,7 +89,6 @@ class MessageLookup extends MessageLookupByLibrary {
     "settingsDeveloperTitle" : MessageLookupByLibrary.simpleMessage("Entwickler"),
     "settingsDevelopmentTitle" : MessageLookupByLibrary.simpleMessage("Entwicklung"),
     "settingsGeneralCategory" : MessageLookupByLibrary.simpleMessage("Allgemein"),
-    "settingsLanguageSubtitle" : MessageLookupByLibrary.simpleMessage("Deutsch"),
     "settingsLanguageTitle" : MessageLookupByLibrary.simpleMessage("Sprache"),
     "settingsMiscTitle" : MessageLookupByLibrary.simpleMessage("Verschiedenes"),
     "settingsNetworkCategory" : MessageLookupByLibrary.simpleMessage("Netzwerk"),

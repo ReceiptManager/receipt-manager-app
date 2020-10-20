@@ -81,10 +81,10 @@ class S {
   }
 
   /// `Deutsch`
-  String get settingsLanguageSubtitle {
+  String get currentLanguage {
     return Intl.message(
       'Deutsch',
-      name: 'settingsLanguageSubtitle',
+      name: 'currentLanguage',
       desc: '',
       args: [],
     );
