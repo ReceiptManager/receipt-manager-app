@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 William Todt
+ * Copyright (c) 2020 - William Todt
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,6 +26,7 @@ import 'package:receipt_parser/theme/theme_manager.dart';
 import 'package:receipt_parser/ui/history_widget.dart';
 import 'package:receipt_parser/ui/home_widget.dart';
 import 'package:receipt_parser/ui/settings_widget.dart';
+import 'package:receipt_parser/ui/stats_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 final Repository _repository = Repository();
@@ -77,6 +78,7 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     final List<Widget> _children = [
       HomeWidget(this.receipt, sendImage, sharedPrefs, _bloc),
       HistoryWidget(_bloc),
+      StatsWidget(_bloc),
       SettingsWidget(sharedPrefs, _bloc)
     ];
 
@@ -89,6 +91,7 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
           items: <Widget>[
             Icon(Icons.add, color: Colors.white, size: 30),
             Icon(Icons.history, color: Colors.white, size: 30),
+            Icon(Icons.analytics_outlined, color: Colors.white, size: 30),
             Icon(Icons.settings, color: Colors.white, size: 30),
           ],
           color: LightColor.brighter,

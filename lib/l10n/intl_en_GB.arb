@@ -50,5 +50,14 @@
   "emptyTotal": "Please enter the total.",
   "invalidTotal": "Total is invalid.",
   "currency": "£",
-  "language": "Language"
+  "language": "Language",
+  "monday": "Monday",
+  "tuesday": "Tuesday",
+  "wednesday": "Wednesday",
+  "thursday": "Thursday",
+  "friday": "Friday",
+  "saturday": "Saturday",
+  "sunday": "Sunday",
+  "overviewExpenses": "Ausgabenübersicht",
+  "overview": "Wochenübersicht"
 }

@@ -45,7 +45,7 @@ dependencies:
   settings_ui: ^0.4.0
   flutter_staggered_grid_view: ^0.3.2
   permission_handler: ^5.0.1+1
-
+  fl_chart: ^0.12.0
 
 dev_dependencies:
   flutter_test:

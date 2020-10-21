@@ -50,5 +50,14 @@
   "emptyTotal": "Bitte geben einen Betrag an",
   "invalidTotal": "Betrag ist ungültig",
   "currency": "€",
-  "language": "Sprache"
+  "language": "Sprache",
+  "monday": "Monday",
+  "tuesday": "Tuesday",
+  "wednesday": "Wednesday",
+  "thursday": "Thursday",
+  "friday": "Friday",
+  "saturday": "Saturday",
+  "sunday": "Sunday",
+  "overviewExpenses": "Ausgabenübersicht",
+  "overview": "Wochenübersicht"
 }
