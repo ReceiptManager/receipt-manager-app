@@ -75,14 +75,10 @@ class _SettingsWidgetState extends State<SettingsWidget> {
             ],
           ),
           SettingsSection(
-            title: S
-                .of(context)
-                .settingsNetworkCategory,
+            title: S.of(context).settingsNetworkCategory,
             tiles: [
               SettingsTile(
-                title: S
-                    .of(context)
-                    .settingsServerTitle,
+                title: S.of(context).settingsServerTitle,
                 leading: Icon(Icons.wifi),
                 onTap: () {
                   Navigator.of(context).push(MaterialPageRoute(

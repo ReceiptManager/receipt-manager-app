@@ -24,7 +24,6 @@ class LogoFactory {
 
   LogoFactory(this._receipt, this.context);
 
-
   String buildPath() {
     String _fallback = assetsLogoPrefix +
         _receipt.category.split(" ")[0].toLowerCase().trim() +

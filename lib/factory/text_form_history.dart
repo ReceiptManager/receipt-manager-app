@@ -50,13 +50,9 @@ class TextFormFactory {
             multiLine: false);
 
         if (!totalRegex.hasMatch(value.trim())) {
-          return S
-              .of(context)
-              .receiptDateInvalid +
+          return S.of(context).receiptDateInvalid +
               " " +
-              S
-                  .of(context)
-                  .receiptDateFormat;
+              S.of(context).receiptDateFormat;
         }
 
         return null;
@@ -64,8 +60,8 @@ class TextFormFactory {
     );
   }
 
-  static TextFormField total(TextEditingController receiptTotalController,
-      BuildContext context) {
+  static TextFormField total(
+      TextEditingController receiptTotalController, BuildContext context) {
     return TextFormField(
       style: TextStyle(color: HexColor.fromHex("#232F34")),
       keyboardType: TextInputType.number,
@@ -78,15 +74,9 @@ class TextFormFactory {
         ),
         border: new OutlineInputBorder(
             borderSide: new BorderSide(color: HexColor.fromHex("#232F34"))),
-        hintText: S
-            .of(context)
-            .totalTitle,
-        labelText: S
-            .of(context)
-            .totalLabelText,
-        helperText: S
-            .of(context)
-            .totalHelperText,
+        hintText: S.of(context).totalTitle,
+        labelText: S.of(context).totalLabelText,
+        helperText: S.of(context).totalHelperText,
         prefixIcon: const Icon(
           Icons.attach_money,
         ),
