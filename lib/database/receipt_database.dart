@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 William Todt
+ * Copyright (c) 2020 - William Todt
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -41,10 +41,10 @@ class ReceiptDao extends DatabaseAccessor<AppDatabase> with _$ReceiptDaoMixin {
 
   Future<List<Receipt>> getReceipts() {
     return (select(receipts)
-      ..orderBy(([
+          ..orderBy(([
             (t) => OrderingTerm(expression: t.date, mode: OrderingMode.desc),
             (t) => OrderingTerm(expression: t.shop),
-      ])))
+          ])))
         .get();
   }
 

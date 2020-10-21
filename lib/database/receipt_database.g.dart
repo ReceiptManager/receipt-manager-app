@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 William Todt
+ * Copyright (c) 2020 - William Todt
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -140,11 +140,10 @@ class Receipt extends DataClass implements Insertable<Receipt> {
   }
 
   @override
-  int get hashCode =>
-      $mrjf($mrjc(
-          id.hashCode,
-          $mrjc(total.hashCode,
-              $mrjc(shop.hashCode, $mrjc(category.hashCode, date.hashCode)))));
+  int get hashCode => $mrjf($mrjc(
+      id.hashCode,
+      $mrjc(total.hashCode,
+          $mrjc(shop.hashCode, $mrjc(category.hashCode, date.hashCode)))));
 
   @override
   bool operator ==(dynamic other) =>

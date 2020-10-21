@@ -1,19 +1,3 @@
-/*
- * Copyright (c) 2020 William Todt
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 // DO NOT EDIT. This is code generated via package:intl/generate_localized.dart
 // This is a library that provides messages for a de_DE locale. All the
 // messages from the main program should be duplicated here with the same
@@ -55,6 +39,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "Entwicklerinformationen anzeigen"),
         "failedUpdateReceipt": MessageLookupByLibrary.simpleMessage(
             "Beleg wurde nicht aktualisiert"),
+        "friday": MessageLookupByLibrary.simpleMessage("Friday"),
         "groceryCategory": MessageLookupByLibrary.simpleMessage("Lebensmittel"),
         "healthCategory": MessageLookupByLibrary.simpleMessage("Gesundheit"),
         "invalidInput":
@@ -64,8 +49,12 @@ class MessageLookup extends MessageLookupByLibrary {
         "invalidTotal":
             MessageLookupByLibrary.simpleMessage("Betrag ist ungültig"),
         "language": MessageLookupByLibrary.simpleMessage("Sprache"),
+        "monday": MessageLookupByLibrary.simpleMessage("Monday"),
         "openSourceLicence":
             MessageLookupByLibrary.simpleMessage("Open-Source Lizenzen"),
+        "overview": MessageLookupByLibrary.simpleMessage("Wochenübersicht"),
+        "overviewExpenses":
+            MessageLookupByLibrary.simpleMessage("Ausgabenübersicht"),
         "receiptDateDialog":
             MessageLookupByLibrary.simpleMessage("Please enter some date"),
         "receiptDateFormat": MessageLookupByLibrary.simpleMessage("dd.MM.YYYY"),
@@ -82,6 +71,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "Ein Fehler ist aufgetreten, Kassenbelege konnten nicht geladen werden"),
         "receiptSelectCategory":
             MessageLookupByLibrary.simpleMessage("Wähle eine Kategorie"),
+        "saturday": MessageLookupByLibrary.simpleMessage("Saturday"),
         "serverIP": MessageLookupByLibrary.simpleMessage("Server ip"),
         "serverIPHelpText":
             MessageLookupByLibrary.simpleMessage("Zugangs-Server Addresse "),
@@ -93,28 +83,40 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Entwickelerwerkzeuge"),
         "settingsDeveloperTitle":
             MessageLookupByLibrary.simpleMessage("Entwickler"),
-        "settingsDevelopmentTitle":
-            MessageLookupByLibrary.simpleMessage("Entwicklung"),
-        "settingsGeneralCategory":
-            MessageLookupByLibrary.simpleMessage("Allgemein"),
-        "settingsLanguageTitle":
-            MessageLookupByLibrary.simpleMessage("Sprache"),
-        "settingsMiscTitle":
-            MessageLookupByLibrary.simpleMessage("Verschiedenes"),
-        "settingsNetworkCategory":
-            MessageLookupByLibrary.simpleMessage("Netzwerk"),
-        "settingsServerTitle" : MessageLookupByLibrary.simpleMessage("Netzwerk Einstellungen"),
-    "storeNameHelper" : MessageLookupByLibrary.simpleMessage("Füge einen Shop Namen hinzu"),
-    "storeNameHint" : MessageLookupByLibrary.simpleMessage("Shop Name"),
-    "storeNameTitle" : MessageLookupByLibrary.simpleMessage("Shop Name"),
-    "totalHelperText" : MessageLookupByLibrary.simpleMessage("Füge den Betrag des Beleges hinzu"),
-    "totalLabelText" : MessageLookupByLibrary.simpleMessage("Betrag"),
-    "totalTitle" : MessageLookupByLibrary.simpleMessage("Betrag"),
-    "update" : MessageLookupByLibrary.simpleMessage("Aktualisieren"),
-    "updateReceipt" : MessageLookupByLibrary.simpleMessage("Kassenbeleg aktualisieren"),
-    "updateReceiptSuccessful" : MessageLookupByLibrary.simpleMessage("Beleg erfolgreich aktualisiert"),
-    "updateServerIP" : MessageLookupByLibrary.simpleMessage("Zugangs-Server Addresse aktualisiert."),
-    "uploadFailed" : MessageLookupByLibrary.simpleMessage("Bild konnte nicht hochgeladen werden"),
-    "uploadSuccess" : MessageLookupByLibrary.simpleMessage("Bild erfolgreich hochgeladen")
+    "settingsDevelopmentTitle":
+    MessageLookupByLibrary.simpleMessage("Entwicklung"),
+    "settingsGeneralCategory":
+    MessageLookupByLibrary.simpleMessage("Allgemein"),
+    "settingsLanguageTitle":
+    MessageLookupByLibrary.simpleMessage("Sprache"),
+    "settingsMiscTitle":
+    MessageLookupByLibrary.simpleMessage("Verschiedenes"),
+    "settingsNetworkCategory":
+    MessageLookupByLibrary.simpleMessage("Netzwerk"),
+    "settingsServerTitle":
+    MessageLookupByLibrary.simpleMessage("Netzwerk Einstellungen"),
+    "storeNameHelper":
+    MessageLookupByLibrary.simpleMessage("Füge einen Shop Namen hinzu"),
+    "storeNameHint": MessageLookupByLibrary.simpleMessage("Shop Name"),
+    "storeNameTitle": MessageLookupByLibrary.simpleMessage("Shop Name"),
+    "sunday": MessageLookupByLibrary.simpleMessage("Sunday"),
+    "thursday": MessageLookupByLibrary.simpleMessage("Thursday"),
+    "totalHelperText": MessageLookupByLibrary.simpleMessage(
+        "Füge den Betrag des Beleges hinzu"),
+    "totalLabelText": MessageLookupByLibrary.simpleMessage("Betrag"),
+    "totalTitle": MessageLookupByLibrary.simpleMessage("Betrag"),
+    "tuesday": MessageLookupByLibrary.simpleMessage("Tuesday"),
+    "update": MessageLookupByLibrary.simpleMessage("Aktualisieren"),
+    "updateReceipt":
+    MessageLookupByLibrary.simpleMessage("Kassenbeleg aktualisieren"),
+    "updateReceiptSuccessful": MessageLookupByLibrary.simpleMessage(
+        "Beleg erfolgreich aktualisiert"),
+    "updateServerIP": MessageLookupByLibrary.simpleMessage(
+        "Zugangs-Server Addresse aktualisiert."),
+    "uploadFailed": MessageLookupByLibrary.simpleMessage(
+        "Bild konnte nicht hochgeladen werden"),
+    "uploadSuccess": MessageLookupByLibrary.simpleMessage(
+        "Bild erfolgreich hochgeladen"),
+    "wednesday": MessageLookupByLibrary.simpleMessage("Wednesday")
   };
 }

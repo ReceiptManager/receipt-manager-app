@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 William Todt
+ * Copyright (c) 2020 - William Todt
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -84,14 +84,12 @@ class _ServerSettingsState extends State<ServerSettings> {
     }
     return Scaffold(
         key: _scaffoldKey2,
-        appBar: AppBar(title: Text(S
-            .of(context)
-            .serverSettings)),
+        appBar: AppBar(title: Text(S.of(context).serverSettings)),
         body: Column(children: [
           Padding(
               padding: const EdgeInsets.all(16.0),
               child:
-              new Theme(data: ThemeData.light(), child: serverTextfield())),
+                  new Theme(data: ThemeData.light(), child: serverTextfield())),
           new Align(
               alignment: Alignment.bottomRight,
               child: Padding(

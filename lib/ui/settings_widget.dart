@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 William Todt
+ * Copyright (c) 2020 - William Todt
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -63,12 +63,8 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                 },
               ),
               SettingsTile(
-                title: S
-                    .of(context)
-                    .settingsDeveloperTitle,
-                subtitle: S
-                    .of(context)
-                    .settingsDeveloperSubtitle,
+                title: S.of(context).settingsDeveloperTitle,
+                subtitle: S.of(context).settingsDeveloperSubtitle,
                 leading: Icon(Icons.adb_rounded),
                 onTap: () {
                   Navigator.of(context).push(MaterialPageRoute(

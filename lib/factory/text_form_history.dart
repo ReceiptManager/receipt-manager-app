@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 William Todt
+ * Copyright (c) 2020 - William Todt
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -42,9 +42,7 @@ class TextFormFactory {
       controller: dateController,
       validator: (value) {
         if (value.isEmpty) {
-          return S
-              .of(context)
-              .receiptEmpty;
+          return S.of(context).receiptEmpty;
         }
         RegExp totalRegex = new RegExp(
             "^(0?[1-9]|[12][0-9]|3[01])[.\\/ ]?(0?[1-9]|1[0-2])[./ ]?(?:19|20)[0-9]{2}\$",
@@ -54,9 +52,11 @@ class TextFormFactory {
         if (!totalRegex.hasMatch(value.trim())) {
           return S
               .of(context)
-              .receiptDateInvalid + " " + S
-              .of(context)
-              .receiptDateFormat;
+              .receiptDateInvalid +
+              " " +
+              S
+                  .of(context)
+                  .receiptDateFormat;
         }
 
         return null;

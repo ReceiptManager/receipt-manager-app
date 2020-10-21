@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 William Todt
+ * Copyright (c) 2020 - William Todt
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,6 +17,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:intl/intl.dart';
 import 'package:receipt_parser/bloc/moor/bloc.dart';
 import 'package:receipt_parser/database/receipt_database.dart';
 import 'package:receipt_parser/date/date_manipulator.dart';
@@ -107,16 +108,15 @@ class HistoryWidgetState extends State<HistoryWidget> {
 
   Widget _buildListItems(Receipt receipt) {
     LogoFactory _factory = LogoFactory(receipt, context);
-    String path = _factory.buildPath().toString();
+    String path;
+    Intl.withLocale("en_US", () => path = _factory.buildPath().toString());
 
     return Slidable(
         actionPane: SlidableDrawerActionPane(),
         closeOnScroll: true,
         secondaryActions: <Widget>[
           IconSlideAction(
-            caption: S
-                .of(context)
-                .deleteReceipt,
+            caption: S.of(context).deleteReceipt,
             color: Colors.red,
             icon: Icons.delete,
             onTap: () {
@@ -136,52 +136,62 @@ class HistoryWidgetState extends State<HistoryWidget> {
           ),
         ],
         child: Card(
-            color: Colors.white,
-            child: Container(
-                color: Colors.white,
-                child: ListTile(
-                    leading: Container(
-                        width: 40,
-                        height: 40,
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(5.0),
-                          child: Image.asset(
-                            path,
-                            fit: BoxFit.fill,
-                          ),
-                        )),
-                    contentPadding:
-                        EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
-                    trailing: Text(
-                      "-" + receipt.total + S.of(context).currency,
-                      style: TextStyle(
-                          color: Colors.redAccent,
-                          fontWeight: FontWeight.w300,
-                          fontSize: 20),
-                    ),
-                    subtitle: Row(
-                      children: <Widget>[
-                        Text(
-                            receipt.category +
-                                ", " +
-                                DateManipulator.humanDate(receipt.date),
-                            style: TextStyle(color: Colors.black))
-                      ],
-                    ),
-                    title: Text(
-                      receipt.shop,
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.w300,
-                          fontSize: 18),
-                    )))));
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(15.0),
+            ),
+            child: ClipPath(
+              child: Container(
+                  color: Colors.white,
+                  child: ListTile(
+                      leading: Container(
+                          width: 50,
+                          height: 50,
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(5.0),
+                            child: Image.asset(
+                              path,
+                              fit: BoxFit.fill,
+                            ),
+                          )),
+                      contentPadding:
+                      EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
+                      trailing: Text(
+                        "-" + receipt.total + S
+                            .of(context)
+                            .currency,
+                        style: TextStyle(
+                            color: Colors.redAccent,
+                            fontWeight: FontWeight.w300,
+                            fontSize: 20),
+                      ),
+                      subtitle: Row(
+                        children: <Widget>[
+                          Text(
+                              receipt.category +
+                                  ", " +
+                                  DateManipulator.humanDate(receipt.date),
+                              style: TextStyle(
+                                  color: Colors.black, fontSize: 16))
+                        ],
+                      ),
+                      title: Text(
+                        receipt.shop,
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16),
+                      ))),
+              clipper: ShapeBorderClipper(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8))),
+            )));
   }
 
   Container createEditMenu({hint, icon, controller}) {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
-        color: Colors.blueAccent,
+        color: Colors.white,
       ),
       child: TextFormField(
         controller: controller,
@@ -191,7 +201,7 @@ class HistoryWidgetState extends State<HistoryWidget> {
           suffixIcon: Container(
             decoration: BoxDecoration(
                 color: Colors.grey[200],
-                borderRadius: BorderRadius.all(Radius.circular(0))),
+                borderRadius: BorderRadius.all(Radius.circular(4))),
             child: IconButton(
                 icon: Icon(icon),
                 onPressed: () async {
