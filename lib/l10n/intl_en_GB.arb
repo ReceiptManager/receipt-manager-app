@@ -58,6 +58,6 @@
   "friday": "Friday",
   "saturday": "Saturday",
   "sunday": "Sunday",
-  "overviewExpenses": "Ausgabenübersicht",
-  "overview": "Wochenübersicht"
+  "overviewExpenses": "Expenses overview",
+  "overview": "Weekly overview"
 }

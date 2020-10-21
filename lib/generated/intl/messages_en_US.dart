@@ -50,9 +50,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "monday": MessageLookupByLibrary.simpleMessage("Monday"),
         "openSourceLicence":
             MessageLookupByLibrary.simpleMessage("Open source licenses"),
-        "overview": MessageLookupByLibrary.simpleMessage("Wochenübersicht"),
+        "overview": MessageLookupByLibrary.simpleMessage("Weekly overview"),
         "overviewExpenses":
-            MessageLookupByLibrary.simpleMessage("Ausgabenübersicht"),
+            MessageLookupByLibrary.simpleMessage("Expenses overview"),
         "receiptDateDialog":
             MessageLookupByLibrary.simpleMessage("Please enter some date"),
         "receiptDateFormat": MessageLookupByLibrary.simpleMessage("dd.MM.y"),
