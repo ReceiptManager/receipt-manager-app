@@ -148,12 +148,12 @@ class Receipt extends DataClass implements Insertable<Receipt> {
   @override
   bool operator ==(dynamic other) =>
       identical(this, other) ||
-          (other is Receipt &&
-              other.id == this.id &&
-              other.total == this.total &&
-              other.shop == this.shop &&
-              other.category == this.category &&
-              other.date == this.date);
+      (other is Receipt &&
+          other.id == this.id &&
+          other.total == this.total &&
+          other.shop == this.shop &&
+          other.category == this.category &&
+          other.date == this.date);
 }
 
 class ReceiptsCompanion extends UpdateCompanion<Receipt> {

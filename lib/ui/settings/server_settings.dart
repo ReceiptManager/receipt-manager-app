@@ -105,8 +105,7 @@ class _ServerSettingsState extends State<ServerSettings> {
                         if (ipv4.isEmpty || !ipRegex.hasMatch(ipv4)) {
                           showDialog(
                               context: context,
-                              builder: (_) =>
-                                  AssetGiffyDialog(
+                              builder: (_) => AssetGiffyDialog(
                                     image: Image.asset(
                                       "assets/robot.gif",
                                       fit: BoxFit.fill,

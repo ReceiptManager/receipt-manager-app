@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:developer';
 
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
@@ -136,15 +135,17 @@ class StatsWidgetState extends State<StatsWidget> {
 
   void generateData(List<Receipt> r) {
     final date = DateTime.now();
+    expenses = [0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00];
     final startDate = getDate(date.subtract(Duration(days: date.weekday - 1)));
 
     for (Receipt receipt in r) {
       for (int i = 0; i < 7; i++) {
-        var d = new DateTime(startDate.year, startDate.month, startDate.day + i);
+        var d =
+            new DateTime(startDate.year, startDate.month, startDate.day + i);
         if (receipt.date.year == d.year &&
             receipt.date.month == d.month &&
             receipt.date.day == d.day) {
-          expenses[i] = double.parse(receipt.total);
+          expenses[i] += double.parse(receipt.total);
         }
       }
     }
@@ -167,7 +168,8 @@ class StatsWidgetState extends State<StatsWidget> {
           width: width,
           backDrawRodData: BackgroundBarChartRodData(
             show: true,
-            y: 150,
+            y: expenses
+                .reduce((current, next) => current > next ? current : next),
             colors: [barBackgroundColor],
           ),
         ),

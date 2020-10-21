@@ -83,40 +83,40 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Entwickelerwerkzeuge"),
         "settingsDeveloperTitle":
             MessageLookupByLibrary.simpleMessage("Entwickler"),
-    "settingsDevelopmentTitle":
-    MessageLookupByLibrary.simpleMessage("Entwicklung"),
-    "settingsGeneralCategory":
-    MessageLookupByLibrary.simpleMessage("Allgemein"),
-    "settingsLanguageTitle":
-    MessageLookupByLibrary.simpleMessage("Sprache"),
-    "settingsMiscTitle":
-    MessageLookupByLibrary.simpleMessage("Verschiedenes"),
-    "settingsNetworkCategory":
-    MessageLookupByLibrary.simpleMessage("Netzwerk"),
-    "settingsServerTitle":
-    MessageLookupByLibrary.simpleMessage("Netzwerk Einstellungen"),
-    "storeNameHelper":
-    MessageLookupByLibrary.simpleMessage("Füge einen Shop Namen hinzu"),
-    "storeNameHint": MessageLookupByLibrary.simpleMessage("Shop Name"),
-    "storeNameTitle": MessageLookupByLibrary.simpleMessage("Shop Name"),
-    "sunday": MessageLookupByLibrary.simpleMessage("Sunday"),
-    "thursday": MessageLookupByLibrary.simpleMessage("Thursday"),
-    "totalHelperText": MessageLookupByLibrary.simpleMessage(
-        "Füge den Betrag des Beleges hinzu"),
-    "totalLabelText": MessageLookupByLibrary.simpleMessage("Betrag"),
-    "totalTitle": MessageLookupByLibrary.simpleMessage("Betrag"),
-    "tuesday": MessageLookupByLibrary.simpleMessage("Tuesday"),
-    "update": MessageLookupByLibrary.simpleMessage("Aktualisieren"),
-    "updateReceipt":
-    MessageLookupByLibrary.simpleMessage("Kassenbeleg aktualisieren"),
-    "updateReceiptSuccessful": MessageLookupByLibrary.simpleMessage(
-        "Beleg erfolgreich aktualisiert"),
-    "updateServerIP": MessageLookupByLibrary.simpleMessage(
-        "Zugangs-Server Addresse aktualisiert."),
-    "uploadFailed": MessageLookupByLibrary.simpleMessage(
-        "Bild konnte nicht hochgeladen werden"),
-    "uploadSuccess": MessageLookupByLibrary.simpleMessage(
-        "Bild erfolgreich hochgeladen"),
-    "wednesday": MessageLookupByLibrary.simpleMessage("Wednesday")
-  };
+        "settingsDevelopmentTitle":
+            MessageLookupByLibrary.simpleMessage("Entwicklung"),
+        "settingsGeneralCategory":
+            MessageLookupByLibrary.simpleMessage("Allgemein"),
+        "settingsLanguageTitle":
+            MessageLookupByLibrary.simpleMessage("Sprache"),
+        "settingsMiscTitle":
+            MessageLookupByLibrary.simpleMessage("Verschiedenes"),
+        "settingsNetworkCategory":
+            MessageLookupByLibrary.simpleMessage("Netzwerk"),
+        "settingsServerTitle":
+            MessageLookupByLibrary.simpleMessage("Netzwerk Einstellungen"),
+        "storeNameHelper":
+            MessageLookupByLibrary.simpleMessage("Füge einen Shop Namen hinzu"),
+        "storeNameHint": MessageLookupByLibrary.simpleMessage("Shop Name"),
+        "storeNameTitle": MessageLookupByLibrary.simpleMessage("Shop Name"),
+        "sunday": MessageLookupByLibrary.simpleMessage("Sunday"),
+        "thursday": MessageLookupByLibrary.simpleMessage("Thursday"),
+        "totalHelperText": MessageLookupByLibrary.simpleMessage(
+            "Füge den Betrag des Beleges hinzu"),
+        "totalLabelText": MessageLookupByLibrary.simpleMessage("Betrag"),
+        "totalTitle": MessageLookupByLibrary.simpleMessage("Betrag"),
+        "tuesday": MessageLookupByLibrary.simpleMessage("Tuesday"),
+        "update": MessageLookupByLibrary.simpleMessage("Aktualisieren"),
+        "updateReceipt":
+            MessageLookupByLibrary.simpleMessage("Kassenbeleg aktualisieren"),
+        "updateReceiptSuccessful": MessageLookupByLibrary.simpleMessage(
+            "Beleg erfolgreich aktualisiert"),
+        "updateServerIP": MessageLookupByLibrary.simpleMessage(
+            "Zugangs-Server Addresse aktualisiert."),
+        "uploadFailed": MessageLookupByLibrary.simpleMessage(
+            "Bild konnte nicht hochgeladen werden"),
+        "uploadSuccess": MessageLookupByLibrary.simpleMessage(
+            "Bild erfolgreich hochgeladen"),
+        "wednesday": MessageLookupByLibrary.simpleMessage("Wednesday")
+      };
 }

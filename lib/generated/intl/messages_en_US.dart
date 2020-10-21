@@ -82,37 +82,37 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Developer utils"),
         "settingsDeveloperTitle":
             MessageLookupByLibrary.simpleMessage("Developer"),
-    "settingsDevelopmentTitle":
-    MessageLookupByLibrary.simpleMessage("Development"),
-    "settingsGeneralCategory":
-    MessageLookupByLibrary.simpleMessage("Common"),
-    "settingsLanguageTitle":
-    MessageLookupByLibrary.simpleMessage("Language"),
-    "settingsMiscTitle": MessageLookupByLibrary.simpleMessage("Misc"),
-    "settingsNetworkCategory":
-    MessageLookupByLibrary.simpleMessage("Network"),
-    "settingsServerTitle": MessageLookupByLibrary.simpleMessage("Server"),
-    "storeNameHelper":
-    MessageLookupByLibrary.simpleMessage("Set the store name"),
-    "storeNameHint": MessageLookupByLibrary.simpleMessage("Store name"),
-    "storeNameTitle": MessageLookupByLibrary.simpleMessage("Store name"),
-    "sunday": MessageLookupByLibrary.simpleMessage("Sunday"),
-    "thursday": MessageLookupByLibrary.simpleMessage("Thursday"),
-    "totalHelperText":
-    MessageLookupByLibrary.simpleMessage("Receipt total"),
-    "totalLabelText": MessageLookupByLibrary.simpleMessage("Receipt total"),
-    "totalTitle": MessageLookupByLibrary.simpleMessage("Receipt total"),
-    "tuesday": MessageLookupByLibrary.simpleMessage("Tuesday"),
-    "update": MessageLookupByLibrary.simpleMessage("Update"),
-    "updateReceipt": MessageLookupByLibrary.simpleMessage("Update Receipt"),
-    "updateReceiptSuccessful":
-    MessageLookupByLibrary.simpleMessage("Update receipt successfully"),
-    "updateServerIP":
-    MessageLookupByLibrary.simpleMessage("Server ip is set."),
-    "uploadFailed":
-    MessageLookupByLibrary.simpleMessage("Failed to upload image."),
-    "uploadSuccess": MessageLookupByLibrary.simpleMessage(
-        "Image successfully uploaded."),
-    "wednesday": MessageLookupByLibrary.simpleMessage("Wednesday")
-  };
+        "settingsDevelopmentTitle":
+            MessageLookupByLibrary.simpleMessage("Development"),
+        "settingsGeneralCategory":
+            MessageLookupByLibrary.simpleMessage("Common"),
+        "settingsLanguageTitle":
+            MessageLookupByLibrary.simpleMessage("Language"),
+        "settingsMiscTitle": MessageLookupByLibrary.simpleMessage("Misc"),
+        "settingsNetworkCategory":
+            MessageLookupByLibrary.simpleMessage("Network"),
+        "settingsServerTitle": MessageLookupByLibrary.simpleMessage("Server"),
+        "storeNameHelper":
+            MessageLookupByLibrary.simpleMessage("Set the store name"),
+        "storeNameHint": MessageLookupByLibrary.simpleMessage("Store name"),
+        "storeNameTitle": MessageLookupByLibrary.simpleMessage("Store name"),
+        "sunday": MessageLookupByLibrary.simpleMessage("Sunday"),
+        "thursday": MessageLookupByLibrary.simpleMessage("Thursday"),
+        "totalHelperText":
+            MessageLookupByLibrary.simpleMessage("Receipt total"),
+        "totalLabelText": MessageLookupByLibrary.simpleMessage("Receipt total"),
+        "totalTitle": MessageLookupByLibrary.simpleMessage("Receipt total"),
+        "tuesday": MessageLookupByLibrary.simpleMessage("Tuesday"),
+        "update": MessageLookupByLibrary.simpleMessage("Update"),
+        "updateReceipt": MessageLookupByLibrary.simpleMessage("Update Receipt"),
+        "updateReceiptSuccessful":
+            MessageLookupByLibrary.simpleMessage("Update receipt successfully"),
+        "updateServerIP":
+            MessageLookupByLibrary.simpleMessage("Server ip is set."),
+        "uploadFailed":
+            MessageLookupByLibrary.simpleMessage("Failed to upload image."),
+        "uploadSuccess": MessageLookupByLibrary.simpleMessage(
+            "Image successfully uploaded."),
+        "wednesday": MessageLookupByLibrary.simpleMessage("Wednesday")
+      };
 }

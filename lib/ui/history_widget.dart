@@ -125,9 +125,7 @@ class HistoryWidgetState extends State<HistoryWidget> {
             },
           ),
           IconSlideAction(
-            caption: S
-                .of(context)
-                .editReceipt,
+            caption: S.of(context).editReceipt,
             icon: Icons.update,
             color: LightColor.brighter,
             onTap: () {
@@ -170,8 +168,8 @@ class HistoryWidgetState extends State<HistoryWidget> {
                               receipt.category +
                                   ", " +
                                   DateManipulator.humanDate(receipt.date),
-                              style: TextStyle(
-                                  color: Colors.black, fontSize: 16))
+                              style:
+                              TextStyle(color: Colors.black, fontSize: 16))
                         ],
                       ),
                       title: Text(
