@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
@@ -29,7 +30,7 @@ class StatsWidget extends StatefulWidget {
 }
 
 class StatsWidgetState extends State<StatsWidget> {
-  final Color barBackgroundColor = const Color(0xff72d8bf);
+  final Color barBackgroundColor = Colors.white; //const Color(0xff72d8bf);
   final Duration animDuration = const Duration(milliseconds: 250);
   final DbBloc _bloc;
 
@@ -155,10 +156,13 @@ class StatsWidgetState extends State<StatsWidget> {
     int x,
     double y, {
     bool isTouched = false,
-    Color barColor = Colors.white,
+    Color barColor = Colors.purple,
     double width = 22,
     List<int> showTooltips = const [],
   }) {
+    double max =
+    expenses.reduce((current, next) => current > next ? current : next);
+
     return BarChartGroupData(
       x: x,
       barRods: [
@@ -168,8 +172,7 @@ class StatsWidgetState extends State<StatsWidget> {
           width: width,
           backDrawRodData: BackgroundBarChartRodData(
             show: true,
-            y: expenses
-                .reduce((current, next) => current > next ? current : next),
+            y: max + log(max) / log(2) * 10,
             colors: [barBackgroundColor],
           ),
         ),

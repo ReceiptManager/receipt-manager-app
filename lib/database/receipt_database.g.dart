@@ -177,8 +177,7 @@ class ReceiptsCompanion extends UpdateCompanion<Receipt> {
     @required String shop,
     @required String category,
     @required DateTime date,
-  })
-      : total = Value(total),
+  })  : total = Value(total),
         shop = Value(shop),
         category = Value(category),
         date = Value(date);

@@ -120,9 +120,7 @@ class _ServerSettingsState extends State<ServerSettings> {
                                     ),
                                     entryAnimation: EntryAnimation.BOTTOM_RIGHT,
                                     description: Text(
-                                      S
-                                          .of(context)
-                                          .invalidServerIP,
+                                      S.of(context).invalidServerIP,
                                       textAlign: TextAlign.center,
                                       style: TextStyle(),
                                     ),

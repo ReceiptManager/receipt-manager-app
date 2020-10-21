@@ -85,9 +85,7 @@ class TextFormFactory {
       controller: receiptTotalController,
       validator: (value) {
         if (value.isEmpty) {
-          return S
-              .of(context)
-              .emptyTotal;
+          return S.of(context).emptyTotal;
         }
         RegExp totalRegex = new RegExp("^(?=.*[1-9])[0-9]*[.]?[0-9]{2}\$",
             caseSensitive: false, multiLine: false);

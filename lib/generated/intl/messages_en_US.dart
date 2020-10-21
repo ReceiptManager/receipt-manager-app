@@ -55,7 +55,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Ausgabenübersicht"),
         "receiptDateDialog":
             MessageLookupByLibrary.simpleMessage("Please enter some date"),
-        "receiptDateFormat": MessageLookupByLibrary.simpleMessage("dd.MM.YYYY"),
+        "receiptDateFormat": MessageLookupByLibrary.simpleMessage("dd.MM.y"),
         "receiptDateHelperText":
             MessageLookupByLibrary.simpleMessage("Set the receipt date"),
         "receiptDateInvalid": MessageLookupByLibrary.simpleMessage(
