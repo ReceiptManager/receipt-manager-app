@@ -89,14 +89,10 @@ class _SettingsWidgetState extends State<SettingsWidget> {
             ],
           ),
           SettingsSection(
-            title: S
-                .of(context)
-                .settingsDevelopmentTitle,
+            title: S.of(context).settingsDevelopmentTitle,
             tiles: [
               SettingsTile.switchTile(
-                title: S
-                    .of(context)
-                    .enableDebugOutput,
+                title: S.of(context).enableDebugOutput,
                 leading: Icon(Icons.bug_report),
                 switchValue: enableDebugOutput,
                 onToggle: (bool value) {

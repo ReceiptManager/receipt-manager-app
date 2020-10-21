@@ -14,7 +14,7 @@
   "openSourceLicence": "Open-Source Lizenzen",
   "addReceipt": "Kassenbeleg hinzufügen",
   "receiptEmpty": "Bitte geben Sie ein Datum ein",
-  "receiptDateFormat": "dd.MM.YYYY",
+  "receiptDateFormat": "dd.MM.y",
   "receiptDateLabelText": "Datum",
   "receiptDateInvalid": "Receipt date is invalid, format:",
   "receiptDateHelperText": "Füge das Datum das Kassenbeleg hinzu",

@@ -10,6 +10,8 @@ import 'intl/messages_all.dart';
 // **************************************************************************
 
 // ignore_for_file: non_constant_identifier_names, lines_longer_than_80_chars
+// ignore_for_file: join_return_with_assignment, prefer_final_in_for_each
+// ignore_for_file: avoid_redundant_argument_values
 
 class S {
   S();
@@ -175,10 +177,10 @@ class S {
     );
   }
 
-  /// `dd.MM.YYYY`
+  /// `dd.MM.y`
   String get receiptDateFormat {
     return Intl.message(
-      'dd.MM.YYYY',
+      'dd.MM.y',
       name: 'receiptDateFormat',
       desc: '',
       args: [],
@@ -649,10 +651,8 @@ class AppLocalizationDelegate extends LocalizationsDelegate<S> {
 
   @override
   bool isSupported(Locale locale) => _isSupported(locale);
-
   @override
   Future<S> load(Locale locale) => S.load(locale);
-
   @override
   bool shouldReload(AppLocalizationDelegate old) => false;
 

@@ -19,6 +19,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:intl/intl.dart';
 import 'package:receipt_parser/bloc/moor/bloc.dart';
+import 'package:receipt_parser/converter/color_converter.dart';
 import 'package:receipt_parser/database/receipt_database.dart';
 import 'package:receipt_parser/date/date_manipulator.dart';
 import 'package:receipt_parser/factory/logo_factory.dart';
@@ -152,11 +153,9 @@ class HistoryWidgetState extends State<HistoryWidget> {
                             ),
                           )),
                       contentPadding:
-                      EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
+                          EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
                       trailing: Text(
-                        "-" + receipt.total + S
-                            .of(context)
-                            .currency,
+                        "-" + receipt.total + S.of(context).currency,
                         style: TextStyle(
                             color: Colors.redAccent,
                             fontWeight: FontWeight.w300,
@@ -169,7 +168,7 @@ class HistoryWidgetState extends State<HistoryWidget> {
                                   ", " +
                                   DateManipulator.humanDate(receipt.date),
                               style:
-                              TextStyle(color: Colors.black, fontSize: 16))
+                                  TextStyle(color: Colors.black, fontSize: 16))
                         ],
                       ),
                       title: Text(
@@ -223,16 +222,16 @@ class HistoryWidgetState extends State<HistoryWidget> {
   Receipt currentReceipt;
 
   _showDialog({controller, Receipt receipt}) async {
-    storeName = receipt.shop;
-    receiptTotal = receipt.total;
-    currentReceiptDate = DateManipulator.humanDate(receipt.date);
-    category = receipt.category;
-    receiptDate = receipt.date;
+    this.storeName = receipt.shop;
+    this.receiptTotal = receipt.total;
+    this.currentReceiptDate = DateManipulator.humanDate(receipt.date);
+    this.category = receipt.category;
     this.currentReceipt = receipt;
+    // this.currentReceipt = receipt;
 
-    storeNameController.text = storeName;
-    receiptTotalController.text = receiptTotal;
-    dateController.text = currentReceiptDate;
+    this.storeNameController.text = storeName;
+    this.receiptTotalController.text = receiptTotal;
+    this.dateController.text = currentReceiptDate;
 
     await showDialog<String>(
       context: context,
@@ -270,10 +269,106 @@ class HistoryWidgetState extends State<HistoryWidget> {
                                           receiptTotalController, context))),
                                   PaddingFactory.create(new Theme(
                                       data: AppTheme.lightTheme,
-                                      child: TextFormFactory.date(
-                                          dateController,
-                                          receiptDate,
-                                          context))),
+                                      child: TextFormField(
+                                        style:
+                                        TextStyle(
+                                            color: HexColor.fromHex("#232F34")),
+                                        keyboardType: TextInputType.number,
+                                        decoration: new InputDecoration(
+                                            enabledBorder: OutlineInputBorder(
+                                              borderSide: BorderSide(
+                                                  color: HexColor.fromHex(
+                                                      "#232F34")),
+                                            ),
+                                            focusedBorder: OutlineInputBorder(
+                                              borderSide: BorderSide(
+                                                  color: HexColor.fromHex(
+                                                      "#232F34")),
+                                            ),
+                                            border: new OutlineInputBorder(
+                                                borderSide: new BorderSide(
+                                                    color: HexColor.fromHex(
+                                                        "#232F34"))),
+                                            hintText: S
+                                                .of(context)
+                                                .receiptDateFormat,
+                                            labelText: S
+                                                .of(context)
+                                                .receiptDateLabelText,
+                                            helperText:
+                                            S
+                                                .of(context)
+                                                .receiptDateHelperText,
+                                            prefixIcon: IconButton(
+                                                icon: Icon(
+                                                  Icons.calendar_today,
+                                                  color: Colors.purple,
+                                                ),
+                                                splashColor: Colors.black,
+                                                color: Colors.black,
+                                                onPressed: () async {
+                                                  this.receiptDate =
+                                                  await showDatePicker(
+                                                      builder: (
+                                                          BuildContext context,
+                                                          Widget child) {
+                                                        return Theme(
+                                                          data:
+                                                          ThemeData.light()
+                                                              .copyWith(
+                                                            primaryColor: Colors
+                                                                .black,
+                                                            accentColor: Colors
+                                                                .black,
+                                                            colorScheme:
+                                                            ColorScheme.light(
+                                                                primary: const Color(
+                                                                    0XFFF9AA33)),
+                                                            buttonTheme: ButtonThemeData(
+                                                                textTheme: ButtonTextTheme
+                                                                    .primary),
+                                                          ),
+                                                          child: child,
+                                                        );
+                                                      },
+                                                      context: context,
+                                                      initialDate: DateTime
+                                                          .now(),
+                                                      firstDate: DateTime(2010),
+                                                      lastDate: DateTime(2050));
+                                                  dateController.text =
+                                                      DateFormat(
+                                                          S
+                                                              .of(context)
+                                                              .receiptDateFormat)
+                                                          .format(receiptDate);
+                                                })),
+                                        controller: dateController,
+                                        validator: (value) {
+                                          if (value.isEmpty) {
+                                            return S
+                                                .of(context)
+                                                .receiptDateDialog;
+                                          }
+                                          RegExp totalRegex = new RegExp(
+                                              "^(0?[1-9]|[12][0-9]|3[01])[.\\/ ]?(0?[1-9]|1[0-2])[./ ]?(?:19|20)[0-9]{2}\$",
+                                              caseSensitive: false,
+                                              multiLine: false);
+
+                                          if (!totalRegex.hasMatch(
+                                              value.trim())) {
+                                            return S
+                                                .of(context)
+                                                .receiptDateNotFormatted +
+                                                " " +
+                                                S
+                                                    .of(context)
+                                                    .receiptDateFormat;
+                                          }
+
+                                          return null;
+                                        },
+                                      )))
                                 ],
                               )),
                             )
@@ -302,7 +397,7 @@ class HistoryWidgetState extends State<HistoryWidget> {
               ),
               onPressed: () {
                 if (_editFormKey.currentState.validate() &&
-                    receiptDate != null) {
+                    currentReceiptDate != null) {
                   try {
                     storeName = storeNameController.text;
                     receiptTotal = receiptTotalController.text;
@@ -316,10 +411,10 @@ class HistoryWidgetState extends State<HistoryWidget> {
 
                   _bloc.add(UpdateEvent(
                       receipt: currentReceipt.copyWith(
-                          category: (category),
-                          shop: (storeName),
-                          total: (receiptTotal),
-                          date: (receiptDate))));
+                          category: this.category,
+                          shop: this.storeName,
+                          total: this.receiptTotal,
+                          date: this.receiptDate)));
 
                   _bloc.add(ReceiptAllFetch());
 
@@ -333,9 +428,8 @@ class HistoryWidgetState extends State<HistoryWidget> {
                     ));
 
                   _controller.clear();
-                  receiptDate = null;
-                  storeName = "";
-                  receiptTotal = "";
+                  dateController.clear();
+                  receiptTotalController.clear();
                 } else {
                   Scaffold.of(context)
                     ..hideCurrentSnackBar()

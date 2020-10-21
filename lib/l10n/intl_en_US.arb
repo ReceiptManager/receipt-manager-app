@@ -15,7 +15,7 @@
   "addReceipt": "Add receipt",
   "receiptDateInvalid": "Receipt date is invalid, format:",
   "receiptEmpty": "Please enter some date",
-  "receiptDateFormat": "dd.MM.YYYY",
+  "receiptDateFormat": "dd.MM.y",
   "receiptDateLabelText": "Receipt date",
   "receiptDateHelperText": "Set the receipt date",
   "receiptDateDialog": "Please enter some date",
