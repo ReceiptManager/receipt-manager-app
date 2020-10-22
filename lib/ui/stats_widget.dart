@@ -30,12 +30,13 @@ class StatsWidget extends StatefulWidget {
 }
 
 class StatsWidgetState extends State<StatsWidget> {
- // final Color barBackgroundColor = Colors.white; //const Color(0xff72d8bf);
+  // final Color barBackgroundColor = Colors.white; //const Color(0xff72d8bf);
   final Duration animDuration = const Duration(milliseconds: 250);
   final DbBloc _bloc;
 
   // store expenses
   List<double> expenses = [0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00];
+  double weeklyExpenses = 0.00;
 
   int touchedIndex;
 
@@ -78,7 +79,7 @@ class StatsWidgetState extends State<StatsWidget> {
     return SingleChildScrollView(
         child: Column(children: <Widget>[
       PaddingFactory.create(AspectRatio(
-        aspectRatio: 0.8,
+        aspectRatio: 1.2,
         child: Card(
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
@@ -105,8 +106,10 @@ class StatsWidgetState extends State<StatsWidget> {
                     ),
                     Text(
                       S.of(context).overviewExpenses,
-                      style:
-                          TextStyle(fontSize: 18,color: Colors.grey.shade400, fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                          fontSize: 18,
+                          color: Colors.grey.shade400,
+                          fontWeight: FontWeight.bold),
                     ),
                     const SizedBox(
                       height: 38,
@@ -125,6 +128,18 @@ class StatsWidgetState extends State<StatsWidget> {
                     ),
                   ],
                 ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Align(
+                    alignment: Alignment.topRight,
+                    child: Text(
+                      "-" + weeklyExpenses.toStringAsFixed(2) + S.of(context).currency,
+                      style: TextStyle(
+                          color: Colors.red,
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold),
+                    )),
               ),
             ],
           ),
@@ -151,6 +166,8 @@ class StatsWidgetState extends State<StatsWidget> {
         }
       }
     }
+    weeklyExpenses =
+    expenses.reduce((current, next) => current > next ? current : next);
   }
 
   BarChartGroupData makeGroupData(
@@ -161,8 +178,6 @@ class StatsWidgetState extends State<StatsWidget> {
     double width = 22,
     List<int> showTooltips = const [],
   }) {
-    double max =
-        expenses.reduce((current, next) => current > next ? current : next);
 
     return BarChartGroupData(
       x: x,
@@ -173,7 +188,7 @@ class StatsWidgetState extends State<StatsWidget> {
           width: width,
           backDrawRodData: BackgroundBarChartRodData(
             show: true,
-            y: max + log(max) / log(2) * 10,
+            y: weeklyExpenses + log(weeklyExpenses) / log(2) * 10,
             colors: [LightColor.brighterL],
           ),
         ),
