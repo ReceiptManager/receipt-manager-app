@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'dart:math';
+import 'dart:math' as l;
 
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
@@ -165,9 +165,12 @@ class StatsWidgetState extends State<StatsWidget> {
             receipt.date.month == d.month &&
             receipt.date.day == d.day) {
           expenses[i] += double.parse(receipt.total);
-          sum += expenses[i];
         }
       }
+    }
+
+    for (int i = 0; i < 7; i++) {
+      sum += expenses[i];
     }
     max = expenses.reduce((current, next) => current > next ? current : next);
   }
@@ -189,7 +192,7 @@ class StatsWidgetState extends State<StatsWidget> {
           width: width,
           backDrawRodData: BackgroundBarChartRodData(
             show: true,
-            y: max + log(max) / log(2) * 2,
+            y: max + l.log(max) / l.log(2) * 2,
             colors: [LightColor.brighterL],
           ),
         ),
