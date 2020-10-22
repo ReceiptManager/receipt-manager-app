@@ -14,8 +14,11 @@
  * limitations under the License.
  */
 
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:receipt_parser/database/receipt_database.dart';
+import 'package:receipt_parser/model/receipt_category.dart';
 
 class LogoFactory {
   final Receipt _receipt;
@@ -25,9 +28,12 @@ class LogoFactory {
   LogoFactory(this._receipt, this.context);
 
   String buildPath() {
-    String _fallback = assetsLogoPrefix +
-        _receipt.category.split(" ")[0].toLowerCase().trim() +
-        ".png";
+    Map userMap = jsonDecode(_receipt.category);
+    var category = ReceiptCategory.fromJson(userMap);
+    String path = category.path;
+
+    String _fallback =
+        assetsLogoPrefix + path.split(" ")[0].toLowerCase().trim() + ".png";
 
     return _fallback;
   }

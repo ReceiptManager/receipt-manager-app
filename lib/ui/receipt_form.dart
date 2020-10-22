@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 
+import 'dart:convert';
+
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -297,7 +299,7 @@ class ReceiptInputController extends State<ReceiptForm> {
                 receipt: ReceiptsCompanion(
                     date: Value(receiptDate),
                     total: Value(total),
-                    category: Value(receiptCategory),
+                    category: Value(jsonEncode(selectedCategory)),
                     shop: Value(shopName))));
             _bloc.add(ReceiptAllFetch());
             reset();

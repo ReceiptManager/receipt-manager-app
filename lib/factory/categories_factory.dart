@@ -29,9 +29,9 @@ class ReceiptCategoryFactory {
     if (categories == null) {
       categories = <ReceiptCategory>[
         ReceiptCategory(
-            S.of(context).groceryCategory, Icon(Icons.shopping_bag_outlined)),
+            S.of(context).groceryCategory, Icon(Icons.shopping_bag_outlined), "grocery"),
         ReceiptCategory(
-            S.of(context).healthCategory, Icon(Icons.medical_services)),
+            S.of(context).healthCategory, Icon(Icons.medical_services),"health"),
       ];
     }
 
