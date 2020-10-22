@@ -9,6 +9,7 @@ import 'package:receipt_parser/bloc/moor/db_state.dart';
 import 'package:receipt_parser/database/receipt_database.dart';
 import 'package:receipt_parser/factory/padding_factory.dart';
 import 'package:receipt_parser/generated/l10n.dart';
+import 'package:receipt_parser/math/math_util.dart';
 import 'package:receipt_parser/theme/color/color.dart';
 
 class StatsWidget extends StatefulWidget {
@@ -159,6 +160,7 @@ class StatsWidgetState extends State<StatsWidget> {
     }
 
     for (int i = 0; i < 7; i++) {
+      expenses[i] = MathUtil.roundDouble(expenses[i], 2);
       sum += expenses[i];
     }
     max = expenses.reduce((current, next) => current > next ? current : next);
