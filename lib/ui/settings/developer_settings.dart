@@ -14,12 +14,17 @@
  * limitations under the License.
  */
 
+import 'dart:convert';
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:receipt_parser/bloc/moor/bloc.dart';
 import 'package:receipt_parser/bloc/moor/db_bloc.dart';
 import 'package:receipt_parser/database/receipt_database.dart';
+import 'package:receipt_parser/factory/categories_factory.dart';
+import 'package:receipt_parser/model/receipt_category.dart';
 
 class DeveloperSettings extends StatefulWidget {
   final DbBloc _bloc;
@@ -129,11 +134,13 @@ class _DeveloperSettingsState extends State<DeveloperSettings> {
 }
 
 add(BuildContext context) {
+  ReceiptCategory _category =  ReceiptCategoryFactory.categories.first;
+
   bloc.add(InsertEvent(
       receipt: ReceiptsCompanion(
           date: Value(DateTime.now()),
           total: Value("100.00"),
-          category: Value("Grocery"),
+          category: Value(jsonEncode(_category)),
           shop: Value("DEBUG EVENT"))));
   bloc.add(ReceiptAllFetch());
 

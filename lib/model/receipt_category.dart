@@ -15,10 +15,20 @@
  */
 
 import 'package:flutter/material.dart';
+import 'package:json_annotation/json_annotation.dart';
 
+@JsonSerializable()
 class ReceiptCategory {
-  const ReceiptCategory(this.name, this.icon);
+  const ReceiptCategory(this.name, this.icon, this.path);
 
   final String name;
+  final String path;
   final Icon icon;
+
+  ReceiptCategory.fromJson(Map<String, dynamic> json)
+      : name = json['name'],
+        path = json['path'],
+        icon = null;
+
+  Map<String, dynamic> toJson() => {'name': name, 'path': path};
 }

@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -49,9 +51,6 @@ class HistoryWidgetState extends State<HistoryWidget> {
   TextEditingController receiptTotalController;
   TextEditingController dateController;
   TextEditingController _controller = TextEditingController();
-
-  String receiptCategory;
-  ReceiptCategory selectedCategory;
 
   HistoryWidgetState(this._bloc);
 
@@ -109,8 +108,7 @@ class HistoryWidgetState extends State<HistoryWidget> {
 
   Widget _buildListItems(Receipt receipt) {
     LogoFactory _factory = LogoFactory(receipt, context);
-    String path;
-    Intl.withLocale("en_US", () => path = _factory.buildPath().toString());
+    String path = _factory.buildPath().toString();
 
     return Slidable(
         actionPane: SlidableDrawerActionPane(),
@@ -164,7 +162,7 @@ class HistoryWidgetState extends State<HistoryWidget> {
                       subtitle: Row(
                         children: <Widget>[
                           Text(
-                              receipt.category +
+                              ReceiptCategory.fromJson(jsonDecode(receipt.category)).name +
                                   ", " +
                                   DateManipulator.humanDate(receipt.date),
                               style:
@@ -225,7 +223,8 @@ class HistoryWidgetState extends State<HistoryWidget> {
     this.storeName = receipt.shop;
     this.receiptTotal = receipt.total;
     this.currentReceiptDate = DateManipulator.humanDate(receipt.date);
-    this.category = receipt.category;
+    String c = ReceiptCategory.fromJson(jsonDecode(receipt.category)).name;
+    this.category = c;
     this.currentReceipt = receipt;
     // this.currentReceipt = receipt;
 
@@ -241,9 +240,7 @@ class HistoryWidgetState extends State<HistoryWidget> {
           titleTextStyle: TextStyle(
               color: Colors.black, fontWeight: FontWeight.w400, fontSize: 22),
           backgroundColor: Colors.white,
-          title: Text(S
-              .of(context)
-              .updateReceipt),
+          title: Text(S.of(context).updateReceipt),
           content: Container(
             height: 300,
             width: 250,
@@ -270,8 +267,7 @@ class HistoryWidgetState extends State<HistoryWidget> {
                                   PaddingFactory.create(new Theme(
                                       data: AppTheme.lightTheme,
                                       child: TextFormField(
-                                        style:
-                                        TextStyle(
+                                        style: TextStyle(
                                             color: HexColor.fromHex("#232F34")),
                                         keyboardType: TextInputType.number,
                                         decoration: new InputDecoration(
@@ -289,14 +285,12 @@ class HistoryWidgetState extends State<HistoryWidget> {
                                                 borderSide: new BorderSide(
                                                     color: HexColor.fromHex(
                                                         "#232F34"))),
-                                            hintText: S
-                                                .of(context)
-                                                .receiptDateFormat,
+                                            hintText:
+                                                S.of(context).receiptDateFormat,
                                             labelText: S
                                                 .of(context)
                                                 .receiptDateLabelText,
-                                            helperText:
-                                            S
+                                            helperText: S
                                                 .of(context)
                                                 .receiptDateHelperText,
                                             prefixIcon: IconButton(
@@ -308,40 +302,44 @@ class HistoryWidgetState extends State<HistoryWidget> {
                                                 color: Colors.black,
                                                 onPressed: () async {
                                                   this.receiptDate =
-                                                  await showDatePicker(
-                                                      builder: (
-                                                          BuildContext context,
-                                                          Widget child) {
-                                                        return Theme(
-                                                          data:
-                                                          ThemeData.light()
-                                                              .copyWith(
-                                                            primaryColor: Colors
-                                                                .black,
-                                                            accentColor: Colors
-                                                                .black,
-                                                            colorScheme:
-                                                            ColorScheme.light(
-                                                                primary: const Color(
-                                                                    0XFFF9AA33)),
-                                                            buttonTheme: ButtonThemeData(
-                                                                textTheme: ButtonTextTheme
-                                                                    .primary),
-                                                          ),
-                                                          child: child,
-                                                        );
-                                                      },
-                                                      context: context,
-                                                      initialDate: DateTime
-                                                          .now(),
-                                                      firstDate: DateTime(2010),
-                                                      lastDate: DateTime(2050));
-                                                  dateController.text =
-                                                      DateFormat(
-                                                          S
-                                                              .of(context)
-                                                              .receiptDateFormat)
-                                                          .format(receiptDate);
+                                                      await showDatePicker(
+                                                          builder: (BuildContext
+                                                                  context,
+                                                              Widget child) {
+                                                            return Theme(
+                                                              data: ThemeData
+                                                                      .light()
+                                                                  .copyWith(
+                                                                primaryColor:
+                                                                    Colors
+                                                                        .black,
+                                                                accentColor:
+                                                                    Colors
+                                                                        .black,
+                                                                colorScheme:
+                                                                    ColorScheme.light(
+                                                                        primary:
+                                                                            const Color(0XFFF9AA33)),
+                                                                buttonTheme: ButtonThemeData(
+                                                                    textTheme:
+                                                                        ButtonTextTheme
+                                                                            .primary),
+                                                              ),
+                                                              child: child,
+                                                            );
+                                                          },
+                                                          context: context,
+                                                          initialDate:
+                                                              DateTime.now(),
+                                                          firstDate:
+                                                              DateTime(2010),
+                                                          lastDate:
+                                                              DateTime(2050));
+                                                  dateController
+                                                      .text = DateFormat(S
+                                                          .of(context)
+                                                          .receiptDateFormat)
+                                                      .format(receiptDate);
                                                 })),
                                         controller: dateController,
                                         validator: (value) {
@@ -355,15 +353,13 @@ class HistoryWidgetState extends State<HistoryWidget> {
                                               caseSensitive: false,
                                               multiLine: false);
 
-                                          if (!totalRegex.hasMatch(
-                                              value.trim())) {
+                                          if (!totalRegex
+                                              .hasMatch(value.trim())) {
                                             return S
-                                                .of(context)
-                                                .receiptDateNotFormatted +
-                                                " " +
-                                                S
                                                     .of(context)
-                                                    .receiptDateFormat;
+                                                    .receiptDateNotFormatted +
+                                                " " +
+                                                S.of(context).receiptDateFormat;
                                           }
 
                                           return null;
@@ -380,9 +376,7 @@ class HistoryWidgetState extends State<HistoryWidget> {
           actions: <Widget>[
             FlatButton(
               child: Text(
-                S
-                    .of(context)
-                    .cancel,
+                S.of(context).cancel,
                 style: TextStyle(color: Colors.red),
               ),
               onPressed: () {
@@ -391,9 +385,7 @@ class HistoryWidgetState extends State<HistoryWidget> {
             ),
             FlatButton(
               child: Text(
-                S
-                    .of(context)
-                    .update,
+                S.of(context).update,
               ),
               onPressed: () {
                 if (_editFormKey.currentState.validate() &&
@@ -421,9 +413,7 @@ class HistoryWidgetState extends State<HistoryWidget> {
                   Scaffold.of(context)
                     ..hideCurrentSnackBar()
                     ..showSnackBar(SnackBar(
-                      content: Text(S
-                          .of(context)
-                          .updateReceiptSuccessful),
+                      content: Text(S.of(context).updateReceiptSuccessful),
                       backgroundColor: Colors.green,
                     ));
 
@@ -434,9 +424,7 @@ class HistoryWidgetState extends State<HistoryWidget> {
                   Scaffold.of(context)
                     ..hideCurrentSnackBar()
                     ..showSnackBar(SnackBar(
-                      content: Text(S
-                          .of(context)
-                          .failedUpdateReceipt),
+                      content: Text(S.of(context).failedUpdateReceipt),
                       backgroundColor: Colors.red,
                     ));
                 }

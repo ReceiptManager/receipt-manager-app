@@ -57,6 +57,7 @@ class ReceiptDao extends DatabaseAccessor<AppDatabase> with _$ReceiptDaoMixin {
         date: receipt.date.value,
         shop: receipt.shop.value,
         category: receipt.category.value);
+
     log("[-> Insert new receipt" + ReceiptPrinter.print(r));
     return into(receipts).insert(receipt);
   }
