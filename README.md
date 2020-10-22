@@ -7,6 +7,10 @@ Keep track of your receipt is pretty hard. You need to update the shop names, re
 
 Why do we not use the digital advantage to our advantage? The receipt scanner solves multiple problems.  You don't have to keep track of your receipts, you safe (a lot) of time but still, see every important information in a blink of a second.
 
+---
+## Latest development
+Implement stats widget which provide detailed information about your daily expenses.
+
 --- 
 
 ## Features
@@ -71,6 +75,8 @@ worry about that. No third party services are used.
   <img src="https://raw.githubusercontent.com/ReceiptParser/Application/master/docs/assets/history_app.png">
   <img src="https://raw.githubusercontent.com/ReceiptParser/Application/master/docs/assets/edit_app.png">
   <img src="https://raw.githubusercontent.com/ReceiptParser/Application/master/docs/assets/settings_app.png">
+  <img src="https://raw.githubusercontent.com/ReceiptParser/Application/master/docs/assets/app_stats.png">
+
 </p>
 
 ---

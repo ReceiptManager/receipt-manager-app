@@ -30,7 +30,7 @@ class StatsWidget extends StatefulWidget {
 }
 
 class StatsWidgetState extends State<StatsWidget> {
-  final Color barBackgroundColor = Colors.white; //const Color(0xff72d8bf);
+ // final Color barBackgroundColor = Colors.white; //const Color(0xff72d8bf);
   final Duration animDuration = const Duration(milliseconds: 250);
   final DbBloc _bloc;
 
@@ -82,6 +82,7 @@ class StatsWidgetState extends State<StatsWidget> {
         child: Card(
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
+          // 0xff72d8bf
           color: LightColor.brighter,
           child: Stack(
             children: <Widget>[
@@ -105,59 +106,7 @@ class StatsWidgetState extends State<StatsWidget> {
                     Text(
                       S.of(context).overviewExpenses,
                       style:
-                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                    ),
-                    const SizedBox(
-                      height: 38,
-                    ),
-                    Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                        child: BarChart(
-                          mainBarData(),
-                          swapAnimationDuration: animDuration,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 12,
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ),
-      )),
-      PaddingFactory.create(AspectRatio(
-        aspectRatio: 0.8,
-        child: Card(
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
-          color: LightColor.brighter,
-          child: Stack(
-            children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.all(16),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.max,
-                  children: <Widget>[
-                    Text(
-                      S.of(context).overview,
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold),
-                    ),
-                    const SizedBox(
-                      height: 4,
-                    ),
-                    Text(
-                      S.of(context).overviewExpenses,
-                      style:
-                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                          TextStyle(fontSize: 18,color: Colors.grey.shade400, fontWeight: FontWeight.bold),
                     ),
                     const SizedBox(
                       height: 38,
@@ -208,24 +157,24 @@ class StatsWidgetState extends State<StatsWidget> {
     int x,
     double y, {
     bool isTouched = false,
-    Color barColor = Colors.purple,
+    Color barColor = Colors.white,
     double width = 22,
     List<int> showTooltips = const [],
   }) {
     double max =
-    expenses.reduce((current, next) => current > next ? current : next);
+        expenses.reduce((current, next) => current > next ? current : next);
 
     return BarChartGroupData(
       x: x,
       barRods: [
         BarChartRodData(
           y: isTouched ? y + 1 : y,
-          colors: isTouched ? [Colors.purple] : [barColor],
+          colors: isTouched ? [Colors.pink] : [barColor],
           width: width,
           backDrawRodData: BackgroundBarChartRodData(
             show: true,
             y: max + log(max) / log(2) * 10,
-            colors: [barBackgroundColor],
+            colors: [LightColor.brighterL],
           ),
         ),
       ],
@@ -285,7 +234,7 @@ class StatsWidgetState extends State<StatsWidget> {
                   break;
               }
               return BarTooltipItem(weekDay + '\n' + (rod.y - 1).toString(),
-                  TextStyle(color: Colors.purple));
+                  TextStyle(color: Colors.pink));
             }),
         touchCallback: (barTouchResponse) {
           setState(() {
