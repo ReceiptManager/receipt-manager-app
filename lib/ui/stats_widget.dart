@@ -36,7 +36,8 @@ class StatsWidgetState extends State<StatsWidget> {
 
   // store expenses
   List<double> expenses = [0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00];
-  double weeklyExpenses = 0.00;
+  double max = 0.00;
+  double sum = 0.00;
 
   int touchedIndex;
 
@@ -134,7 +135,7 @@ class StatsWidgetState extends State<StatsWidget> {
                 child: Align(
                     alignment: Alignment.topRight,
                     child: Text(
-                      "-" + weeklyExpenses.toStringAsFixed(2) + S.of(context).currency,
+                      "-" + sum.toStringAsFixed(2) + S.of(context).currency,
                       style: TextStyle(
                           color: Colors.red,
                           fontSize: 24,
@@ -153,6 +154,7 @@ class StatsWidgetState extends State<StatsWidget> {
   void generateData(List<Receipt> r) {
     final date = DateTime.now();
     expenses = [0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00];
+    sum = 0.00;
     final startDate = getDate(date.subtract(Duration(days: date.weekday - 1)));
 
     for (Receipt receipt in r) {
@@ -163,11 +165,11 @@ class StatsWidgetState extends State<StatsWidget> {
             receipt.date.month == d.month &&
             receipt.date.day == d.day) {
           expenses[i] += double.parse(receipt.total);
+          sum += expenses[i];
         }
       }
     }
-    weeklyExpenses =
-    expenses.reduce((current, next) => current > next ? current : next);
+    max = expenses.reduce((current, next) => current > next ? current : next);
   }
 
   BarChartGroupData makeGroupData(
@@ -178,7 +180,6 @@ class StatsWidgetState extends State<StatsWidget> {
     double width = 22,
     List<int> showTooltips = const [],
   }) {
-
     return BarChartGroupData(
       x: x,
       barRods: [
@@ -188,7 +189,7 @@ class StatsWidgetState extends State<StatsWidget> {
           width: width,
           backDrawRodData: BackgroundBarChartRodData(
             show: true,
-            y: weeklyExpenses + log(weeklyExpenses) / log(2) * 10,
+            y: max + log(max) / log(2) * 2,
             colors: [LightColor.brighterL],
           ),
         ),
