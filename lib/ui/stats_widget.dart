@@ -12,15 +12,6 @@ import 'package:receipt_parser/generated/l10n.dart';
 import 'package:receipt_parser/theme/color/color.dart';
 
 class StatsWidget extends StatefulWidget {
-  final List<Color> availableColors = [
-    Colors.purpleAccent,
-    Colors.yellow,
-    Colors.lightBlue,
-    Colors.orange,
-    Colors.pink,
-    Colors.redAccent,
-  ];
-
   final DbBloc _bloc;
 
   StatsWidget(this._bloc);
@@ -30,11 +21,9 @@ class StatsWidget extends StatefulWidget {
 }
 
 class StatsWidgetState extends State<StatsWidget> {
-  // final Color barBackgroundColor = Colors.white; //const Color(0xff72d8bf);
   final Duration animDuration = const Duration(milliseconds: 250);
   final DbBloc _bloc;
 
-  // store expenses
   List<double> expenses = [0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00];
   double max = 0.00;
   double sum = 0.00;
@@ -192,7 +181,7 @@ class StatsWidgetState extends State<StatsWidget> {
           width: width,
           backDrawRodData: BackgroundBarChartRodData(
             show: true,
-            y: max + l.log(max) / l.log(2) * 2,
+            y: (max + l.log(max) / l.log(2) * 2) ?? 20,
             colors: [LightColor.brighterL],
           ),
         ),

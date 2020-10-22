@@ -1,7 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-
 import 'intl/messages_all.dart';
 
 // **************************************************************************
@@ -15,23 +14,22 @@ import 'intl/messages_all.dart';
 
 class S {
   S();
-
+  
   static S current;
-
-  static const AppLocalizationDelegate delegate = AppLocalizationDelegate();
+  
+  static const AppLocalizationDelegate delegate =
+    AppLocalizationDelegate();
 
   static Future<S> load(Locale locale) {
-    final name = (locale.countryCode?.isEmpty ?? false)
-        ? locale.languageCode
-        : locale.toString();
-    final localeName = Intl.canonicalizedLocale(name);
+    final name = (locale.countryCode?.isEmpty ?? false) ? locale.languageCode : locale.toString();
+    final localeName = Intl.canonicalizedLocale(name); 
     return initializeMessages(localeName).then((_) {
       Intl.defaultLocale = localeName;
       S.current = S();
-
+      
       return S.current;
     });
-  }
+  } 
 
   static S of(BuildContext context) {
     return Localizations.of<S>(context, S);
@@ -547,70 +545,70 @@ class S {
     );
   }
 
-  /// `Monday`
+  /// `Montag`
   String get monday {
     return Intl.message(
-      'Monday',
+      'Montag',
       name: 'monday',
       desc: '',
       args: [],
     );
   }
 
-  /// `Tuesday`
+  /// `Dienstag`
   String get tuesday {
     return Intl.message(
-      'Tuesday',
+      'Dienstag',
       name: 'tuesday',
       desc: '',
       args: [],
     );
   }
 
-  /// `Wednesday`
+  /// `Mittwoch`
   String get wednesday {
     return Intl.message(
-      'Wednesday',
+      'Mittwoch',
       name: 'wednesday',
       desc: '',
       args: [],
     );
   }
 
-  /// `Thursday`
+  /// `Donnerstag`
   String get thursday {
     return Intl.message(
-      'Thursday',
+      'Donnerstag',
       name: 'thursday',
       desc: '',
       args: [],
     );
   }
 
-  /// `Friday`
+  /// `Freitag`
   String get friday {
     return Intl.message(
-      'Friday',
+      'Freitag',
       name: 'friday',
       desc: '',
       args: [],
     );
   }
 
-  /// `Saturday`
+  /// `Samstag`
   String get saturday {
     return Intl.message(
-      'Saturday',
+      'Samstag',
       name: 'saturday',
       desc: '',
       args: [],
     );
   }
 
-  /// `Sunday`
+  /// `Sonntag`
   String get sunday {
     return Intl.message(
-      'Sunday',
+      'Sonntag',
       name: 'sunday',
       desc: '',
       args: [],
@@ -632,6 +630,46 @@ class S {
     return Intl.message(
       'Wochenübersicht',
       name: 'overview',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Server Zeitüberschreibung`
+  String get serverTimeout {
+    return Intl.message(
+      'Server Zeitüberschreibung',
+      name: 'serverTimeout',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Keine Verbindung zum Server möglich`
+  String get socketException {
+    return Intl.message(
+      'Keine Verbindung zum Server möglich',
+      name: 'socketException',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Zertifikat ungültig`
+  String get handshakeException {
+    return Intl.message(
+      'Zertifikat ungültig',
+      name: 'handshakeException',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Etwas ist schief gelaufen`
+  String get generalException {
+    return Intl.message(
+      'Etwas ist schief gelaufen',
+      name: 'generalException',
       desc: '',
       args: [],
     );

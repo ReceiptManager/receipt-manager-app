@@ -58,5 +58,9 @@
   "saturday": "Saturday",
   "sunday": "Sunday",
   "overviewExpenses": "Expenses overview",
-  "overview": "Weekly overview"
+  "overview": "Weekly overview",
+  "serverTimeout": "Server timeout",
+  "socketException": "Can't connect to the server",
+  "handshakeException": "Bad certificate. Please regenerate the certificate",
+  "generalException": "Ups something went wrong"
 }
