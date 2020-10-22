@@ -24,6 +24,7 @@ import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:path/path.dart';
 import 'package:receipt_parser/database/receipt_database.dart';
+import 'package:receipt_parser/generated/l10n.dart';
 
 import '../main.dart';
 
@@ -44,7 +45,7 @@ class NetworkClient {
     ///
     /// Since the server runs local and the certificate is protected
     /// with a password, the security risk is small.
-    HttpOverrides.global = new UnsecureHttpAgent();
+    HttpOverrides.global = new SelfSignedHttpAgent();
   }
 
   static String buildUrl(final ip) {
@@ -95,7 +96,8 @@ class NetworkClient {
         onTimeout: () async {
           key.currentState
             ..showSnackBar(SnackBar(
-                content: Text("Server timeout."), backgroundColor: Colors.red));
+                content: Text(S.of(context).serverTimeout),
+                backgroundColor: Colors.red));
           await Future.delayed(const Duration(seconds: 2), () {});
           Navigator.push(context,
               MaterialPageRoute(builder: (context) => HomeScreen(null, true)));
@@ -127,11 +129,12 @@ class NetworkClient {
                 total: Value(r['receiptTotal']),
                 shop: Value(r['storeName']),
                 category: Value(" 2"),
-                date: Value(DateFormat("dd.MM.yyyy").parse(r['receiptDate'])));
+                date: Value(DateFormat(S.of(context).receiptDateFormat)
+                    .parse(r['receiptDate'])));
 
-            print('StoreName:  ${r['storeName']} ');
-            print('ReceiptTotal:  ${r['receiptTotal']} ');
-            print('ReceiptDate:  ${r['receiptDate']} ');
+            log('StoreName:  ${r['storeName']} ');
+            log('ReceiptTotal:  ${r['receiptTotal']} ');
+            log('ReceiptDate:  ${r['receiptDate']} ');
           })
           .asFuture()
           .then((_) async => {
@@ -152,11 +155,11 @@ class NetworkClient {
 
       return;
     } on SocketException catch (_) {
-      log("[EXCEPTION] get socket exception" + _.toString());
+      log("Get socket exception" + _.toString());
       key.currentState
         ..hideCurrentSnackBar()
         ..showSnackBar(SnackBar(
-            content: Text("SocketException" + _.message.toString()),
+            content: Text(S.of(context).socketexception + _.message.toString()),
             backgroundColor: Colors.red));
       await Future.delayed(const Duration(seconds: 2), () {});
       Navigator.push(context,
@@ -166,7 +169,8 @@ class NetworkClient {
       key.currentState
         ..hideCurrentSnackBar()
         ..showSnackBar(SnackBar(
-            content: Text("HandshakeException" + _.message.toString()),
+            content:
+                Text(S.of(context).handshakeException + _.message.toString()),
             backgroundColor: Colors.red));
 
       Navigator.push(context,
@@ -178,7 +182,8 @@ class NetworkClient {
       key.currentState
         ..hideCurrentSnackBar()
         ..showSnackBar(SnackBar(
-            content: Text("GeneralException" + _.message.toString()),
+            content:
+                Text(S.of(context).generalException + _.message.toString()),
             backgroundColor: Colors.red));
       Navigator.push(context,
           MaterialPageRoute(builder: (context) => HomeScreen(null, true)));
@@ -188,7 +193,7 @@ class NetworkClient {
   }
 }
 
-class UnsecureHttpAgent extends HttpOverrides {
+class SelfSignedHttpAgent extends HttpOverrides {
   @override
   HttpClient createHttpClient(SecurityContext context) {
     return super.createHttpClient(context)
