@@ -75,7 +75,7 @@ worry about that. No third party services are used.
   <img src="https://raw.githubusercontent.com/ReceiptParser/Application/master/docs/assets/history_app.png">
   <img src="https://raw.githubusercontent.com/ReceiptParser/Application/master/docs/assets/edit_app.png">
   <img src="https://raw.githubusercontent.com/ReceiptParser/Application/master/docs/assets/settings_app.png">
-  <img src="https://raw.githubusercontent.com/ReceiptParser/Application/master/docs/assets/app_stats.png">
+  <img src="https://raw.githubusercontent.com/ReceiptParser/Application/master/docs/assets/screen_app.png">
 
 </p>
 
