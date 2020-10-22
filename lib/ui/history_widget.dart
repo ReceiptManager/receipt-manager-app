@@ -223,8 +223,7 @@ class HistoryWidgetState extends State<HistoryWidget> {
     this.storeName = receipt.shop;
     this.receiptTotal = receipt.total;
     this.currentReceiptDate = DateManipulator.humanDate(receipt.date);
-    String c = ReceiptCategory.fromJson(jsonDecode(receipt.category)).name;
-    this.category = c;
+    this.category = receipt.category;
     this.currentReceipt = receipt;
     // this.currentReceipt = receipt;
 
