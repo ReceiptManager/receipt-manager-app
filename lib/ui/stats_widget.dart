@@ -266,19 +266,19 @@ class StatsWidgetState extends State<StatsWidget> {
           getTitles: (double value) {
             switch (value.toInt()) {
               case 0:
-                return 'M';
+                return S.of(context).monday[0];
               case 1:
-                return 'T';
+                return S.of(context).thursday[0];
               case 2:
-                return 'W';
+                return S.of(context).wednesday[0];
               case 3:
-                return 'T';
+                return S.of(context).thursday[0];
               case 4:
-                return 'F';
+                return S.of(context).friday[0];
               case 5:
-                return 'S';
+                return S.of(context).saturday[0];
               case 6:
-                return 'S';
+                return S.of(context).sunday[0];
               default:
                 return '';
             }

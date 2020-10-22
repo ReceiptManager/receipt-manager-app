@@ -159,7 +159,7 @@ class NetworkClient {
       key.currentState
         ..hideCurrentSnackBar()
         ..showSnackBar(SnackBar(
-            content: Text(S.of(context).socketexception + _.message.toString()),
+            content: Text(S.of(context).socketException + _.message.toString()),
             backgroundColor: Colors.red));
       await Future.delayed(const Duration(seconds: 2), () {});
       Navigator.push(context,
