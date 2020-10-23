@@ -21,7 +21,6 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:intl/intl.dart';
 import 'package:path/path.dart';
 import 'package:receipt_parser/database/receipt_database.dart';
 import 'package:receipt_parser/generated/l10n.dart';
