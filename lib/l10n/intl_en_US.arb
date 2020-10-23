@@ -62,5 +62,6 @@
   "serverTimeout": "Server timeout",
   "socketException": "Can't connect to the server",
   "handshakeException": "Bad certificate. Please regenerate the certificate",
-  "generalException": "Ups something went wrong"
+  "generalException": "Ups something went wrong",
+  "serverIpIsNotSet": "Server ip is not set."
 }

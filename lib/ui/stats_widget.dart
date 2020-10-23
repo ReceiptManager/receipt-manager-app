@@ -174,6 +174,11 @@ class StatsWidgetState extends State<StatsWidget> {
     double width = 22,
     List<int> showTooltips = const [],
   }) {
+    double maxY =  (max + l.log(max) / l.log(2) * 2);
+    if (maxY < 10) {
+      maxY = 20;
+    }
+
     return BarChartGroupData(
       x: x,
       barRods: [
@@ -183,7 +188,7 @@ class StatsWidgetState extends State<StatsWidget> {
           width: width,
           backDrawRodData: BackgroundBarChartRodData(
             show: true,
-            y: (max + l.log(max) / l.log(2) * 2) ?? 20,
+            y: maxY,
             colors: [LightColor.brighterL],
           ),
         ),

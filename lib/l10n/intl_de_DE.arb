@@ -63,5 +63,6 @@
   "serverTimeout": "Server Zeitüberschreibung",
   "socketException": "Keine Verbindung zum Server möglich",
   "handshakeException": "Zertifikat ungültig",
-  "generalException": "Etwas ist schief gelaufen"
+  "generalException": "Etwas ist schief gelaufen",
+  "serverIpIsNotSet": "Server IP ist undefiniert."
 }
