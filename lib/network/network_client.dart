@@ -67,8 +67,11 @@ class NetworkClient {
       log("ip appears invalid.");
       key.currentState
         ..showSnackBar(SnackBar(
-            content: Text("Server ip is not set."),
+            content: Text(S
+                .of(context)
+                .serverIpIsNotSet),
             backgroundColor: Colors.red));
+      await Future.delayed(const Duration(seconds: 2), () {});
       Navigator.push(context,
           MaterialPageRoute(builder: (context) => HomeScreen(null, true)));
       return;
@@ -96,7 +99,9 @@ class NetworkClient {
         onTimeout: () async {
           key.currentState
             ..showSnackBar(SnackBar(
-                content: Text(S.of(context).serverTimeout),
+                content: Text(S
+                    .of(context)
+                    .serverTimeout),
                 backgroundColor: Colors.red));
           await Future.delayed(const Duration(seconds: 2), () {});
           Navigator.push(context,
@@ -124,25 +129,32 @@ class NetworkClient {
       response.stream
           .transform(utf8.decoder)
           .listen((value) {
-            Map<String, dynamic> r = jsonDecode(value);
-            receipt = ReceiptsCompanion(
-                total: Value(r['receiptTotal']),
-                shop: Value(r['storeName']),
-                category: Value(" 2"),
-                date: Value(DateFormat(S.of(context).receiptDateFormat)
-                    .parse(r['receiptDate'])));
+        Map<String, dynamic> r = jsonDecode(value);
+        DateTime _date;
+        try {
+          _date = DateTime.parse(r['receiptDate']);
+        } catch (_) {
+        _date = null;
+        }
 
-            log('StoreName:  ${r['storeName']} ');
-            log('ReceiptTotal:  ${r['receiptTotal']} ');
-            log('ReceiptDate:  ${r['receiptDate']} ');
-          })
+        receipt = ReceiptsCompanion(
+        total: Value(r['receiptTotal']),
+        shop: Value(r['storeName']),
+        category: Value(r['category']),
+        date: Value(_date));
+
+        log('StoreName:  ${r['storeName']} ');
+        log('ReceiptTotal:  ${r['receiptTotal']} ');
+        log('ReceiptDate:  ${r['receiptDate']}');
+      })
           .asFuture()
-          .then((_) async => {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => HomeScreen(receipt, true)))
-              });
+          .then((_) async =>
+      {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => HomeScreen(receipt, true)))
+      });
       return;
     } on TimeoutException catch (_) {
       log("[EXCEPTION] get timeout exception" + _.toString());
@@ -159,7 +171,9 @@ class NetworkClient {
       key.currentState
         ..hideCurrentSnackBar()
         ..showSnackBar(SnackBar(
-            content: Text(S.of(context).socketException + _.message.toString()),
+            content: Text(S
+                .of(context)
+                .socketException + _.message.toString()),
             backgroundColor: Colors.red));
       await Future.delayed(const Duration(seconds: 2), () {});
       Navigator.push(context,
@@ -170,7 +184,9 @@ class NetworkClient {
         ..hideCurrentSnackBar()
         ..showSnackBar(SnackBar(
             content:
-                Text(S.of(context).handshakeException + _.message.toString()),
+            Text(S
+                .of(context)
+                .handshakeException + _.message.toString()),
             backgroundColor: Colors.red));
 
       Navigator.push(context,
@@ -183,7 +199,9 @@ class NetworkClient {
         ..hideCurrentSnackBar()
         ..showSnackBar(SnackBar(
             content:
-                Text(S.of(context).generalException + _.message.toString()),
+            Text(S
+                .of(context)
+                .generalException + _.message.toString()),
             backgroundColor: Colors.red));
       Navigator.push(context,
           MaterialPageRoute(builder: (context) => HomeScreen(null, true)));
