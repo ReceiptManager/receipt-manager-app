@@ -674,6 +674,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Server IP ist undefiniert.`
+  String get serverIpIsNotSet {
+    return Intl.message(
+      'Server IP ist undefiniert.',
+      name: 'serverIpIsNotSet',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

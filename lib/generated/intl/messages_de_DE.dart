@@ -58,6 +58,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "serverIP" : MessageLookupByLibrary.simpleMessage("Server ip"),
     "serverIPHelpText" : MessageLookupByLibrary.simpleMessage("Zugangs-Server Addresse "),
     "serverIPLabelText" : MessageLookupByLibrary.simpleMessage("Server ip Addresse"),
+    "serverIpIsNotSet" : MessageLookupByLibrary.simpleMessage("Server IP ist undefiniert."),
     "serverSettings" : MessageLookupByLibrary.simpleMessage("Server Einstellungen"),
     "serverTimeout" : MessageLookupByLibrary.simpleMessage("Server Zeitüberschreibung"),
     "settingsDeveloperSubtitle" : MessageLookupByLibrary.simpleMessage("Entwickelerwerkzeuge"),
