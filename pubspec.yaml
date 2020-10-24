@@ -49,6 +49,7 @@ dependencies:
   flutter_exif_rotation: ^0.3.1
   image: ^2.1.18
   exif: ^1.0.3
+  progress_dialog: ^1.2.4
 
 dev_dependencies:
   flutter_test:
