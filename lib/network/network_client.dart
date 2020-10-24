@@ -32,11 +32,11 @@ import '../main.dart';
 /// after it will parse the response and update the corresponding
 ///  TextFields.
 class NetworkClient {
-  static final protocol = "https://";
-  static final path = "/api/upload/";
-  static final port = "8721";
-  static final maxDuration = 30;
-  static final transactionDuration = 2;
+  static final _protocol = "https://";
+  static final _path = "/api/upload/";
+  static final _port = "8721";
+  static final _timeout = 120;
+  static final _transactionDuration = 2;
 
   static init() {
     /// override the agent to provide support for self signed
@@ -48,7 +48,7 @@ class NetworkClient {
   }
 
   static String buildUrl(final ip) {
-    return protocol + ip + ":" + port + path;
+    return _protocol + ip + ":" + _port + _path;
   }
 
   static toNavigationBar(BuildContext context) {
@@ -94,7 +94,7 @@ class NetworkClient {
 
     try {
       var response = await request.send().timeout(
-        Duration(seconds: maxDuration),
+        Duration(seconds: _timeout),
         onTimeout: () async {
           key.currentState
             ..showSnackBar(SnackBar(
