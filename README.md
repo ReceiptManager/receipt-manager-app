@@ -7,10 +7,6 @@ Keep track of your receipt is pretty hard. You need to update the shop names, re
 
 Why do we not use the digital advantage to our advantage? The receipt scanner solves multiple problems.  You don't have to keep track of your receipts, you safe (a lot) of time but still, see every important information in a blink of a second.
 
----
-## Latest development
-Implement stats widget which provide detailed information about your daily expenses.
-
 --- 
 
 ## Features
@@ -18,17 +14,22 @@ Implement stats widget which provide detailed information about your daily expen
 - fast and easy receipt parser using OCR
 - store receipts permanently in a SQL database
 - minimal design
-- no third party apps
+- no other services required
 
 ---
 
 ## Getting started
+
+### For developers
 First, import the project in Android Studio. After, you have to install the flutter plugins. 
 Now, you can build the flutter application using the android studio app.
 
 1. Import project in android studio (and install the flutter plugin)
 2. Go to Build/Flutter/Build APK
 3. Install the application
+
+### For consumers
+Install the precompiled binaries at the release page.
 
 Now, you can insert, add and store receipts permanently. If you like to parse the receipt using OCR, you
 have to do the following.
@@ -39,15 +40,37 @@ have to do the following.
 4. Generate SSL certificates
 5. Run the server
 
-You can find the required information in the server documentary. Back to the application. 
+### In detail
+#### Clone the repository over https
+```
+git clone https://github.com/ReceiptParser/Server
+```
 
-Now, change the server ip. In the application go to Settings/Server/ and edit the server ip.
+#### Install the python packages using `pip`
+```
+cd Server
+sudo pip install -r requirements.txt
+```
 
+#### Generate an SSL certificate
+```
+make generate_cert
+```
+
+#### Start the image server
+```
+make serve
+```
+
+If the server is running, the server ip is shown in the server console. That's it.
 <p align="center">
   <img src="https://i.imgur.com/xcwvmYa.png">
 </p>
 
-If the server is running, the server ip is shown in the server console. That's it.
+Now, change the server ip. In the application go to `Settings/Server/` and edit the server ip.
+<p align="center">
+  <img src="https://i.imgur.com/nob0QFz.png">
+</p>
 
 ---
 
@@ -62,6 +85,19 @@ Since mobile devices have a unacceptable performance, the parser uses a (traditi
 4. The Application store the receipt in a SQL database
 
 ---
+
+### TODOS
+| Description  | Done?  | Priority | Fixed at |
+|---|---|---| --- |
+| Add loading screen indicator | yes | hight | 1.01 |
+| Correct date parsing | yes | hight | 1.01 |
+| Remove duplicate snackbar after parsing | no | hight | / |
+| Add new categories | no | hight | / |
+| Edit categories in edit widget | no | hight | / |
+
+
+
+
 
 ### Privacy
 A lot of companies store and sell your data. This is the main reason why I started this project. 
