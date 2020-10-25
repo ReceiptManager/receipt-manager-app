@@ -162,7 +162,9 @@ class HistoryWidgetState extends State<HistoryWidget> {
                       subtitle: Row(
                         children: <Widget>[
                           Text(
-                              ReceiptCategory.fromJson(jsonDecode(receipt.category)).name +
+                              ReceiptCategory.fromJson(
+                                          jsonDecode(receipt.category))
+                                      .name +
                                   ", " +
                                   DateManipulator.humanDate(receipt.date),
                               style:

@@ -91,9 +91,7 @@ class TextFormFactory {
             caseSensitive: false, multiLine: false);
 
         if (!totalRegex.hasMatch(value)) {
-          return S
-              .of(context)
-              .invalidTotal;
+          return S.of(context).invalidTotal;
         }
 
         return null;
@@ -101,8 +99,8 @@ class TextFormFactory {
     );
   }
 
-  static TextFormField storeName(TextEditingController storeNameController,
-      BuildContext context) {
+  static TextFormField storeName(
+      TextEditingController storeNameController, BuildContext context) {
     return TextFormField(
       style: TextStyle(color: HexColor.fromHex("#232F34")),
       decoration: new InputDecoration(
@@ -114,24 +112,16 @@ class TextFormFactory {
         ),
         border: new OutlineInputBorder(
             borderSide: new BorderSide(color: HexColor.fromHex("#232F34"))),
-        hintText: S
-            .of(context)
-            .storeNameHint,
-        labelText: S
-            .of(context)
-            .storeNameTitle,
-        helperText: S
-            .of(context)
-            .storeNameHelper,
+        hintText: S.of(context).storeNameHint,
+        labelText: S.of(context).storeNameTitle,
+        helperText: S.of(context).storeNameHelper,
         prefixIcon: const Icon(Icons.storefront_outlined),
         prefixText: ' ',
       ),
       controller: storeNameController,
       validator: (value) {
         if (value.isEmpty) {
-          return S
-              .of(context)
-              .emptyStoreName;
+          return S.of(context).emptyStoreName;
         }
         return null;
       },

@@ -105,14 +105,10 @@ class _SettingsWidgetState extends State<SettingsWidget> {
             ],
           ),
           SettingsSection(
-            title: S
-                .of(context)
-                .settingsMiscTitle,
+            title: S.of(context).settingsMiscTitle,
             tiles: [
               SettingsTile(
-                  title: S
-                      .of(context)
-                      .openSourceLicence,
+                  title: S.of(context).openSourceLicence,
                   leading: Icon(Icons.collections_bookmark)),
             ],
           )

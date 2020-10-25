@@ -28,10 +28,10 @@ class ReceiptCategoryFactory {
   static List<ReceiptCategory> get(BuildContext context) {
     if (categories == null) {
       categories = <ReceiptCategory>[
-        ReceiptCategory(
-            S.of(context).groceryCategory, Icon(Icons.shopping_bag_outlined), "grocery"),
-        ReceiptCategory(
-            S.of(context).healthCategory, Icon(Icons.medical_services),"health"),
+        ReceiptCategory(S.of(context).groceryCategory,
+            Icon(Icons.shopping_bag_outlined), "grocery"),
+        ReceiptCategory(S.of(context).healthCategory,
+            Icon(Icons.medical_services), "health"),
       ];
     }
 

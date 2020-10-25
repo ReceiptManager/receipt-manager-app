@@ -163,7 +163,6 @@ class DisplayPictureScreenState extends State<DisplayPictureScreen> {
 
     final fixedFile =
         await originalFile.writeAsBytes(img.encodeJpg(fixedImage));
-
     return fixedFile;
   }
 
@@ -206,20 +205,20 @@ class DisplayPictureScreenState extends State<DisplayPictureScreen> {
                           color: _acceptButtonColor,
                           controller: _btnController,
                           onPressed: () async {
-                                  setState(() {
-                                    _isButtonDisabled = true;
-                                    _declineButtonColor = Colors.grey;
-                                  });
-                                  SharedPreferences sharedPrefs =
-                                      await SharedPreferences.getInstance();
-                                  String ip = sharedPrefs.get("ipv4");
+                            setState(() {
+                              _isButtonDisabled = true;
+                              _declineButtonColor = Colors.grey;
+                            });
+                            SharedPreferences sharedPrefs =
+                                await SharedPreferences.getInstance();
+                            String ip = sharedPrefs.get("ipv4");
 
-                                  await fixExifRotation(imagePath);
-                                  await NetworkClient.sendImage(
-                                      File(imagePath), ip, context, key2);
-                                  _progress = _progress + 80.0;
-                                  _btnController.reset();
-                                })))),
+                            //await fixExifRotation(imagePath);
+                            await NetworkClient.sendImage(
+                                File(imagePath), ip, context, key2);
+                            _progress = _progress + 80.0;
+                            _btnController.reset();
+                          })))),
             ],
           )
         ],
