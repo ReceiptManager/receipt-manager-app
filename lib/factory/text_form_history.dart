@@ -102,11 +102,12 @@ class TextFormFactory {
   }
 
   static SimpleAutocompleteFormField storeName(
-      TextEditingController storeNameController, BuildContext context, List<Receipt> receipt) {
-
+      TextEditingController storeNameController,
+      BuildContext context,
+      List<Receipt> receipt) {
     List<String> storeNameList = [];
-    for(Receipt r in receipt){
-        storeNameList.add(r.shop);
+    for (Receipt r in receipt) {
+      if (!storeNameList.contains(r.shop)) storeNameList.add(r.shop);
     }
 
     return SimpleAutocompleteFormField<String>(
@@ -128,10 +129,9 @@ class TextFormFactory {
       ),
       maxSuggestions: 5,
       itemBuilder: (context, _storeName) => Padding(
-        padding: EdgeInsets.only(top: 16,left: 16),
-         child : Column(crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-          Text(_storeName, style: TextStyle(color: Colors.grey,fontSize: 16)),
+        padding: EdgeInsets.only(top: 16, left: 16),
+        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          Text(_storeName, style: TextStyle(color: Colors.grey, fontSize: 16)),
         ]),
       ),
       onSearch: (search) async => storeNameList
@@ -140,7 +140,7 @@ class TextFormFactory {
           .toList(),
       controller: storeNameController,
       itemFromString: (string) => storeNameList.singleWhere(
-              (_storeName) => _storeName.toLowerCase() == string.toLowerCase(),
+          (_storeName) => _storeName.toLowerCase() == string.toLowerCase(),
           orElse: () => null),
       validator: (value) {
         if (value.isEmpty) {
