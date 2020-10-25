@@ -17,8 +17,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:receipt_parser/converter/color_converter.dart';
+import 'package:receipt_parser/database/receipt_database.dart';
 import 'package:receipt_parser/factory/button_factory.dart';
 import 'package:receipt_parser/generated/l10n.dart';
+import 'package:simple_autocomplete_formfield/simple_autocomplete_formfield.dart';
 
 class TextFormFactory {
   static TextFormField date(TextEditingController dateController,
@@ -99,9 +101,15 @@ class TextFormFactory {
     );
   }
 
-  static TextFormField storeName(
-      TextEditingController storeNameController, BuildContext context) {
-    return TextFormField(
+  static SimpleAutocompleteFormField storeName(
+      TextEditingController storeNameController, BuildContext context, List<Receipt> receipt) {
+
+    List<String> storeNameList = [];
+    for(Receipt r in receipt){
+        storeNameList.add(r.shop);
+    }
+
+    return SimpleAutocompleteFormField<String>(
       style: TextStyle(color: HexColor.fromHex("#232F34")),
       decoration: new InputDecoration(
         enabledBorder: OutlineInputBorder(
@@ -118,7 +126,22 @@ class TextFormFactory {
         prefixIcon: const Icon(Icons.storefront_outlined),
         prefixText: ' ',
       ),
+      maxSuggestions: 5,
+      itemBuilder: (context, _storeName) => Padding(
+        padding: EdgeInsets.only(top: 16,left: 16),
+         child : Column(crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+          Text(_storeName, style: TextStyle(color: Colors.grey,fontSize: 16)),
+        ]),
+      ),
+      onSearch: (search) async => storeNameList
+          .where((_storeName) =>
+              _storeName.toLowerCase().contains(search.toLowerCase()))
+          .toList(),
       controller: storeNameController,
+      itemFromString: (string) => storeNameList.singleWhere(
+              (_storeName) => _storeName.toLowerCase() == string.toLowerCase(),
+          orElse: () => null),
       validator: (value) {
         if (value.isEmpty) {
           return S.of(context).emptyStoreName;
