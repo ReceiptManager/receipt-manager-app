@@ -36,7 +36,7 @@ class NetworkClient {
   static final _path = "/api/upload/";
   static final _port = "8721";
   static final _timeout = 120;
-  static final _transactionDuration = 2;
+  static const int _transactionDuration = 2;
 
   static init() {
     /// override the agent to provide support for self signed
@@ -68,7 +68,7 @@ class NetworkClient {
         ..showSnackBar(SnackBar(
             content: Text(S.of(context).serverIpIsNotSet),
             backgroundColor: Colors.red));
-      await Future.delayed(const Duration(seconds: 2), () {});
+      await Future.delayed(const Duration(seconds: _transactionDuration), () {});
       Navigator.push(context,
           MaterialPageRoute(builder: (context) => HomeScreen(null, true)));
       return;
@@ -98,7 +98,7 @@ class NetworkClient {
             ..showSnackBar(SnackBar(
                 content: Text(S.of(context).serverTimeout),
                 backgroundColor: Colors.red));
-          await Future.delayed(const Duration(seconds: 2), () {});
+          await Future.delayed(const Duration(seconds: _transactionDuration), () {});
           Navigator.push(context,
               MaterialPageRoute(builder: (context) => HomeScreen(null, true)));
 
@@ -107,7 +107,7 @@ class NetworkClient {
       );
 
       if (response == null) {
-        await Future.delayed(const Duration(seconds: 2), () {});
+        await Future.delayed(const Duration(seconds: _transactionDuration), () {});
         Navigator.push(context,
             MaterialPageRoute(builder: (context) => HomeScreen(null, true)));
         return;
@@ -169,7 +169,7 @@ class NetworkClient {
         ..showSnackBar(SnackBar(
             content: Text(S.of(context).socketException + _.message.toString()),
             backgroundColor: Colors.red));
-      await Future.delayed(const Duration(seconds: 2), () {});
+      await Future.delayed(const Duration(seconds: _transactionDuration), () {});
       Navigator.push(context,
           MaterialPageRoute(builder: (context) => HomeScreen(null, true)));
       return;
