@@ -4,10 +4,11 @@
 
 ### Android ###
 # Built application files
-#*.apk
+*.apk
 *.aar
 *.ap_
 *.aab
+build/*
 
 # Files for the ART/Dalvik VM
 *.dex
