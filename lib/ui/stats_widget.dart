@@ -174,7 +174,7 @@ class StatsWidgetState extends State<StatsWidget> {
     double width = 22,
     List<int> showTooltips = const [],
   }) {
-    double maxY =  (max + l.log(max) / l.log(2) * 2);
+    double maxY = (max + l.log(max) / l.log(2) * 2);
     if (maxY < 10) {
       maxY = 20;
     }

@@ -133,7 +133,7 @@ class _DeveloperSettingsState extends State<DeveloperSettings> {
 }
 
 add(BuildContext context) {
-  ReceiptCategory _category =  ReceiptCategoryFactory.categories.first;
+  ReceiptCategory _category = ReceiptCategoryFactory.categories.first;
 
   bloc.add(InsertEvent(
       receipt: ReceiptsCompanion(

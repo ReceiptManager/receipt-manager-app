@@ -138,9 +138,7 @@ class _ServerSettingsState extends State<ServerSettings> {
                         _scaffoldKey2.currentState
                           ..hideCurrentSnackBar()
                           ..showSnackBar(SnackBar(
-                            content: Text(S
-                                .of(context)
-                                .updateServerIP),
+                            content: Text(S.of(context).updateServerIP),
                             backgroundColor: Colors.green,
                           ));
                       },

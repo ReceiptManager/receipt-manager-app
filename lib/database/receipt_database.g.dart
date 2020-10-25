@@ -198,11 +198,12 @@ class ReceiptsCompanion extends UpdateCompanion<Receipt> {
     });
   }
 
-  ReceiptsCompanion copyWith({Value<int> id,
-    Value<String> total,
-    Value<String> shop,
-    Value<String> category,
-    Value<DateTime> date}) {
+  ReceiptsCompanion copyWith(
+      {Value<int> id,
+      Value<String> total,
+      Value<String> shop,
+      Value<String> category,
+      Value<DateTime> date}) {
     return ReceiptsCompanion(
       id: id ?? this.id,
       total: total ?? this.total,
@@ -236,9 +237,12 @@ class ReceiptsCompanion extends UpdateCompanion<Receipt> {
   @override
   String toString() {
     return (StringBuffer('ReceiptsCompanion(')
-      ..write('id: $id, ')..write('total: $total, ')..write(
-          'shop: $shop, ')..write('category: $category, ')..write(
-          'date: $date')..write(')'))
+          ..write('id: $id, ')
+          ..write('total: $total, ')
+          ..write('shop: $shop, ')
+          ..write('category: $category, ')
+          ..write('date: $date')
+          ..write(')'))
         .toString();
   }
 }

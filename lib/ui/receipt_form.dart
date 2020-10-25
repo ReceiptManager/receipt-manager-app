@@ -81,8 +81,8 @@ class ReceiptInputController extends State<ReceiptForm> {
       initialTotalName = parsedReceipt.total.value ?? '';
 
       if (parsedReceipt.date.value != null)
-      initialDateController =
-          DateManipulator.humanDate(parsedReceipt.date.value);
+        initialDateController =
+            DateManipulator.humanDate(parsedReceipt.date.value);
     }
 
     storeNameController = TextEditingController(text: initialStoreName);
