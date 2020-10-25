@@ -4,7 +4,7 @@
 
 ### Android ###
 # Built application files
-*.apk
+#*.apk
 *.aar
 *.ap_
 *.aab
@@ -278,8 +278,6 @@ modules.xml
 # NDK
 obj/
 
-# IntelliJ IDEA
-/out/
 
 # User-specific configurations
 .idea/caches/
