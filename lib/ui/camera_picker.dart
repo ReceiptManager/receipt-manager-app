@@ -64,6 +64,75 @@ class TakePictureScreenState extends State<TakePictureScreen> {
     super.dispose();
   }
 
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      key: key,
+      appBar: AppBar(title: Text('Take a receipt')),
+      body: FutureBuilder<void>(
+        future: _initializeControllerFuture,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.done) {
+            return CameraPreview(_controller);
+          } else {
+            return Center(child: CircularProgressIndicator());
+          }
+        },
+      ),
+      floatingActionButton: FloatingActionButton(
+        heroTag: "imagePicker",
+        child: Icon(
+          Icons.camera_alt,
+        ),
+        onPressed: () async {
+          await _initializeControllerFuture;
+
+          final path = join(
+            (await getTemporaryDirectory()).path,
+            'receipt_${DateTime.now()}.png',
+          );
+
+          // Take an picture with the best resolution
+          await _controller.takePicture(path);
+          // await FlutterExifRotation.rotateAndSaveImage(path: path);
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => DisplayPictureScreen(imagePath: path),
+              ));
+        },
+      ),
+    );
+  }
+}
+
+class DisplayPictureScreen extends StatefulWidget {
+  final String imagePath;
+
+  DisplayPictureScreen({Key key, this.imagePath}) : super(key: key);
+
+  @override
+  State<StatefulWidget> createState() => DisplayPictureScreenState(imagePath);
+}
+
+class DisplayPictureScreenState extends State<DisplayPictureScreen> {
+  final String imagePath;
+  final GlobalKey<ScaffoldState> key2 = GlobalKey<ScaffoldState>();
+  Color _acceptButtonColor = Colors.green;
+  Color _declineButtonColor = Colors.red;
+  double _progress = 0.0;
+  ProgressDialog pr;
+
+  bool _isButtonDisabled;
+
+  DisplayPictureScreenState(this.imagePath);
+
+  @override
+  void initState() {
+    super.initState();
+    _isButtonDisabled = false;
+  }
+
   Future<File> fixExifRotation(String imagePath) async {
     final originalFile = File(imagePath);
     List<int> imageBytes = await originalFile.readAsBytes();
@@ -99,93 +168,24 @@ class TakePictureScreenState extends State<TakePictureScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      key: key,
-      appBar: AppBar(title: Text('Take a receipt')),
-      body: FutureBuilder<void>(
-        future: _initializeControllerFuture,
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.done) {
-            return CameraPreview(_controller);
-          } else {
-            return Center(child: CircularProgressIndicator());
-          }
-        },
-      ),
-      floatingActionButton: FloatingActionButton(
-        heroTag: "imagePicker",
-        child: Icon(
-          Icons.camera_alt,
-        ),
-        onPressed: () async {
-          await _initializeControllerFuture;
-
-          final path = join(
-            (await getTemporaryDirectory()).path,
-            'receipt_${DateTime.now()}.png',
-          );
-
-          // Take an picture with the best resolution
-          await _controller.takePicture(path);
-          // await FlutterExifRotation.rotateAndSaveImage(path: path);
-          await fixExifRotation(path);
-
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => DisplayPictureScreen(imagePath: path),
-              ));
-        },
-      ),
-    );
-  }
-}
-
-class DisplayPictureScreen extends StatefulWidget {
-  final String imagePath;
-
-  DisplayPictureScreen({Key key, this.imagePath}) : super(key: key);
-
-  @override
-  State<StatefulWidget> createState() => DisplayPictureScreenState(imagePath);
-}
-
-class DisplayPictureScreenState extends State<DisplayPictureScreen> {
-  final String imagePath;
-  final GlobalKey<ScaffoldState> key2 = GlobalKey<ScaffoldState>();
-  Color _acceptButtonColor = Colors.green;
-  Color _declineButtonColor = Colors.red;
-  ProgressDialog pr;
-
-  bool _isButtonDisabled;
-
-  DisplayPictureScreenState(this.imagePath);
-
-  @override
-  void initState() {
-    super.initState();
-    _isButtonDisabled = false;
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    pr = ProgressDialog(
-      context,
-      type: ProgressDialogType.Normal,
-      textDirection: TextDirection.ltr,
-      isDismissible: false,
-    );
+    pr = ProgressDialog(context,
+        type: ProgressDialogType.Download,
+        isDismissible: false,
+        showLogs: true);
 
     pr.style(
-      message:
-          'Parsing image using tesseract. This takes some time.',
-      borderRadius: 10.0,
-      backgroundColor: Colors.white,
-      elevation: 10.0,
-      insetAnimCurve: Curves.easeInCirc,
-      messageTextStyle: TextStyle(
-          color: Colors.black, fontSize: 15.0, fontWeight: FontWeight.w600),
-    );
+        message: 'Downloading file...',
+        borderRadius: 10.0,
+        backgroundColor: Colors.white,
+        progressWidget: CircularProgressIndicator(),
+        elevation: 10.0,
+        insetAnimCurve: Curves.easeInOut,
+        progress: 0.0,
+        maxProgress: 100.0,
+        progressTextStyle: TextStyle(
+            color: Colors.black, fontSize: 13.0, fontWeight: FontWeight.w400),
+        messageTextStyle: TextStyle(
+            color: Colors.black, fontSize: 19.0, fontWeight: FontWeight.w600));
 
     return Scaffold(
       appBar: AppBar(title: Text('Display the Picture')),
@@ -231,11 +231,10 @@ class DisplayPictureScreenState extends State<DisplayPictureScreen> {
                                       await SharedPreferences.getInstance();
                                   String ip = sharedPrefs.get("ipv4");
 
-                                  pr.show();
+                                  await fixExifRotation(imagePath);
                                   await NetworkClient.sendImage(
                                       File(imagePath), ip, context, key2);
-
-                                  pr.hide();
+                                  _progress = _progress + 80.0;
                                 })))),
             ],
           )
