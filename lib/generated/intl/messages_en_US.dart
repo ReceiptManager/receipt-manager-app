@@ -20,108 +20,71 @@ class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'en_US';
 
   final messages = _notInlinedMessages(_notInlinedMessages);
-
-  static _notInlinedMessages(_) => <String, Function>{
-        "addReceipt": MessageLookupByLibrary.simpleMessage("Add receipt"),
-        "appBarTitle": MessageLookupByLibrary.simpleMessage("Receipt manager"),
-        "cancel": MessageLookupByLibrary.simpleMessage("Cancel"),
-        "currency": MessageLookupByLibrary.simpleMessage("\$"),
-        "currentLanguage": MessageLookupByLibrary.simpleMessage("English"),
-        "deleteReceipt": MessageLookupByLibrary.simpleMessage("Delete"),
-        "editReceipt": MessageLookupByLibrary.simpleMessage("Update"),
-        "emptyStoreName": MessageLookupByLibrary.simpleMessage(
-            "\'Please enter a store name."),
-        "emptyTotal":
-            MessageLookupByLibrary.simpleMessage("Please enter the total."),
-        "enableDebugOutput":
-            MessageLookupByLibrary.simpleMessage("Enable debug output"),
-        "failedUpdateReceipt":
-            MessageLookupByLibrary.simpleMessage("Failed to update receipt"),
-        "friday": MessageLookupByLibrary.simpleMessage("Friday"),
-        "generalException":
-            MessageLookupByLibrary.simpleMessage("Ups something went wrong"),
-        "groceryCategory": MessageLookupByLibrary.simpleMessage("Grocery"),
-        "handshakeException": MessageLookupByLibrary.simpleMessage(
-            "Bad certificate. Please regenerate the certificate"),
-        "healthCategory": MessageLookupByLibrary.simpleMessage("Health"),
-        "invalidInput":
-            MessageLookupByLibrary.simpleMessage("Input appears invalid."),
-        "invalidServerIP": MessageLookupByLibrary.simpleMessage(
-            "The given submitted server IP appear invalid. Please try again."),
-        "invalidTotal":
-            MessageLookupByLibrary.simpleMessage("Total is invalid."),
-        "language": MessageLookupByLibrary.simpleMessage("Language"),
-        "monday": MessageLookupByLibrary.simpleMessage("Monday"),
-        "openSourceLicence":
-            MessageLookupByLibrary.simpleMessage("Open source licenses"),
-        "overview": MessageLookupByLibrary.simpleMessage("Weekly overview"),
-        "overviewExpenses":
-            MessageLookupByLibrary.simpleMessage("Expenses overview"),
-        "receiptDateDialog":
-            MessageLookupByLibrary.simpleMessage("Please enter some date"),
-        "receiptDateFormat": MessageLookupByLibrary.simpleMessage("dd.MM.y"),
-        "receiptDateHelperText":
-            MessageLookupByLibrary.simpleMessage("Set the receipt date"),
-        "receiptDateInvalid": MessageLookupByLibrary.simpleMessage(
-            "Receipt date is invalid, format:"),
-        "receiptDateLabelText":
-            MessageLookupByLibrary.simpleMessage("Receipt date"),
-        "receiptDateNotFormatted":
-            MessageLookupByLibrary.simpleMessage("Date is not formatted"),
-        "receiptEmpty":
-            MessageLookupByLibrary.simpleMessage("Please enter some date"),
-        "receiptLoadFailed": MessageLookupByLibrary.simpleMessage(
-            "Error Occur, could not load receipts"),
-        "receiptSelectCategory":
-            MessageLookupByLibrary.simpleMessage("Select receipt category"),
-        "saturday": MessageLookupByLibrary.simpleMessage("Saturday"),
-        "serverIP": MessageLookupByLibrary.simpleMessage("Server ip"),
-        "serverIPHelpText":
-            MessageLookupByLibrary.simpleMessage("Set the image server ip"),
-        "serverIPLabelText":
-            MessageLookupByLibrary.simpleMessage("Server ip address"),
-        "serverIpIsNotSet":
-            MessageLookupByLibrary.simpleMessage("Server ip is not set."),
-        "serverSettings":
-            MessageLookupByLibrary.simpleMessage("Server Settings"),
-        "serverTimeout": MessageLookupByLibrary.simpleMessage("Server timeout"),
-        "settingsDeveloperSubtitle":
-            MessageLookupByLibrary.simpleMessage("Developer utils"),
-        "settingsDeveloperTitle":
-            MessageLookupByLibrary.simpleMessage("Developer"),
-        "settingsDevelopmentTitle":
-            MessageLookupByLibrary.simpleMessage("Development"),
-        "settingsGeneralCategory":
-            MessageLookupByLibrary.simpleMessage("Common"),
-        "settingsLanguageTitle":
-            MessageLookupByLibrary.simpleMessage("Language"),
-        "settingsMiscTitle": MessageLookupByLibrary.simpleMessage("Misc"),
-        "settingsNetworkCategory":
-            MessageLookupByLibrary.simpleMessage("Network"),
-        "settingsServerTitle": MessageLookupByLibrary.simpleMessage("Server"),
-        "socketException": MessageLookupByLibrary.simpleMessage(
-            "Can\'t connect to the server"),
-        "storeNameHelper":
-            MessageLookupByLibrary.simpleMessage("Set the store name"),
-        "storeNameHint": MessageLookupByLibrary.simpleMessage("Store name"),
-        "storeNameTitle": MessageLookupByLibrary.simpleMessage("Store name"),
-        "sunday": MessageLookupByLibrary.simpleMessage("Sunday"),
-        "thursday": MessageLookupByLibrary.simpleMessage("Thursday"),
-        "totalHelperText":
-            MessageLookupByLibrary.simpleMessage("Receipt total"),
-        "totalLabelText": MessageLookupByLibrary.simpleMessage("Receipt total"),
-        "totalTitle": MessageLookupByLibrary.simpleMessage("Receipt total"),
-        "tuesday": MessageLookupByLibrary.simpleMessage("Tuesday"),
-        "update": MessageLookupByLibrary.simpleMessage("Update"),
-        "updateReceipt": MessageLookupByLibrary.simpleMessage("Update Receipt"),
-        "updateReceiptSuccessful":
-            MessageLookupByLibrary.simpleMessage("Update receipt successfully"),
-        "updateServerIP":
-            MessageLookupByLibrary.simpleMessage("Server ip is set."),
-        "uploadFailed":
-            MessageLookupByLibrary.simpleMessage("Failed to upload image."),
-        "uploadSuccess": MessageLookupByLibrary.simpleMessage(
-            "Image successfully uploaded."),
-        "wednesday": MessageLookupByLibrary.simpleMessage("Wednesday")
-      };
+  static _notInlinedMessages(_) => <String, Function> {
+    "addReceipt" : MessageLookupByLibrary.simpleMessage("Add receipt"),
+    "appBarTitle" : MessageLookupByLibrary.simpleMessage("Receipt manager"),
+    "cancel" : MessageLookupByLibrary.simpleMessage("Cancel"),
+    "currency" : MessageLookupByLibrary.simpleMessage("\$"),
+    "currentLanguage" : MessageLookupByLibrary.simpleMessage("English"),
+    "deleteReceipt" : MessageLookupByLibrary.simpleMessage("Delete"),
+    "editReceipt" : MessageLookupByLibrary.simpleMessage("Update"),
+    "emptyStoreName" : MessageLookupByLibrary.simpleMessage("\'Please enter a store name."),
+    "emptyTotal" : MessageLookupByLibrary.simpleMessage("Please enter the total."),
+    "enableDebugOutput" : MessageLookupByLibrary.simpleMessage("Enable debug output"),
+    "failedUpdateReceipt" : MessageLookupByLibrary.simpleMessage("Failed to update receipt"),
+    "friday" : MessageLookupByLibrary.simpleMessage("Friday"),
+    "generalException" : MessageLookupByLibrary.simpleMessage("Ups something went wrong"),
+    "groceryCategory" : MessageLookupByLibrary.simpleMessage("Grocery"),
+    "handshakeException" : MessageLookupByLibrary.simpleMessage("Bad certificate. Please regenerate the certificate"),
+    "healthCategory" : MessageLookupByLibrary.simpleMessage("Health"),
+    "invalidInput" : MessageLookupByLibrary.simpleMessage("Input appears invalid."),
+    "invalidServerIP" : MessageLookupByLibrary.simpleMessage("The given submitted server IP appear invalid. Please try again."),
+    "invalidTotal" : MessageLookupByLibrary.simpleMessage("Total is invalid."),
+    "language" : MessageLookupByLibrary.simpleMessage("Language"),
+    "monday" : MessageLookupByLibrary.simpleMessage("Monday"),
+    "openSourceLicence" : MessageLookupByLibrary.simpleMessage("Open source licenses"),
+    "overview" : MessageLookupByLibrary.simpleMessage("Weekly overview"),
+    "overviewExpenses" : MessageLookupByLibrary.simpleMessage("Expenses overview"),
+    "receiptDateDialog" : MessageLookupByLibrary.simpleMessage("Please enter some date"),
+    "receiptDateFormat" : MessageLookupByLibrary.simpleMessage("dd.MM.y"),
+    "receiptDateHelperText" : MessageLookupByLibrary.simpleMessage("Set the receipt date"),
+    "receiptDateInvalid" : MessageLookupByLibrary.simpleMessage("Receipt date is invalid, format:"),
+    "receiptDateLabelText" : MessageLookupByLibrary.simpleMessage("Receipt date"),
+    "receiptDateNotFormatted" : MessageLookupByLibrary.simpleMessage("Date is not formatted"),
+    "receiptEmpty" : MessageLookupByLibrary.simpleMessage("Please enter some date"),
+    "receiptLoadFailed" : MessageLookupByLibrary.simpleMessage("Error Occur, could not load receipts"),
+    "receiptSelectCategory" : MessageLookupByLibrary.simpleMessage("Select receipt category"),
+    "saturday" : MessageLookupByLibrary.simpleMessage("Saturday"),
+    "serverIP" : MessageLookupByLibrary.simpleMessage("Server ip"),
+    "serverIPHelpText" : MessageLookupByLibrary.simpleMessage("Set the image server ip"),
+    "serverIPLabelText" : MessageLookupByLibrary.simpleMessage("Server ip address"),
+    "serverIpIsNotSet" : MessageLookupByLibrary.simpleMessage("Server ip is not set."),
+    "serverSettings" : MessageLookupByLibrary.simpleMessage("Server Settings"),
+    "serverTimeout" : MessageLookupByLibrary.simpleMessage("Server timeout"),
+    "settingsDeveloperSubtitle" : MessageLookupByLibrary.simpleMessage("Developer utils"),
+    "settingsDeveloperTitle" : MessageLookupByLibrary.simpleMessage("Developer"),
+    "settingsDevelopmentTitle" : MessageLookupByLibrary.simpleMessage("Development"),
+    "settingsGeneralCategory" : MessageLookupByLibrary.simpleMessage("Common"),
+    "settingsLanguageTitle" : MessageLookupByLibrary.simpleMessage("Language"),
+    "settingsMiscTitle" : MessageLookupByLibrary.simpleMessage("Misc"),
+    "settingsNetworkCategory" : MessageLookupByLibrary.simpleMessage("Network"),
+    "settingsServerTitle" : MessageLookupByLibrary.simpleMessage("Server"),
+    "socketException" : MessageLookupByLibrary.simpleMessage("Can\'t connect to the server"),
+    "storeNameHelper" : MessageLookupByLibrary.simpleMessage("Set the store name"),
+    "storeNameHint" : MessageLookupByLibrary.simpleMessage("Store name"),
+    "storeNameTitle" : MessageLookupByLibrary.simpleMessage("Store name"),
+    "sunday" : MessageLookupByLibrary.simpleMessage("Sunday"),
+    "thursday" : MessageLookupByLibrary.simpleMessage("Thursday"),
+    "totalHelperText" : MessageLookupByLibrary.simpleMessage("Receipt total"),
+    "totalLabelText" : MessageLookupByLibrary.simpleMessage("Receipt total"),
+    "totalTitle" : MessageLookupByLibrary.simpleMessage("Receipt total"),
+    "tuesday" : MessageLookupByLibrary.simpleMessage("Tuesday"),
+    "update" : MessageLookupByLibrary.simpleMessage("Update"),
+    "updateReceipt" : MessageLookupByLibrary.simpleMessage("Update Receipt"),
+    "updateReceiptSuccessful" : MessageLookupByLibrary.simpleMessage("Update receipt successfully"),
+    "updateServerIP" : MessageLookupByLibrary.simpleMessage("Server ip is set."),
+    "uploadFailed" : MessageLookupByLibrary.simpleMessage("Failed to upload image."),
+    "uploadSuccess" : MessageLookupByLibrary.simpleMessage("Image successfully uploaded."),
+    "wednesday" : MessageLookupByLibrary.simpleMessage("Wednesday")
+  };
 }
