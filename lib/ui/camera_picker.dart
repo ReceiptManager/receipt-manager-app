@@ -27,6 +27,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 import 'package:receipt_parser/factory/padding_factory.dart';
 import 'package:receipt_parser/network/network_client.dart';
+import 'package:rounded_loading_button/rounded_loading_button.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class TakePictureScreen extends StatefulWidget {
@@ -168,24 +169,8 @@ class DisplayPictureScreenState extends State<DisplayPictureScreen> {
 
   @override
   Widget build(BuildContext context) {
-    pr = ProgressDialog(context,
-        type: ProgressDialogType.Download,
-        isDismissible: false,
-        showLogs: true);
-
-    pr.style(
-        message: 'Downloading file...',
-        borderRadius: 10.0,
-        backgroundColor: Colors.white,
-        progressWidget: CircularProgressIndicator(),
-        elevation: 10.0,
-        insetAnimCurve: Curves.easeInOut,
-        progress: 0.0,
-        maxProgress: 100.0,
-        progressTextStyle: TextStyle(
-            color: Colors.black, fontSize: 13.0, fontWeight: FontWeight.w400),
-        messageTextStyle: TextStyle(
-            color: Colors.black, fontSize: 19.0, fontWeight: FontWeight.w600));
+    final RoundedLoadingButtonController _btnController =
+        new RoundedLoadingButtonController();
 
     return Scaffold(
       appBar: AppBar(title: Text('Display the Picture')),
@@ -199,32 +184,30 @@ class DisplayPictureScreenState extends State<DisplayPictureScreen> {
             children: [
               PaddingFactory.create(Center(
                   child: IgnorePointer(
-                ignoring: _isButtonDisabled,
-                child: FloatingActionButton(
-                    heroTag: "decline",
-                    backgroundColor: _declineButtonColor,
-                    child: Icon(
-                      Icons.clear,
-                    ),
-                    onPressed: () {
-                      Navigator.pop(context);
-                    }),
-              ))),
+                      ignoring: _isButtonDisabled,
+                      child: RoundedLoadingButton(
+                          width: 60,
+                          height: 60,
+                          child: Icon(Icons.clear, color: Colors.white),
+                          animateOnTap: true,
+                          color: _declineButtonColor,
+                          controller: _btnController,
+                          onPressed: () {
+                            Navigator.pop(context);
+                          })))),
               PaddingFactory.create(Center(
                   child: IgnorePointer(
                       ignoring: _isButtonDisabled,
-                      child: FloatingActionButton(
-                          heroTag: "accept",
-                          backgroundColor: _acceptButtonColor,
-                          child: Icon(
-                            Icons.done,
-                          ),
-                          onPressed: _isButtonDisabled
-                              ? null
-                              : () async {
+                      child: RoundedLoadingButton(
+                          width: 60,
+                          height: 60,
+                          child: Icon(Icons.done, color: Colors.white),
+                          animateOnTap: true,
+                          color: _acceptButtonColor,
+                          controller: _btnController,
+                          onPressed: () async {
                                   setState(() {
                                     _isButtonDisabled = true;
-                                    _acceptButtonColor = Colors.grey;
                                     _declineButtonColor = Colors.grey;
                                   });
                                   SharedPreferences sharedPrefs =
@@ -235,6 +218,7 @@ class DisplayPictureScreenState extends State<DisplayPictureScreen> {
                                   await NetworkClient.sendImage(
                                       File(imagePath), ip, context, key2);
                                   _progress = _progress + 80.0;
+                                  _btnController.reset();
                                 })))),
             ],
           )
