@@ -260,7 +260,7 @@ class HistoryWidgetState extends State<HistoryWidget> {
                                   PaddingFactory.create(new Theme(
                                       data: AppTheme.lightTheme,
                                       child: TextFormFactory.storeName(
-                                          storeNameController, context))),
+                                          storeNameController, context,receipts))),
                                   PaddingFactory.create(new Theme(
                                       data: AppTheme.lightTheme,
                                       child: TextFormFactory.total(
