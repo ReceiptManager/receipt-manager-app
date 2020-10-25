@@ -29,7 +29,13 @@ Now, you can build the flutter application using the android studio app.
 3. Install the application
 
 ### For consumers
-Install the precompiled binaries at the release page.
+Download the precombiled binary. Check the checksum using following
+```
+shasum1 app-release.apk
+cat app.apk.sha1
+```
+
+If the checksum matches you are good to go. Now, install the precompiled binaries at the release page. 
 
 Now, you can insert, add and store receipts permanently. If you like to parse the receipt using OCR, you
 have to do the following.
@@ -95,9 +101,7 @@ Since mobile devices have a unacceptable performance, the parser uses a (traditi
 | Add new categories | no | hight | / |
 | Edit categories in edit widget | no | hight | / |
 
-
-
-
+---
 
 ### Privacy
 A lot of companies store and sell your data. This is the main reason why I started this project. 
@@ -108,10 +112,14 @@ worry about that. No third party services are used.
 
 ### Screenshots
 <p align="left">
-  <img src="https://raw.githubusercontent.com/ReceiptParser/Application/master/docs/assets/dash.png">
+  <img src="https://raw.githubusercontent.com/ReceiptParser/Application/master/docs/assets/dash_app.png">
+  
   <img src="https://raw.githubusercontent.com/ReceiptParser/Application/master/docs/assets/history_app.png">
+  
   <img src="https://raw.githubusercontent.com/ReceiptParser/Application/master/docs/assets/edit_app.png">
+  
   <img src="https://raw.githubusercontent.com/ReceiptParser/Application/master/docs/assets/settings_app.png">
+  
   <img src="https://raw.githubusercontent.com/ReceiptParser/Application/master/docs/assets/screen_app.png">
 </p>
 
