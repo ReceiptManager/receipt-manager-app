@@ -16,7 +16,7 @@
 
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
-import 'package:receipt_parser/database/receipt_database.dart';
+import 'package:receipt_manager/database/receipt_database.dart';
 
 @immutable
 abstract class DbState extends Equatable {

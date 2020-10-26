@@ -25,8 +25,8 @@ import 'package:image/image.dart' as img;
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:progress_dialog/progress_dialog.dart';
-import 'package:receipt_parser/factory/padding_factory.dart';
-import 'package:receipt_parser/network/network_client.dart';
+import 'package:receipt_manager/factory/padding_factory.dart';
+import 'package:receipt_manager/network/network_client.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

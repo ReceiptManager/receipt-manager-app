@@ -16,8 +16,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:giffy_dialog/giffy_dialog.dart';
-import 'package:receipt_parser/converter/color_converter.dart';
-import 'package:receipt_parser/generated/l10n.dart';
+import 'package:receipt_manager/converter/color_converter.dart';
+import 'package:receipt_manager/generated/l10n.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ServerSettings extends StatefulWidget {
