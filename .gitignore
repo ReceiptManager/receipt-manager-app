@@ -8,6 +8,7 @@
 *.aar
 *.ap_
 *.aab
+*.jks
 build/*
 
 # Files for the ART/Dalvik VM
@@ -339,3 +340,5 @@ hs_err_pid*
 
 # End of https://www.toptal.com/developers/gitignore/api/flutter,intellij+all,androidstudio,android
 build/*
+/android/app/.receipt_manager_key.jks
+/android/app/receipt_manager_key
