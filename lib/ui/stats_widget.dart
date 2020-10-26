@@ -4,13 +4,13 @@ import 'dart:math' as l;
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:receipt_parser/bloc/moor/db_bloc.dart';
-import 'package:receipt_parser/bloc/moor/db_state.dart';
-import 'package:receipt_parser/database/receipt_database.dart';
-import 'package:receipt_parser/factory/padding_factory.dart';
-import 'package:receipt_parser/generated/l10n.dart';
-import 'package:receipt_parser/math/math_util.dart';
-import 'package:receipt_parser/theme/color/color.dart';
+import 'package:receipt_manager/bloc/moor/db_bloc.dart';
+import 'package:receipt_manager/bloc/moor/db_state.dart';
+import 'package:receipt_manager/database/receipt_database.dart';
+import 'package:receipt_manager/factory/padding_factory.dart';
+import 'package:receipt_manager/generated/l10n.dart';
+import 'package:receipt_manager/math/math_util.dart';
+import 'package:receipt_manager/theme/color/color.dart';
 
 class StatsWidget extends StatefulWidget {
   final DbBloc _bloc;

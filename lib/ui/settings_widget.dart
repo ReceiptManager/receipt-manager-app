@@ -15,10 +15,10 @@
  */
 
 import 'package:flutter/material.dart';
-import 'package:receipt_parser/bloc/moor/bloc.dart';
-import 'package:receipt_parser/generated/l10n.dart';
-import 'package:receipt_parser/ui/settings/developer_settings.dart';
-import 'package:receipt_parser/ui/settings/server_settings.dart';
+import 'package:receipt_manager/bloc/moor/bloc.dart';
+import 'package:receipt_manager/generated/l10n.dart';
+import 'package:receipt_manager/ui/settings/developer_settings.dart';
+import 'package:receipt_manager/ui/settings/server_settings.dart';
 import 'package:settings_ui/settings_ui.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

@@ -19,11 +19,11 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:receipt_parser/bloc/moor/bloc.dart';
-import 'package:receipt_parser/bloc/moor/db_bloc.dart';
-import 'package:receipt_parser/database/receipt_database.dart';
-import 'package:receipt_parser/factory/categories_factory.dart';
-import 'package:receipt_parser/model/receipt_category.dart';
+import 'package:receipt_manager/bloc/moor/bloc.dart';
+import 'package:receipt_manager/bloc/moor/db_bloc.dart';
+import 'package:receipt_manager/database/receipt_database.dart';
+import 'package:receipt_manager/factory/categories_factory.dart';
+import 'package:receipt_manager/model/receipt_category.dart';
 
 class DeveloperSettings extends StatefulWidget {
   final DbBloc _bloc;

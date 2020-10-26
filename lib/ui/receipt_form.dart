@@ -20,16 +20,16 @@ import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
-import 'package:receipt_parser/bloc/moor/bloc.dart';
-import 'package:receipt_parser/converter/color_converter.dart';
-import 'package:receipt_parser/database/receipt_database.dart';
-import 'package:receipt_parser/date/date_manipulator.dart';
-import 'package:receipt_parser/factory/categories_factory.dart';
-import 'package:receipt_parser/factory/padding_factory.dart';
-import 'package:receipt_parser/factory/text_form_history.dart';
-import 'package:receipt_parser/generated/l10n.dart';
-import 'package:receipt_parser/model/receipt_category.dart';
-import 'package:receipt_parser/theme/theme_manager.dart';
+import 'package:receipt_manager/bloc/moor/bloc.dart';
+import 'package:receipt_manager/converter/color_converter.dart';
+import 'package:receipt_manager/database/receipt_database.dart';
+import 'package:receipt_manager/date/date_manipulator.dart';
+import 'package:receipt_manager/factory/categories_factory.dart';
+import 'package:receipt_manager/factory/padding_factory.dart';
+import 'package:receipt_manager/factory/text_form_history.dart';
+import 'package:receipt_manager/generated/l10n.dart';
+import 'package:receipt_manager/model/receipt_category.dart';
+import 'package:receipt_manager/theme/theme_manager.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'camera_picker.dart';
@@ -94,215 +94,237 @@ class ReceiptInputController extends State<ReceiptForm> {
 
   @override
   Widget build(BuildContext context) {
-
     WidgetsBinding.instance.addPostFrameCallback((_) => showUpdateSuccess());
     return BlocBuilder(
-        cubit: _bloc,
-        builder: (BuildContext context, state) {
-      if (state is LoadingState) {
-        return Center(
-          child: CircularProgressIndicator(),
-        );
-      }
-      if (state is ErrorState) {
-        return Center(
-          child: Text(S.of(context).receiptLoadFailed),
-        );
-      }
-      if (state is LoadedState) {
-        final receipt = state.receipt;
-        return BlocProvider(
-            create: (_) => _bloc,
-            child: CustomScrollView(
-              slivers: [
-                SliverFillRemaining(
-                  hasScrollBody: false,
-                  child: Column(
-                    children: <Widget>[
-                      Expanded(
-                          child: Container(
-                              child: Form(
-                                key: _formKey,
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: <Widget>[
-                                    Stack(children: <Widget>[
-                                      new Padding(
-                                          padding:
-                                          const EdgeInsets.only(top: 16.0, left: 8),
-                                          child: new Align(
-                                              alignment: Alignment.bottomLeft,
-                                              child: Text(
-                                                S.of(context).addReceipt,
-                                                style: TextStyle(
-                                                    fontSize: 25,
-                                                    color: Colors.black,
-                                                    fontWeight: FontWeight.w300),
-                                              ))),
-                                      PaddingFactory.create(new Align(
-                                          alignment: Alignment.topRight,
-                                          child: IconButton(
-                                            icon: new Icon(Icons.camera_alt,
-                                                size: 35, color: Colors.black),
-                                            color: Colors.white,
-                                            onPressed: () async {
-                                              WidgetsFlutterBinding.ensureInitialized();
-
-                                              final cameras = await availableCameras();
-                                              final firstCamera = cameras.first;
-
-                                              Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                  builder: (context) => TakePictureScreen(
-                                                      sharedPrefs: sharedPrefs,
-                                                      camera: firstCamera),
-                                                ),
-                                              );
-                                            },
-                                          )))
-                                    ]),
-                                    PaddingFactory.create(new Theme(
-                                        data: AppTheme.lightTheme,
-                                        child: TextFormFactory.storeName(
-                                            storeNameController, context,receipt))),
-                                    PaddingFactory.create(new Theme(
-                                        data: AppTheme.lightTheme,
-                                        child: TextFormFactory.total(
-                                            receiptTotalController, context))),
-                                    PaddingFactory.create(new Theme(
-                                        data: AppTheme.lightTheme,
-                                        child: TextFormField(
-                                          style:
-                                          TextStyle(color: HexColor.fromHex("#232F34")),
-                                          keyboardType: TextInputType.number,
-                                          decoration: new InputDecoration(
-                                              enabledBorder: OutlineInputBorder(
-                                                borderSide: BorderSide(
-                                                    color: HexColor.fromHex("#232F34")),
-                                              ),
-                                              focusedBorder: OutlineInputBorder(
-                                                borderSide: BorderSide(
-                                                    color: HexColor.fromHex("#232F34")),
-                                              ),
-                                              border: new OutlineInputBorder(
-                                                  borderSide: new BorderSide(
-                                                      color: HexColor.fromHex("#232F34"))),
-                                              hintText: S.of(context).receiptDateFormat,
-                                              labelText: S.of(context).receiptDateLabelText,
-                                              helperText:
-                                              S.of(context).receiptDateHelperText,
-                                              prefixIcon: IconButton(
-                                                  icon: Icon(
-                                                    Icons.calendar_today,
-                                                    color: Colors.purple,
-                                                  ),
-                                                  splashColor: Colors.black,
-                                                  color: Colors.black,
-                                                  onPressed: () async {
-                                                    receiptDate = await showDatePicker(
-                                                        builder: (BuildContext context,
-                                                            Widget child) {
-                                                          return Theme(
-                                                            data:
-                                                            ThemeData.light().copyWith(
-                                                              primaryColor: Colors.black,
-                                                              accentColor: Colors.black,
-                                                              colorScheme:
-                                                              ColorScheme.light(
-                                                                  primary: const Color(
-                                                                      0XFFF9AA33)),
-                                                              buttonTheme: ButtonThemeData(
-                                                                  textTheme: ButtonTextTheme
-                                                                      .primary),
-                                                            ),
-                                                            child: child,
-                                                          );
-                                                        },
-                                                        context: context,
-                                                        initialDate: DateTime.now(),
-                                                        firstDate: DateTime(2010),
-                                                        lastDate: DateTime(2050));
-                                                    dateController.text = DateFormat(
-                                                        S.of(context).receiptDateFormat)
-                                                        .format(receiptDate);
-                                                  })),
-                                          controller: dateController,
-                                          validator: (value) {
-                                            if (value.isEmpty) {
-                                              return S.of(context).receiptDateDialog;
-                                            }
-                                            RegExp totalRegex = new RegExp(
-                                                "^(0?[1-9]|[12][0-9]|3[01])[.\\/ ]?(0?[1-9]|1[0-2])[./ ]?(?:19|20)[0-9]{2}\$",
-                                                caseSensitive: false,
-                                                multiLine: false);
-
-                                            if (!totalRegex.hasMatch(value.trim())) {
-                                              return S.of(context).receiptDateNotFormatted +
-                                                  " " +
-                                                  S.of(context).receiptDateFormat;
-                                            }
-
-                                            return null;
-                                          },
+      cubit: _bloc,
+      builder: (BuildContext context, state) {
+        if (state is LoadingState) {
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+        if (state is ErrorState) {
+          return Center(
+            child: Text(S.of(context).receiptLoadFailed),
+          );
+        }
+        if (state is LoadedState) {
+          final receipt = state.receipt;
+          return BlocProvider(
+              create: (_) => _bloc,
+              child: CustomScrollView(
+                slivers: [
+                  SliverFillRemaining(
+                    hasScrollBody: false,
+                    child: Column(
+                      children: <Widget>[
+                        Expanded(
+                            child: Container(
+                                child: Form(
+                          key: _formKey,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Stack(children: <Widget>[
+                                new Padding(
+                                    padding: const EdgeInsets.only(
+                                        top: 16.0, left: 8),
+                                    child: new Align(
+                                        alignment: Alignment.bottomLeft,
+                                        child: Text(
+                                          S.of(context).addReceipt,
+                                          style: TextStyle(
+                                              fontSize: 25,
+                                              color: Colors.black,
+                                              fontWeight: FontWeight.w300),
                                         ))),
-                                    PaddingFactory.create(Container(
-                                        padding:
-                                        const EdgeInsets.only(left: 8.0, right: 8.0),
-                                        decoration: BoxDecoration(
-                                            color: Colors.white,
-                                            border: Border.all(color: Colors.black)),
-                                        child: Theme(
-                                            data: AppTheme.lightTheme,
-                                            child: DropdownButton<ReceiptCategory>(
-                                                key: _dropKey,
-                                                hint: Text(
-                                                    S.of(context).receiptSelectCategory),
-                                                value: selectedCategory,
-                                                isExpanded: true,
-                                                onChanged: (ReceiptCategory value) {
-                                                  setState(() {
-                                                    receiptCategory = value.name;
-                                                    selectedCategory = value;
-                                                  });
-                                                },
-                                                items: ReceiptCategoryFactory.get(context)
-                                                    .map((ReceiptCategory user) {
-                                                  return DropdownMenuItem<ReceiptCategory>(
-                                                    value: user,
-                                                    child: Row(
-                                                      children: <Widget>[
-                                                        user.icon,
-                                                        SizedBox(
-                                                          width: 10,
-                                                        ),
-                                                        Text(user.name),
-                                                      ],
-                                                    ),
-                                                  );
-                                                }).toList())))),
-                                    new Align(
-                                        alignment: Alignment.bottomRight,
-                                        child: Padding(
-                                            padding: const EdgeInsets.all(16.0),
-                                            child: submitButton())),
-                                  ],
-                                ),
-                              ))),
-                    ],
+                                PaddingFactory.create(new Align(
+                                    alignment: Alignment.topRight,
+                                    child: IconButton(
+                                      icon: new Icon(Icons.camera_alt,
+                                          size: 35, color: Colors.black),
+                                      color: Colors.white,
+                                      onPressed: () async {
+                                        WidgetsFlutterBinding
+                                            .ensureInitialized();
+
+                                        final cameras =
+                                            await availableCameras();
+                                        final firstCamera = cameras.first;
+
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                TakePictureScreen(
+                                                    sharedPrefs: sharedPrefs,
+                                                    camera: firstCamera),
+                                          ),
+                                        );
+                                      },
+                                    )))
+                              ]),
+                              PaddingFactory.create(new Theme(
+                                  data: AppTheme.lightTheme,
+                                  child: TextFormFactory.storeName(
+                                      storeNameController, context, receipt))),
+                              PaddingFactory.create(new Theme(
+                                  data: AppTheme.lightTheme,
+                                  child: TextFormFactory.total(
+                                      receiptTotalController, context))),
+                              PaddingFactory.create(new Theme(
+                                  data: AppTheme.lightTheme,
+                                  child: TextFormField(
+                                    style: TextStyle(
+                                        color: HexColor.fromHex("#232F34")),
+                                    keyboardType: TextInputType.number,
+                                    decoration: new InputDecoration(
+                                        enabledBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                              color:
+                                                  HexColor.fromHex("#232F34")),
+                                        ),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                              color:
+                                                  HexColor.fromHex("#232F34")),
+                                        ),
+                                        border: new OutlineInputBorder(
+                                            borderSide: new BorderSide(
+                                                color: HexColor.fromHex(
+                                                    "#232F34"))),
+                                        hintText:
+                                            S.of(context).receiptDateFormat,
+                                        labelText:
+                                            S.of(context).receiptDateLabelText,
+                                        helperText:
+                                            S.of(context).receiptDateHelperText,
+                                        prefixIcon: IconButton(
+                                            icon: Icon(
+                                              Icons.calendar_today,
+                                              color: Colors.purple,
+                                            ),
+                                            splashColor: Colors.black,
+                                            color: Colors.black,
+                                            onPressed: () async {
+                                              receiptDate =
+                                                  await showDatePicker(
+                                                      builder:
+                                                          (BuildContext context,
+                                                              Widget child) {
+                                                        return Theme(
+                                                          data:
+                                                              ThemeData.light()
+                                                                  .copyWith(
+                                                            primaryColor:
+                                                                Colors.black,
+                                                            accentColor:
+                                                                Colors.black,
+                                                            colorScheme:
+                                                                ColorScheme.light(
+                                                                    primary:
+                                                                        const Color(
+                                                                            0XFFF9AA33)),
+                                                            buttonTheme:
+                                                                ButtonThemeData(
+                                                                    textTheme:
+                                                                        ButtonTextTheme
+                                                                            .primary),
+                                                          ),
+                                                          child: child,
+                                                        );
+                                                      },
+                                                      context: context,
+                                                      initialDate:
+                                                          DateTime.now(),
+                                                      firstDate: DateTime(2010),
+                                                      lastDate: DateTime(2050));
+                                              dateController.text = DateFormat(S
+                                                      .of(context)
+                                                      .receiptDateFormat)
+                                                  .format(receiptDate);
+                                            })),
+                                    controller: dateController,
+                                    validator: (value) {
+                                      if (value.isEmpty) {
+                                        return S.of(context).receiptDateDialog;
+                                      }
+                                      RegExp totalRegex = new RegExp(
+                                          "^(0?[1-9]|[12][0-9]|3[01])[.\\/ ]?(0?[1-9]|1[0-2])[./ ]?(?:19|20)[0-9]{2}\$",
+                                          caseSensitive: false,
+                                          multiLine: false);
+
+                                      if (!totalRegex.hasMatch(value.trim())) {
+                                        return S
+                                                .of(context)
+                                                .receiptDateNotFormatted +
+                                            " " +
+                                            S.of(context).receiptDateFormat;
+                                      }
+
+                                      return null;
+                                    },
+                                  ))),
+                              PaddingFactory.create(Container(
+                                  padding: const EdgeInsets.only(
+                                      left: 8.0, right: 8.0),
+                                  decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      border: Border.all(color: Colors.black)),
+                                  child: Theme(
+                                      data: AppTheme.lightTheme,
+                                      child: DropdownButton<ReceiptCategory>(
+                                          key: _dropKey,
+                                          hint: Text(S
+                                              .of(context)
+                                              .receiptSelectCategory),
+                                          value: selectedCategory,
+                                          isExpanded: true,
+                                          onChanged: (ReceiptCategory value) {
+                                            setState(() {
+                                              receiptCategory = value.name;
+                                              selectedCategory = value;
+                                            });
+                                          },
+                                          items: ReceiptCategoryFactory.get(
+                                                  context)
+                                              .map((ReceiptCategory user) {
+                                            return DropdownMenuItem<
+                                                ReceiptCategory>(
+                                              value: user,
+                                              child: Row(
+                                                children: <Widget>[
+                                                  user.icon,
+                                                  SizedBox(
+                                                    width: 10,
+                                                  ),
+                                                  Text(user.name),
+                                                ],
+                                              ),
+                                            );
+                                          }).toList())))),
+                              new Align(
+                                  alignment: Alignment.bottomRight,
+                                  child: Padding(
+                                      padding: const EdgeInsets.all(16.0),
+                                      child: submitButton())),
+                            ],
+                          ),
+                        ))),
+                      ],
+                    ),
                   ),
-                ),
-              ],
-            ));
-      }
-      return Container(
-          color: Colors.white,
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.all(Radius.circular(20)),
-              boxShadow: <BoxShadow>[
-                BoxShadow(offset: Offset(0, 5), blurRadius: 10)
-              ]));
-    },
+                ],
+              ));
+        }
+        return Container(
+            color: Colors.white,
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.all(Radius.circular(20)),
+                boxShadow: <BoxShadow>[
+                  BoxShadow(offset: Offset(0, 5), blurRadius: 10)
+                ]));
+      },
     );
   }
 
@@ -371,5 +393,4 @@ class ReceiptInputController extends State<ReceiptForm> {
     storeNameController.clear();
     dateController.clear();
   }
-
 }

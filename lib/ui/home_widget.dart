@@ -16,9 +16,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:receipt_parser/bloc/moor/db_bloc.dart';
-import 'package:receipt_parser/database/receipt_database.dart';
-import 'package:receipt_parser/ui/receipt_form.dart';
+import 'package:receipt_manager/bloc/moor/db_bloc.dart';
+import 'package:receipt_manager/database/receipt_database.dart';
+import 'package:receipt_manager/ui/receipt_form.dart';
 
 // ignore: must_be_immutable
 class HomeWidget extends StatelessWidget {

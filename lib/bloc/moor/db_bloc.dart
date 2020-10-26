@@ -17,7 +17,7 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
-import 'package:receipt_parser/bloc/moor/bloc.dart';
+import 'package:receipt_manager/bloc/moor/bloc.dart';
 
 import '../../repository/repository.dart';
 

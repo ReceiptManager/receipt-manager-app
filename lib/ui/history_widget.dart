@@ -20,17 +20,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:intl/intl.dart';
-import 'package:receipt_parser/bloc/moor/bloc.dart';
-import 'package:receipt_parser/converter/color_converter.dart';
-import 'package:receipt_parser/database/receipt_database.dart';
-import 'package:receipt_parser/date/date_manipulator.dart';
-import 'package:receipt_parser/factory/logo_factory.dart';
-import 'package:receipt_parser/factory/padding_factory.dart';
-import 'package:receipt_parser/factory/text_form_history.dart';
-import 'package:receipt_parser/generated/l10n.dart';
-import 'package:receipt_parser/model/receipt_category.dart';
-import 'package:receipt_parser/theme/color/color.dart';
-import 'package:receipt_parser/theme/theme_manager.dart';
+import 'package:receipt_manager/bloc/moor/bloc.dart';
+import 'package:receipt_manager/converter/color_converter.dart';
+import 'package:receipt_manager/database/receipt_database.dart';
+import 'package:receipt_manager/date/date_manipulator.dart';
+import 'package:receipt_manager/factory/logo_factory.dart';
+import 'package:receipt_manager/factory/padding_factory.dart';
+import 'package:receipt_manager/factory/text_form_history.dart';
+import 'package:receipt_manager/generated/l10n.dart';
+import 'package:receipt_manager/model/receipt_category.dart';
+import 'package:receipt_manager/theme/color/color.dart';
+import 'package:receipt_manager/theme/theme_manager.dart';
 
 class HistoryWidget extends StatefulWidget {
   final DbBloc _bloc;
@@ -260,7 +260,9 @@ class HistoryWidgetState extends State<HistoryWidget> {
                                   PaddingFactory.create(new Theme(
                                       data: AppTheme.lightTheme,
                                       child: TextFormFactory.storeName(
-                                          storeNameController, context,receipts))),
+                                          storeNameController,
+                                          context,
+                                          receipts))),
                                   PaddingFactory.create(new Theme(
                                       data: AppTheme.lightTheme,
                                       child: TextFormFactory.total(
