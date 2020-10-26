@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import 'package:receipt_parser/database/receipt_database.dart';
+import 'package:receipt_manager/database/receipt_database.dart';
 
 class Repository {
   ReceiptDao _dao = ReceiptDao(AppDatabase());

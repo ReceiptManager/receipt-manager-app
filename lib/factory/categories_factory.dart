@@ -15,8 +15,8 @@
  */
 
 import 'package:flutter/material.dart';
-import 'package:receipt_parser/generated/l10n.dart';
-import 'package:receipt_parser/model/receipt_category.dart';
+import 'package:receipt_manager/generated/l10n.dart';
+import 'package:receipt_manager/model/receipt_category.dart';
 
 /// {@category Factory}
 /// {@subCategory Information displays}

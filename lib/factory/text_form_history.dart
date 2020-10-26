@@ -16,10 +16,10 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:receipt_parser/converter/color_converter.dart';
-import 'package:receipt_parser/database/receipt_database.dart';
-import 'package:receipt_parser/factory/button_factory.dart';
-import 'package:receipt_parser/generated/l10n.dart';
+import 'package:receipt_manager/converter/color_converter.dart';
+import 'package:receipt_manager/database/receipt_database.dart';
+import 'package:receipt_manager/factory/button_factory.dart';
+import 'package:receipt_manager/generated/l10n.dart';
 import 'package:simple_autocomplete_formfield/simple_autocomplete_formfield.dart';
 
 class TextFormFactory {

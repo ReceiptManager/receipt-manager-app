@@ -17,8 +17,8 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:receipt_parser/database/receipt_database.dart';
-import 'package:receipt_parser/model/receipt_category.dart';
+import 'package:receipt_manager/database/receipt_database.dart';
+import 'package:receipt_manager/model/receipt_category.dart';
 
 class LogoFactory {
   final Receipt _receipt;

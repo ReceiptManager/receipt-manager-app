@@ -17,8 +17,8 @@
 import 'dart:developer';
 
 import 'package:moor_flutter/moor_flutter.dart';
-import 'package:receipt_parser/model/receipt.dart';
-import 'package:receipt_parser/out/receipt_printer.dart';
+import 'package:receipt_manager/model/receipt.dart';
+import 'package:receipt_manager/out/receipt_printer.dart';
 
 export 'package:moor_flutter/moor_flutter.dart' show Value;
 

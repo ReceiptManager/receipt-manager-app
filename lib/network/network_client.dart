@@ -22,8 +22,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:path/path.dart';
-import 'package:receipt_parser/database/receipt_database.dart';
-import 'package:receipt_parser/generated/l10n.dart';
+import 'package:receipt_manager/database/receipt_database.dart';
+import 'package:receipt_manager/generated/l10n.dart';
 
 import '../main.dart';
 
@@ -68,7 +68,8 @@ class NetworkClient {
         ..showSnackBar(SnackBar(
             content: Text(S.of(context).serverIpIsNotSet),
             backgroundColor: Colors.red));
-      await Future.delayed(const Duration(seconds: _transactionDuration), () {});
+      await Future.delayed(
+          const Duration(seconds: _transactionDuration), () {});
       Navigator.push(context,
           MaterialPageRoute(builder: (context) => HomeScreen(null, true)));
       return;
@@ -98,7 +99,8 @@ class NetworkClient {
             ..showSnackBar(SnackBar(
                 content: Text(S.of(context).serverTimeout),
                 backgroundColor: Colors.red));
-          await Future.delayed(const Duration(seconds: _transactionDuration), () {});
+          await Future.delayed(
+              const Duration(seconds: _transactionDuration), () {});
           Navigator.push(context,
               MaterialPageRoute(builder: (context) => HomeScreen(null, true)));
 
@@ -107,7 +109,8 @@ class NetworkClient {
       );
 
       if (response == null) {
-        await Future.delayed(const Duration(seconds: _transactionDuration), () {});
+        await Future.delayed(
+            const Duration(seconds: _transactionDuration), () {});
         Navigator.push(context,
             MaterialPageRoute(builder: (context) => HomeScreen(null, true)));
         return;
@@ -169,7 +172,8 @@ class NetworkClient {
         ..showSnackBar(SnackBar(
             content: Text(S.of(context).socketException + _.message.toString()),
             backgroundColor: Colors.red));
-      await Future.delayed(const Duration(seconds: _transactionDuration), () {});
+      await Future.delayed(
+          const Duration(seconds: _transactionDuration), () {});
       Navigator.push(context,
           MaterialPageRoute(builder: (context) => HomeScreen(null, true)));
       return;

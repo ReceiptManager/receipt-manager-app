@@ -16,7 +16,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:receipt_parser/generated/l10n.dart';
+import 'package:receipt_manager/generated/l10n.dart';
 
 /// Since most of the buttons use the same style
 /// The factory create a unique button with the custom style.
