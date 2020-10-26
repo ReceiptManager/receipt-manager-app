@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.receipt_scanner
+package org.receipt_manager
 
 import io.flutter.embedding.android.FlutterActivity
 

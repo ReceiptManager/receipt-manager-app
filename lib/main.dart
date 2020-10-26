@@ -17,16 +17,16 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:receipt_parser/bloc/moor/bloc.dart';
-import 'package:receipt_parser/database/receipt_database.dart';
-import 'package:receipt_parser/generated/l10n.dart';
-import 'package:receipt_parser/repository/repository.dart';
-import 'package:receipt_parser/theme/color/color.dart';
-import 'package:receipt_parser/theme/theme_manager.dart';
-import 'package:receipt_parser/ui/history_widget.dart';
-import 'package:receipt_parser/ui/home_widget.dart';
-import 'package:receipt_parser/ui/settings_widget.dart';
-import 'package:receipt_parser/ui/stats_widget.dart';
+import 'package:receipt_manager/bloc/moor/bloc.dart';
+import 'package:receipt_manager/database/receipt_database.dart';
+import 'package:receipt_manager/generated/l10n.dart';
+import 'package:receipt_manager/repository/repository.dart';
+import 'package:receipt_manager/theme/color/color.dart';
+import 'package:receipt_manager/theme/theme_manager.dart';
+import 'package:receipt_manager/ui/history_widget.dart';
+import 'package:receipt_manager/ui/home_widget.dart';
+import 'package:receipt_manager/ui/settings_widget.dart';
+import 'package:receipt_manager/ui/stats_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 final Repository _repository = Repository();
