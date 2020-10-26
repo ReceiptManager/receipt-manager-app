@@ -1,8 +1,6 @@
-<p align="center">
-  <img src="https://raw.githubusercontent.com/ReceiptParser/Application/master/docs/assets/dash_app.png">
-</p>
-
 # Receipt manager
+[<img src="https://i.imgur.com/DTbi7LK.png" width="150">](https://apt.izzysoft.de/fdroid/index/apk/org.receipt_scanner)
+
 Keep track of your receipt is pretty hard. You need to update the shop names, receipt date and a total of every receipt.
 
 Why do we not use the digital advantage to our advantage? The receipt scanner solves multiple problems.  You don't have to keep track of your receipts, you safe (a lot) of time but still, see every important information in a blink of a second.
