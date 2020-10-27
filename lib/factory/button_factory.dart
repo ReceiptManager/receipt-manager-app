@@ -48,7 +48,7 @@ class ButtonFactory {
               context: context,
               initialDate: DateTime.now(),
               firstDate: DateTime(2010),
-              lastDate: DateTime(2050));
+              lastDate: DateTime(2030));
           dateController.text =
               DateFormat(S.of(context).receiptDateFormat).format(receiptDate);
         });

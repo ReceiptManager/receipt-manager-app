@@ -14,11 +14,8 @@
  * limitations under the License.
  */
 
-import 'dart:developer';
-
 import 'package:moor_flutter/moor_flutter.dart';
 import 'package:receipt_manager/model/receipt.dart';
-import 'package:receipt_manager/out/receipt_printer.dart';
 
 export 'package:moor_flutter/moor_flutter.dart' show Value;
 
@@ -39,6 +36,7 @@ class ReceiptDao extends DatabaseAccessor<AppDatabase> with _$ReceiptDaoMixin {
 
   ReceiptDao(this.db) : super(db);
 
+  /// Perform fetch receipts event in database.
   Future<List<Receipt>> getReceipts() {
     return (select(receipts)
           ..orderBy(([
@@ -50,22 +48,17 @@ class ReceiptDao extends DatabaseAccessor<AppDatabase> with _$ReceiptDaoMixin {
 
   Stream<List<Receipt>> watchReceipts() => select(receipts).watch();
 
+  /// Perform insert event in database.
   Future<void> insertReceipt(ReceiptsCompanion receipt) {
-    Receipt r = Receipt(
-        id: receipt.id.value,
-        total: receipt.total.value,
-        date: receipt.date.value,
-        shop: receipt.shop.value,
-        category: receipt.category.value);
-
-    log("[-> Insert new receipt" + ReceiptPrinter.print(r));
     return into(receipts).insert(receipt);
   }
 
+  /// Delete database.
   Future deleteDatabase() async {
     delete(receipts).go();
   }
 
+  /// Perform update event in database.
   Future updateReceipt(Receipt receipt) => update(receipts).replace(receipt);
 
   Future deleteReceipt(Receipt receipt) => delete(receipts).delete(receipt);
