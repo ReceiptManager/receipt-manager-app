@@ -50,10 +50,12 @@ class DbBloc extends Bloc<DbEvent, DbState> {
     }
   }
 
+  /// Perform insert event in database {Repository}.
   Stream<DbState> _mapInsertEventToState(InsertEvent event) async* {
     await _repository.insertReceipt(event.receipt);
   }
 
+  /// Fetch all stored receipts
   Stream<DbState> _mapTaskAllFetchToState() async* {
     yield LoadingState();
 
@@ -65,18 +67,24 @@ class DbBloc extends Bloc<DbEvent, DbState> {
     }
   }
 
+  /// Perform delete event in database {Repository}.
   Stream<DbState> _mapDeleteEventToState(DeleteEvent event) async* {
     await _repository.deleteReceipt(event.receipt);
   }
 
+  /// Wipe complete database using the
+  /// database {Repository}.
   Stream<DbState> _mapDeleteAllEventToState() async* {
     await _repository.deleteDatabase();
   }
 
+
+  /// Perform update event in database {Repository}.
   Stream<DbState> _mapUpdateEventToState(UpdateEvent event) async* {
     await _repository.updateReceipt(event.receipt);
   }
 
+  /// Fetch all stored receipts
   Stream<DbState> _mapSwitchButtonEventToState() async* {
     yield LoadingState();
 

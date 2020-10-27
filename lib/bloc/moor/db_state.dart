@@ -24,18 +24,14 @@ abstract class DbState extends Equatable {
 }
 
 class InitialState extends DbState {
-  @override
-  // TODO: implement props
-  List<Object> get props => throw UnimplementedError();
+  noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
 }
 
 class LoadingState extends DbState {
   @override
   String toString() => "LoadingState";
 
-  @override
-  // TODO: implement props
-  List<Object> get props => throw UnimplementedError();
+  noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
 }
 
 // ignore: must_be_immutable
@@ -47,16 +43,12 @@ class LoadedState extends DbState {
   @override
   String toString() => "LoadingState";
 
-  @override
-  // TODO: implement props
-  List<Object> get props => throw UnimplementedError();
+  noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
 }
 
 class ErrorState extends DbState {
   @override
   String toString() => "ErrorState";
 
-  @override
-  // TODO: implement props
-  List<Object> get props => throw UnimplementedError();
+  noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
 }
