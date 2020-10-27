@@ -1,0 +1,24 @@
+Keeping track of your receipt is pretty hard. You need to update the shop names, receipt date and a total of every receipt.
+
+Why do we not use the digital advantage to our advantage? The receipt scanner solves multiple problems. You don’t have to keep track of your receipts, you safe (a lot) of time but still, see every important information in a blink of a second.
+
+<br><b>Features:</b>
+
+* iOS and Android application
+* fast and easy receipt parser using OCR
+* store receipts permanently in a SQL database
+* minimal design
+* no third party apps
+
+Parsing receipts is not only time consuming, it is moreover a very powerful task. Since mobile devices have a unacceptable performance, the parser uses a (traditional) client server architecture.
+
+<br><b>How it works:</b>
+
+* The User makes a photo of a receipt
+* The Application uploads the receipt to the sever
+* The Server parses the receipt and sends the output (as JSON response) back to the application
+* The Application stores the receipt in a SQL database
+
+<br><b>Privacy:</b>
+
+A lot of companies store and sell your data. This is the main reason why I started this project. I want to control my private data. Since <b>you are hosting <a href='https://github.com/ReceiptManager/Server' target='_blank'>your own server</a>,</b> you don’t have to worry about that. No third party services are used.
