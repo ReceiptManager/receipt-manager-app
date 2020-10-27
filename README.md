@@ -45,31 +45,7 @@ have to do the following.
 5. Run the server
 
 ### In detail
-#### Clone the repository over https
-```
-git clone https://github.com/ReceiptParser/Server
-```
-
-#### Install the python packages using `pip`
-```
-cd Server
-sudo pip install -r requirements.txt
-```
-
-#### Generate an SSL certificate
-```
-make generate_cert
-```
-
-#### Start the image server
-```
-make serve
-```
-
-If the server is running, the server ip is shown in the server console. That's it.
-<p align="center">
-  <img src="https://i.imgur.com/xcwvmYa.png">
-</p>
+Build and run the image server. You will find instructions in the server repository, or click [here](https://github.com/ReceiptManager/Server).
 
 Now, change the server ip. In the application go to `Settings/Server/` and edit the server ip.
 <p align="center">
