@@ -3,7 +3,7 @@
 </p>
 
 # Receipt manager
-[<img src="https://i.imgur.com/DTbi7LK.png" width="150">](https://apt.izzysoft.de/fdroid/index/apk/org.receipt_scanner)
+[<img src="https://i.imgur.com/DTbi7LK.png" width="150">](https://apt.izzysoft.de/fdroid/index/apk/org.receipt_manager)
 
 Keep track of your receipt is pretty hard. You need to update the shop names, receipt date and a total of every receipt.
 
@@ -50,7 +50,6 @@ have to do the following.
 
 ### In detail
 Build and run the image server. You will find instructions in the server repository, or click [here](https://github.com/ReceiptManager/Server).
-
 Now, change the server ip. In the application go to `Settings/Server/` and edit the server ip.
 <p align="center">
   <img src="https://i.imgur.com/nob0QFz.png">
