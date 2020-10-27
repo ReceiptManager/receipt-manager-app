@@ -1,3 +1,7 @@
+<p align="center">
+<img src="https://miro.medium.com/max/700/1*VfeXSnc08x6BTCbPNPCfIg.jpeg">
+</p>
+
 # Receipt manager
 [<img src="https://i.imgur.com/DTbi7LK.png" width="150">](https://apt.izzysoft.de/fdroid/index/apk/org.receipt_scanner)
 
