@@ -176,8 +176,10 @@ class DisplayPictureScreenState extends State<DisplayPictureScreen> {
       key: key2,
       body: Column(
         children: [
-          PaddingFactory.create(
-              Container(height: 550, child: Image.file(File(imagePath)))),
+          Center(
+              child: PaddingFactory.create(Container(
+                  height: MediaQuery.of(context).size.height / 1.5,
+                  child: Image.file(File(imagePath))))),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
@@ -217,7 +219,6 @@ class DisplayPictureScreenState extends State<DisplayPictureScreen> {
                             await NetworkClient.sendImage(
                                 File(imagePath), ip, context, key2);
                             _progress = _progress + 80.0;
-                            _btnController.reset();
                           })))),
             ],
           )
