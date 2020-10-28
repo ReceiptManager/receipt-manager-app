@@ -78,7 +78,6 @@ class DbBloc extends Bloc<DbEvent, DbState> {
     await _repository.deleteDatabase();
   }
 
-
   /// Perform update event in database {Repository}.
   Stream<DbState> _mapUpdateEventToState(UpdateEvent event) async* {
     await _repository.updateReceipt(event.receipt);

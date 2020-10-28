@@ -354,7 +354,7 @@ class ReceiptInputController extends State<ReceiptForm> {
             _bloc.add(ReceiptAllFetch());
             reset();
           } else {
-            if (receiptCategory.isEmpty) {
+            if (receiptCategory == null || receiptCategory.isEmpty) {
               Scaffold.of(context).showSnackBar(SnackBar(
                   content: Text(S.of(context).receiptSelectCategory),
                   backgroundColor: Colors.red));
