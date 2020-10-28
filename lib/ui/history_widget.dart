@@ -95,8 +95,23 @@ class HistoryWidgetState extends State<HistoryWidget> {
     );
   }
 
-  _buildList(r) {
+  _buildList(List<Receipt> r) {
+    if (r.isEmpty) {
+      return new Container(
+          color: Colors.white,
+          child: PaddingFactory.create(Column(
+            children: [
+              PaddingFactory.create(
+                  Image(image: AssetImage('assets/empty.png'))),
+              PaddingFactory.create(Text(
+                "There are no receipts inserted.",
+                style: TextStyle(fontSize: 16, color: LightColor.grey),
+              ))
+            ],
+          )));
+    }
     return new Container(
+        color: Colors.white,
         child: ListView.builder(
             padding: const EdgeInsets.all(8.0),
             itemCount: r.length,
@@ -186,6 +201,7 @@ class HistoryWidgetState extends State<HistoryWidget> {
 
   Container createEditMenu({hint, icon, controller}) {
     return Container(
+      color: Colors.white,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
         color: Colors.white,

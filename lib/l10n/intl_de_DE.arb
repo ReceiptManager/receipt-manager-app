@@ -65,5 +65,12 @@
   "handshakeException": "Zertifikat ungültig",
   "generalException": "Etwas ist schief gelaufen",
   "serverIpIsNotSet": "Server IP ist undefiniert.",
-  "entertainment": "Unterhaltung"
+  "entertainment": "Unterhaltung",
+  "skip": "Skip",
+  "startsDescription": "Analyse personal expenses with detailed charts and filter categories.",
+  "statsTitle": "Track your progress with statistics",
+  "ocrTitle": "Parse receipt via tesseract",
+  "ocrDescription": "Parse receipts using optical character recognition.",
+  "next": "Next",
+  "done": "Done"
 }
