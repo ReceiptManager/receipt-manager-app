@@ -17,6 +17,7 @@
 import 'package:flutter/material.dart';
 import 'package:giffy_dialog/giffy_dialog.dart';
 import 'package:receipt_manager/converter/color_converter.dart';
+import 'package:receipt_manager/factory/padding_factory.dart';
 import 'package:receipt_manager/generated/l10n.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -83,14 +84,17 @@ class _ServerSettingsState extends State<ServerSettings> {
       );
     }
     return Scaffold(
-        key: _scaffoldKey2,
-        appBar: AppBar(title: Text(S.of(context).serverSettings)),
-        body: Column(children: [
-          Padding(
-              padding: const EdgeInsets.all(16.0),
-              child:
-                  new Theme(data: ThemeData.light(), child: serverTextfield())),
-          new Align(
+      backgroundColor: Colors.white,
+      key: _scaffoldKey2,
+      appBar: AppBar(title: Text(S.of(context).serverSettings)),
+      body: Column(children: [
+        Padding(
+            padding: const EdgeInsets.all(16.0),
+            child:
+                new Theme(data: ThemeData.light(), child: serverTextfield())),
+        Stack(children: [
+          PaddingFactory.create(Image(image: AssetImage('assets/server.png'))),
+          Align(
               alignment: Alignment.bottomRight,
               child: Padding(
                   padding: const EdgeInsets.all(16.0),
@@ -143,6 +147,8 @@ class _ServerSettingsState extends State<ServerSettings> {
                           ));
                       },
                       child: Icon(Icons.done_all))))
-        ]));
+        ])
+      ]),
+    );
   }
 }

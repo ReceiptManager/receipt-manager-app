@@ -32,8 +32,8 @@
   "failedUpdateReceipt": "Beleg wurde nicht aktualisiert",
   "cancel": "Abbrechen",
   "update": "Aktualisieren",
-  "serverIP": "Server ip",
-  "serverIPLabelText": "Server ip Addresse",
+  "serverIP": "Server IP",
+  "serverIPLabelText": "Server IP Addresse",
   "serverIPHelpText": "Zugangs-Server Addresse ",
   "serverSettings": "Server Einstellungen",
   "invalidServerIP": "Die eingegebene IP war falsch. Bitte versuchen Sie es erneut",
@@ -72,5 +72,6 @@
   "ocrTitle": "Füge deine Einkaufszettel aus Bildern hinzu",
   "ocrDescription": "Durch tesseract können Bilder automatisch analysiert werden",
   "next": "Weiter",
-  "done": "Geschaft"
+  "done": "Geschaft",
+  "noReceipts": "Keine Belege wurden hinzugefügt"
 }

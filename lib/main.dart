@@ -82,6 +82,7 @@ class OnboardScreenState extends State<OnboardScreen> {
   final SharedPreferences sharedPrefs;
 
   var skipOnboardMethod = false;
+
   OnboardScreenState(this.sharedPrefs);
 
   @override
@@ -91,18 +92,15 @@ class OnboardScreenState extends State<OnboardScreen> {
     final List<OnBoardModel> onBoardData = [
       OnBoardModel(
         title: S.of(context).ocrTitle,
-        description:
-        S.of(context).ocrDescription,
+        description: S.of(context).ocrDescription,
         imgUrl: "assets/data.png",
       ),
       OnBoardModel(
         title: S.of(context).statsTitle,
-        description:
-        S.of(context).startsDescription,
+        description: S.of(context).startsDescription,
         imgUrl: "assets/charts.png",
       ),
     ];
-
 
     return Provider<OnBoardState>(
       create: (_) => OnBoardState(),
@@ -190,10 +188,8 @@ class OnboardScreenState extends State<OnboardScreen> {
       );
     } else {
       sharedPrefs.setBool("skip", true);
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => HomeScreen(null, false)));
+      Navigator.push(context,
+          MaterialPageRoute(builder: (context) => HomeScreen(null, false)));
     }
   }
 }
@@ -223,8 +219,17 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
         onWillPop: () async => false,
         child: Scaffold(
             backgroundColor: Colors.white,
-            appBar: AppBar(title: Text(S.of(context).appBarTitle),
-            automaticallyImplyLeading: false),
+            appBar: AppBar(
+              title: Text(S.of(context).appBarTitle,
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.w500,
+
+              )),
+              automaticallyImplyLeading: false,
+              shadowColor: LightColor.black,
+              centerTitle: true,
+            ),
             bottomNavigationBar: CurvedNavigationBar(
               key: _bottomNavigationKey,
               index: 0,

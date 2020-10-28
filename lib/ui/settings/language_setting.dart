@@ -18,6 +18,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:receipt_manager/generated/l10n.dart';
+import 'package:receipt_manager/theme/color/color.dart';
 import 'package:settings_ui/settings_ui.dart';
 
 class LanguageSetting extends StatefulWidget {
@@ -84,7 +85,7 @@ class _LanguageSettingState extends State<LanguageSetting> {
 
   Widget trailingWidget(int index) {
     return (languageIndex == index)
-        ? Icon(Icons.check, color: Colors.black)
+        ? Icon(Icons.check, color: LightColor.brighter)
         : Icon(null);
   }
 
