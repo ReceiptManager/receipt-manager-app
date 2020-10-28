@@ -40,6 +40,7 @@ Future<void> main() async {
   _bloc.add(ReceiptAllFetch());
 
   runApp(MaterialApp(
+      color: LightColor.brighter,
       localizationsDelegates: [
         S.delegate,
         GlobalMaterialLocalizations.delegate,

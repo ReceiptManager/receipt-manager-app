@@ -20,72 +20,114 @@ class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'de_DE';
 
   final messages = _notInlinedMessages(_notInlinedMessages);
-  static _notInlinedMessages(_) => <String, Function> {
-    "addReceipt" : MessageLookupByLibrary.simpleMessage("Kassenbeleg hinzufügen"),
-    "appBarTitle" : MessageLookupByLibrary.simpleMessage("Mein Haushaltsbuch"),
-    "cancel" : MessageLookupByLibrary.simpleMessage("Abbrechen"),
-    "currency" : MessageLookupByLibrary.simpleMessage("€"),
-    "currentLanguage" : MessageLookupByLibrary.simpleMessage("Deutsch"),
-    "deleteReceipt" : MessageLookupByLibrary.simpleMessage("Löschen"),
-    "editReceipt" : MessageLookupByLibrary.simpleMessage("Editieren"),
-    "emptyStoreName" : MessageLookupByLibrary.simpleMessage("\'Bitte gebe einen Shop Namen an."),
-    "emptyTotal" : MessageLookupByLibrary.simpleMessage("Bitte geben einen Betrag an"),
-    "enableDebugOutput" : MessageLookupByLibrary.simpleMessage("Entwicklerinformationen anzeigen"),
-    "entertainment" : MessageLookupByLibrary.simpleMessage("Unterhaltung"),
-    "failedUpdateReceipt" : MessageLookupByLibrary.simpleMessage("Beleg wurde nicht aktualisiert"),
-    "friday" : MessageLookupByLibrary.simpleMessage("Freitag"),
-    "generalException" : MessageLookupByLibrary.simpleMessage("Etwas ist schief gelaufen"),
-    "groceryCategory" : MessageLookupByLibrary.simpleMessage("Lebensmittel"),
-    "handshakeException" : MessageLookupByLibrary.simpleMessage("Zertifikat ungültig"),
-    "healthCategory" : MessageLookupByLibrary.simpleMessage("Gesundheit"),
-    "invalidInput" : MessageLookupByLibrary.simpleMessage("Eingabe is ungültig"),
-    "invalidServerIP" : MessageLookupByLibrary.simpleMessage("Die eingegebene IP war falsch. Bitte versuchen Sie es erneut"),
-    "invalidTotal" : MessageLookupByLibrary.simpleMessage("Betrag ist ungültig"),
-    "language" : MessageLookupByLibrary.simpleMessage("Sprache"),
-    "monday" : MessageLookupByLibrary.simpleMessage("Montag"),
-    "openSourceLicence" : MessageLookupByLibrary.simpleMessage("Open-Source Lizenzen"),
-    "overview" : MessageLookupByLibrary.simpleMessage("Wochenübersicht"),
-    "overviewExpenses" : MessageLookupByLibrary.simpleMessage("Ausgabenübersicht"),
-    "receiptDateDialog" : MessageLookupByLibrary.simpleMessage("Please enter some date"),
-    "receiptDateFormat" : MessageLookupByLibrary.simpleMessage("dd.MM.y"),
-    "receiptDateHelperText" : MessageLookupByLibrary.simpleMessage("Füge das Datum das Kassenbeleg hinzu"),
-    "receiptDateInvalid" : MessageLookupByLibrary.simpleMessage("Receipt date is invalid, format:"),
-    "receiptDateLabelText" : MessageLookupByLibrary.simpleMessage("Datum"),
-    "receiptDateNotFormatted" : MessageLookupByLibrary.simpleMessage("Eingabeformat ungültig"),
-    "receiptEmpty" : MessageLookupByLibrary.simpleMessage("Bitte geben Sie ein Datum ein"),
-    "receiptLoadFailed" : MessageLookupByLibrary.simpleMessage("Ein Fehler ist aufgetreten, Kassenbelege konnten nicht geladen werden"),
-    "receiptSelectCategory" : MessageLookupByLibrary.simpleMessage("Wähle eine Kategorie"),
-    "saturday" : MessageLookupByLibrary.simpleMessage("Samstag"),
-    "serverIP" : MessageLookupByLibrary.simpleMessage("Server ip"),
-    "serverIPHelpText" : MessageLookupByLibrary.simpleMessage("Zugangs-Server Addresse "),
-    "serverIPLabelText" : MessageLookupByLibrary.simpleMessage("Server ip Addresse"),
-    "serverIpIsNotSet" : MessageLookupByLibrary.simpleMessage("Server IP ist undefiniert."),
-    "serverSettings" : MessageLookupByLibrary.simpleMessage("Server Einstellungen"),
-    "serverTimeout" : MessageLookupByLibrary.simpleMessage("Server Zeitüberschreibung"),
-    "settingsDeveloperSubtitle" : MessageLookupByLibrary.simpleMessage("Entwickelerwerkzeuge"),
-    "settingsDeveloperTitle" : MessageLookupByLibrary.simpleMessage("Entwickler"),
-    "settingsDevelopmentTitle" : MessageLookupByLibrary.simpleMessage("Entwicklung"),
-    "settingsGeneralCategory" : MessageLookupByLibrary.simpleMessage("Allgemein"),
-    "settingsLanguageTitle" : MessageLookupByLibrary.simpleMessage("Sprache"),
-    "settingsMiscTitle" : MessageLookupByLibrary.simpleMessage("Verschiedenes"),
-    "settingsNetworkCategory" : MessageLookupByLibrary.simpleMessage("Netzwerk"),
-    "settingsServerTitle" : MessageLookupByLibrary.simpleMessage("Netzwerk Einstellungen"),
-    "socketException" : MessageLookupByLibrary.simpleMessage("Keine Verbindung zum Server möglich"),
-    "storeNameHelper" : MessageLookupByLibrary.simpleMessage("Füge einen Shop Namen hinzu"),
-    "storeNameHint" : MessageLookupByLibrary.simpleMessage("Shop Name"),
-    "storeNameTitle" : MessageLookupByLibrary.simpleMessage("Shop Name"),
-    "sunday" : MessageLookupByLibrary.simpleMessage("Sonntag"),
-    "thursday" : MessageLookupByLibrary.simpleMessage("Donnerstag"),
-    "totalHelperText" : MessageLookupByLibrary.simpleMessage("Füge den Betrag des Beleges hinzu"),
-    "totalLabelText" : MessageLookupByLibrary.simpleMessage("Betrag"),
-    "totalTitle" : MessageLookupByLibrary.simpleMessage("Betrag"),
-    "tuesday" : MessageLookupByLibrary.simpleMessage("Dienstag"),
-    "update" : MessageLookupByLibrary.simpleMessage("Aktualisieren"),
-    "updateReceipt" : MessageLookupByLibrary.simpleMessage("Kassenbeleg aktualisieren"),
-    "updateReceiptSuccessful" : MessageLookupByLibrary.simpleMessage("Beleg erfolgreich aktualisiert"),
-    "updateServerIP" : MessageLookupByLibrary.simpleMessage("Zugangs-Server Addresse aktualisiert."),
-    "uploadFailed" : MessageLookupByLibrary.simpleMessage("Bild konnte nicht hochgeladen werden"),
-    "uploadSuccess" : MessageLookupByLibrary.simpleMessage("Bild erfolgreich hochgeladen"),
-    "wednesday" : MessageLookupByLibrary.simpleMessage("Mittwoch")
-  };
+
+  static _notInlinedMessages(_) => <String, Function>{
+        "addReceipt":
+            MessageLookupByLibrary.simpleMessage("Kassenbeleg hinzufügen"),
+        "appBarTitle":
+            MessageLookupByLibrary.simpleMessage("Mein Haushaltsbuch"),
+        "cancel": MessageLookupByLibrary.simpleMessage("Abbrechen"),
+        "currency": MessageLookupByLibrary.simpleMessage("€"),
+        "currentLanguage": MessageLookupByLibrary.simpleMessage("Deutsch"),
+        "deleteReceipt": MessageLookupByLibrary.simpleMessage("Löschen"),
+        "editReceipt": MessageLookupByLibrary.simpleMessage("Editieren"),
+        "emptyStoreName": MessageLookupByLibrary.simpleMessage(
+            "\'Bitte gebe einen Shop Namen an."),
+        "emptyTotal":
+            MessageLookupByLibrary.simpleMessage("Bitte geben einen Betrag an"),
+        "enableDebugOutput": MessageLookupByLibrary.simpleMessage(
+            "Entwicklerinformationen anzeigen"),
+        "entertainment": MessageLookupByLibrary.simpleMessage("Unterhaltung"),
+        "failedUpdateReceipt": MessageLookupByLibrary.simpleMessage(
+            "Beleg wurde nicht aktualisiert"),
+        "friday": MessageLookupByLibrary.simpleMessage("Freitag"),
+        "generalException":
+            MessageLookupByLibrary.simpleMessage("Etwas ist schief gelaufen"),
+        "groceryCategory": MessageLookupByLibrary.simpleMessage("Lebensmittel"),
+        "handshakeException":
+            MessageLookupByLibrary.simpleMessage("Zertifikat ungültig"),
+        "healthCategory": MessageLookupByLibrary.simpleMessage("Gesundheit"),
+        "invalidInput":
+            MessageLookupByLibrary.simpleMessage("Eingabe is ungültig"),
+        "invalidServerIP": MessageLookupByLibrary.simpleMessage(
+            "Die eingegebene IP war falsch. Bitte versuchen Sie es erneut"),
+        "invalidTotal":
+            MessageLookupByLibrary.simpleMessage("Betrag ist ungültig"),
+        "language": MessageLookupByLibrary.simpleMessage("Sprache"),
+        "monday": MessageLookupByLibrary.simpleMessage("Montag"),
+        "openSourceLicence":
+            MessageLookupByLibrary.simpleMessage("Open-Source Lizenzen"),
+        "overview": MessageLookupByLibrary.simpleMessage("Wochenübersicht"),
+        "overviewExpenses":
+            MessageLookupByLibrary.simpleMessage("Ausgabenübersicht"),
+        "receiptDateDialog":
+            MessageLookupByLibrary.simpleMessage("Please enter some date"),
+        "receiptDateFormat": MessageLookupByLibrary.simpleMessage("dd.MM.y"),
+        "receiptDateHelperText": MessageLookupByLibrary.simpleMessage(
+            "Füge das Datum das Kassenbeleg hinzu"),
+        "receiptDateInvalid": MessageLookupByLibrary.simpleMessage(
+            "Receipt date is invalid, format:"),
+        "receiptDateLabelText": MessageLookupByLibrary.simpleMessage("Datum"),
+        "receiptDateNotFormatted":
+            MessageLookupByLibrary.simpleMessage("Eingabeformat ungültig"),
+        "receiptEmpty": MessageLookupByLibrary.simpleMessage(
+            "Bitte geben Sie ein Datum ein"),
+        "receiptLoadFailed": MessageLookupByLibrary.simpleMessage(
+            "Ein Fehler ist aufgetreten, Kassenbelege konnten nicht geladen werden"),
+        "receiptSelectCategory":
+            MessageLookupByLibrary.simpleMessage("Wähle eine Kategorie"),
+        "saturday": MessageLookupByLibrary.simpleMessage("Samstag"),
+        "serverIP": MessageLookupByLibrary.simpleMessage("Server ip"),
+        "serverIPHelpText":
+            MessageLookupByLibrary.simpleMessage("Zugangs-Server Addresse "),
+        "serverIPLabelText":
+            MessageLookupByLibrary.simpleMessage("Server ip Addresse"),
+        "serverIpIsNotSet":
+            MessageLookupByLibrary.simpleMessage("Server IP ist undefiniert."),
+        "serverSettings":
+            MessageLookupByLibrary.simpleMessage("Server Einstellungen"),
+        "serverTimeout":
+            MessageLookupByLibrary.simpleMessage("Server Zeitüberschreibung"),
+        "settingsDeveloperSubtitle":
+            MessageLookupByLibrary.simpleMessage("Entwickelerwerkzeuge"),
+        "settingsDeveloperTitle":
+            MessageLookupByLibrary.simpleMessage("Entwickler"),
+        "settingsDevelopmentTitle":
+            MessageLookupByLibrary.simpleMessage("Entwicklung"),
+        "settingsGeneralCategory":
+            MessageLookupByLibrary.simpleMessage("Allgemein"),
+        "settingsLanguageTitle":
+            MessageLookupByLibrary.simpleMessage("Sprache"),
+        "settingsMiscTitle":
+            MessageLookupByLibrary.simpleMessage("Verschiedenes"),
+        "settingsNetworkCategory":
+            MessageLookupByLibrary.simpleMessage("Netzwerk"),
+        "settingsServerTitle":
+            MessageLookupByLibrary.simpleMessage("Netzwerk Einstellungen"),
+        "socketException": MessageLookupByLibrary.simpleMessage(
+            "Keine Verbindung zum Server möglich"),
+        "storeNameHelper":
+            MessageLookupByLibrary.simpleMessage("Füge einen Shop Namen hinzu"),
+        "storeNameHint": MessageLookupByLibrary.simpleMessage("Shop Name"),
+        "storeNameTitle": MessageLookupByLibrary.simpleMessage("Shop Name"),
+        "sunday": MessageLookupByLibrary.simpleMessage("Sonntag"),
+        "thursday": MessageLookupByLibrary.simpleMessage("Donnerstag"),
+        "totalHelperText": MessageLookupByLibrary.simpleMessage(
+            "Füge den Betrag des Beleges hinzu"),
+        "totalLabelText": MessageLookupByLibrary.simpleMessage("Betrag"),
+        "totalTitle": MessageLookupByLibrary.simpleMessage("Betrag"),
+        "tuesday": MessageLookupByLibrary.simpleMessage("Dienstag"),
+        "update": MessageLookupByLibrary.simpleMessage("Aktualisieren"),
+        "updateReceipt":
+            MessageLookupByLibrary.simpleMessage("Kassenbeleg aktualisieren"),
+        "updateReceiptSuccessful": MessageLookupByLibrary.simpleMessage(
+            "Beleg erfolgreich aktualisiert"),
+        "updateServerIP": MessageLookupByLibrary.simpleMessage(
+            "Zugangs-Server Addresse aktualisiert."),
+        "uploadFailed": MessageLookupByLibrary.simpleMessage(
+            "Bild konnte nicht hochgeladen werden"),
+        "uploadSuccess": MessageLookupByLibrary.simpleMessage(
+            "Bild erfolgreich hochgeladen"),
+        "wednesday": MessageLookupByLibrary.simpleMessage("Mittwoch")
+      };
 }

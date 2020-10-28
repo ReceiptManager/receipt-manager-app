@@ -32,8 +32,8 @@ class ReceiptCategoryFactory {
             Icon(Icons.shopping_bag_outlined), "grocery"),
         ReceiptCategory(S.of(context).healthCategory,
             Icon(Icons.medical_services), "health"),
-        ReceiptCategory(S.of(context).entertainment, Icon(Icons.shop),
-            "entertainment")
+        ReceiptCategory(
+            S.of(context).entertainment, Icon(Icons.shop), "entertainment")
       ];
     }
 
