@@ -131,3 +131,4 @@ I use free logos.
 | Grocery logo | Freepik | https://www.flaticon.com/free-icon/groceries_3050159?term=groceries&page=1&position=7 |
 | Icon pack | unknown | https://www.flaticon.com/packs/retail-59?k=1602359120540 |
 | Health icon |  Eucalypt | https://www.flaticon.com/free-icon/health-check_2463800?term=health&page=1&position=6 |
+| Entertainment icon | Photo3_Idea_studio | https://www.flaticon.com/free-icon/popcorn_3163478?term=entertainment&page=1&position=9 |

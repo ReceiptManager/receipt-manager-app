@@ -64,5 +64,6 @@
   "socketException": "Can't connect to the server",
   "handshakeException": "Bad certificate. Please regenerate the certificate",
   "generalException": "Ups something went wrong",
-  "serverIpIsNotSet": "Server ip is not set."
+  "serverIpIsNotSet": "Server ip is not set.",
+  "entertainment": "Entertainment"
 }
