@@ -64,5 +64,6 @@
   "socketException": "Keine Verbindung zum Server möglich",
   "handshakeException": "Zertifikat ungültig",
   "generalException": "Etwas ist schief gelaufen",
-  "serverIpIsNotSet": "Server IP ist undefiniert."
+  "serverIpIsNotSet": "Server IP ist undefiniert.",
+  "entertainment": "Unterhaltung"
 }

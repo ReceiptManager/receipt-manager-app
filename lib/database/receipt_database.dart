@@ -61,5 +61,6 @@ class ReceiptDao extends DatabaseAccessor<AppDatabase> with _$ReceiptDaoMixin {
   /// Perform update event in database.
   Future updateReceipt(Receipt receipt) => update(receipts).replace(receipt);
 
+  /// Perform delete event in database.
   Future deleteReceipt(Receipt receipt) => delete(receipts).delete(receipt);
 }
