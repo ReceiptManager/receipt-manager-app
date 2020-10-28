@@ -104,7 +104,7 @@ class HistoryWidgetState extends State<HistoryWidget> {
               PaddingFactory.create(
                   Image(image: AssetImage('assets/empty.png'))),
               PaddingFactory.create(Text(
-                "There are no receipts inserted.",
+                S.of(context).noReceipts,
                 style: TextStyle(fontSize: 16, color: LightColor.grey),
               ))
             ],

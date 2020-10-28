@@ -71,5 +71,6 @@
   "ocrTitle": "Parse receipt via tesseract",
   "ocrDescription": "Parse receipts using optical character recognition.",
   "next": "Next",
-  "done": "Done"
+  "done": "Done",
+  "noReceipts": "There are no receipts inserted."
 }

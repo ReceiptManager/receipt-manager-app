@@ -17,7 +17,6 @@
 import 'package:flutter/material.dart';
 import 'package:receipt_manager/bloc/moor/bloc.dart';
 import 'package:receipt_manager/generated/l10n.dart';
-import 'package:receipt_manager/ui/settings/developer_settings.dart';
 import 'package:receipt_manager/ui/settings/server_settings.dart';
 import 'package:settings_ui/settings_ui.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -62,21 +61,6 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                       builder: (BuildContext context) => LanguageSetting()));
                 },
               ),
-              SettingsTile(
-                title: S.of(context).settingsDeveloperTitle,
-                subtitle: S.of(context).settingsDeveloperSubtitle,
-                leading: Icon(Icons.adb_rounded),
-                onTap: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (BuildContext context) =>
-                          DeveloperSettings(_bloc)));
-                },
-              ),
-            ],
-          ),
-          SettingsSection(
-            title: S.of(context).settingsNetworkCategory,
-            tiles: [
               SettingsTile(
                 title: S.of(context).settingsServerTitle,
                 leading: Icon(Icons.wifi),

@@ -355,20 +355,20 @@ class S {
     );
   }
 
-  /// `Server ip`
+  /// `Server IP`
   String get serverIP {
     return Intl.message(
-      'Server ip',
+      'Server IP',
       name: 'serverIP',
       desc: '',
       args: [],
     );
   }
 
-  /// `Server ip Addresse`
+  /// `Server IP Addresse`
   String get serverIPLabelText {
     return Intl.message(
-      'Server ip Addresse',
+      'Server IP Addresse',
       name: 'serverIPLabelText',
       desc: '',
       args: [],
@@ -760,6 +760,16 @@ class S {
     return Intl.message(
       'Geschaft',
       name: 'done',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Keine Belege wurden hinzugefügt`
+  String get noReceipts {
+    return Intl.message(
+      'Keine Belege wurden hinzugefügt',
+      name: 'noReceipts',
       desc: '',
       args: [],
     );

@@ -45,6 +45,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "language" : MessageLookupByLibrary.simpleMessage("Language"),
     "monday" : MessageLookupByLibrary.simpleMessage("Monday"),
     "next" : MessageLookupByLibrary.simpleMessage("Next"),
+    "noReceipts" : MessageLookupByLibrary.simpleMessage("There are no receipts inserted."),
     "ocrDescription" : MessageLookupByLibrary.simpleMessage("Parse receipts using optical character recognition."),
     "ocrTitle" : MessageLookupByLibrary.simpleMessage("Parse receipt via tesseract"),
     "openSourceLicence" : MessageLookupByLibrary.simpleMessage("Open source licenses"),
