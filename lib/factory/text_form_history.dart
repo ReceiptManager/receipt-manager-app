@@ -26,16 +26,17 @@ class TextFormFactory {
   static TextFormField date(TextEditingController dateController,
       DateTime receiptDate, BuildContext context) {
     return TextFormField(
+      style: TextStyle(color: Colors.grey),
       keyboardType: TextInputType.number,
       decoration: new InputDecoration(
           enabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: HexColor.fromHex("#232F34")),
+            borderSide: BorderSide(color: Colors.grey),
           ),
           focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: HexColor.fromHex("#232F34")),
+            borderSide: BorderSide(color: Colors.grey),
           ),
           border: new OutlineInputBorder(
-              borderSide: new BorderSide(color: HexColor.fromHex("#232F34"))),
+              borderSide: new BorderSide(color: Colors.grey)),
           hintText: S.of(context).receiptDateFormat,
           labelText: S.of(context).receiptDateLabelText,
           helperText: S.of(context).receiptDateHelperText,
@@ -65,17 +66,17 @@ class TextFormFactory {
   static TextFormField total(
       TextEditingController receiptTotalController, BuildContext context) {
     return TextFormField(
-      style: TextStyle(color: HexColor.fromHex("#232F34")),
+      style: TextStyle(color: Colors.grey),
       keyboardType: TextInputType.number,
       decoration: new InputDecoration(
         enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: HexColor.fromHex("#232F34")),
+          borderSide: BorderSide(color: Colors.grey),
         ),
         focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: HexColor.fromHex("#232F34")),
+          borderSide: BorderSide(color: Colors.grey),
         ),
         border: new OutlineInputBorder(
-            borderSide: new BorderSide(color: HexColor.fromHex("#232F34"))),
+            borderSide: new BorderSide(color: Colors.grey)),
         hintText: S.of(context).totalTitle,
         labelText: S.of(context).totalLabelText,
         helperText: S.of(context).totalHelperText,
@@ -111,16 +112,16 @@ class TextFormFactory {
     }
 
     return SimpleAutocompleteFormField<String>(
-      style: TextStyle(color: HexColor.fromHex("#232F34")),
+      style: TextStyle(color: Colors.grey),
       decoration: new InputDecoration(
         enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: HexColor.fromHex("#232F34")),
+          borderSide: BorderSide(color: Colors.grey),
         ),
         focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: HexColor.fromHex("#232F34")),
+          borderSide: BorderSide(color: Colors.grey),
         ),
         border: new OutlineInputBorder(
-            borderSide: new BorderSide(color: HexColor.fromHex("#232F34"))),
+            borderSide: new BorderSide(color: Colors.black)),
         hintText: S.of(context).storeNameHint,
         labelText: S.of(context).storeNameTitle,
         helperText: S.of(context).storeNameHelper,
@@ -131,7 +132,7 @@ class TextFormFactory {
       itemBuilder: (context, _storeName) => Padding(
         padding: EdgeInsets.only(top: 16, left: 16),
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          Text(_storeName, style: TextStyle(color: Colors.grey, fontSize: 16)),
+          Text(_storeName, style: TextStyle(color: Colors.black, fontSize: 16)),
         ]),
       ),
       onSearch: (search) async => storeNameList

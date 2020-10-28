@@ -21,7 +21,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:receipt_manager/bloc/moor/bloc.dart';
-import 'package:receipt_manager/converter/color_converter.dart';
 import 'package:receipt_manager/database/receipt_database.dart';
 import 'package:receipt_manager/date/date_manipulator.dart';
 import 'package:receipt_manager/factory/categories_factory.dart';
@@ -29,6 +28,7 @@ import 'package:receipt_manager/factory/padding_factory.dart';
 import 'package:receipt_manager/factory/text_form_history.dart';
 import 'package:receipt_manager/generated/l10n.dart';
 import 'package:receipt_manager/model/receipt_category.dart';
+import 'package:receipt_manager/theme/color/color.dart';
 import 'package:receipt_manager/theme/theme_manager.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -142,7 +142,7 @@ class ReceiptInputController extends State<ReceiptForm> {
                                     alignment: Alignment.topRight,
                                     child: IconButton(
                                       icon: new Icon(Icons.camera_alt,
-                                          size: 35, color: Colors.black),
+                                          size: 35, color: LightColor.brighter),
                                       color: Colors.white,
                                       onPressed: () async {
                                         WidgetsFlutterBinding
@@ -175,24 +175,20 @@ class ReceiptInputController extends State<ReceiptForm> {
                               PaddingFactory.create(new Theme(
                                   data: AppTheme.lightTheme,
                                   child: TextFormField(
-                                    style: TextStyle(
-                                        color: HexColor.fromHex("#232F34")),
+                                    style: TextStyle(color: Colors.grey),
                                     keyboardType: TextInputType.number,
                                     decoration: new InputDecoration(
                                         enabledBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(
-                                              color:
-                                                  HexColor.fromHex("#232F34")),
+                                          borderSide:
+                                              BorderSide(color: Colors.grey),
                                         ),
                                         focusedBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(
-                                              color:
-                                                  HexColor.fromHex("#232F34")),
+                                          borderSide:
+                                              BorderSide(color: Colors.grey),
                                         ),
                                         border: new OutlineInputBorder(
                                             borderSide: new BorderSide(
-                                                color: HexColor.fromHex(
-                                                    "#232F34"))),
+                                                color: Colors.grey)),
                                         hintText:
                                             S.of(context).receiptDateFormat,
                                         labelText:
@@ -223,8 +219,7 @@ class ReceiptInputController extends State<ReceiptForm> {
                                                             colorScheme:
                                                                 ColorScheme.light(
                                                                     primary:
-                                                                        const Color(
-                                                                            0XFFF9AA33)),
+                                                                        (LightColor.brighter)),
                                                             buttonTheme:
                                                                 ButtonThemeData(
                                                                     textTheme:
@@ -270,7 +265,7 @@ class ReceiptInputController extends State<ReceiptForm> {
                                       left: 8.0, right: 8.0),
                                   decoration: BoxDecoration(
                                       color: Colors.white,
-                                      border: Border.all(color: Colors.black)),
+                                      border: Border.all(color: Colors.grey)),
                                   child: Theme(
                                       data: AppTheme.lightTheme,
                                       child: DropdownButton<ReceiptCategory>(
@@ -286,6 +281,7 @@ class ReceiptInputController extends State<ReceiptForm> {
                                               selectedCategory = value;
                                             });
                                           },
+                                          dropdownColor: Colors.white,
                                           items: ReceiptCategoryFactory.get(
                                                   context)
                                               .map((ReceiptCategory user) {
@@ -298,7 +294,7 @@ class ReceiptInputController extends State<ReceiptForm> {
                                                   SizedBox(
                                                     width: 10,
                                                   ),
-                                                  Text(user.name),
+                                                  Text(user.name,style: TextStyle(color: Colors.grey),),
                                                 ],
                                               ),
                                             );
