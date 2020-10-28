@@ -77,7 +77,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "skip" : MessageLookupByLibrary.simpleMessage("Skip"),
     "socketException" : MessageLookupByLibrary.simpleMessage("Can\'t connect to the server"),
     "startsDescription" : MessageLookupByLibrary.simpleMessage("Analyse personal expenses with detailed charts and filter categories."),
-    "statsTitle" : MessageLookupByLibrary.simpleMessage("Track your progress with statistics"),
+    "statsTitle" : MessageLookupByLibrary.simpleMessage("Track your expenses with statistics"),
     "storeNameHelper" : MessageLookupByLibrary.simpleMessage("Set the store name"),
     "storeNameHint" : MessageLookupByLibrary.simpleMessage("Store name"),
     "storeNameTitle" : MessageLookupByLibrary.simpleMessage("Store name"),

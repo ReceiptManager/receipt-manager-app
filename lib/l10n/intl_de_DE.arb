@@ -66,11 +66,11 @@
   "generalException": "Etwas ist schief gelaufen",
   "serverIpIsNotSet": "Server IP ist undefiniert.",
   "entertainment": "Unterhaltung",
-  "skip": "Skip",
-  "startsDescription": "Analyse personal expenses with detailed charts and filter categories.",
-  "statsTitle": "Track your progress with statistics",
-  "ocrTitle": "Parse receipt via tesseract",
-  "ocrDescription": "Parse receipts using optical character recognition.",
-  "next": "Next",
-  "done": "Done"
+  "skip": "Überspringen",
+  "startsDescription": "Analyisiere deine persönlichen Ausgaben.",
+  "statsTitle": "Deine Ausgaben auf einem Blick",
+  "ocrTitle": "Füge deine Einkaufszettel aus Bildern hinzu",
+  "ocrDescription": "Durch tesseract können Bilder automatisch analysiert werden",
+  "next": "Weiter",
+  "done": "Geschaft"
 }

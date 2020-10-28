@@ -67,7 +67,7 @@
   "entertainment": "Entertainment",
   "skip": "Skip",
   "startsDescription": "Analyse personal expenses with detailed charts and filter categories.",
-  "statsTitle": "Track your progress with statistics",
+  "statsTitle": "Track your expenses with statistics",
   "ocrTitle": "Parse receipt via tesseract",
   "ocrDescription": "Parse receipts using optical character recognition.",
   "next": "Next",
