@@ -52,6 +52,8 @@ dependencies:
   progress_dialog: ^1.2.4
   rounded_loading_button: ^1.0.0
   simple_autocomplete_formfield: ^0.2.7
+  flutter_onboard: ^0.1.0
+  provider: ^4.3.2+2
 
 dev_dependencies:
   flutter_test:

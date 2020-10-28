@@ -52,7 +52,7 @@ class HomeWidget extends StatelessWidget {
 
   Widget buildBody() {
     return Container(
-      color: Colors.grey,
+      color: Colors.white,
       child: Align(
           alignment: Alignment.bottomCenter,
           child: Padding(
@@ -75,6 +75,7 @@ class HomeWidget extends StatelessWidget {
     init();
 
     return Scaffold(
+      backgroundColor: Colors.white,
       body: ReceiptForm(receipt, sendImage, sharedPrefs, _bloc),
     );
   }

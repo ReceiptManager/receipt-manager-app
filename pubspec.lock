@@ -298,6 +298,13 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_onboard:
+    dependency: "direct main"
+    description:
+      name: flutter_onboard
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.1.0"
   flutter_slidable:
     dependency: "direct main"
     description:
@@ -610,7 +617,7 @@ packages:
     source: hosted
     version: "1.2.4"
   provider:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: provider
       url: "https://pub.dartlang.org"
