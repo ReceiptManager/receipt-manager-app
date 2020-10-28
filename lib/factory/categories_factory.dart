@@ -17,6 +17,7 @@
 import 'package:flutter/material.dart';
 import 'package:receipt_manager/generated/l10n.dart';
 import 'package:receipt_manager/model/receipt_category.dart';
+import 'package:receipt_manager/theme/color/color.dart';
 
 /// {@category Factory}
 /// {@subCategory Information displays}
@@ -29,11 +30,11 @@ class ReceiptCategoryFactory {
     if (categories == null) {
       categories = <ReceiptCategory>[
         ReceiptCategory(S.of(context).groceryCategory,
-            Icon(Icons.shopping_bag_outlined), "grocery"),
+            Icon(Icons.shopping_bag_outlined, color: LightColor.brighter), "grocery"),
         ReceiptCategory(S.of(context).healthCategory,
-            Icon(Icons.medical_services), "health"),
+            Icon(Icons.medical_services, color: LightColor.brighter), "health"),
         ReceiptCategory(
-            S.of(context).entertainment, Icon(Icons.shop), "entertainment")
+            S.of(context).entertainment, Icon(Icons.shop,color: LightColor.brighter), "entertainment")
       ];
     }
 
