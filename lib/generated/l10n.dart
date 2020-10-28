@@ -695,70 +695,70 @@ class S {
     );
   }
 
-  /// `Skip`
+  /// `Überspringen`
   String get skip {
     return Intl.message(
-      'Skip',
+      'Überspringen',
       name: 'skip',
       desc: '',
       args: [],
     );
   }
 
-  /// `Analyse personal expenses with detailed charts and filter categories.`
+  /// `Analyisiere deine persönlichen Ausgaben.`
   String get startsDescription {
     return Intl.message(
-      'Analyse personal expenses with detailed charts and filter categories.',
+      'Analyisiere deine persönlichen Ausgaben.',
       name: 'startsDescription',
       desc: '',
       args: [],
     );
   }
 
-  /// `Track your progress with statistics`
+  /// `Deine Ausgaben auf einem Blick`
   String get statsTitle {
     return Intl.message(
-      'Track your progress with statistics',
+      'Deine Ausgaben auf einem Blick',
       name: 'statsTitle',
       desc: '',
       args: [],
     );
   }
 
-  /// `Parse receipt via tesseract`
+  /// `Füge deine Einkaufszettel aus Bildern hinzu`
   String get ocrTitle {
     return Intl.message(
-      'Parse receipt via tesseract',
+      'Füge deine Einkaufszettel aus Bildern hinzu',
       name: 'ocrTitle',
       desc: '',
       args: [],
     );
   }
 
-  /// `Parse receipts using optical character recognition.`
+  /// `Durch tesseract können Bilder automatisch analysiert werden`
   String get ocrDescription {
     return Intl.message(
-      'Parse receipts using optical character recognition.',
+      'Durch tesseract können Bilder automatisch analysiert werden',
       name: 'ocrDescription',
       desc: '',
       args: [],
     );
   }
 
-  /// `Next`
+  /// `Weiter`
   String get next {
     return Intl.message(
-      'Next',
+      'Weiter',
       name: 'next',
       desc: '',
       args: [],
     );
   }
 
-  /// `Done`
+  /// `Geschaft`
   String get done {
     return Intl.message(
-      'Done',
+      'Geschaft',
       name: 'done',
       desc: '',
       args: [],
