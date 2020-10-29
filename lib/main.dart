@@ -25,6 +25,7 @@ import 'package:receipt_manager/generated/l10n.dart';
 import 'package:receipt_manager/repository/repository.dart';
 import 'package:receipt_manager/theme/color/color.dart';
 import 'package:receipt_manager/theme/theme_manager.dart';
+import 'package:receipt_manager/ui/filter/filter_chips.dart';
 import 'package:receipt_manager/ui/history_widget.dart';
 import 'package:receipt_manager/ui/home_widget.dart';
 import 'package:receipt_manager/ui/settings_widget.dart';
@@ -239,6 +240,7 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                 Icon(Icons.history, color: Colors.white, size: 30),
                 Icon(Icons.analytics_outlined, color: Colors.white, size: 30),
                 Icon(Icons.settings, color: Colors.white, size: 30),
+
               ],
               color: LightColor.brighter,
               backgroundColor: Colors.white,
