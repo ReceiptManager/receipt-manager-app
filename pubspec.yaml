@@ -54,6 +54,8 @@ dependencies:
   simple_autocomplete_formfield: ^0.2.7
   flutter_onboard: ^0.1.0
   provider: ^4.3.2+2
+  random_color: ^1.0.5
+
 
 dev_dependencies:
   flutter_test:

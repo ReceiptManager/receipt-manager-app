@@ -75,7 +75,7 @@ class StatsWidgetState extends State<StatsWidget> {
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
           // 0xff72d8bf
-          color: LightColor.brighter,
+          color: Colors.white,
           child: Stack(
             children: <Widget>[
               Padding(
@@ -88,7 +88,7 @@ class StatsWidgetState extends State<StatsWidget> {
                     Text(
                       S.of(context).overview,
                       style: TextStyle(
-                          color: Colors.white,
+                          color: Colors.black87,
                           fontSize: 24,
                           fontWeight: FontWeight.bold),
                     ),
@@ -99,7 +99,7 @@ class StatsWidgetState extends State<StatsWidget> {
                       S.of(context).overviewExpenses,
                       style: TextStyle(
                           fontSize: 18,
-                          color: Colors.grey.shade400,
+                          color: Colors.grey.shade500,
                           fontWeight: FontWeight.bold),
                     ),
                     const SizedBox(
@@ -170,7 +170,7 @@ class StatsWidgetState extends State<StatsWidget> {
     int x,
     double y, {
     bool isTouched = false,
-    Color barColor = Colors.white,
+    Color barColor = Colors.grey,
     double width = 22,
     List<int> showTooltips = const [],
   }) {
@@ -222,7 +222,7 @@ class StatsWidgetState extends State<StatsWidget> {
     return BarChartData(
       barTouchData: BarTouchData(
         touchTooltipData: BarTouchTooltipData(
-            tooltipBgColor: Colors.white,
+            tooltipBgColor: Colors.grey,
             getTooltipItem: (group, groupIndex, rod, rodIndex) {
               String weekDay;
               switch (group.x.toInt()) {
@@ -268,7 +268,7 @@ class StatsWidgetState extends State<StatsWidget> {
         bottomTitles: SideTitles(
           showTitles: true,
           getTextStyles: (value) => const TextStyle(
-              color: Colors.white, fontWeight: FontWeight.bold, fontSize: 14),
+              color: Colors.grey, fontWeight: FontWeight.bold, fontSize: 14),
           margin: 16,
           getTitles: (double value) {
             switch (value.toInt()) {

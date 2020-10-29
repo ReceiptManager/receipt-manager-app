@@ -219,7 +219,8 @@ class ReceiptInputController extends State<ReceiptForm> {
                                                             colorScheme:
                                                                 ColorScheme.light(
                                                                     primary:
-                                                                        (LightColor.brighter)),
+                                                                        (LightColor
+                                                                            .brighter)),
                                                             buttonTheme:
                                                                 ButtonThemeData(
                                                                     textTheme:
@@ -294,7 +295,11 @@ class ReceiptInputController extends State<ReceiptForm> {
                                                   SizedBox(
                                                     width: 10,
                                                   ),
-                                                  Text(user.name,style: TextStyle(color: Colors.grey),),
+                                                  Text(
+                                                    user.name,
+                                                    style: TextStyle(
+                                                        color: Colors.grey),
+                                                  ),
                                                 ],
                                               ),
                                             );
@@ -327,9 +332,9 @@ class ReceiptInputController extends State<ReceiptForm> {
   FloatingActionButton submitButton() {
     return new FloatingActionButton(
         onPressed: () {
-          if (_formKey.currentState.validate() &&
-              receiptCategory != null &&
-              receiptCategory.isNotEmpty) {
+          final form = _formKey.currentState;
+          if (form.validate() &&
+              receiptCategory != null) {
             try {
               Scaffold.of(context).showSnackBar(SnackBar(
                 content: Text(S.of(context).addReceipt),
