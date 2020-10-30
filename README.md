@@ -89,7 +89,7 @@ worry about that. No third party services are used.
 
 ### Screenshots
 <p align="left">
-  <img src="https://raw.githubusercontent.com/ReceiptParser/Application/master/docs/assets/dash_app.png">
+  <img src="https://raw.githubusercontent.com/ReceiptParser/Application/master/docs/assets/dashboard_app.png">
   
   <img src="https://raw.githubusercontent.com/ReceiptParser/Application/master/docs/assets/history_app.png">
   
@@ -98,6 +98,7 @@ worry about that. No third party services are used.
   <img src="https://raw.githubusercontent.com/ReceiptParser/Application/master/docs/assets/settings_app.png">
   
   <img src="https://raw.githubusercontent.com/ReceiptParser/Application/master/docs/assets/screen_app.png">
+
 </p>
 
 ---

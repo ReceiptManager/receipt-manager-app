@@ -36,7 +36,7 @@ class ReceiptCategoryFactory {
             Icon(Icons.medical_services, color: LightColor.black), "health"),
         ReceiptCategory(S.of(context).Rent, Icon(Icons.store_mall_directory,color: LightColor.black), "rent"),
         ReceiptCategory(
-           "Food", Icon(Icons.shop,color: LightColor.black), "entertainment"),
+           S.of(context).food, Icon(Icons.shop,color: LightColor.black), "food"),
         ReceiptCategory(
             S.of(context).entertainment, Icon(Icons.shop,color: LightColor.black), "entertainment"),
 

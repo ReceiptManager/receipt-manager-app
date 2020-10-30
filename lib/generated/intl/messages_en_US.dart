@@ -21,7 +21,7 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static _notInlinedMessages(_) => <String, Function> {
-    "Rent" : MessageLookupByLibrary.simpleMessage("rent"),
+    "Rent" : MessageLookupByLibrary.simpleMessage("Rent"),
     "addReceipt" : MessageLookupByLibrary.simpleMessage("Add receipt"),
     "appBarTitle" : MessageLookupByLibrary.simpleMessage("Receipt manager"),
     "cancel" : MessageLookupByLibrary.simpleMessage("Cancel"),
@@ -35,6 +35,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "enableDebugOutput" : MessageLookupByLibrary.simpleMessage("Enable debug output"),
     "entertainment" : MessageLookupByLibrary.simpleMessage("Entertainment"),
     "failedUpdateReceipt" : MessageLookupByLibrary.simpleMessage("Failed to update receipt"),
+    "food" : MessageLookupByLibrary.simpleMessage("Food"),
     "friday" : MessageLookupByLibrary.simpleMessage("Friday"),
     "generalException" : MessageLookupByLibrary.simpleMessage("Ups something went wrong"),
     "groceryCategory" : MessageLookupByLibrary.simpleMessage("Grocery"),

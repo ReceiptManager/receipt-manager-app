@@ -775,11 +775,21 @@ class S {
     );
   }
 
-  /// `rent`
+  /// `Miete`
   String get Rent {
     return Intl.message(
-      'rent',
+      'Miete',
       name: 'Rent',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Essen`
+  String get food {
+    return Intl.message(
+      'Essen',
+      name: 'food',
       desc: '',
       args: [],
     );
