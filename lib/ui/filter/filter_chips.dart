@@ -36,7 +36,7 @@ class _FilterChipScreenState extends State<FilterChipScreen> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 75,
+      height: 65,
       child: ListView.builder(
           scrollDirection: Axis.horizontal,
           itemCount: data.length,

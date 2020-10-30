@@ -34,8 +34,12 @@ class ReceiptCategoryFactory {
             Icon(Icons.shopping_bag_outlined, color: LightColor.black), "grocery"),
         ReceiptCategory(S.of(context).healthCategory,
             Icon(Icons.medical_services, color: LightColor.black), "health"),
+        ReceiptCategory(S.of(context).Rent, Icon(Icons.store_mall_directory,color: LightColor.black), "rent"),
         ReceiptCategory(
-            S.of(context).entertainment, Icon(Icons.shop,color: LightColor.black), "entertainment")
+           "Food", Icon(Icons.shop,color: LightColor.black), "entertainment"),
+        ReceiptCategory(
+            S.of(context).entertainment, Icon(Icons.shop,color: LightColor.black), "entertainment"),
+
       ];
     }
 

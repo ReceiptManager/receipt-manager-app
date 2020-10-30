@@ -72,5 +72,6 @@
   "ocrDescription": "Parse receipts using optical character recognition.",
   "next": "Next",
   "done": "Done",
-  "noReceipts": "There are no receipts inserted."
+  "noReceipts": "There are no receipts inserted.",
+  "Rent": "rent"
 }
