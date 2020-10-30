@@ -273,7 +273,7 @@ class HistoryWidgetState extends State<HistoryWidget> {
                 SliverFillRemaining(
                     hasScrollBody: false,
                     child: Form(
-                        key: _editFormKey,
+                       key: _editFormKey,
                         child: Column(
                           children: <Widget>[
                             Expanded(
@@ -413,8 +413,7 @@ class HistoryWidgetState extends State<HistoryWidget> {
                 S.of(context).update,
               ),
               onPressed: () {
-                if (_editFormKey.currentState.validate() &&
-                    currentReceiptDate != null) {
+                if (currentReceiptDate != null) {
                   try {
                     storeName = storeNameController.text;
                     receiptTotal = receiptTotalController.text;

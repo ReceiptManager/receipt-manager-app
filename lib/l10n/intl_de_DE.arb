@@ -73,5 +73,6 @@
   "ocrDescription": "Durch tesseract können Bilder automatisch analysiert werden",
   "next": "Weiter",
   "done": "Geschaft",
-  "noReceipts": "Keine Belege wurden hinzugefügt"
+  "noReceipts": "Keine Belege wurden hinzugefügt",
+  "Rent": "rent"
 }
