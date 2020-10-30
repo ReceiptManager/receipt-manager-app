@@ -74,5 +74,6 @@
   "next": "Weiter",
   "done": "Geschaft",
   "noReceipts": "Keine Belege wurden hinzugefügt",
-  "Rent": "rent"
+  "Rent": "Miete",
+  "food": "Essen"
 }
