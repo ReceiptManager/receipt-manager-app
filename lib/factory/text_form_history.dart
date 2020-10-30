@@ -27,7 +27,7 @@ class TextFormFactory {
   static TextFormField date(TextEditingController dateController,
       DateTime receiptDate, BuildContext context) {
     return TextFormField(
-      style: TextStyle(color: Colors.grey),
+      style: TextStyle(color: Colors.black),
       keyboardType: TextInputType.number,
       decoration: new InputDecoration(
           enabledBorder: OutlineInputBorder(
@@ -67,7 +67,7 @@ class TextFormFactory {
   static TextFormField total(
       TextEditingController receiptTotalController, BuildContext context) {
     return TextFormField(
-      style: TextStyle(color: Colors.grey),
+      style: TextStyle(color: Colors.black),
       keyboardType: TextInputType.number,
       decoration: new InputDecoration(
         enabledBorder: OutlineInputBorder(
@@ -113,7 +113,7 @@ class TextFormFactory {
     }
 
     return SimpleAutocompleteFormField<String>(
-      style: TextStyle(color: Colors.grey),
+      style: TextStyle(color: Colors.black),
       decoration: new InputDecoration(
         enabledBorder: OutlineInputBorder(
           borderSide: BorderSide(color: Colors.grey),

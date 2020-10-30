@@ -143,7 +143,7 @@ class ReceiptInputController extends State<ReceiptForm> {
                                     alignment: Alignment.topRight,
                                     child: IconButton(
                                       icon: new Icon(Icons.camera_alt,
-                                          size: 35, color: LightColor.brighter),
+                                          size: 35, color: LightColor.black),
                                       color: Colors.white,
                                       onPressed: () async {
                                         WidgetsFlutterBinding
@@ -176,7 +176,7 @@ class ReceiptInputController extends State<ReceiptForm> {
                               PaddingFactory.create(new Theme(
                                   data: AppTheme.lightTheme,
                                   child: TextFormField(
-                                    style: TextStyle(color: Colors.grey),
+                                    style: TextStyle(color: Colors.black),
                                     keyboardType: TextInputType.number,
                                     decoration: new InputDecoration(
                                         enabledBorder: OutlineInputBorder(
@@ -299,7 +299,7 @@ class ReceiptInputController extends State<ReceiptForm> {
                                                   Text(
                                                     user.name,
                                                     style: TextStyle(
-                                                        color: Colors.grey),
+                                                        color: Colors.black),
                                                   ),
                                                 ],
                                               ),
