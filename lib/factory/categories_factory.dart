@@ -31,11 +31,11 @@ class ReceiptCategoryFactory {
     if (categories == null) {
       categories = <ReceiptCategory>[
         ReceiptCategory(S.of(context).groceryCategory,
-            Icon(Icons.shopping_bag_outlined, color: LightColor.grey), "grocery"),
+            Icon(Icons.shopping_bag_outlined, color: LightColor.black), "grocery"),
         ReceiptCategory(S.of(context).healthCategory,
-            Icon(Icons.medical_services, color: LightColor.grey), "health"),
+            Icon(Icons.medical_services, color: LightColor.black), "health"),
         ReceiptCategory(
-            S.of(context).entertainment, Icon(Icons.shop,color: LightColor.grey), "entertainment")
+            S.of(context).entertainment, Icon(Icons.shop,color: LightColor.black), "entertainment")
       ];
     }
 
