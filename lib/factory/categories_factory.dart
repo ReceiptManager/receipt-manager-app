@@ -38,7 +38,13 @@ class ReceiptCategoryFactory {
         ReceiptCategory(
            S.of(context).food, Icon(Icons.shop,color: LightColor.black), "food"),
         ReceiptCategory(
-            S.of(context).entertainment, Icon(Icons.shop,color: LightColor.black), "entertainment"),
+            S.of(context).entertainment, Icon(Icons.fastfood_sharp,color: LightColor.black), "entertainment"),
+        ReceiptCategory(
+            S.of(context).employeeBenefits, Icon(Icons.people,color: LightColor.black), "employees"),
+        ReceiptCategory(
+          S.of(context).util, Icon(Icons.edit_location_outlined,color: LightColor.black), "util"),
+        ReceiptCategory(
+           S.of(context).travel, Icon(Icons.edit,color: LightColor.black), "global"),
 
       ];
     }

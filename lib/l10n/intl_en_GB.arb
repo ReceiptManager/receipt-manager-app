@@ -75,5 +75,8 @@
   "done": "Done",
   "noReceipts": "There are no receipts inserted.",
   "Rent": "Rent",
-  "food": "Food"
+  "food": "Food",
+  "employeeBenefits": "Employee Benefits",
+  "util": "Util",
+  "travel": "Travel"
 }

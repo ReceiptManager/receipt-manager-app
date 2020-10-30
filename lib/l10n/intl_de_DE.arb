@@ -75,5 +75,8 @@
   "done": "Geschaft",
   "noReceipts": "Keine Belege wurden hinzugefügt",
   "Rent": "Miete",
-  "food": "Essen"
+  "food": "Essen",
+  "employeeBenefits": "Sozialleistungen",
+  "util": "Sonstiges",
+  "travel": "Reisen"
 }

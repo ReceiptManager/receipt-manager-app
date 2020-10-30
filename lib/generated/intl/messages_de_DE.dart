@@ -30,6 +30,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "deleteReceipt" : MessageLookupByLibrary.simpleMessage("Löschen"),
     "done" : MessageLookupByLibrary.simpleMessage("Geschaft"),
     "editReceipt" : MessageLookupByLibrary.simpleMessage("Editieren"),
+    "employeeBenefits" : MessageLookupByLibrary.simpleMessage("Sozialleistungen"),
     "emptyStoreName" : MessageLookupByLibrary.simpleMessage("\'Bitte gebe einen Shop Namen an."),
     "emptyTotal" : MessageLookupByLibrary.simpleMessage("Bitte geben einen Betrag an"),
     "enableDebugOutput" : MessageLookupByLibrary.simpleMessage("Entwicklerinformationen anzeigen"),
@@ -89,6 +90,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "totalHelperText" : MessageLookupByLibrary.simpleMessage("Füge den Betrag des Beleges hinzu"),
     "totalLabelText" : MessageLookupByLibrary.simpleMessage("Betrag"),
     "totalTitle" : MessageLookupByLibrary.simpleMessage("Betrag"),
+    "travel" : MessageLookupByLibrary.simpleMessage("Reisen"),
     "tuesday" : MessageLookupByLibrary.simpleMessage("Dienstag"),
     "update" : MessageLookupByLibrary.simpleMessage("Aktualisieren"),
     "updateReceipt" : MessageLookupByLibrary.simpleMessage("Kassenbeleg aktualisieren"),
@@ -96,6 +98,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "updateServerIP" : MessageLookupByLibrary.simpleMessage("Zugangs-Server Addresse aktualisiert."),
     "uploadFailed" : MessageLookupByLibrary.simpleMessage("Bild konnte nicht hochgeladen werden"),
     "uploadSuccess" : MessageLookupByLibrary.simpleMessage("Bild erfolgreich hochgeladen"),
+    "util" : MessageLookupByLibrary.simpleMessage("Sonstiges"),
     "wednesday" : MessageLookupByLibrary.simpleMessage("Mittwoch")
   };
 }
