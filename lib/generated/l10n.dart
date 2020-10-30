@@ -794,6 +794,36 @@ class S {
       args: [],
     );
   }
+
+  /// `Sozialleistungen`
+  String get employeeBenefits {
+    return Intl.message(
+      'Sozialleistungen',
+      name: 'employeeBenefits',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Sonstiges`
+  String get util {
+    return Intl.message(
+      'Sonstiges',
+      name: 'util',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Reisen`
+  String get travel {
+    return Intl.message(
+      'Reisen',
+      name: 'travel',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

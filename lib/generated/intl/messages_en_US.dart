@@ -30,6 +30,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "deleteReceipt" : MessageLookupByLibrary.simpleMessage("Delete"),
     "done" : MessageLookupByLibrary.simpleMessage("Done"),
     "editReceipt" : MessageLookupByLibrary.simpleMessage("Update"),
+    "employeeBenefits" : MessageLookupByLibrary.simpleMessage("Employee Benefits"),
     "emptyStoreName" : MessageLookupByLibrary.simpleMessage("\'Please enter a store name."),
     "emptyTotal" : MessageLookupByLibrary.simpleMessage("Please enter the total."),
     "enableDebugOutput" : MessageLookupByLibrary.simpleMessage("Enable debug output"),
@@ -89,6 +90,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "totalHelperText" : MessageLookupByLibrary.simpleMessage("Receipt total"),
     "totalLabelText" : MessageLookupByLibrary.simpleMessage("Receipt total"),
     "totalTitle" : MessageLookupByLibrary.simpleMessage("Receipt total"),
+    "travel" : MessageLookupByLibrary.simpleMessage("Travel"),
     "tuesday" : MessageLookupByLibrary.simpleMessage("Tuesday"),
     "update" : MessageLookupByLibrary.simpleMessage("Update"),
     "updateReceipt" : MessageLookupByLibrary.simpleMessage("Update Receipt"),
@@ -96,6 +98,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "updateServerIP" : MessageLookupByLibrary.simpleMessage("Server ip is set."),
     "uploadFailed" : MessageLookupByLibrary.simpleMessage("Failed to upload image."),
     "uploadSuccess" : MessageLookupByLibrary.simpleMessage("Image successfully uploaded."),
+    "util" : MessageLookupByLibrary.simpleMessage("Util"),
     "wednesday" : MessageLookupByLibrary.simpleMessage("Wednesday")
   };
 }
