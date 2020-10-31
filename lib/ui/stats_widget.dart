@@ -71,7 +71,6 @@ class StatsWidgetState extends State<StatsWidget> {
         }
 
         return Container(
-            color: Colors.white,
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.all(Radius.circular(20)),
                 boxShadow: <BoxShadow>[
@@ -187,7 +186,7 @@ class StatsWidgetState extends State<StatsWidget> {
     int x,
     double y, {
     bool isTouched = false,
-    Color barColor = Colors.grey,
+    Color barColor = LightColor.brighter,
     double width = 22,
     List<int> showTooltips = const [],
   }) {
@@ -285,7 +284,7 @@ class StatsWidgetState extends State<StatsWidget> {
         bottomTitles: SideTitles(
           showTitles: true,
           getTextStyles: (value) => const TextStyle(
-              color: Colors.grey, fontWeight: FontWeight.bold, fontSize: 14),
+              color: LightColor.brighter, fontWeight: FontWeight.bold, fontSize: 14),
           margin: 16,
           getTitles: (double value) {
             switch (value.toInt()) {

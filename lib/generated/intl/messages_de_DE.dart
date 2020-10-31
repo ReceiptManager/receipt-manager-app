@@ -30,6 +30,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "deleteReceipt" : MessageLookupByLibrary.simpleMessage("Löschen"),
     "done" : MessageLookupByLibrary.simpleMessage("Geschaft"),
     "editReceipt" : MessageLookupByLibrary.simpleMessage("Editieren"),
+    "education" : MessageLookupByLibrary.simpleMessage("Bildung"),
     "employeeBenefits" : MessageLookupByLibrary.simpleMessage("Sozialleistungen"),
     "emptyStoreName" : MessageLookupByLibrary.simpleMessage("\'Bitte gebe einen Shop Namen an."),
     "emptyTotal" : MessageLookupByLibrary.simpleMessage("Bitte geben einen Betrag an"),
