@@ -78,5 +78,6 @@
   "food": "Essen",
   "employeeBenefits": "Sozialleistungen",
   "util": "Sonstiges",
-  "travel": "Reisen"
+  "travel": "Reisen",
+  "education": "Bildung"
 }

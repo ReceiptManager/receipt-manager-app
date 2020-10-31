@@ -16,6 +16,7 @@
  */
 
 import 'package:flutter/material.dart';
+import 'package:random_color/random_color.dart';
 import 'package:receipt_manager/generated/l10n.dart';
 import 'package:receipt_manager/model/receipt_category.dart';
 import 'package:receipt_manager/theme/color/color.dart';
@@ -26,29 +27,33 @@ import 'package:receipt_manager/theme/color/color.dart';
 class ReceiptCategoryFactory {
   // initialise category only once
   static List<ReceiptCategory> categories;
+  static RandomColor _rand = RandomColor();
 
   static List<ReceiptCategory> get(BuildContext context) {
     if (categories == null) {
       categories = <ReceiptCategory>[
         ReceiptCategory(S.of(context).groceryCategory,
-            Icon(Icons.shopping_bag_outlined, color: LightColor.black), "grocery"),
+            Icon(Icons.shopping_bag_outlined, color: _rand.randomColor(colorHue: ColorHue.red)), "grocery"),
         ReceiptCategory(S.of(context).healthCategory,
-            Icon(Icons.medical_services, color: LightColor.black), "health"),
-        ReceiptCategory(S.of(context).Rent, Icon(Icons.store_mall_directory,color: LightColor.black), "rent"),
+            Icon(Icons.medical_services, color: _rand.randomColor(colorHue: ColorHue.blue)), "health"),
+        ReceiptCategory(S.of(context).Rent, Icon(Icons.store_mall_directory,color: _rand.randomColor(colorHue: ColorHue.orange)), "rent"),
         ReceiptCategory(
-           S.of(context).food, Icon(Icons.shop,color: LightColor.black), "food"),
+           S.of(context).food, Icon(Icons.shop,color: _rand.randomColor(colorHue: ColorHue.yellow)), "food"),
         ReceiptCategory(
-            S.of(context).entertainment, Icon(Icons.fastfood_sharp,color: LightColor.black), "entertainment"),
+            S.of(context).entertainment, Icon(Icons.fastfood_sharp,color: _rand.randomColor(colorHue: ColorHue.green)), "entertainment"),
         ReceiptCategory(
-            S.of(context).employeeBenefits, Icon(Icons.people,color: LightColor.black), "employees"),
+            S.of(context).employeeBenefits, Icon(Icons.people,color: _rand.randomColor(colorHue: ColorHue.orange)), "employees"),
         ReceiptCategory(
-          S.of(context).util, Icon(Icons.edit_location_outlined,color: LightColor.black), "util"),
+          S.of(context).util, Icon(Icons.edit_location_outlined,color: _rand.randomColor(colorHue: ColorHue.red)), "util"),
         ReceiptCategory(
-           S.of(context).travel, Icon(Icons.edit,color: LightColor.black), "global"),
+           S.of(context).travel, Icon(Icons.edit,color: _rand.randomColor(colorHue: ColorHue.purple)), "global"),
+        ReceiptCategory(
+            S.of(context).education, Icon(Icons.book,color: _rand.randomColor(colorHue: ColorHue.blue)), "education"),
 
       ];
     }
 
+    categories.sort((a, b) => a.name.compareTo(b.name));
     return categories;
   }
 }
