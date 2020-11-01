@@ -845,10 +845,10 @@ class S {
     );
   }
 
-  /// `Kategory Übersicht`
+  /// `Kategoryübersicht`
   String get expensesByCategory {
     return Intl.message(
-      'Kategory Übersicht',
+      'Kategoryübersicht',
       name: 'expensesByCategory',
       desc: '',
       args: [],
