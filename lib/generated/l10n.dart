@@ -834,6 +834,26 @@ class S {
       args: [],
     );
   }
+
+  /// `Data N/A`
+  String get noData {
+    return Intl.message(
+      'Data N/A',
+      name: 'noData',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Expenses by category`
+  String get expensesByCategory {
+    return Intl.message(
+      'Expenses by category',
+      name: 'expensesByCategory',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

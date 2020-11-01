@@ -32,7 +32,7 @@ import 'package:receipt_manager/generated/l10n.dart';
 import 'package:receipt_manager/model/receipt_category.dart';
 import 'package:receipt_manager/theme/color/color.dart';
 import 'package:receipt_manager/theme/theme_manager.dart';
-import 'package:receipt_manager/ui/filter/filter_chips.dart';
+import 'package:receipt_manager/ui/history/filter_chips.dart';
 
 class HistoryWidget extends StatefulWidget {
   final DbBloc _bloc;

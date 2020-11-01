@@ -16,33 +16,29 @@
  */
 
 import 'package:flutter/material.dart';
-import 'package:receipt_manager/bloc/moor/bloc.dart';
 import 'package:receipt_manager/generated/l10n.dart';
 import 'package:receipt_manager/ui/settings/server_settings.dart';
 import 'package:settings_ui/settings_ui.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'settings/language_setting.dart';
+import 'language_setting.dart';
 
 class SettingsWidget extends StatefulWidget {
   final SharedPreferences sharedPreferences;
-  final DbBloc _bloc;
 
-  SettingsWidget(this.sharedPreferences, this._bloc);
+  SettingsWidget(this.sharedPreferences);
 
   @override
-  _SettingsWidgetState createState() =>
-      _SettingsWidgetState(sharedPreferences, _bloc);
+  _SettingsWidgetState createState() => _SettingsWidgetState(sharedPreferences);
 }
 
 class _SettingsWidgetState extends State<SettingsWidget> {
   bool enableDebugOutput = true;
   bool notificationsEnabled = true;
 
-  final DbBloc _bloc;
   final SharedPreferences sharedPreferences;
 
-  _SettingsWidgetState(this.sharedPreferences, this._bloc);
+  _SettingsWidgetState(this.sharedPreferences);
 
   @override
   Widget build(BuildContext context) {

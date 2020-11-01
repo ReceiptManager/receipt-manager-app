@@ -33,7 +33,7 @@ import 'package:receipt_manager/theme/color/color.dart';
 import 'package:receipt_manager/theme/theme_manager.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'camera_picker.dart';
+import '../parser/camera_picker.dart';
 
 class ReceiptForm extends StatefulWidget {
   final ReceiptsCompanion receipt;
