@@ -180,7 +180,6 @@ class _CategoryOverviewScreenState extends State<CategoryOverviewScreen> {
 
     return List.generate(count, (i) {
       final isTouched = i == touchIndexCategories;
-      final double fontSize = isTouched ? 25 : 16;
       final double radius = isTouched ? 60 : 50;
       if (!initSectionData) {
         for (int i = 0; i < frequency.length; i++) {
