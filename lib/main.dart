@@ -26,11 +26,10 @@ import 'package:receipt_manager/generated/l10n.dart';
 import 'package:receipt_manager/repository/repository.dart';
 import 'package:receipt_manager/theme/color/color.dart';
 import 'package:receipt_manager/theme/theme_manager.dart';
-import 'package:receipt_manager/ui/filter/filter_chips.dart';
-import 'package:receipt_manager/ui/history_widget.dart';
-import 'package:receipt_manager/ui/home_widget.dart';
-import 'package:receipt_manager/ui/settings_widget.dart';
-import 'package:receipt_manager/ui/stats_widget.dart';
+import 'package:receipt_manager/ui/history/history_widget.dart';
+import 'package:receipt_manager/ui/home/home_widget.dart';
+import 'package:receipt_manager/ui/settings/settings_widget.dart';
+import 'package:receipt_manager/ui/stats/stats_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 final Repository _repository = Repository();
@@ -214,7 +213,7 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
       HomeWidget(this.receipt, sendImage, sharedPrefs, _bloc),
       HistoryWidget(_bloc),
       StatsWidget(_bloc),
-      SettingsWidget(sharedPrefs, _bloc)
+      SettingsWidget(sharedPrefs)
     ];
 
     return new WillPopScope(
