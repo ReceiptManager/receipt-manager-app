@@ -43,6 +43,8 @@ class _LanguageSettingState extends State<LanguageSetting> {
 
     languageIndex = sortedLocals
         .indexWhere((element) => element.toString() == currentLanguage);
+
+    super.initState();
   }
 
   @override
