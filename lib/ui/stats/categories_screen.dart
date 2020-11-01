@@ -68,12 +68,83 @@ class _CategoryOverviewScreenState extends State<CategoryOverviewScreen> {
   /// Receipt total
   double total;
 
+  /// pie tiles
+  List<Widget> widgets;
+
   /// Category constructor
   _CategoryOverviewScreenState(this.receipts);
 
+
+  @override
+  void initState() {
+    List<ReceiptCategory> categories = ReceiptCategoryFactory.get(context);
+    super.initState();
+
+    widgets = [];
+    frequency = [];
+    total = 0;
+    colorCode = [];
+
+    if (receipts.isEmpty) {
+      widgets.add(Indicator(
+        color: notAvailableColor,
+        text: S.of(context).noData,
+        isSquare: false,
+      ));
+
+      widgets.add(SizedBox(
+        height: 18,
+      ));
+
+    }
+
+    RandomColor _rand = RandomColor();
+    for (int i = 0; i < categories.length; i++) {
+      frequency.add(0);
+      colorCode.add(_rand.randomColor());
+
+      for (var receipt in receipts) {
+        if (ReceiptCategory.fromJson(jsonDecode(receipt.category)).name ==
+            categories[i].name) {
+
+          total += double.parse(receipt.total);
+          if (i + 1 != categories.length) {
+            if (frequency[i] == 0.00) {
+              widgets.add(Indicator(
+                color: colorCode[i],
+                text: categories[i].name,
+                isSquare: true,
+              ));
+              widgets.add(SizedBox(
+                height: 4,
+              ));
+              frequency[i] += double.parse(receipt.total);
+            } else {
+              frequency[i] += double.parse(receipt.total);
+            }
+          } else {
+            widgets.add(Indicator(
+              color: notAvailableColor,
+              text: categories[i].name,
+              isSquare: false,
+            ));
+          }
+        }
+      }
+    }
+
+    widgets.add(SizedBox(
+      height: 18,
+    ));
+
+    count = 0;
+    for (int i = 0; i < frequency.length; i++) {
+      if (frequency[i] != 0.00) count++;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    List<Widget> widgets = getChildren(context);
 
     return PaddingFactory.create(AspectRatio(
       aspectRatio: 1.3,
@@ -206,79 +277,5 @@ class _CategoryOverviewScreenState extends State<CategoryOverviewScreen> {
       }
       return data[i];
     });
-  }
-
-  getChildren(BuildContext context) {
-    List<ReceiptCategory> categories = ReceiptCategoryFactory.get(context);
-    List<Widget> widgets = [];
-    frequency = [];
-    total = 0;
-
-    if (!initSectionData) {
-      colorCode = [];
-    }
-
-    if (receipts.isEmpty) {
-      widgets.add(Indicator(
-        color: notAvailableColor,
-        text: S.of(context).noData,
-        isSquare: false,
-      ));
-
-      widgets.add(SizedBox(
-        height: 18,
-      ));
-
-      return widgets;
-    }
-
-    RandomColor _rand = RandomColor();
-    for (int i = 0; i < categories.length; i++) {
-      frequency.add(0);
-      if (!initSectionData) {
-        colorCode.add(_rand.randomColor());
-      }
-
-      // check if category is present
-      for (var receipt in receipts) {
-        if (ReceiptCategory.fromJson(jsonDecode(receipt.category)).name ==
-            categories[i].name) {
-
-          total += double.parse(receipt.total);
-          if (i + 1 != categories.length) {
-            if (frequency[i] == 0.00) {
-              widgets.add(Indicator(
-                color: colorCode[i],
-                text: categories[i].name,
-                isSquare: true,
-              ));
-              widgets.add(SizedBox(
-                height: 4,
-              ));
-              frequency[i] += double.parse(receipt.total);
-            } else {
-              frequency[i] += double.parse(receipt.total);
-            }
-          } else {
-            widgets.add(Indicator(
-              color: notAvailableColor,
-              text: categories[i].name,
-              isSquare: false,
-            ));
-          }
-        }
-      }
-    }
-
-    widgets.add(SizedBox(
-      height: 18,
-    ));
-
-    count = 0;
-    for (int i = 0; i < frequency.length; i++) {
-      if (frequency[i] != 0.00) count++;
-    }
-
-    return widgets;
   }
 }
