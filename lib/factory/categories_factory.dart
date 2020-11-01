@@ -19,7 +19,6 @@ import 'package:flutter/material.dart';
 import 'package:random_color/random_color.dart';
 import 'package:receipt_manager/generated/l10n.dart';
 import 'package:receipt_manager/model/receipt_category.dart';
-import 'package:receipt_manager/theme/color/color.dart';
 
 /// {@category Factory}
 /// {@subCategory Information displays}
@@ -56,4 +55,5 @@ class ReceiptCategoryFactory {
     categories.sort((a, b) => a.name.compareTo(b.name));
     return categories;
   }
+
 }

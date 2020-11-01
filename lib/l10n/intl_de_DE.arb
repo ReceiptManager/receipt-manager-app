@@ -79,5 +79,7 @@
   "employeeBenefits": "Sozialleistungen",
   "util": "Sonstiges",
   "travel": "Reisen",
-  "education": "Bildung"
+  "education": "Bildung",
+  "noData": "Data N/A",
+  "expensesByCategory": "Expenses by category"
 }
