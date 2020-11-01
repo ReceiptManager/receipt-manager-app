@@ -26,7 +26,7 @@ import 'package:receipt_manager/math/math_util.dart';
 import 'package:receipt_manager/theme/color/color.dart';
 
 class WeeklyOverviewScreen extends StatefulWidget {
-  List<Receipt> receipt;
+  final List<Receipt> receipt;
 
   WeeklyOverviewScreen(this.receipt);
 
