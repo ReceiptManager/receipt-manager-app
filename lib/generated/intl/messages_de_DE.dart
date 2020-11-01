@@ -36,7 +36,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "emptyTotal" : MessageLookupByLibrary.simpleMessage("Bitte geben einen Betrag an"),
     "enableDebugOutput" : MessageLookupByLibrary.simpleMessage("Entwicklerinformationen anzeigen"),
     "entertainment" : MessageLookupByLibrary.simpleMessage("Unterhaltung"),
-    "expensesByCategory" : MessageLookupByLibrary.simpleMessage("Expenses by category"),
+    "expensesByCategory" : MessageLookupByLibrary.simpleMessage("Kategory Übersicht"),
     "failedUpdateReceipt" : MessageLookupByLibrary.simpleMessage("Beleg wurde nicht aktualisiert"),
     "food" : MessageLookupByLibrary.simpleMessage("Essen"),
     "friday" : MessageLookupByLibrary.simpleMessage("Freitag"),

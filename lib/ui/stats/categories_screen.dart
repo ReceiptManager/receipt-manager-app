@@ -128,8 +128,10 @@ class _CategoryOverviewScreenState extends State<CategoryOverviewScreen> {
                                 pieTouchResponse.touchInput is FlPanEnd) {
                               touchIndexCategories = -1;
                             } else {
-                              touchIndexCategories =
-                                  pieTouchResponse.touchedSectionIndex;
+                              setState(() {
+                                touchIndexCategories =
+                                    pieTouchResponse.touchedSectionIndex;
+                              });
                             }
                           });
                         }),
@@ -180,7 +182,11 @@ class _CategoryOverviewScreenState extends State<CategoryOverviewScreen> {
 
     return List.generate(count, (i) {
       final isTouched = i == touchIndexCategories;
-      final double radius = isTouched ? 60 : 50;
+      double radius = 50;
+      setState(() {
+        radius = isTouched ? 80 : 50;
+      });
+
       if (!initSectionData) {
         for (int i = 0; i < frequency.length; i++) {
           if (frequency[i] == 0) continue;
