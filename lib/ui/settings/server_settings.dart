@@ -18,7 +18,6 @@
 import 'package:flutter/material.dart';
 import 'package:giffy_dialog/giffy_dialog.dart';
 import 'package:receipt_manager/converter/color_converter.dart';
-import 'package:receipt_manager/factory/padding_factory.dart';
 import 'package:receipt_manager/generated/l10n.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -94,7 +93,6 @@ class _ServerSettingsState extends State<ServerSettings> {
             child:
                 new Theme(data: ThemeData.light(), child: serverTextfield())),
         Stack(children: [
-          PaddingFactory.create(Image(image: AssetImage('assets/server.png'))),
           Align(
               alignment: Alignment.bottomRight,
               child: Padding(
