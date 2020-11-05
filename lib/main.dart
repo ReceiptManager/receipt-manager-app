@@ -200,7 +200,7 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
 
   // current receipt
   final ReceiptsCompanion receipt;
-  final bool sendImage;
+  bool sendImage;
 
   // set current body index
   int currentIndex = 0;
@@ -249,6 +249,7 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               onTap: (index) {
                 setState(() {
                   currentIndex = index;
+                  this.sendImage = false;
                 });
               },
             ),
