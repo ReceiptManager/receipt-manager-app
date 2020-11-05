@@ -45,7 +45,7 @@ class ReceiptCategoryFactory {
         ReceiptCategory(
           S.of(context).util, Icon(Icons.edit_location_outlined,color: _rand.randomColor(colorHue: ColorHue.red)), "util"),
         ReceiptCategory(
-           S.of(context).travel, Icon(Icons.edit,color: _rand.randomColor(colorHue: ColorHue.purple)), "global"),
+           S.of(context).travel, Icon(Icons.edit,color: _rand.randomColor(colorHue: ColorHue.purple)), "globe"),
         ReceiptCategory(
             S.of(context).education, Icon(Icons.book,color: _rand.randomColor(colorHue: ColorHue.blue)), "education"),
 

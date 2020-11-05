@@ -55,6 +55,9 @@ dependencies:
   flutter_onboard: ^0.1.0
   provider: ^4.3.2+2
   random_color: ^1.0.5
+  simple_animations: ^2.2.2
+  random_date: ^0.0.5
+
 
 
 dev_dependencies:
