@@ -74,8 +74,8 @@ Since mobile devices have a unacceptable performance, the parser uses a (traditi
 |---|---|---| --- |
 | Add loading screen indicator | yes | hight | 1.01 |
 | Correct date parsing | yes | hight | 1.01 |
-| Remove duplicate snackbar after parsing | no | hight | / |
-| Add new categories | no | hight | / |
+| Remove duplicate snackbar after parsing | yes | hight |1.03 |
+| Add new categories | yes | hight | 1.03 |
 | Edit categories in edit widget | no | hight | / |
 
 ---

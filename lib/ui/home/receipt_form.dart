@@ -28,6 +28,7 @@ import 'package:receipt_manager/factory/categories_factory.dart';
 import 'package:receipt_manager/factory/padding_factory.dart';
 import 'package:receipt_manager/factory/text_form_history.dart';
 import 'package:receipt_manager/generated/l10n.dart';
+import 'package:receipt_manager/generator/receipt_generator.dart';
 import 'package:receipt_manager/model/receipt_category.dart';
 import 'package:receipt_manager/theme/color/color.dart';
 import 'package:receipt_manager/theme/theme_manager.dart';
@@ -132,13 +133,24 @@ class ReceiptInputController extends State<ReceiptForm> {
                                         top: 16.0, left: 8),
                                     child: new Align(
                                         alignment: Alignment.bottomLeft,
-                                        child: Text(
-                                          S.of(context).addReceipt,
-                                          style: TextStyle(
-                                              fontSize: 25,
-                                              color: Colors.black,
-                                              fontWeight: FontWeight.w300),
-                                        ))),
+                                        child: new GestureDetector(
+                                            onLongPress: () {
+                                              ReceiptGenerator generator =
+                                                  ReceiptGenerator(context);
+                                              generator.init();
+                                              for (int i = 0; i < 1000; i++) {
+                                                ReceiptsCompanion c = generator.get();
+                                                _bloc.add(InsertEvent(receipt: c));
+                                              }
+                                              _bloc.add(ReceiptAllFetch());
+                                            },
+                                            child: Text(
+                                              S.of(context).addReceipt,
+                                              style: TextStyle(
+                                                  fontSize: 25,
+                                                  color: Colors.black,
+                                                  fontWeight: FontWeight.w300),
+                                            )))),
                                 PaddingFactory.create(new Align(
                                     alignment: Alignment.topRight,
                                     child: IconButton(

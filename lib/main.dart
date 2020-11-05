@@ -56,7 +56,13 @@ Future<void> main() async {
       ],
       supportedLocales: S.delegate.supportedLocales,
       home: OnboardScreen(sharedPrefs),
-      theme: AppTheme.lightTheme));
+      theme: AppTheme.lightTheme.copyWith(
+        pageTransitionsTheme: const PageTransitionsTheme(
+          builders: <TargetPlatform, PageTransitionsBuilder>{
+            TargetPlatform.android: ZoomPageTransitionsBuilder(),
+          },
+        ),
+      )));
 }
 
 class HomeScreen extends StatefulWidget {
