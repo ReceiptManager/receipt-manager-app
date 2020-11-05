@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 
+import 'package:moor/src/ffi/vm_database.dart';
 import 'package:moor_flutter/moor_flutter.dart';
 import 'package:receipt_manager/model/receipt.dart';
 
@@ -24,7 +25,7 @@ part 'receipt_database.g.dart';
 
 @UseMoor(tables: [Receipts], daos: [ReceiptDao])
 class AppDatabase extends _$AppDatabase {
-  AppDatabase()
+  AppDatabase({VmDatabase vmDatabase})
       : super(FlutterQueryExecutor.inDatabaseFolder(
             path: "db.sql", logStatements: true));
 
