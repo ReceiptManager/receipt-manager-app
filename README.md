@@ -97,7 +97,7 @@ worry about that. No third party services are used.
   
   <img src="https://raw.githubusercontent.com/ReceiptParser/Application/master/docs/assets/settings_app.png">
   
-  <img src="https://raw.githubusercontent.com/ReceiptParser/Application/master/docs/assets/screen_app.png">
+  <img src="https://raw.githubusercontent.com/ReceiptManager/Application/master/docs/assets/stats_app.png">
 
 </p>
 
