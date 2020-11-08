@@ -31,13 +31,7 @@ Now, you can build the flutter application using the android studio app.
 3. Install the application
 
 ### For consumers
-Download the precombiled binary. Check the checksum using following
-```
-shasum1 app-release.apk
-cat app.apk.sha1
-```
-
-If the checksum matches you are good to go. Now, install the precompiled binaries at the release page. 
+Download the precombiled binary. Now, install the precompiled binaries at the release page. 
 
 Now, you can insert, add and store receipts permanently. If you like to parse the receipt using OCR, you
 have to do the following.
