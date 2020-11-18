@@ -26,9 +26,27 @@ Why do we not use the digital advantage to our advantage? The receipt scanner so
 First, import the project in Android Studio. After, you have to install the flutter plugins. 
 Now, you can build the flutter application using the android studio app.
 
-1. Import project in android studio (and install the flutter plugin)
-2. Go to Build/Flutter/Build APK
-3. Install the application
+**1.** Import project in android studio (and install the flutter plugin)
+
+**2.** Edit `android/app/build.gradle` and change
+```
+ buildTypes {
+        release {
+            signingConfig signingConfigs.release
+        }
+    }
+```
+To:
+```
+ buildTypes {
+        release {
+            signingConfig signingConfigs.debug
+        }
+    }
+```
+**3.** Go to Build/Flutter/Build APK
+
+**4.** Install the application
 
 ### For consumers
 Download the precombiled binary. Now, install the precompiled binaries at the release page. 
