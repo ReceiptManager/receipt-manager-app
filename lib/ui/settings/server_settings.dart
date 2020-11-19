@@ -49,7 +49,7 @@ class _ServerSettingsState extends State<ServerSettings> {
       onChanged: (value) {
         ipv4 = value;
       },
-      keyboardType: TextInputType.number,
+      keyboardType: TextInputType.url,
       decoration: new InputDecoration(
         enabledBorder: OutlineInputBorder(
           borderSide: BorderSide(color: HexColor.fromHex("#232F34")),
