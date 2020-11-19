@@ -218,7 +218,7 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     final List<Widget> _children = [
       HomeWidget(this.receipt, sendImage, sharedPrefs, _bloc),
       HistoryWidget(_bloc),
-      StatsWidget(_bloc),
+  //    StatsWidget(_bloc),
       SettingsWidget(sharedPrefs)
     ];
 
@@ -244,7 +244,7 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               items: <Widget>[
                 Icon(Icons.add, color: Colors.white, size: 30),
                 Icon(Icons.history, color: Colors.white, size: 30),
-                Icon(Icons.analytics_outlined, color: Colors.white, size: 30),
+                //Icon(Icons.analytics_outlined, color: Colors.white, size: 30),
                 Icon(Icons.settings, color: Colors.white, size: 30),
 
               ],
