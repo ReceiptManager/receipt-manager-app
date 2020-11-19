@@ -189,7 +189,6 @@ class ReceiptInputController extends State<ReceiptForm> {
                                   data: AppTheme.lightTheme,
                                   child: TextFormField(
                                     style: TextStyle(color: Colors.black),
-                                    keyboardType: TextInputType.number,
                                     decoration: new InputDecoration(
                                         enabledBorder: OutlineInputBorder(
                                           borderSide:

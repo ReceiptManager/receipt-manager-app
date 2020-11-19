@@ -27,7 +27,6 @@ class TextFormFactory {
       DateTime receiptDate, BuildContext context) {
     return TextFormField(
       style: TextStyle(color: Colors.black),
-      keyboardType: TextInputType.number,
       decoration: new InputDecoration(
           enabledBorder: OutlineInputBorder(
             borderSide: BorderSide(color: Colors.grey),
