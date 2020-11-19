@@ -174,11 +174,11 @@ class HistoryWidgetState extends State<HistoryWidget> {
                       contentPadding:
                           EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
                       trailing: Text(
-                        "-" + receipt.total + S.of(context).currency,
-                        style: TextStyle(
-                            color: Colors.redAccent,
-                            fontWeight: FontWeight.w300,
-                            fontSize: 20),
+                          "-" + receipt.total + S.of(context).currency,
+                          style: TextStyle(
+                              color: Colors.redAccent,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16),
                       ),
                       subtitle: Row(
                         children: <Widget>[
@@ -189,7 +189,7 @@ class HistoryWidgetState extends State<HistoryWidget> {
                                   ", " +
                                   DateManipulator.humanDate(receipt.date),
                               style:
-                                  TextStyle(color: Colors.black, fontSize: 16))
+                                  TextStyle(color: Colors.black, fontSize: 12))
                         ],
                       ),
                       title: Text(
@@ -273,7 +273,7 @@ class HistoryWidgetState extends State<HistoryWidget> {
                 SliverFillRemaining(
                     hasScrollBody: false,
                     child: Form(
-                       key: _editFormKey,
+                        key: _editFormKey,
                         child: Column(
                           children: <Widget>[
                             Expanded(
