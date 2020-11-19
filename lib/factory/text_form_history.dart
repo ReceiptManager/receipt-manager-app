@@ -66,7 +66,6 @@ class TextFormFactory {
       TextEditingController receiptTotalController, BuildContext context) {
     return TextFormField(
       style: TextStyle(color: Colors.black),
-      keyboardType: TextInputType.number,
       decoration: new InputDecoration(
         enabledBorder: OutlineInputBorder(
           borderSide: BorderSide(color: Colors.grey),
@@ -144,12 +143,6 @@ class TextFormFactory {
       itemFromString: (string) => storeNameList.singleWhere(
           (_storeName) => _storeName.toLowerCase() == string.toLowerCase(),
           orElse: () => null),
-      validator: (value) {
-        if (value.isEmpty) {
-          return S.of(context).emptyStoreName;
-        }
-        return null;
-      },
     );
   }
 }

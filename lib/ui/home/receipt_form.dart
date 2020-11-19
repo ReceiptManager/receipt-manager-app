@@ -344,9 +344,9 @@ class ReceiptInputController extends State<ReceiptForm> {
   FloatingActionButton submitButton() {
     return new FloatingActionButton(
         onPressed: () {
-          //final form = _formKey.currentState;
+          final form = _formKey.currentState;
           // disable form validation for now
-          if (receiptCategory != null) {
+          if (form.validate() ||receiptCategory != null) {
             try {
               Scaffold.of(context).showSnackBar(SnackBar(
                 content: Text(S.of(context).addReceipt),
