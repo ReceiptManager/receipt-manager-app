@@ -28,6 +28,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "currency" : MessageLookupByLibrary.simpleMessage("\$"),
     "currentLanguage" : MessageLookupByLibrary.simpleMessage("English"),
     "deleteReceipt" : MessageLookupByLibrary.simpleMessage("Delete"),
+    "diySupermarkt" : MessageLookupByLibrary.simpleMessage("DIY supermarkt"),
     "done" : MessageLookupByLibrary.simpleMessage("Done"),
     "editReceipt" : MessageLookupByLibrary.simpleMessage("Update"),
     "education" : MessageLookupByLibrary.simpleMessage("Education"),

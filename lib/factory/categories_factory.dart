@@ -33,21 +33,31 @@ class ReceiptCategoryFactory {
       categories = <ReceiptCategory>[
         ReceiptCategory(S.of(context).groceryCategory,
             Icon(Icons.shopping_bag_outlined, color: _rand.randomColor(colorHue: ColorHue.red)), "grocery"),
+
         ReceiptCategory(S.of(context).healthCategory,
             Icon(Icons.medical_services, color: _rand.randomColor(colorHue: ColorHue.blue)), "health"),
         ReceiptCategory(S.of(context).Rent, Icon(Icons.store_mall_directory,color: _rand.randomColor(colorHue: ColorHue.orange)), "rent"),
+
         ReceiptCategory(
            S.of(context).food, Icon(Icons.shop,color: _rand.randomColor(colorHue: ColorHue.yellow)), "food"),
         ReceiptCategory(
             S.of(context).entertainment, Icon(Icons.fastfood_sharp,color: _rand.randomColor(colorHue: ColorHue.green)), "entertainment"),
+
         ReceiptCategory(
             S.of(context).employeeBenefits, Icon(Icons.people,color: _rand.randomColor(colorHue: ColorHue.orange)), "employees"),
+
         ReceiptCategory(
           S.of(context).util, Icon(Icons.edit_location_outlined,color: _rand.randomColor(colorHue: ColorHue.red)), "util"),
+
         ReceiptCategory(
            S.of(context).travel, Icon(Icons.edit,color: _rand.randomColor(colorHue: ColorHue.purple)), "globe"),
+
         ReceiptCategory(
             S.of(context).education, Icon(Icons.book,color: _rand.randomColor(colorHue: ColorHue.blue)), "education"),
+
+        ReceiptCategory(
+            S.of(context).diySupermarkt, Icon(Icons.book,color: _rand.randomColor(colorHue: ColorHue.blue)), "bauhaus"),
+
 
       ];
     }

@@ -845,11 +845,21 @@ class S {
     );
   }
 
-  /// `Kategoryübersicht`
+  /// `Kategorieübersicht`
   String get expensesByCategory {
     return Intl.message(
-      'Kategoryübersicht',
+      'Kategorieübersicht',
       name: 'expensesByCategory',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `DIY supermarkt`
+  String get diySupermarkt {
+    return Intl.message(
+      'DIY supermarkt',
+      name: 'diySupermarkt',
       desc: '',
       args: [],
     );

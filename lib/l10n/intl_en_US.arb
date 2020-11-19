@@ -80,5 +80,6 @@
   "travel": "Travel",
   "education": "Education",
   "noData": "Data N/A",
-  "expensesByCategory": "Expenses by category"
+  "expensesByCategory": "Expenses by category",
+  "diySupermarkt": "DIY supermarkt"
 }

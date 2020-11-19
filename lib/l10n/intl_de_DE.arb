@@ -81,5 +81,6 @@
   "travel": "Reisen",
   "education": "Bildung",
   "noData": "Data N/A",
-  "expensesByCategory": "Kategoryübersicht"
+  "expensesByCategory": "Kategorieübersicht",
+  "diySupermarkt": "DIY supermarkt"
 }
