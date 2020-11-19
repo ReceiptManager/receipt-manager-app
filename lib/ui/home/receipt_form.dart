@@ -147,9 +147,9 @@ class ReceiptInputController extends State<ReceiptForm> {
                                             child: Text(
                                               S.of(context).addReceipt,
                                               style: TextStyle(
-                                                  fontSize: 25,
+                                                  fontSize: 24,
                                                   color: Colors.black,
-                                                  fontWeight: FontWeight.w300),
+                                                  fontWeight: FontWeight.w100),
                                             )))),
                                 PaddingFactory.create(new Align(
                                     alignment: Alignment.topRight,
