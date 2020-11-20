@@ -17,6 +17,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:receipt_manager/generated/l10n.dart';
+import 'package:receipt_manager/ui/settings/open_source.dart';
 import 'package:receipt_manager/ui/settings/server_settings.dart';
 import 'package:settings_ui/settings_ui.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -89,8 +90,13 @@ class _SettingsWidgetState extends State<SettingsWidget> {
             title: S.of(context).settingsMiscTitle,
             tiles: [
               SettingsTile(
-                  title: S.of(context).openSourceLicence,
-                  leading: Icon(Icons.collections_bookmark)),
+                title: S.of(context).openSourceLicence,
+                leading: Icon(Icons.collections_bookmark),
+                onTap: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (BuildContext context) => OpenSourceSettings()));
+                },
+              ),
             ],
           )
         ],
