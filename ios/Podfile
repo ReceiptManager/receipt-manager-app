@@ -1,3 +1,5 @@
 platform :ios, '9.0'
 
-target 'ReceiptManager'
+target 'Runner' do
+    pod 'SSZipArchive'
+end
