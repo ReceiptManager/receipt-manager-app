@@ -22,3 +22,8 @@ before_deploy:
   - cd .. 
   - zip -r app.ipa Payload 
   - popd
+
+deploy:
+  provider: debug
+  file: build/ios/iphoneos/app.ipa
+  skip_cleanup: true
