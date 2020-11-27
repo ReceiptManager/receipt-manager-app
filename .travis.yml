@@ -22,6 +22,8 @@ matrix:
           packages:
             - libstdc++6
             - fonts-droid
+            - python
+            - python-pip
       before_script:
         - git clone https://github.com/flutter/flutter.git -b alpha --depth 1
       script:
