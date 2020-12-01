@@ -15,12 +15,14 @@
  * limitations under the License.
  */
 
+import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
+import 'package:receipt_manager/generated/l10n.dart';
 
 class DateManipulator {
-  static String humanDate(DateTime dateTime) {
+  static String humanDate(BuildContext context, DateTime dateTime) {
     if (dateTime == null) return " ";
 
-    return DateFormat("dd.MM.yyyy").format(dateTime);
+    return DateFormat(S.of(context).receiptDateFormat).format(dateTime);
   }
 }

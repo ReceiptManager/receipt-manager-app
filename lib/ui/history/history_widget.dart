@@ -187,7 +187,7 @@ class HistoryWidgetState extends State<HistoryWidget> {
                                           jsonDecode(receipt.category))
                                       .name +
                                   ", " +
-                                  DateManipulator.humanDate(receipt.date),
+                                  DateFormat(S.of(context).receiptDateFormat).format(receipt.date),
                               style:
                                   TextStyle(color: Colors.black, fontSize: 12))
                         ],
@@ -246,7 +246,7 @@ class HistoryWidgetState extends State<HistoryWidget> {
   _showDialog({controller, Receipt receipt}) async {
     this.storeName = receipt.shop;
     this.receiptTotal = receipt.total;
-    this.currentReceiptDate = DateManipulator.humanDate(receipt.date);
+    this.currentReceiptDate = DateManipulator.humanDate(context, receipt.date);
     this.category = receipt.category;
     this.currentReceipt = receipt;
     // this.currentReceipt = receipt;
