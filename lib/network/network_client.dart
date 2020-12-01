@@ -22,6 +22,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:intl/intl.dart';
 import 'package:path/path.dart';
 import 'package:receipt_manager/database/receipt_database.dart';
 import 'package:receipt_manager/generated/l10n.dart';
@@ -130,10 +131,15 @@ class NetworkClient {
           .listen((value) {
             Map<String, dynamic> r = jsonDecode(value);
             DateTime _date;
-            String parsedString =
-                r['receiptDate'].replaceAll('"', '').split(" ")[0];
+
+            String parsedString = r['receiptDate']
+                .replaceAll('"', '')
+                .replaceAll("\n", '')
+                .split(" ")[0];
+
+            var format = DateFormat(S.of(context).receiptDateFormat);
             try {
-              _date = DateTime.parse(parsedString);
+              _date = format.parse(parsedString);
             } catch (_) {
               _date = null;
             }
