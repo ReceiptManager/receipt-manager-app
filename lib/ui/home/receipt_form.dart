@@ -139,8 +139,10 @@ class ReceiptInputController extends State<ReceiptForm> {
                                                   ReceiptGenerator(context);
                                               generator.init();
                                               for (int i = 0; i < 1000; i++) {
-                                                ReceiptsCompanion c = generator.get();
-                                                _bloc.add(InsertEvent(receipt: c));
+                                                ReceiptsCompanion c =
+                                                    generator.get();
+                                                _bloc.add(
+                                                    InsertEvent(receipt: c));
                                               }
                                               _bloc.add(ReceiptAllFetch());
                                             },
@@ -257,20 +259,18 @@ class ReceiptInputController extends State<ReceiptForm> {
                                       if (value.isEmpty) {
                                         return S.of(context).receiptDateDialog;
                                       }
-                                      RegExp totalRegex = new RegExp(
-                                          "^(0?[1-9]|[12][0-9]|3[01])[.\\/ ]?(0?[1-9]|1[0-2])[./ ]?(?:19|20)[0-9]{2}\$",
-                                          caseSensitive: false,
-                                          multiLine: false);
 
-                                      if (!totalRegex.hasMatch(value.trim())) {
+                                      try {
+                                        receiptDate = DateTime.parse(value);
+                                        return null;
+                                      } catch (_) {
+                                        receiptDate = null;
                                         return S
                                                 .of(context)
                                                 .receiptDateNotFormatted +
                                             " " +
                                             S.of(context).receiptDateFormat;
                                       }
-
-                                      return null;
                                     },
                                   ))),
                               PaddingFactory.create(Container(
@@ -346,7 +346,7 @@ class ReceiptInputController extends State<ReceiptForm> {
         onPressed: () {
           final form = _formKey.currentState;
           // disable form validation for now
-          if (form.validate() ||receiptCategory != null) {
+          if (form.validate() || receiptCategory != null) {
             try {
               Scaffold.of(context).showSnackBar(SnackBar(
                 content: Text(S.of(context).addReceipt),

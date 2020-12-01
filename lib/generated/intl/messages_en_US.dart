@@ -59,7 +59,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "overview" : MessageLookupByLibrary.simpleMessage("Weekly overview"),
     "overviewExpenses" : MessageLookupByLibrary.simpleMessage("Expenses overview"),
     "receiptDateDialog" : MessageLookupByLibrary.simpleMessage("Please enter some date"),
-    "receiptDateFormat" : MessageLookupByLibrary.simpleMessage("dd.MM.y"),
+    "receiptDateFormat" : MessageLookupByLibrary.simpleMessage("dd/MM/y"),
     "receiptDateHelperText" : MessageLookupByLibrary.simpleMessage("Set the receipt date"),
     "receiptDateInvalid" : MessageLookupByLibrary.simpleMessage("Receipt date is invalid, format:"),
     "receiptDateLabelText" : MessageLookupByLibrary.simpleMessage("Receipt date"),
