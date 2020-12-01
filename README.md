@@ -12,7 +12,7 @@ Why do we not use the digital advantage to our advantage? The receipt scanner so
 --- 
 
 ## Features
-- IOS and Android application
+- Android application
 - fast and easy receipt parser using OCR
 - store receipts permanently in a SQL database
 - minimal design
@@ -21,32 +21,6 @@ Why do we not use the digital advantage to our advantage? The receipt scanner so
 ---
 
 ## Getting started
-
-### For developers
-First, import the project in Android Studio. After, you have to install the flutter plugins. 
-Now, you can build the flutter application using the android studio app.
-
-**1.** Import project in android studio (and install the flutter plugin)
-
-**2.** Edit `android/app/build.gradle` and change
-```
- buildTypes {
-        release {
-            signingConfig signingConfigs.release
-        }
-    }
-```
-To:
-```
- buildTypes {
-        release {
-            signingConfig signingConfigs.debug
-        }
-    }
-```
-**3.** Go to Build/Flutter/Build APK
-
-**4.** Install the application
 
 ### For consumers
 Download the precombiled binary. Now, install the precompiled binaries at the release page. 
@@ -60,7 +34,7 @@ have to do the following.
 4. Generate SSL certificates
 5. Run the server
 
-### In detail
+#### In detail
 Build and run the image server. You will find instructions in the server repository, or click [here](https://github.com/ReceiptManager/Server).
 Now, change the server ip. In the application go to `Settings/Server/` and edit the server ip.
 <p align="center">
@@ -78,17 +52,6 @@ Since mobile devices have a unacceptable performance, the parser uses a (traditi
 2. The Application upload the receipt to the sever
 3. The Sever parses the receipt and send the output (as json response) back to the application
 4. The Application store the receipt in a SQL database
-
----
-
-### TODOS
-| Description  | Done?  | Priority | Fixed at |
-|---|---|---| --- |
-| Add loading screen indicator | yes | hight | 1.01 |
-| Correct date parsing | yes | hight | 1.01 |
-| Remove duplicate snackbar after parsing | yes | hight |1.03 |
-| Add new categories | yes | hight | 1.03 |
-| Edit categories in edit widget | no | hight | / |
 
 ---
 
@@ -116,7 +79,7 @@ worry about that. No third party services are used.
 ---
 
 ## Credits
-I use free logos.
+Thank you for providing these free logos.
 | Logo | Creator | Url |
 | --- | --- | --- |
 | Educator logo | Payungkead | https://www.flaticon.com/free-icon/global-education_3379636?term=education&page=1&position=28 |
