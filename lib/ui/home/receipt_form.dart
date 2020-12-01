@@ -261,7 +261,8 @@ class ReceiptInputController extends State<ReceiptForm> {
                                       }
 
                                       try {
-                                        receiptDate = DateTime.parse(value);
+                                        var format = DateFormat(S.of(context).receiptDateFormat);
+                                        receiptDate = format.parse(value);
                                         return null;
                                       } catch (_) {
                                         receiptDate = null;
