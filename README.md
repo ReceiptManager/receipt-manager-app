@@ -1,34 +1,6 @@
-# Hello Word
-
-<<<<<<< HEAD
 # Receipt manager
 [![Codemagic build status](https://api.codemagic.io/apps/5fcbc24c59d78f5801f494d8/5fcbc24c59d78f5801f494d7/status_badge.svg)](https://codemagic.io/apps/5fcbc24c59d78f5801f494d8/5fcbc24c59d78f5801f494d7/latest_build) 
-=======
-A new Flutter project created with [FlutLab](https://flutlab.io)
->>>>>>> app/development
 
-### Getting Started: FlutLab - Flutter Online IDE
-
-- Watch Mini crash course "How to use Flutter Widgets” on [FlutLab Youtube Channel](https://www.youtube.com/channel/UC7ZOPQm4JFlvBc9WeynLX_g)
-- Discover a marketplace of ready-to-use Flutter projects [FlutLab Widget Bay](https://widgetbay.flutlab.io/)
-- Join the discussion and conversation on [FlutLab Facebook Group](https://www.facebook.com/groups/flutlab/)
-
-If you have some questions regarding FlutLab, you can ask on [FlutLab FAQ](https://faq.flutlab.io/)
-
-### Getting Started: Flutter
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
-
-<<<<<<< HEAD
 1. Read the server documentary
 2. Clone the image server repository
 3. Install the required python dependencies
@@ -95,5 +67,4 @@ Thank you for providing these free logos.
 | Icon pack | unknown | https://www.flaticon.com/packs/retail-59?k=1602359120540 |
 | Health icon |  Eucalypt | https://www.flaticon.com/free-icon/health-check_2463800?term=health&page=1&position=6 |
 | Entertainment icon | Photo3_Idea_studio | https://www.flaticon.com/free-icon/popcorn_3163478?term=entertainment&page=1&position=9 |
-=======
->>>>>>> app/development
+
