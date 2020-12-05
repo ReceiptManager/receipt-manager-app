@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:exif/exif.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image/image.dart' as img;
@@ -36,38 +35,6 @@ class DisplayPictureScreenState extends State<DisplayPictureScreen> {
   void initState() {
     super.initState();
     _isButtonDisabled = false;
-  }
-
-  Future<File> fixExifRotation(String imagePath) async {
-    final originalFile = File(imagePath);
-    List<int> imageBytes = await originalFile.readAsBytes();
-
-    final originalImage = img.decodeImage(imageBytes);
-    final height = originalImage.height;
-    final width = originalImage.width;
-
-    if (height >= width) {
-      return originalFile;
-    }
-
-    final exifData = await readExifFromBytes(imageBytes);
-    img.Image fixedImage;
-
-    if (height < width) {
-      if (exifData['Image Orientation'].printable.contains('Horizontal')) {
-        fixedImage = img.copyRotate(originalImage, 90);
-      } else if (exifData['Image Orientation'].printable.contains('180')) {
-        fixedImage = img.copyRotate(originalImage, -90);
-      } else if (exifData['Image Orientation'].printable.contains('CCW')) {
-        fixedImage = img.copyRotate(originalImage, 180);
-      } else {
-        fixedImage = img.copyRotate(originalImage, 0);
-      }
-    }
-
-    final fixedFile =
-        await originalFile.writeAsBytes(img.encodeJpg(fixedImage));
-    return fixedFile;
   }
 
   @override
@@ -120,7 +87,6 @@ class DisplayPictureScreenState extends State<DisplayPictureScreen> {
                             String ip = sharedPrefs.get("ipv4");
                             String token = sharedPrefs.get("api_token");
 
-                            //await fixExifRotation(imagePath);
                             await NetworkClient.sendImage(
                                 File(imagePath), ip,token, context, key2);
                             _progress = _progress + 80.0;
