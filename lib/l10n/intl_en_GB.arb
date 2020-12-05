@@ -82,5 +82,10 @@
   "education": "Education",
   "noData": "Data N/A",
   "expensesByCategory": "Expenses by category",
-  "diySupermarkt": "DIY supermarkt"
+  "diySupermarkt": "DIY supermarkt",
+  "insertYourApiToken": "Insert your api token",
+  "apitoken": "API Token",
+  "insertServerApiToken": "Insert server API token",
+  "invalidApiToken": "Invalid API token",
+  "updateApiTokenSuccessfully": "Update api token successfully"
 }
