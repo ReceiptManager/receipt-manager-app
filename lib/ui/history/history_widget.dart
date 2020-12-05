@@ -16,15 +16,18 @@
  */
 
 import 'dart:convert';
+import 'dart:core';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:intl/intl.dart';
+import 'package:random_color/random_color.dart';
 import 'package:receipt_manager/bloc/moor/bloc.dart';
 import 'package:receipt_manager/converter/color_converter.dart';
 import 'package:receipt_manager/database/receipt_database.dart';
 import 'package:receipt_manager/date/date_manipulator.dart';
+import 'package:receipt_manager/factory/categories_factory.dart';
 import 'package:receipt_manager/factory/logo_factory.dart';
 import 'package:receipt_manager/factory/padding_factory.dart';
 import 'package:receipt_manager/factory/text_form_history.dart';
@@ -32,7 +35,6 @@ import 'package:receipt_manager/generated/l10n.dart';
 import 'package:receipt_manager/model/receipt_category.dart';
 import 'package:receipt_manager/theme/color/color.dart';
 import 'package:receipt_manager/theme/theme_manager.dart';
-import 'package:receipt_manager/ui/history/filter_chips.dart';
 
 class HistoryWidget extends StatefulWidget {
   final DbBloc _bloc;
@@ -81,11 +83,11 @@ class HistoryWidgetState extends State<HistoryWidget> {
           );
         }
         if (state is LoadedState) {
-          final receipt = state.receipt;
+          receipts = state.receipt;
           return Column(
             children: <Widget>[
-              FilterChipScreen(),
-              Expanded(child: _buildList(receipt))
+              FilterChipScreen(receipts),
+              Expanded(child: _buildList(receipts))
             ],
           );
         }
@@ -459,5 +461,68 @@ class HistoryWidgetState extends State<HistoryWidget> {
         );
       },
     );
+  }
+}
+
+List<Receipt> receipts = [];
+
+class FilterChipScreen extends StatefulWidget {
+  final List<Receipt> _receipts;
+  @override
+  _FilterChipScreenState createState() => _FilterChipScreenState(_receipts);
+
+  FilterChipScreen(this._receipts);
+}
+
+class _FilterChipScreenState extends State<FilterChipScreen> {
+  var data = ReceiptCategoryFactory.categories;
+  var selected = [];
+  List<Receipt> receipts;
+  List<ReceiptCategory> filterCategories = [];
+
+
+  RandomColor _rand = RandomColor();
+
+  _FilterChipScreenState(this.receipts);
+
+  @override
+  Widget build(BuildContext context) {
+    filterCategories = [];
+
+    return Container(
+      height: 65,
+      child: ListView.builder(
+          scrollDirection: Axis.horizontal,
+          itemCount: data.length,
+          itemBuilder: (BuildContext context, int index) =>
+              PaddingFactory.create(
+                FilterChip(
+                  label: Text(data[index].name),
+                  onSelected: (bool value) {
+                    if (selected.contains(index)) {
+                      selected.remove(index);
+                    } else {
+                      selected.add(index);
+                    }
+                  },
+                  selected: selected.contains(index),
+                  selectedColor: Colors.red,
+                  labelStyle: TextStyle(
+                    color: Colors.white,
+                  ),
+                  backgroundColor: _rand.randomColor(colorHue: ColorHue.blue),
+                ),
+              )),
+    );
+  }
+
+  void addFilter(int index) {
+    filterCategories.add(data[index]);
+  }
+
+  void removeFilter(int index) {
+    if (filterCategories != null && filterCategories.length > index) {
+      filterCategories.remove(data[index]);
+    }
   }
 }
