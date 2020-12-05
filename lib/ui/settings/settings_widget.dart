@@ -17,6 +17,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:receipt_manager/generated/l10n.dart';
+import 'package:receipt_manager/ui/settings/api_settings.dart';
 import 'package:receipt_manager/ui/settings/open_source.dart';
 import 'package:receipt_manager/ui/settings/server_settings.dart';
 import 'package:settings_ui/settings_ui.dart';
@@ -66,6 +67,15 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                   Navigator.of(context).push(MaterialPageRoute(
                       builder: (BuildContext context) =>
                           ServerSettings(sharedPreferences)));
+                },
+              ),
+              SettingsTile(
+                title: S.of(context).apitoken,
+                leading: Icon(Icons.vpn_key),
+                onTap: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (BuildContext context) =>
+                          ApiSettings(sharedPreferences)));
                 },
               ),
             ],
