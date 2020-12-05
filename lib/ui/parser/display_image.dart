@@ -118,10 +118,11 @@ class DisplayPictureScreenState extends State<DisplayPictureScreen> {
                             SharedPreferences sharedPrefs =
                                 await SharedPreferences.getInstance();
                             String ip = sharedPrefs.get("ipv4");
+                            String token = sharedPrefs.get("api_token");
 
                             //await fixExifRotation(imagePath);
                             await NetworkClient.sendImage(
-                                File(imagePath), ip, context, key2);
+                                File(imagePath), ip,token, context, key2);
                             _progress = _progress + 80.0;
                           })))),
             ],
