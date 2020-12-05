@@ -53,10 +53,8 @@ class TakePictureScreenState extends State<TakePictureScreen> {
   @override
   void initState() {
     super.initState();
-
+    
     _controller = CameraController(widget.camera, ResolutionPreset.ultraHigh);
-
-    // Next, initialize the controller. This returns a Future.
     _initializeControllerFuture = _controller.initialize();
   }
 
@@ -94,7 +92,6 @@ class TakePictureScreenState extends State<TakePictureScreen> {
             'receipt_${DateTime.now()}.png',
           );
 
-          // Take an picture with the best resolution
           await _controller.takePicture(path);
           Navigator.push(
               context,
