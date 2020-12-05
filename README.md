@@ -3,7 +3,7 @@
 </p>
 
 # Receipt manager
-[<img src="https://i.imgur.com/DTbi7LK.png" width="150">](https://apt.izzysoft.de/fdroid/index/apk/org.receipt_manager)
+[![Codemagic build status](https://api.codemagic.io/apps/5fcbc24c59d78f5801f494d8/5fcbc24c59d78f5801f494d7/status_badge.svg)](https://codemagic.io/apps/5fcbc24c59d78f5801f494d8/5fcbc24c59d78f5801f494d7/latest_build) 
 
 Keep track of your receipt is pretty hard. You need to update the shop names, receipt date and a total of every receipt.
 
@@ -75,6 +75,13 @@ worry about that. No third party services are used.
   <img src="https://raw.githubusercontent.com/ReceiptManager/Application/master/docs/assets/stats_app.png">
 
 </p>
+
+---
+
+### Releases
+[<img src="https://i.imgur.com/DTbi7LK.png" width="150">](https://apt.izzysoft.de/fdroid/index/apk/org.receipt_manager)
+
+You can find precompiled applications on the github release page.
 
 ---
 
