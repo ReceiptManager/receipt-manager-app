@@ -13,6 +13,7 @@ class ReceiptGenerator {
   ReceiptGenerator(this.context);
 
   BuildContext context;
+
   Random random;
   List<ReceiptCategory> categories;
 
