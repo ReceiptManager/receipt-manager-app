@@ -46,9 +46,7 @@ dependencies:
   flutter_staggered_grid_view: ^0.3.2
   permission_handler: ^5.0.1+1
   fl_chart: ^0.12.0
-  flutter_exif_rotation: ^0.3.1
   image: ^2.1.18
-  exif: ^1.0.3
   progress_dialog: ^1.2.4
   rounded_loading_button: ^1.0.0
   simple_autocomplete_formfield: ^0.2.7

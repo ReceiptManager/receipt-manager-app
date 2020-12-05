@@ -1,6 +1,0 @@
-# https://github.com/flutter/flutter/issues/54599
-platform :ios, '11.0'
-
-target 'Runner' do
-    pod 'SSZipArchive'
-end

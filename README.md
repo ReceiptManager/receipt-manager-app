@@ -1,33 +1,34 @@
-<p align="center">
-<img src="https://miro.medium.com/max/700/1*VfeXSnc08x6BTCbPNPCfIg.jpeg">
-</p>
+# Hello Word
 
+<<<<<<< HEAD
 # Receipt manager
 [![Codemagic build status](https://api.codemagic.io/apps/5fcbc24c59d78f5801f494d8/5fcbc24c59d78f5801f494d7/status_badge.svg)](https://codemagic.io/apps/5fcbc24c59d78f5801f494d8/5fcbc24c59d78f5801f494d7/latest_build) 
+=======
+A new Flutter project created with [FlutLab](https://flutlab.io)
+>>>>>>> app/development
 
-Keep track of your receipt is pretty hard. You need to update the shop names, receipt date and a total of every receipt.
+### Getting Started: FlutLab - Flutter Online IDE
 
-Why do we not use the digital advantage to our advantage? The receipt scanner solves multiple problems.  You don't have to keep track of your receipts, you safe (a lot) of time but still, see every important information in a blink of a second.
+- Watch Mini crash course "How to use Flutter Widgets” on [FlutLab Youtube Channel](https://www.youtube.com/channel/UC7ZOPQm4JFlvBc9WeynLX_g)
+- Discover a marketplace of ready-to-use Flutter projects [FlutLab Widget Bay](https://widgetbay.flutlab.io/)
+- Join the discussion and conversation on [FlutLab Facebook Group](https://www.facebook.com/groups/flutlab/)
 
---- 
+If you have some questions regarding FlutLab, you can ask on [FlutLab FAQ](https://faq.flutlab.io/)
 
-## Features
-- Android application
-- fast and easy receipt parser using OCR
-- store receipts permanently in a SQL database
-- minimal design
-- no other services required
+### Getting Started: Flutter
 
----
+This project is a starting point for a Flutter application.
 
-## Getting started
+A few resources to get you started if this is your first Flutter project:
 
-### For consumers
-Download the precombiled binary. Now, install the precompiled binaries at the release page. 
+- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
+- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
 
-Now, you can insert, add and store receipts permanently. If you like to parse the receipt using OCR, you
-have to do the following.
+For help getting started with Flutter, view
+[online documentation](https://flutter.dev/docs), which offers tutorials,
+samples, guidance on mobile development, and a full API reference.
 
+<<<<<<< HEAD
 1. Read the server documentary
 2. Clone the image server repository
 3. Install the required python dependencies
@@ -94,3 +95,5 @@ Thank you for providing these free logos.
 | Icon pack | unknown | https://www.flaticon.com/packs/retail-59?k=1602359120540 |
 | Health icon |  Eucalypt | https://www.flaticon.com/free-icon/health-check_2463800?term=health&page=1&position=6 |
 | Entertainment icon | Photo3_Idea_studio | https://www.flaticon.com/free-icon/popcorn_3163478?term=entertainment&page=1&position=9 |
+=======
+>>>>>>> app/development

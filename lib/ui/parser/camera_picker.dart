@@ -19,7 +19,6 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:camera/camera.dart';
-import 'package:exif/exif.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image/image.dart' as img;
@@ -54,10 +53,8 @@ class TakePictureScreenState extends State<TakePictureScreen> {
   @override
   void initState() {
     super.initState();
-
+    
     _controller = CameraController(widget.camera, ResolutionPreset.ultraHigh);
-
-    // Next, initialize the controller. This returns a Future.
     _initializeControllerFuture = _controller.initialize();
   }
 
@@ -95,9 +92,7 @@ class TakePictureScreenState extends State<TakePictureScreen> {
             'receipt_${DateTime.now()}.png',
           );
 
-          // Take an picture with the best resolution
           await _controller.takePicture(path);
-          // await FlutterExifRotation.rotateAndSaveImage(path: path);
           Navigator.push(
               context,
               MaterialPageRoute(
