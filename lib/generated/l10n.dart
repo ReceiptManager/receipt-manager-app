@@ -864,6 +864,56 @@ class S {
       args: [],
     );
   }
+
+  /// `Insert your api token`
+  String get insertYourApiToken {
+    return Intl.message(
+      'Insert your api token',
+      name: 'insertYourApiToken',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `ApiToken`
+  String get apitoken {
+    return Intl.message(
+      'ApiToken',
+      name: 'apitoken',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Insert server api token`
+  String get insertServerApiToken {
+    return Intl.message(
+      'Insert server api token',
+      name: 'insertServerApiToken',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Invalid api token`
+  String get invalidApiToken {
+    return Intl.message(
+      'Invalid api token',
+      name: 'invalidApiToken',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Update api token successfully`
+  String get updateApiTokenSuccessfully {
+    return Intl.message(
+      'Update api token successfully',
+      name: 'updateApiTokenSuccessfully',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
