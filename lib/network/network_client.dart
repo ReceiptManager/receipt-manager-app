@@ -35,7 +35,8 @@ import '../main.dart';
 ///  TextFields.
 class NetworkClient {
   static final _protocol = "https://";
-  static final _path = "/api/upload/";
+  static final _path = "/api/upload";
+  static final _access_token = "?access_token=";
   static final _port = "8721";
   static final _timeout = 120;
   static const int _transactionDuration = 2;
@@ -49,8 +50,9 @@ class NetworkClient {
     HttpOverrides.global = new SelfSignedHttpAgent();
   }
 
-  static String buildUrl(final ip) {
-    return _protocol + ip + ":" + _port + _path;
+  static String buildUrl(final ip, final token) {
+    if (token == null) return _protocol + ip + ":" + _port + _path;
+    return _protocol + ip + ":" + _port + _path + _access_token + token;
   }
 
   static toNavigationBar(BuildContext context) {
@@ -59,7 +61,8 @@ class NetworkClient {
   }
 
   /// Send image via post request to the server and capture the response.
-  static sendImage(File imageFile, String ip, BuildContext context,
+  static sendImage(
+      File imageFile, String ip, String token, BuildContext context,
       [GlobalKey<ScaffoldState> key]) async {
     init();
 
@@ -81,7 +84,10 @@ class NetworkClient {
     stream.cast();
 
     var length = await imageFile.length();
-    var uri = Uri.parse(buildUrl(ip));
+    var uri = Uri.parse(buildUrl(ip, token));
+
+    log(uri.toString());
+
     var request = new http.MultipartRequest("POST", uri);
     var multipartFile = new http.MultipartFile('image', stream, length,
         filename: basename(imageFile.path));
@@ -132,10 +138,12 @@ class NetworkClient {
             Map<String, dynamic> r = jsonDecode(value);
             DateTime _date;
 
-            String parsedString = r['receiptDate']
-                .replaceAll('"', '')
-                .replaceAll("\n", '')
-                .split(" ")[0];
+            String parsedString = r['receiptDate'] == null
+                ? ""
+                : r['receiptDate']
+                    .replaceAll('"', '')
+                    .replaceAll("\n", '')
+                    .split(" ")[0];
 
             var format = DateFormat(S.of(context).receiptDateFormat);
             try {
