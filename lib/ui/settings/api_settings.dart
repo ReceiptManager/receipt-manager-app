@@ -99,38 +99,6 @@ class _ApiSettingsState extends State<ApiSettings> {
                   padding: const EdgeInsets.all(16.0),
                   child: FloatingActionButton(
                       onPressed: () async {
-                        
-                        if (api_token.isEmpty) {
-                          showDialog(
-                              context: context,
-                              builder: (_) => AssetGiffyDialog(
-                                image: Image.asset(
-                                  "assets/robot.gif",
-                                  fit: BoxFit.fill,
-                                ),
-                                title: Text(
-                                  S.of(context).invalidApiToken,
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                      fontSize: 22.0,
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.w600),
-                                ),
-                                entryAnimation: EntryAnimation.BOTTOM_RIGHT,
-                                description: Text(
-                                  S.of(context).invalidServerIP,
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(),
-                                ),
-                                onCancelButtonPressed: () {
-                                  Navigator.of(context).pop();
-                                },
-                                onOkButtonPressed: () {
-                                  Navigator.of(context).pop();
-                                },
-                              ));
-                          return;
-                        }
 
                         sharedPreferences.setString("api_token", api_token);
                         _scaffoldKey2.currentState
