@@ -23,6 +23,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
+import 'package:http_parser/http_parser.dart' as mime;
 import 'package:path/path.dart';
 import 'package:receipt_manager/database/receipt_database.dart';
 import 'package:receipt_manager/generated/l10n.dart';
@@ -30,7 +31,7 @@ import 'package:receipt_manager/generated/l10n.dart';
 import '../main.dart';
 
 /// Network client interact with the python image server.
-/// It send a minimal post request to the server over https,
+/// Iimal post request to the server over https,
 /// after it will parse the response and update the corresponding
 ///  TextFields.
 class NetworkClient {
@@ -51,7 +52,8 @@ class NetworkClient {
   }
 
   static String buildUrl(final ip, final token) {
-    if (token == null) return _protocol + ip + ":" + _port + _path;
+    if (token == null || token == "")
+      return _protocol + ip + ":" + _port + _path;
     return _protocol + ip + ":" + _port + _path + _access_token + token;
   }
 
@@ -61,8 +63,8 @@ class NetworkClient {
   }
 
   /// Send image via post request to the server and capture the response.
-  static sendImage(
-      File imageFile, String ip, String token, BuildContext context,
+  static sendImage(File imageFile, String ip, String token,
+      BuildContext context,
       [GlobalKey<ScaffoldState> key]) async {
     init();
 
@@ -71,7 +73,9 @@ class NetworkClient {
       log("ip appears invalid.");
       key.currentState
         ..showSnackBar(SnackBar(
-            content: Text(S.of(context).serverIpIsNotSet),
+            content: Text(S
+                .of(context)
+                .serverIpIsNotSet),
             backgroundColor: Colors.red));
       await Future.delayed(
           const Duration(seconds: _transactionDuration), () {});
@@ -88,9 +92,13 @@ class NetworkClient {
 
     log(uri.toString());
 
+
     var request = new http.MultipartRequest("POST", uri);
-    var multipartFile = new http.MultipartFile('image', stream, length,
-        filename: basename(imageFile.path));
+
+
+    var multipartFile = new http.MultipartFile('file', stream, length,
+        filename: basename(imageFile.path),
+        contentType: mime.MediaType("multipart", "form-data"),);
     request.files.add(multipartFile);
 
     key.currentState
@@ -105,7 +113,9 @@ class NetworkClient {
         onTimeout: () async {
           key.currentState
             ..showSnackBar(SnackBar(
-                content: Text(S.of(context).serverTimeout),
+                content: Text(S
+                    .of(context)
+                    .serverTimeout),
                 backgroundColor: Colors.red));
           await Future.delayed(
               const Duration(seconds: _transactionDuration), () {});
@@ -135,40 +145,43 @@ class NetworkClient {
       response.stream
           .transform(utf8.decoder)
           .listen((value) {
-            Map<String, dynamic> r = jsonDecode(value);
-            DateTime _date;
+        Map<String, dynamic> r = jsonDecode(value);
+        DateTime _date;
 
-            String parsedString = r['receiptDate'] == null
-                ? ""
-                : r['receiptDate']
-                    .replaceAll('"', '')
-                    .replaceAll("\n", '')
-                    .split(" ")[0];
+        String parsedString = r['receiptDate'] == null
+            ? ""
+            : r['receiptDate']
+            .replaceAll('"', '')
+            .replaceAll("\n", '')
+            .split(" ")[0];
 
-            var format = DateFormat(S.of(context).receiptDateFormat);
-            try {
-              _date = format.parse(parsedString);
-            } catch (_) {
-              _date = null;
-            }
+        var format = DateFormat(S
+            .of(context)
+            .receiptDateFormat);
+        try {
+          _date = format.parse(parsedString);
+        } catch (_) {
+          _date = null;
+        }
 
-            receipt = ReceiptsCompanion(
-                total: Value(r['receiptTotal']),
-                shop: Value(r['storeName']),
-                category: Value(r['category']),
-                date: Value(_date));
+        receipt = ReceiptsCompanion(
+            total: Value(r['receiptTotal']),
+            shop: Value(r['storeName']),
+            category: Value(r['category']),
+            date: Value(_date));
 
-            log('StoreName:  ${r['storeName']} ');
-            log('ReceiptTotal:  ${r['receiptTotal']} ');
-            log('ReceiptDate:  $parsedString');
-          })
+        log('StoreName:  ${r['storeName']} ');
+        log('ReceiptTotal:  ${r['receiptTotal']} ');
+        log('ReceiptDate:  $parsedString');
+      })
           .asFuture()
-          .then((_) async => {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => HomeScreen(receipt, true)))
-              });
+          .then((_) async =>
+      {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => HomeScreen(receipt, true)))
+      });
       return;
     } on TimeoutException catch (_) {
       log("[EXCEPTION] get timeout exception" + _.toString());
@@ -185,7 +198,9 @@ class NetworkClient {
       key.currentState
         ..hideCurrentSnackBar()
         ..showSnackBar(SnackBar(
-            content: Text(S.of(context).socketException + _.message.toString()),
+            content: Text(S
+                .of(context)
+                .socketException + _.toString()),
             backgroundColor: Colors.red));
       await Future.delayed(
           const Duration(seconds: _transactionDuration), () {});
@@ -197,7 +212,9 @@ class NetworkClient {
         ..hideCurrentSnackBar()
         ..showSnackBar(SnackBar(
             content:
-                Text(S.of(context).handshakeException + _.message.toString()),
+            Text(S
+                .of(context)
+                .handshakeException + _.toString()),
             backgroundColor: Colors.red));
 
       Navigator.push(context,
@@ -210,7 +227,9 @@ class NetworkClient {
         ..hideCurrentSnackBar()
         ..showSnackBar(SnackBar(
             content:
-                Text(S.of(context).generalException + _.message.toString()),
+            Text(S
+                .of(context)
+                .generalException + _.toString()),
             backgroundColor: Colors.red));
       Navigator.push(context,
           MaterialPageRoute(builder: (context) => HomeScreen(null, true)));
@@ -223,8 +242,9 @@ class NetworkClient {
 class SelfSignedHttpAgent extends HttpOverrides {
   @override
   HttpClient createHttpClient(SecurityContext context) {
-    return super.createHttpClient(context)
+  return super.createHttpClient(context)
       ..badCertificateCallback =
           (X509Certificate cert, String host, int port) => true;
+
   }
 }
