@@ -218,13 +218,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.2.5"
-  exif:
-    dependency: "direct main"
-    description:
-      name: exif
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.0.3"
   fake_async:
     dependency: transitive
     description:
@@ -286,13 +279,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "6.0.6"
-  flutter_exif_rotation:
-    dependency: "direct main"
-    description:
-      name: flutter_exif_rotation
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.3.1"
   flutter_localizations:
     dependency: "direct main"
     description: flutter
@@ -363,7 +349,7 @@ packages:
       name: http
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.12.2"
+    version: "0.12.0+4"
   http_multi_server:
     dependency: transitive
     description:
@@ -803,13 +789,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.8.0-nullsafety.2"
-  sprintf:
-    dependency: transitive
-    description:
-      name: sprintf
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "4.1.0"
   sqflite:
     dependency: transitive
     description:
@@ -972,5 +951,5 @@ packages:
     source: hosted
     version: "2.2.1"
 sdks:
-  dart: ">=2.10.0-110 <2.11.0"
+  dart: ">=2.10.0-110 <=2.11.0-173.0.dev"
   flutter: ">=1.17.0 <2.0.0"
