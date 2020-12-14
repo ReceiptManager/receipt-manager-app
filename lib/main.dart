@@ -26,8 +26,9 @@ import 'package:receipt_manager/generated/l10n.dart';
 import 'package:receipt_manager/repository/repository.dart';
 import 'package:receipt_manager/theme/color/color.dart';
 import 'package:receipt_manager/theme/theme_manager.dart';
+import 'package:receipt_manager/ui/dashboard/dashboard_widget.dart';
 import 'package:receipt_manager/ui/history/history_widget.dart';
-import 'package:receipt_manager/ui/home/home_widget.dart';
+import 'package:receipt_manager/ui/home/add_widget.dart';
 import 'package:receipt_manager/ui/settings/settings_widget.dart';
 import 'package:receipt_manager/ui/stats/stats_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -216,6 +217,7 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     final List<Widget> _children = [
+      DashboardWidget(),
       HomeWidget(this.receipt, sendImage, sharedPrefs, _bloc),
       HistoryWidget(_bloc),
       StatsWidget(_bloc),
@@ -242,6 +244,7 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               index: 0,
               height: 60.0,
               items: <Widget>[
+                Icon(Icons.dashboard, color: Colors.white, size: 30),
                 Icon(Icons.add, color: Colors.white, size: 30),
                 Icon(Icons.history, color: Colors.white, size: 30),
                 Icon(Icons.analytics_outlined, color: Colors.white, size: 30),
