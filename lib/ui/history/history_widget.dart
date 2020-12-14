@@ -84,6 +84,8 @@ class HistoryWidgetState extends State<HistoryWidget> {
         }
         if (state is LoadedState) {
           receipts = state.receipt;
+          if (receipts == null || receipts.length == 0)
+            return Expanded(child: _buildList(receipts));
           return Column(
             children: <Widget>[
               FilterChipScreen(receipts),
@@ -487,7 +489,7 @@ class _FilterChipScreenState extends State<FilterChipScreen> {
 
   @override
   Widget build(BuildContext context) {
-    filterCategories = [];
+    filterCategories = [];;
 
     return Container(
       height: 65,
