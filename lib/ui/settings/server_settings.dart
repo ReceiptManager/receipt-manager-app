@@ -90,8 +90,7 @@ class _ServerSettingsState extends State<ServerSettings> {
       body: Column(children: [
         Padding(
             padding: const EdgeInsets.all(16.0),
-            child:
-                new Theme(data: ThemeData.light(), child: serverTextfield())),
+            child: serverTextfield()),
         Stack(children: [
           Align(
               alignment: Alignment.bottomRight,
