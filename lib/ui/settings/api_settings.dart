@@ -16,7 +16,6 @@
  */
 
 import 'package:flutter/material.dart';
-import 'package:giffy_dialog/giffy_dialog.dart';
 import 'package:receipt_manager/converter/color_converter.dart';
 import 'package:receipt_manager/generated/l10n.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -88,10 +87,7 @@ class _ApiSettingsState extends State<ApiSettings> {
       key: _scaffoldKey2,
       appBar: AppBar(title: Text(S.of(context).serverSettings)),
       body: Column(children: [
-        Padding(
-            padding: const EdgeInsets.all(16.0),
-            child:
-            new Theme(data: ThemeData.light(), child: serverTextfield())),
+        Padding(padding: const EdgeInsets.all(16.0), child: serverTextfield()),
         Stack(children: [
           Align(
               alignment: Alignment.bottomRight,
@@ -99,12 +95,12 @@ class _ApiSettingsState extends State<ApiSettings> {
                   padding: const EdgeInsets.all(16.0),
                   child: FloatingActionButton(
                       onPressed: () async {
-
                         sharedPreferences.setString("api_token", api_token);
                         _scaffoldKey2.currentState
                           ..hideCurrentSnackBar()
                           ..showSnackBar(SnackBar(
-                            content: Text(S.of(context).updateApiTokenSuccessfully),
+                            content:
+                                Text(S.of(context).updateApiTokenSuccessfully),
                             backgroundColor: Colors.green,
                           ));
                       },
