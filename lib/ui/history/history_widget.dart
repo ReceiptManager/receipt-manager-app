@@ -21,6 +21,7 @@ import 'dart:core';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
 import 'package:random_color/random_color.dart';
 import 'package:receipt_manager/bloc/moor/bloc.dart';
@@ -33,6 +34,7 @@ import 'package:receipt_manager/factory/padding_factory.dart';
 import 'package:receipt_manager/factory/text_form_history.dart';
 import 'package:receipt_manager/generated/l10n.dart';
 import 'package:receipt_manager/model/receipt_category.dart';
+import 'package:receipt_manager/painter/curved_painter.dart';
 import 'package:receipt_manager/theme/color/color.dart';
 import 'package:receipt_manager/theme/theme_manager.dart';
 
@@ -67,6 +69,7 @@ class HistoryWidgetState extends State<HistoryWidget> {
     super.initState();
   }
 
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder(
@@ -85,9 +88,88 @@ class HistoryWidgetState extends State<HistoryWidget> {
         if (state is LoadedState) {
           receipts = state.receipt;
           if (receipts == null || receipts.length == 0)
-            return Expanded(child: _buildList(receipts));
+            return new
+            Column(
+             children: [
+               Stack(
+                 children: [
+                   CustomPaint(
+                     child: Container(
+                       height: 250.0,
+                     ),
+                     painter: CurvePainter(),
+                   ),
+                   Padding(
+                       padding: EdgeInsets.all(60),
+                       child: Column(
+                         children: [
+                           Container(
+                               child: Row(
+                                 mainAxisAlignment: MainAxisAlignment.center,
+                                 children: [
+                                   Text("History ",
+                                       style: TextStyle(
+                                           fontSize: 30,
+                                           fontWeight: FontWeight.bold,
+                                           color: Colors.white)),
+                                   Text("receipts",
+                                       style: TextStyle(
+                                           fontSize: 30,
+                                           fontWeight: FontWeight.w200,
+                                           color: Colors.white))
+                                 ],
+                               )),
+                         ],
+                       )),
+                 ],
+               ),
+               Container(
+                   color: Colors.white,
+                   child: PaddingFactory.create(Column(
+                     children: [
+                       PaddingFactory.create(
+                           SvgPicture.asset(
+                               "assets/not_empty",
+                             height: 250,
+                           ),
+                       ),
+                       PaddingFactory.create(Text(
+                         S.of(context).noReceipts,
+                         style: TextStyle(fontSize: 16, color: LightColor.grey),
+                       ))
+                     ],
+                   )))
+             ],
+            );
+
           return Column(
-            children: <Widget>[
+            children: <Widget>[ Stack(
+              children: [
+                CustomPaint(
+                  child: Container(
+                    height: 250.0,
+                  ),
+                  painter: CurvePainter(),
+                ),
+                Padding(
+                    padding: EdgeInsets.all(60),
+                    child: Column(
+                      children: [
+                        Container(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text("History ",
+                                    style: TextStyle(
+                                        fontSize: 30,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.white)),
+                              ],
+                            )),
+                      ],
+                    )),
+              ],
+            ),
               FilterChipScreen(receipts),
               Expanded(child: _buildList(receipts))
             ],
@@ -105,22 +187,8 @@ class HistoryWidgetState extends State<HistoryWidget> {
   }
 
   _buildList(List<Receipt> r) {
-    if (r.isEmpty) {
-      return new Container(
-          color: Colors.white,
-          child: PaddingFactory.create(Column(
-            children: [
-              PaddingFactory.create(
-                  Image(image: AssetImage('assets/empty.png'))),
-              PaddingFactory.create(Text(
-                S.of(context).noReceipts,
-                style: TextStyle(fontSize: 16, color: LightColor.grey),
-              ))
-            ],
-          )));
-    }
-
-    return new Container(
+    return new
+      Container(
         color: Colors.white,
         child: ListView.builder(
             padding: const EdgeInsets.all(8.0),
@@ -151,7 +219,7 @@ class HistoryWidgetState extends State<HistoryWidget> {
           IconSlideAction(
             caption: S.of(context).editReceipt,
             icon: Icons.update,
-            color: LightColor.brighter,
+            color:LightColor.black,
             onTap: () {
               _showDialog(controller: _controller, receipt: receipt);
             },
@@ -512,7 +580,7 @@ class _FilterChipScreenState extends State<FilterChipScreen> {
                   labelStyle: TextStyle(
                     color: Colors.white,
                   ),
-                  backgroundColor: _rand.randomColor(colorHue: ColorHue.blue),
+                  backgroundColor: _rand.randomColor(),
                 ),
               )),
     );
