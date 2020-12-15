@@ -17,6 +17,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:receipt_manager/generated/l10n.dart';
+import 'package:receipt_manager/painter/curved_painter.dart';
 import 'package:receipt_manager/ui/settings/api_settings.dart';
 import 'package:receipt_manager/ui/settings/open_source.dart';
 import 'package:receipt_manager/ui/settings/server_settings.dart';
@@ -44,73 +45,63 @@ class _SettingsWidgetState extends State<SettingsWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.white,
-      child: SettingsList(
-        sections: [
-          SettingsSection(
-            title: S.of(context).settingsGeneralCategory,
-            tiles: [
-              SettingsTile(
-                title: S.of(context).settingsLanguageTitle,
-                subtitle: S.of(context).currentLanguage,
-                leading: Icon(Icons.language),
-                onTap: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (BuildContext context) => LanguageSetting()));
-                },
-              ),
-              SettingsTile(
-                title: S.of(context).settingsServerTitle,
-                leading: Icon(Icons.wifi),
-                onTap: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (BuildContext context) =>
-                          ServerSettings(sharedPreferences)));
-                },
-              ),
-              SettingsTile(
-                title: S.of(context).apitoken,
-                leading: Icon(Icons.vpn_key),
-                onTap: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (BuildContext context) =>
-                          ApiSettings(sharedPreferences)));
-                },
-              ),
-            ],
-          ),
-          SettingsSection(
-            title: S.of(context).settingsDevelopmentTitle,
-            tiles: [
-              SettingsTile.switchTile(
-                title: S.of(context).enableDebugOutput,
-                leading: Icon(Icons.bug_report),
-                switchValue: enableDebugOutput,
-                onToggle: (bool value) {
-                  setState(() {
-                    enableDebugOutput = value;
-                    notificationsEnabled = value;
-                  });
-                },
-              ),
-            ],
-          ),
-          SettingsSection(
-            title: S.of(context).settingsMiscTitle,
-            tiles: [
-              SettingsTile(
-                title: S.of(context).openSourceLicence,
-                leading: Icon(Icons.collections_bookmark),
-                onTap: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (BuildContext context) => OpenSourceSettings()));
-                },
-              ),
-            ],
-          )
-        ],
-      ),
-    );
+    return
+
+        Container(
+        color: Colors.white,
+        child:
+        SettingsList(
+          sections: [
+            SettingsSection(
+              title: S.of(context).settingsGeneralCategory,
+              tiles: [
+                SettingsTile(
+                  title: S.of(context).settingsLanguageTitle,
+                  subtitle: S.of(context).currentLanguage,
+                  leading: Icon(Icons.language),
+                  onTap: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (BuildContext context) => LanguageSetting()));
+                  },
+                ),
+                SettingsTile(
+                  title: S.of(context).settingsServerTitle,
+                  leading: Icon(Icons.wifi),
+                  onTap: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (BuildContext context) =>
+                            ServerSettings(sharedPreferences)));
+                  },
+                ),
+                SettingsTile(
+                  title: S.of(context).apitoken,
+                  leading: Icon(Icons.vpn_key),
+                  onTap: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (BuildContext context) =>
+                            ApiSettings(sharedPreferences)));
+                  },
+                ),
+              ],
+            ),
+            SettingsSection(
+              title: S.of(context).settingsDevelopmentTitle,
+              tiles: [
+                SettingsTile.switchTile(
+                  title: S.of(context).enableDebugOutput,
+                  leading: Icon(Icons.bug_report),
+                  switchValue: enableDebugOutput,
+                  onToggle: (bool value) {
+                    setState(() {
+                      enableDebugOutput = value;
+                      notificationsEnabled = value;
+                      sharedPreferences.setBool("enable_debug_output", value);
+                    });
+                  },
+                ),
+              ],
+            )
+          ],
+        ));
   }
 }
