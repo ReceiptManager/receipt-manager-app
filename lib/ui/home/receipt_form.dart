@@ -30,6 +30,7 @@ import 'package:receipt_manager/factory/text_form_history.dart';
 import 'package:receipt_manager/generated/l10n.dart';
 import 'package:receipt_manager/generator/receipt_generator.dart';
 import 'package:receipt_manager/model/receipt_category.dart';
+import 'package:receipt_manager/painter/curved_painter.dart';
 import 'package:receipt_manager/theme/color/color.dart';
 import 'package:receipt_manager/theme/theme_manager.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -69,8 +70,8 @@ class ReceiptInputController extends State<ReceiptForm> {
   ReceiptsCompanion parsedReceipt;
   ReceiptCategory selectedCategory;
 
-  ReceiptInputController(this.parsedReceipt, this.sendImage, this.sharedPrefs,
-      this._bloc);
+  ReceiptInputController(
+      this.parsedReceipt, this.sendImage, this.sharedPrefs, this._bloc);
 
   @override
   void initState() {
@@ -109,9 +110,7 @@ class ReceiptInputController extends State<ReceiptForm> {
         }
         if (state is ErrorState) {
           return Center(
-            child: Text(S
-                .of(context)
-                .receiptLoadFailed),
+            child: Text(S.of(context).receiptLoadFailed),
           );
         }
         if (state is LoadedState) {
@@ -127,249 +126,242 @@ class ReceiptInputController extends State<ReceiptForm> {
                         Expanded(
                             child: Container(
                                 child: Form(
-                                  key: _formKey,
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment
-                                        .start,
-                                    children: <Widget>[
-                                      Stack(children: <Widget>[
-                                        new Padding(
-                                            padding: const EdgeInsets.only(
-                                                top: 16.0, left: 8),
-                                            child: new Align(
-                                                alignment: Alignment.bottomLeft,
-                                                child: new GestureDetector(
-                                                    onLongPress: () {
-                                                      ReceiptGenerator generator =
-                                                      ReceiptGenerator(context);
-                                                      generator.init();
-                                                      for (int i = 0; i <
-                                                          1000; i++) {
-                                                        ReceiptsCompanion c =
-                                                        generator.get();
-                                                        _bloc.add(
-                                                            InsertEvent(
-                                                                receipt: c));
-                                                      }
-                                                      _bloc.add(
-                                                          ReceiptAllFetch());
-                                                    },
-                                                    child: Text(
-                                                      S
-                                                          .of(context)
-                                                          .addReceipt,
-                                                      style: TextStyle(
-                                                          fontSize: 24,
-                                                          color: Colors.black,
-                                                          fontWeight: FontWeight
-                                                              .w100),
-                                                    )))),
-                                        PaddingFactory.create(new Align(
-                                            alignment: Alignment.topRight,
-                                            child: IconButton(
-                                              icon: new Icon(Icons.camera_alt,
-                                                  size: 35,
-                                                  color: LightColor.black),
-                                              color: Colors.white,
-                                              onPressed: () async {
-                                                WidgetsFlutterBinding
-                                                    .ensureInitialized();
-
-                                                final cameras =
-                                                await availableCameras();
-                                                final firstCamera = cameras
-                                                    .first;
-
-                                                Navigator.push(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        TakePictureScreen(
-                                                            sharedPrefs: sharedPrefs,
-                                                            camera: firstCamera),
-                                                  ),
-                                                );
-                                              },
-                                            )))
-                                      ]),
-                                      PaddingFactory.create(new Theme(
-                                          data: AppTheme.lightTheme,
-                                          child: TextFormFactory.storeName(
-                                              storeNameController, context,
-                                              receipt))),
-                                      PaddingFactory.create(new Theme(
-                                          data: AppTheme.lightTheme,
-                                          child: TextFormFactory.total(
-                                              receiptTotalController,
-                                              context))),
-                                      PaddingFactory.create(new Theme(
-                                          data: AppTheme.lightTheme,
-                                          child: TextFormField(
-                                            style: TextStyle(
-                                                color: Colors.black),
-                                            decoration: new InputDecoration(
-                                                enabledBorder: OutlineInputBorder(
-                                                  borderSide:
-                                                  BorderSide(
-                                                      color: Colors.grey),
-                                                ),
-                                                focusedBorder: OutlineInputBorder(
-                                                  borderSide:
-                                                  BorderSide(
-                                                      color: Colors.grey),
-                                                ),
-                                                border: new OutlineInputBorder(
-                                                    borderSide: new BorderSide(
-                                                        color: Colors.grey)),
-                                                hintText:
-                                                S
-                                                    .of(context)
-                                                    .receiptDateFormat,
-                                                labelText:
-                                                S
-                                                    .of(context)
-                                                    .receiptDateLabelText,
-                                                helperText:
-                                                S
-                                                    .of(context)
-                                                    .receiptDateHelperText,
-                                                prefixIcon: IconButton(
-                                                    icon: Icon(
-                                                      Icons.calendar_today,
-                                                      color: Colors.purple,
-                                                    ),
-                                                    splashColor: Colors.black,
-                                                    color: Colors.black,
-                                                    onPressed: () async {
-                                                      receiptDate =
-                                                      await showDatePicker(
-                                                          builder:
-                                                              (
-                                                              BuildContext context,
-                                                              Widget child) {
-                                                            return Theme(
-                                                              data:
-                                                              ThemeData.light()
-                                                                  .copyWith(
-                                                                primaryColor:
-                                                                Colors.black,
-                                                                accentColor:
-                                                                Colors.black,
-                                                                colorScheme:
-                                                                ColorScheme
-                                                                    .light(
-                                                                    primary:
-                                                                    (LightColor
-                                                                        .brighter)),
-                                                                buttonTheme:
-                                                                ButtonThemeData(
-                                                                    textTheme:
-                                                                    ButtonTextTheme
-                                                                        .primary),
-                                                              ),
-                                                              child: child,
-                                                            );
-                                                          },
-                                                          context: context,
-                                                          initialDate:
-                                                          DateTime.now(),
-                                                          firstDate: DateTime(
-                                                              2010),
-                                                          lastDate: DateTime(
-                                                              2050));
-                                                      dateController.text =
-                                                          DateFormat(S
-                                                              .of(context)
-                                                              .receiptDateFormat)
-                                                              .format(
-                                                              receiptDate);
-                                                    })),
-                                            controller: dateController,
-                                            validator: (value) {
-                                              if (value.isEmpty) {
-                                                return S
-                                                    .of(context)
-                                                    .receiptDateDialog;
-                                              }
-
-                                              try {
-                                                var format = DateFormat(S
-                                                    .of(context)
-                                                    .receiptDateFormat);
-                                                receiptDate =
-                                                    format.parse(value);
-                                                return null;
-                                              } catch (_) {
-                                                receiptDate = null;
-                                                return S
-                                                    .of(context)
-                                                    .receiptDateNotFormatted +
-                                                    " " +
-                                                    S
-                                                        .of(context)
-                                                        .receiptDateFormat;
-                                              }
-                                            },
-                                          ))),
-                                      PaddingFactory.create(Container(
-                                          padding: const EdgeInsets.only(
-                                              left: 8.0, right: 8.0),
-                                          decoration: BoxDecoration(
-                                              color: Colors.white,
-                                              border: Border.all(
-                                                  color: Colors.grey)),
-                                          child: Theme(
-                                              data: AppTheme.lightTheme,
-                                              child: DropdownButton<
-                                                  ReceiptCategory>(
-                                                  key: _dropKey,
-                                                  hint: Text(S
-                                                      .of(context)
-                                                      .receiptSelectCategory),
-                                                  value: selectedCategory,
-                                                  isExpanded: true,
-                                                  onChanged: (
-                                                      ReceiptCategory value) {
-                                                    setState(() {
-                                                      receiptCategory =
-                                                          value.name;
-                                                      selectedCategory = value;
-                                                    });
-                                                  },
-                                                  dropdownColor: Colors.white,
-                                                  items: ReceiptCategoryFactory
-                                                      .get(
-                                                      context)
-                                                      .map((
-                                                      ReceiptCategory user) {
-                                                    return DropdownMenuItem<
-                                                        ReceiptCategory>(
-                                                      value: user,
+                          key: _formKey,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Stack(children: <Widget>[
+                                new Align(
+                                    alignment: Alignment.bottomLeft,
+                                    child: new GestureDetector(
+                                        onLongPress: () {
+                                          ReceiptGenerator generator =
+                                              ReceiptGenerator(context);
+                                          generator.init();
+                                          for (int i = 0; i < 1000; i++) {
+                                            ReceiptsCompanion c =
+                                                generator.get();
+                                            _bloc.add(InsertEvent(receipt: c));
+                                          }
+                                          _bloc.add(ReceiptAllFetch());
+                                        },
+                                        child: Stack(
+                                          children: [
+                                            CustomPaint(
+                                              child: Container(
+                                                height: 250.0,
+                                              ),
+                                              painter: CurvePainter(),
+                                            ),
+                                            Padding(
+                                                padding: EdgeInsets.all(60),
+                                                child: Column(
+                                                  children: [
+                                                    Container(
                                                       child: Row(
-                                                        children: <Widget>[
-                                                          user.icon,
-                                                          SizedBox(
-                                                            width: 10,
-                                                          ),
-                                                          Text(
-                                                            user.name,
-                                                            style: TextStyle(
-                                                                color: Colors
-                                                                    .black),
-                                                          ),
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .center,
+                                                        children: [
+                                                          Text("Add ",
+                                                              style: TextStyle(
+                                                                  fontSize: 30,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold,
+                                                                  color: Colors
+                                                                      .white)),
+                                                          Text("receipt",
+                                                              style: TextStyle(
+                                                                  fontSize: 30,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w200,
+                                                                  color: Colors
+                                                                      .white))
                                                         ],
                                                       ),
-                                                    );
-                                                  }).toList())))),
-                                      new Align(
-                                          alignment: Alignment.bottomRight,
-                                          child: Padding(
-                                              padding: const EdgeInsets.all(
-                                                  16.0),
-                                              child: submitButton())),
-                                    ],
-                                  ),
-                                ))),
+                                                    ),
+                                                  ],
+                                                )),
+                                          ],
+                                        ))),
+                                Padding(
+                                    padding: EdgeInsets.only(top: 200, right: 16),
+                                    child: Align(
+                                        alignment: Alignment.topRight,
+                                        child: IconButton(
+                                          icon: new Icon(Icons.camera_alt,
+                                              size: 35, color: Colors.black),
+                                          color: Colors.white,
+                                          onPressed: () async {
+                                            WidgetsFlutterBinding
+                                                .ensureInitialized();
+
+                                            final cameras =
+                                            await availableCameras();
+                                            final firstCamera = cameras.first;
+
+                                            Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) =>
+                                                    TakePictureScreen(
+                                                        sharedPrefs:
+                                                        sharedPrefs,
+                                                        camera: firstCamera),
+                                              ),
+                                            );
+                                          },
+                                        ))),
+                              ]),
+                              PaddingFactory.create(new Theme(
+                                  data: AppTheme.lightTheme,
+                                  child: TextFormFactory.storeName(
+                                      storeNameController, context, receipt))),
+                              PaddingFactory.create(new Theme(
+                                  data: AppTheme.lightTheme,
+                                  child: TextFormFactory.total(
+                                      receiptTotalController, context))),
+                              PaddingFactory.create(new Theme(
+                                  data: AppTheme.lightTheme,
+                                  child: TextFormField(
+                                    style: TextStyle(color: Colors.black),
+                                    decoration: new InputDecoration(
+                                        enabledBorder: OutlineInputBorder(
+                                          borderSide:
+                                              BorderSide(color: Colors.grey),
+                                        ),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderSide:
+                                              BorderSide(color: Colors.grey),
+                                        ),
+                                        border: new OutlineInputBorder(
+                                            borderSide: new BorderSide(
+                                                color: Colors.grey)),
+                                        hintText:
+                                            S.of(context).receiptDateFormat,
+                                        labelText:
+                                            S.of(context).receiptDateLabelText,
+                                        helperText:
+                                            S.of(context).receiptDateHelperText,
+                                        prefixIcon: IconButton(
+                                            icon: Icon(
+                                              Icons.calendar_today,
+                                              color: Colors.purple,
+                                            ),
+                                            splashColor: Colors.black,
+                                            color: Colors.black,
+                                            onPressed: () async {
+                                              receiptDate =
+                                                  await showDatePicker(
+                                                      builder:
+                                                          (BuildContext context,
+                                                              Widget child) {
+                                                        return Theme(
+                                                          data:
+                                                              ThemeData.light()
+                                                                  .copyWith(
+                                                            primaryColor:
+                                                                Colors.black,
+                                                            accentColor:
+                                                                Colors.black,
+                                                            colorScheme:
+                                                                ColorScheme.light(
+                                                                    primary:
+                                                                        (LightColor
+                                                                            .brighter)),
+                                                            buttonTheme:
+                                                                ButtonThemeData(
+                                                                    textTheme:
+                                                                        ButtonTextTheme
+                                                                            .primary),
+                                                          ),
+                                                          child: child,
+                                                        );
+                                                      },
+                                                      context: context,
+                                                      initialDate:
+                                                          DateTime.now(),
+                                                      firstDate: DateTime(2010),
+                                                      lastDate: DateTime(2050));
+                                              dateController.text = DateFormat(S
+                                                      .of(context)
+                                                      .receiptDateFormat)
+                                                  .format(receiptDate);
+                                            })),
+                                    controller: dateController,
+                                    validator: (value) {
+                                      if (value.isEmpty) {
+                                        return S.of(context).receiptDateDialog;
+                                      }
+
+                                      try {
+                                        var format = DateFormat(
+                                            S.of(context).receiptDateFormat);
+                                        receiptDate = format.parse(value);
+                                        return null;
+                                      } catch (_) {
+                                        receiptDate = null;
+                                        return S
+                                                .of(context)
+                                                .receiptDateNotFormatted +
+                                            " " +
+                                            S.of(context).receiptDateFormat;
+                                      }
+                                    },
+                                  ))),
+                              PaddingFactory.create(Container(
+                                  padding: const EdgeInsets.only(
+                                      left: 8.0, right: 8.0),
+                                  decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      border: Border.all(color: Colors.grey)),
+                                  child: Theme(
+                                      data: AppTheme.lightTheme,
+                                      child: DropdownButton<ReceiptCategory>(
+                                          key: _dropKey,
+                                          hint: Text(S
+                                              .of(context)
+                                              .receiptSelectCategory),
+                                          value: selectedCategory,
+                                          isExpanded: true,
+                                          onChanged: (ReceiptCategory value) {
+                                            setState(() {
+                                              receiptCategory = value.name;
+                                              selectedCategory = value;
+                                            });
+                                          },
+                                          dropdownColor: Colors.white,
+                                          items: ReceiptCategoryFactory.get(
+                                                  context)
+                                              .map((ReceiptCategory user) {
+                                            return DropdownMenuItem<
+                                                ReceiptCategory>(
+                                              value: user,
+                                              child: Row(
+                                                children: <Widget>[
+                                                  user.icon,
+                                                  SizedBox(
+                                                    width: 10,
+                                                  ),
+                                                  Text(
+                                                    user.name,
+                                                    style: TextStyle(
+                                                        color: Colors.black),
+                                                  ),
+                                                ],
+                                              ),
+                                            );
+                                          }).toList())))),
+                              new Align(
+                                  alignment: Alignment.bottomRight,
+                                  child: Padding(
+                                      padding: const EdgeInsets.all(16.0),
+                                      child: submitButton())),
+                            ],
+                          ),
+                        ))),
                       ],
                     ),
                   ),
@@ -395,9 +387,7 @@ class ReceiptInputController extends State<ReceiptForm> {
           if (form.validate() || receiptCategory != null) {
             try {
               Scaffold.of(context).showSnackBar(SnackBar(
-                content: Text(S
-                    .of(context)
-                    .addReceipt),
+                content: Text(S.of(context).addReceipt),
                 backgroundColor: Colors.green,
               ));
               shopName = storeNameController.text;
@@ -417,15 +407,11 @@ class ReceiptInputController extends State<ReceiptForm> {
           } else {
             if (receiptCategory == null || receiptCategory.isEmpty) {
               Scaffold.of(context).showSnackBar(SnackBar(
-                  content: Text(S
-                      .of(context)
-                      .receiptSelectCategory),
+                  content: Text(S.of(context).receiptSelectCategory),
                   backgroundColor: Colors.red));
             } else {
               Scaffold.of(context).showSnackBar(SnackBar(
-                  content: Text(S
-                      .of(context)
-                      .invalidInput),
+                  content: Text(S.of(context).invalidInput),
                   backgroundColor: Colors.red));
             }
           }
@@ -439,18 +425,14 @@ class ReceiptInputController extends State<ReceiptForm> {
         Scaffold.of(context)
           ..hideCurrentSnackBar()
           ..showSnackBar(SnackBar(
-            content: Text(S
-                .of(context)
-                .uploadFailed),
+            content: Text(S.of(context).uploadFailed),
             backgroundColor: Colors.red,
           ));
       } else {
         Scaffold.of(context)
           ..hideCurrentSnackBar()
           ..showSnackBar(SnackBar(
-            content: Text(S
-                .of(context)
-                .uploadSuccess),
+            content: Text(S.of(context).uploadSuccess),
             backgroundColor: Colors.green,
           ));
       }
