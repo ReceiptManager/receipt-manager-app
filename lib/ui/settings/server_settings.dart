@@ -110,22 +110,22 @@ class _ServerSettingsState extends State<ServerSettings> {
                               context: context,
                               builder: (_) => AssetGiffyDialog(
                                     image: Image.asset(
-                                      "assets/robot.gif",
+                                      "assets/server_down.png",
                                       fit: BoxFit.fill,
                                     ),
                                     title: Text(
-                                      'Invalid server ip',
+                                      'Invalid server IP',
                                       textAlign: TextAlign.center,
                                       style: TextStyle(
                                           fontSize: 22.0,
                                           color: Colors.black,
-                                          fontWeight: FontWeight.w600),
+                                          fontWeight: FontWeight.bold),
                                     ),
                                     entryAnimation: EntryAnimation.BOTTOM_RIGHT,
                                     description: Text(
                                       S.of(context).invalidServerIP,
                                       textAlign: TextAlign.center,
-                                      style: TextStyle(),
+                                      style: TextStyle(fontWeight: FontWeight.w100),
                                     ),
                                     onCancelButtonPressed: () {
                                       Navigator.of(context).pop();
