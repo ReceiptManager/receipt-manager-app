@@ -84,8 +84,8 @@
   "expensesByCategory": "Kategorieübersicht",
   "diySupermarkt": "DIY supermarkt",
   "insertYourApiToken": "Insert your api token",
-  "apitoken": "ApiToken",
+  "apitoken": "API Token",
   "insertServerApiToken": "Insert server api token",
-  "invalidApiToken": "Invalid api token",
+  "invalidApiToken": "Invalid API token",
   "updateApiTokenSuccessfully": "Update api token successfully"
 }
