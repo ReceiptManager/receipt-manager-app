@@ -875,10 +875,10 @@ class S {
     );
   }
 
-  /// `ApiToken`
+  /// `API Token`
   String get apitoken {
     return Intl.message(
-      'ApiToken',
+      'API Token',
       name: 'apitoken',
       desc: '',
       args: [],
@@ -895,10 +895,10 @@ class S {
     );
   }
 
-  /// `Invalid api token`
+  /// `Invalid API token`
   String get invalidApiToken {
     return Intl.message(
-      'Invalid api token',
+      'Invalid API token',
       name: 'invalidApiToken',
       desc: '',
       args: [],
