@@ -1,3 +1,9 @@
+<p align="center">
+
+  <img  src="https://i.imgur.com/2nv3XHBl.png">
+
+</p>
+
 # Receipt manager
 [![Codemagic build status](https://api.codemagic.io/apps/5fcbc24c59d78f5801f494d8/5fcbc24c59d78f5801f494d7/status_badge.svg)](https://codemagic.io/apps/5fcbc24c59d78f5801f494d8/5fcbc24c59d78f5801f494d7/latest_build) 
 
