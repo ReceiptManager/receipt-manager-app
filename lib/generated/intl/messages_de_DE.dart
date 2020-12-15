@@ -23,7 +23,7 @@ class MessageLookup extends MessageLookupByLibrary {
   static _notInlinedMessages(_) => <String, Function> {
     "Rent" : MessageLookupByLibrary.simpleMessage("Miete"),
     "addReceipt" : MessageLookupByLibrary.simpleMessage("Kassenbeleg hinzufügen"),
-    "apitoken" : MessageLookupByLibrary.simpleMessage("ApiToken"),
+    "apitoken" : MessageLookupByLibrary.simpleMessage("API Token"),
     "appBarTitle" : MessageLookupByLibrary.simpleMessage("Mein Haushaltsbuch"),
     "cancel" : MessageLookupByLibrary.simpleMessage("Abbrechen"),
     "currency" : MessageLookupByLibrary.simpleMessage("€"),
@@ -48,7 +48,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "healthCategory" : MessageLookupByLibrary.simpleMessage("Gesundheit"),
     "insertServerApiToken" : MessageLookupByLibrary.simpleMessage("Insert server api token"),
     "insertYourApiToken" : MessageLookupByLibrary.simpleMessage("Insert your api token"),
-    "invalidApiToken" : MessageLookupByLibrary.simpleMessage("Invalid api token"),
+    "invalidApiToken" : MessageLookupByLibrary.simpleMessage("Invalid API token"),
     "invalidInput" : MessageLookupByLibrary.simpleMessage("Eingabe is ungültig"),
     "invalidServerIP" : MessageLookupByLibrary.simpleMessage("Die eingegebene IP war falsch. Bitte versuchen Sie es erneut"),
     "invalidTotal" : MessageLookupByLibrary.simpleMessage("Betrag ist ungültig"),
