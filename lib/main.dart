@@ -48,7 +48,7 @@ Future<void> main() async {
   }
 
   runApp(MaterialApp(
-      color: LightColor.brighter,
+      color: LightColor.black,
       localizationsDelegates: [
         S.delegate,
         GlobalMaterialLocalizations.delegate,
@@ -130,7 +130,7 @@ class OnboardScreenState extends State<OnboardScreen> {
           },
           onBoardData: onBoardData,
           titleStyles: TextStyle(
-            color: LightColor.brighter,
+            color: LightColor.black,
             fontSize: 20,
             fontWeight: FontWeight.w900,
             letterSpacing: 0.15,
@@ -154,7 +154,7 @@ class OnboardScreenState extends State<OnboardScreen> {
             },
             child: Text(
               S.of(context).skip,
-              style: TextStyle(color: LightColor.brighter),
+              style: TextStyle(color: LightColor.black),
             ),
           ),
           nextButton: Consumer<OnBoardState>(
@@ -168,7 +168,7 @@ class OnboardScreenState extends State<OnboardScreen> {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(30),
                     gradient: LinearGradient(
-                      colors: [LightColor.brighter, LightColor.brighter],
+                      colors: [LightColor.black, LightColor.black],
                     ),
                   ),
                   child: Text(
@@ -217,10 +217,10 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     final List<Widget> _children = [
-      DashboardWidget(),
+      //DashboardWidget(),
       HomeWidget(this.receipt, sendImage, sharedPrefs, _bloc),
       HistoryWidget(_bloc),
-      StatsWidget(_bloc),
+      //StatsWidget(_bloc),
       SettingsWidget(sharedPrefs)
     ];
 
@@ -228,30 +228,17 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
         onWillPop: () async => false,
         child: Scaffold(
             backgroundColor: Colors.white,
-            appBar: AppBar(
-              title: Text(S.of(context).appBarTitle,
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.w500,
-
-              )),
-              automaticallyImplyLeading: false,
-              shadowColor: LightColor.black,
-              centerTitle: true,
-            ),
             bottomNavigationBar: CurvedNavigationBar(
               key: _bottomNavigationKey,
               index: 0,
-              height: 60.0,
               items: <Widget>[
-                Icon(Icons.dashboard, color: Colors.white, size: 30),
+                //  Icon(Icons.home_outlined, color: Colors.white, size: 30),
                 Icon(Icons.add, color: Colors.white, size: 30),
                 Icon(Icons.history, color: Colors.white, size: 30),
-                Icon(Icons.analytics_outlined, color: Colors.white, size: 30),
+                //Icon(Icons.analytics_outlined, color: Colors.white, size: 30),
                 Icon(Icons.settings, color: Colors.white, size: 30),
-
               ],
-              color: LightColor.brighter,
+              color: LightColor.black,
               backgroundColor: Colors.white,
               animationCurve: Curves.easeInOut,
               animationDuration: Duration(milliseconds: 600),
