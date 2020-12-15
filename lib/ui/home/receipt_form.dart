@@ -33,6 +33,7 @@ import 'package:receipt_manager/model/receipt_category.dart';
 import 'package:receipt_manager/painter/curved_painter.dart';
 import 'package:receipt_manager/theme/color/color.dart';
 import 'package:receipt_manager/theme/theme_manager.dart';
+import 'package:receipt_manager/util/dimensions.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../parser/camera_picker.dart';
@@ -149,7 +150,7 @@ class ReceiptInputController extends State<ReceiptForm> {
                                           children: [
                                             CustomPaint(
                                               child: Container(
-                                                height: 250.0,
+                                                height: DimensionsCalculator.getBannerHeight(context),
                                               ),
                                               painter: CurvePainter(),
                                             ),
@@ -192,7 +193,7 @@ class ReceiptInputController extends State<ReceiptForm> {
                                         alignment: Alignment.topRight,
                                         child: IconButton(
                                           icon: new Icon(Icons.camera_alt,
-                                              size: 35, color: Colors.black),
+                                              size: 40, color: Colors.black),
                                           color: Colors.white,
                                           onPressed: () async {
                                             WidgetsFlutterBinding
@@ -248,10 +249,10 @@ class ReceiptInputController extends State<ReceiptForm> {
                                         prefixIcon: IconButton(
                                             icon: Icon(
                                               Icons.calendar_today,
-                                              color: Colors.purple,
+                                              color: Colors.red[350],
                                             ),
                                             splashColor: Colors.black,
-                                            color: Colors.black,
+                                            color: Colors.red,
                                             onPressed: () async {
                                               receiptDate =
                                                   await showDatePicker(
@@ -269,8 +270,7 @@ class ReceiptInputController extends State<ReceiptForm> {
                                                             colorScheme:
                                                                 ColorScheme.light(
                                                                     primary:
-                                                                        (LightColor
-                                                                            .brighter)),
+                                                                        (Colors.red)),
                                                             buttonTheme:
                                                                 ButtonThemeData(
                                                                     textTheme:

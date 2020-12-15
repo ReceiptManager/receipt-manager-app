@@ -37,6 +37,7 @@ import 'package:receipt_manager/model/receipt_category.dart';
 import 'package:receipt_manager/painter/curved_painter.dart';
 import 'package:receipt_manager/theme/color/color.dart';
 import 'package:receipt_manager/theme/theme_manager.dart';
+import 'package:receipt_manager/util/dimensions.dart';
 
 class HistoryWidget extends StatefulWidget {
   final DbBloc _bloc;
@@ -69,7 +70,6 @@ class HistoryWidgetState extends State<HistoryWidget> {
     super.initState();
   }
 
-
   @override
   Widget build(BuildContext context) {
     return BlocBuilder(
@@ -88,75 +88,22 @@ class HistoryWidgetState extends State<HistoryWidget> {
         if (state is LoadedState) {
           receipts = state.receipt;
           if (receipts == null || receipts.length == 0)
-            return new
-            Column(
-             children: [
-               Stack(
-                 children: [
-                   CustomPaint(
-                     child: Container(
-                       height: 250.0,
-                     ),
-                     painter: CurvePainter(),
-                   ),
-                   Padding(
-                       padding: EdgeInsets.all(60),
-                       child: Column(
-                         children: [
-                           Container(
-                               child: Row(
-                                 mainAxisAlignment: MainAxisAlignment.center,
-                                 children: [
-                                   Text("History ",
-                                       style: TextStyle(
-                                           fontSize: 30,
-                                           fontWeight: FontWeight.bold,
-                                           color: Colors.white)),
-                                   Text("receipts",
-                                       style: TextStyle(
-                                           fontSize: 30,
-                                           fontWeight: FontWeight.w200,
-                                           color: Colors.white))
-                                 ],
-                               )),
-                         ],
-                       )),
-                 ],
-               ),
-               Container(
-                   color: Colors.white,
-                   child: PaddingFactory.create(Column(
-                     children: [
-                       PaddingFactory.create(
-                           SvgPicture.asset(
-                               "assets/not_empty",
-                             height: 250,
-                           ),
-                       ),
-                       PaddingFactory.create(Text(
-                         S.of(context).noReceipts,
-                         style: TextStyle(fontSize: 16, color: LightColor.grey),
-                       ))
-                     ],
-                   )))
-             ],
-            );
-
-          return Column(
-            children: <Widget>[ Stack(
+            return new Column(
               children: [
-                CustomPaint(
-                  child: Container(
-                    height: 250.0,
-                  ),
-                  painter: CurvePainter(),
-                ),
-                Padding(
-                    padding: EdgeInsets.all(60),
-                    child: Column(
-                      children: [
-                        Container(
-                            child: Row(
+                Stack(
+                  children: [
+                    CustomPaint(
+                      child: Container(
+                        height: DimensionsCalculator.getBannerHeight(context),
+                      ),
+                      painter: CurvePainter(),
+                    ),
+                    Padding(
+                        padding: EdgeInsets.all(60),
+                        child: Column(
+                          children: [
+                            Container(
+                                child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text("History ",
@@ -164,12 +111,66 @@ class HistoryWidgetState extends State<HistoryWidget> {
                                         fontSize: 30,
                                         fontWeight: FontWeight.bold,
                                         color: Colors.white)),
+                                Text("receipts",
+                                    style: TextStyle(
+                                        fontSize: 30,
+                                        fontWeight: FontWeight.w200,
+                                        color: Colors.white))
                               ],
                             )),
+                          ],
+                        )),
+                  ],
+                ),
+                Container(
+                    color: Colors.white,
+                    child: PaddingFactory.create(Column(
+                      children: [
+                        PaddingFactory.create(
+                          SvgPicture.asset(
+                            "assets/not_empty",
+                            height: 250,
+                          ),
+                        ),
+                        PaddingFactory.create(Text(
+                          S.of(context).noReceipts,
+                          style:
+                              TextStyle(fontSize: 16, color: LightColor.grey),
+                        ))
                       ],
-                    )),
+                    )))
               ],
-            ),
+            );
+
+          return Column(
+            children: <Widget>[
+              Stack(
+                children: [
+                  CustomPaint(
+                    child: Container(
+                      height: 250.0,
+                    ),
+                    painter: CurvePainter(),
+                  ),
+                  Padding(
+                      padding: EdgeInsets.all(60),
+                      child: Column(
+                        children: [
+                          Container(
+                              child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text("History ",
+                                  style: TextStyle(
+                                      fontSize: 30,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white)),
+                            ],
+                          )),
+                        ],
+                      )),
+                ],
+              ),
               FilterChipScreen(receipts),
               Expanded(child: _buildList(receipts))
             ],
@@ -187,8 +188,7 @@ class HistoryWidgetState extends State<HistoryWidget> {
   }
 
   _buildList(List<Receipt> r) {
-    return new
-      Container(
+    return new Container(
         color: Colors.white,
         child: ListView.builder(
             padding: const EdgeInsets.all(8.0),
@@ -219,7 +219,7 @@ class HistoryWidgetState extends State<HistoryWidget> {
           IconSlideAction(
             caption: S.of(context).editReceipt,
             icon: Icons.update,
-            color:LightColor.black,
+            color: LightColor.black,
             onTap: () {
               _showDialog(controller: _controller, receipt: receipt);
             },
@@ -246,11 +246,11 @@ class HistoryWidgetState extends State<HistoryWidget> {
                       contentPadding:
                           EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
                       trailing: Text(
-                          "-" + receipt.total + S.of(context).currency,
-                          style: TextStyle(
-                              color: Colors.redAccent,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 16),
+                        "-" + receipt.total + S.of(context).currency,
+                        style: TextStyle(
+                            color: Colors.redAccent,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16),
                       ),
                       subtitle: Row(
                         children: <Widget>[
@@ -259,7 +259,8 @@ class HistoryWidgetState extends State<HistoryWidget> {
                                           jsonDecode(receipt.category))
                                       .name +
                                   ", " +
-                                  DateFormat(S.of(context).receiptDateFormat).format(receipt.date),
+                                  DateFormat(S.of(context).receiptDateFormat)
+                                      .format(receipt.date),
                               style:
                                   TextStyle(color: Colors.black, fontSize: 12))
                         ],
@@ -538,6 +539,7 @@ List<Receipt> receipts = [];
 
 class FilterChipScreen extends StatefulWidget {
   final List<Receipt> _receipts;
+
   @override
   _FilterChipScreenState createState() => _FilterChipScreenState(_receipts);
 
@@ -550,14 +552,14 @@ class _FilterChipScreenState extends State<FilterChipScreen> {
   List<Receipt> receipts;
   List<ReceiptCategory> filterCategories = [];
 
-
   RandomColor _rand = RandomColor();
 
   _FilterChipScreenState(this.receipts);
 
   @override
   Widget build(BuildContext context) {
-    filterCategories = [];;
+    filterCategories = [];
+    ;
 
     return Container(
       height: 65,

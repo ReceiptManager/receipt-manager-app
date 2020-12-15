@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:receipt_manager/painter/curved_painter.dart';
+import 'package:receipt_manager/util/dimensions.dart';
 
 class DashboardWidget extends StatelessWidget {
   @override
@@ -16,7 +17,7 @@ class DashboardWidget extends StatelessWidget {
               children: [
                 CustomPaint(
                   child: Container(
-                    height: 250.0,
+                    height: DimensionsCalculator.getBannerHeight(context),
                   ),
                   painter: CurvePainter(),
                 ),
