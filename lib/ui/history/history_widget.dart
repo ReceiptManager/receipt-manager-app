@@ -28,6 +28,7 @@ import 'package:receipt_manager/bloc/moor/bloc.dart';
 import 'package:receipt_manager/converter/color_converter.dart';
 import 'package:receipt_manager/database/receipt_database.dart';
 import 'package:receipt_manager/date/date_manipulator.dart';
+import 'package:receipt_manager/factory/banner_factory.dart';
 import 'package:receipt_manager/factory/categories_factory.dart';
 import 'package:receipt_manager/factory/logo_factory.dart';
 import 'package:receipt_manager/factory/padding_factory.dart';
@@ -90,38 +91,7 @@ class HistoryWidgetState extends State<HistoryWidget> {
           if (receipts == null || receipts.length == 0)
             return new Column(
               children: [
-                Stack(
-                  children: [
-                    CustomPaint(
-                      child: Container(
-                        height: DimensionsCalculator.getBannerHeight(context),
-                      ),
-                      painter: CurvePainter(),
-                    ),
-                    Padding(
-                        padding: EdgeInsets.all(60),
-                        child: Column(
-                          children: [
-                            Container(
-                                child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text("History ",
-                                    style: TextStyle(
-                                        fontSize: 30,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.white)),
-                                Text("receipts",
-                                    style: TextStyle(
-                                        fontSize: 30,
-                                        fontWeight: FontWeight.w200,
-                                        color: Colors.white))
-                              ],
-                            )),
-                          ],
-                        )),
-                  ],
-                ),
+                BannerFactory.get(S.of(context).overviewExpenses, context),
                 Container(
                     color: Colors.white,
                     child: PaddingFactory.create(Column(
@@ -144,33 +114,7 @@ class HistoryWidgetState extends State<HistoryWidget> {
 
           return Column(
             children: <Widget>[
-              Stack(
-                children: [
-                  CustomPaint(
-                    child: Container(
-                      height: 250.0,
-                    ),
-                    painter: CurvePainter(),
-                  ),
-                  Padding(
-                      padding: EdgeInsets.all(60),
-                      child: Column(
-                        children: [
-                          Container(
-                              child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text("History ",
-                                  style: TextStyle(
-                                      fontSize: 30,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.white)),
-                            ],
-                          )),
-                        ],
-                      )),
-                ],
-              ),
+              BannerFactory.get(S.of(context).overviewExpenses, context),
               FilterChipScreen(receipts),
               Expanded(child: _buildList(receipts))
             ],

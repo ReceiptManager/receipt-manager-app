@@ -24,6 +24,7 @@ import 'package:intl/intl.dart';
 import 'package:receipt_manager/bloc/moor/bloc.dart';
 import 'package:receipt_manager/database/receipt_database.dart';
 import 'package:receipt_manager/date/date_manipulator.dart';
+import 'package:receipt_manager/factory/banner_factory.dart';
 import 'package:receipt_manager/factory/categories_factory.dart';
 import 'package:receipt_manager/factory/padding_factory.dart';
 import 'package:receipt_manager/factory/text_form_history.dart';
@@ -146,49 +147,13 @@ class ReceiptInputController extends State<ReceiptForm> {
                                           }
                                           _bloc.add(ReceiptAllFetch());
                                         },
-                                        child: Stack(
-                                          children: [
-                                            CustomPaint(
-                                              child: Container(
-                                                height: DimensionsCalculator.getBannerHeight(context),
-                                              ),
-                                              painter: CurvePainter(),
-                                            ),
-                                            Padding(
-                                                padding: EdgeInsets.all(60),
-                                                child: Column(
-                                                  children: [
-                                                    Container(
-                                                      child: Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .center,
-                                                        children: [
-                                                          Text("Add ",
-                                                              style: TextStyle(
-                                                                  fontSize: 30,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .bold,
-                                                                  color: Colors
-                                                                      .white)),
-                                                          Text("receipt",
-                                                              style: TextStyle(
-                                                                  fontSize: 30,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w200,
-                                                                  color: Colors
-                                                                      .white))
-                                                        ],
-                                                      ),
-                                                    ),
-                                                  ],
-                                                )),
-                                          ],
-                                        ))),
+                                        child: BannerFactory.get(S.of(context).addReceipt,context))),
                                 Padding(
-                                    padding: EdgeInsets.only(top: 200, right: 16),
+                                    padding: EdgeInsets.only(
+                                        top: DimensionsCalculator
+                                                .getBannerHeight(context) -
+                                            30,
+                                        right: 16),
                                     child: Align(
                                         alignment: Alignment.topRight,
                                         child: IconButton(
@@ -200,7 +165,7 @@ class ReceiptInputController extends State<ReceiptForm> {
                                                 .ensureInitialized();
 
                                             final cameras =
-                                            await availableCameras();
+                                                await availableCameras();
                                             final firstCamera = cameras.first;
 
                                             Navigator.push(
@@ -209,7 +174,7 @@ class ReceiptInputController extends State<ReceiptForm> {
                                                 builder: (context) =>
                                                     TakePictureScreen(
                                                         sharedPrefs:
-                                                        sharedPrefs,
+                                                            sharedPrefs,
                                                         camera: firstCamera),
                                               ),
                                             );
@@ -252,7 +217,7 @@ class ReceiptInputController extends State<ReceiptForm> {
                                               color: Colors.red[350],
                                             ),
                                             splashColor: Colors.black,
-                                            color: Colors.red,
+                                            color: Colors.black,
                                             onPressed: () async {
                                               receiptDate =
                                                   await showDatePicker(
@@ -270,7 +235,8 @@ class ReceiptInputController extends State<ReceiptForm> {
                                                             colorScheme:
                                                                 ColorScheme.light(
                                                                     primary:
-                                                                        (Colors.red)),
+                                                                        (Colors
+                                                                            .red)),
                                                             buttonTheme:
                                                                 ButtonThemeData(
                                                                     textTheme:
