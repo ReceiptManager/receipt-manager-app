@@ -5,6 +5,7 @@
 </p>
 
 # Receipt manager
+![](https://cdn.rawgit.com/sindresorhus/awesome/d7305f38d29fed78fa85652e3a63e154dd8e8829/media/badge.svg)
 [![Codemagic build status](https://api.codemagic.io/apps/5fcbc24c59d78f5801f494d8/5fcbc24c59d78f5801f494d7/status_badge.svg)](https://codemagic.io/apps/5fcbc24c59d78f5801f494d8/5fcbc24c59d78f5801f494d7/latest_build) 
 
 
