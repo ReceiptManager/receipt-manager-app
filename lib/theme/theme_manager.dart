@@ -25,7 +25,7 @@ class AppTheme {
     primarySwatch: Colors.red,
     backgroundColor: LightColor.background,
     primaryColor: LightColor.black,
-    accentColor: LightColor.black,
+    accentColor: Colors.red,
     primaryColorDark: LightColor.black,
     primaryColorLight: LightColor.black,
     cardTheme: CardTheme(color: LightColor.background),

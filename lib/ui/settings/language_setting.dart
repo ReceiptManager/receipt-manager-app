@@ -88,7 +88,7 @@ class _LanguageSettingState extends State<LanguageSetting> {
 
   Widget trailingWidget(int index) {
     return (languageIndex == index)
-        ? Icon(Icons.check, color: LightColor.brighter)
+        ? Icon(Icons.check, color: Colors.red)
         : Icon(null);
   }
 
