@@ -9,8 +9,10 @@ class DimensionsCalculator {
   static var isCalculated = false;
 
   static double getBannerHeight(BuildContext context) {
-    fallback_height = MediaQuery.of(context).size.height / banner_ration;
-    log("Get height of banner: " + fallback_height.toString());
+    if (!isCalculated)
+      fallback_height = MediaQuery.of(context).size.height / banner_ration;
+
+    isCalculated = true;
     return fallback_height;
   }
 }
