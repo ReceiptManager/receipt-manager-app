@@ -23,6 +23,7 @@ import 'package:provider/provider.dart';
 import 'package:receipt_manager/bloc/moor/bloc.dart';
 import 'package:receipt_manager/database/receipt_database.dart';
 import 'package:receipt_manager/generated/l10n.dart';
+import 'package:receipt_manager/localisation/easy_language_loader.dart';
 import 'package:receipt_manager/repository/repository.dart';
 import 'package:receipt_manager/theme/color/color.dart';
 import 'package:receipt_manager/theme/theme_manager.dart';
@@ -38,15 +39,12 @@ DbBloc _bloc;
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   sharedPrefs = await SharedPreferences.getInstance();
+
   _bloc = DbBloc(repository: _repository);
   _bloc.add(ReceiptAllFetch());
 
   if (!sharedPrefs.containsKey("skip")) {
     sharedPrefs.setBool("skip", false);
-  }
-
-  if (sharedPrefs.containsKey("language")) {
-
   }
 
   runApp(MaterialApp(
@@ -218,6 +216,9 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    EasyLanguageLoader _loader = EasyLanguageLoader(sharedPrefs);
+    _loader.loadCurrentLanguage();
+
     final List<Widget> _children = [
       //DashboardWidget(),
       HomeWidget(this.receipt, sendImage, sharedPrefs, _bloc),
