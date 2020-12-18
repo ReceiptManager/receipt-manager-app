@@ -1,7 +1,4 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
-import 'package:path/path.dart';
 
 class DimensionsCalculator {
   static var fallback_height = 250.0;

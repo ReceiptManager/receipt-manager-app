@@ -31,8 +31,6 @@ import 'package:receipt_manager/factory/text_form_history.dart';
 import 'package:receipt_manager/generated/l10n.dart';
 import 'package:receipt_manager/generator/receipt_generator.dart';
 import 'package:receipt_manager/model/receipt_category.dart';
-import 'package:receipt_manager/painter/curved_painter.dart';
-import 'package:receipt_manager/theme/color/color.dart';
 import 'package:receipt_manager/theme/theme_manager.dart';
 import 'package:receipt_manager/util/dimensions.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -147,7 +145,9 @@ class ReceiptInputController extends State<ReceiptForm> {
                                           }
                                           _bloc.add(ReceiptAllFetch());
                                         },
-                                        child: BannerFactory.get(S.of(context).addReceipt,context))),
+                                        child: BannerFactory.get(
+                                            S.of(context).addReceipt,
+                                            context))),
                                 Padding(
                                     padding: EdgeInsets.only(
                                         top: DimensionsCalculator

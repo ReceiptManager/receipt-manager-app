@@ -74,7 +74,6 @@ class _CategoryOverviewScreenState extends State<CategoryOverviewScreen> {
   /// Category constructor
   _CategoryOverviewScreenState(this.receipts);
 
-
   @override
   void initState() {
     List<ReceiptCategory> categories = ReceiptCategoryFactory.get(context);
@@ -95,7 +94,6 @@ class _CategoryOverviewScreenState extends State<CategoryOverviewScreen> {
       widgets.add(SizedBox(
         height: 18,
       ));
-
     }
 
     RandomColor _rand = RandomColor();
@@ -106,7 +104,6 @@ class _CategoryOverviewScreenState extends State<CategoryOverviewScreen> {
       for (var receipt in receipts) {
         if (ReceiptCategory.fromJson(jsonDecode(receipt.category)).name ==
             categories[i].name) {
-
           total += double.parse(receipt.total);
           if (i + 1 != categories.length) {
             if (frequency[i] == 0.00) {
@@ -145,7 +142,6 @@ class _CategoryOverviewScreenState extends State<CategoryOverviewScreen> {
 
   @override
   Widget build(BuildContext context) {
-
     return PaddingFactory.create(AspectRatio(
       aspectRatio: 1.3,
       child: Card(

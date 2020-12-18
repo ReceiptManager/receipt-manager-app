@@ -26,11 +26,9 @@ import 'package:receipt_manager/generated/l10n.dart';
 import 'package:receipt_manager/repository/repository.dart';
 import 'package:receipt_manager/theme/color/color.dart';
 import 'package:receipt_manager/theme/theme_manager.dart';
-import 'package:receipt_manager/ui/dashboard/dashboard_widget.dart';
 import 'package:receipt_manager/ui/history/history_widget.dart';
 import 'package:receipt_manager/ui/home/add_widget.dart';
 import 'package:receipt_manager/ui/settings/settings_widget.dart';
-import 'package:receipt_manager/ui/stats/stats_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 final Repository _repository = Repository();
@@ -45,6 +43,10 @@ Future<void> main() async {
 
   if (!sharedPrefs.containsKey("skip")) {
     sharedPrefs.setBool("skip", false);
+  }
+
+  if (sharedPrefs.containsKey("language")) {
+
   }
 
   runApp(MaterialApp(
@@ -232,7 +234,7 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               key: _bottomNavigationKey,
               index: 0,
               items: <Widget>[
-                //  Icon(Icons.home_outlined, color: Colors.white, size: 30),
+                //Icon(Icons.home_outlined, color: Colors.white, size: 30),
                 Icon(Icons.add, color: Colors.white, size: 30),
                 Icon(Icons.history, color: Colors.white, size: 30),
                 //Icon(Icons.analytics_outlined, color: Colors.white, size: 30),

@@ -87,5 +87,6 @@
   "apitoken": "API Token",
   "insertServerApiToken": "Insert server api token",
   "invalidApiToken": "Invalid API token",
-  "updateApiTokenSuccessfully": "Update api token successfully"
+  "updateApiTokenSuccessfully": "Update api token successfully",
+  "dashboard": "Übersicht"
 }

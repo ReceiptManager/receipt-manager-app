@@ -14,12 +14,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:image/image.dart' as img;
 import 'package:progress_dialog/progress_dialog.dart';
 import 'package:receipt_manager/factory/padding_factory.dart';
 import 'package:receipt_manager/network/network_client.dart';
@@ -102,11 +100,11 @@ class DisplayPictureScreenState extends State<DisplayPictureScreen> {
                                 await SharedPreferences.getInstance();
                             String ip = sharedPrefs.get("ipv4");
                             String token = sharedPrefs.get("api_token");
-                            bool sendDebugOutput = sharedPrefs.get("enable_debug_output");
+                            bool sendDebugOutput =
+                                sharedPrefs.get("enable_debug_output");
 
-
-                            await NetworkClient.sendImage(
-                                File(imagePath), ip,token,sendDebugOutput, context, key2);
+                            await NetworkClient.sendImage(File(imagePath), ip,
+                                token, sendDebugOutput, context, key2);
                             _progress = _progress + 80.0;
                           })))),
             ],

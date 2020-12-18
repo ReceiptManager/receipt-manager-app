@@ -33,7 +33,8 @@ class ReceiptGenerator {
     return ReceiptsCompanion(
         total: Value(doubleInRange(random, 12, 1000).toStringAsFixed(2)),
         date: Value(randomDate.random()),
-        category: Value(jsonEncode(categories[random.nextInt(categories.length - 1)])),
+        category: Value(
+            jsonEncode(categories[random.nextInt(categories.length - 1)])),
         shop: Value("Test Store"));
   }
 }

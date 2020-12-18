@@ -59,7 +59,7 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                 leading: Icon(Icons.language),
                 onTap: () {
                   Navigator.of(context).push(MaterialPageRoute(
-                      builder: (BuildContext context) => LanguageSetting()));
+                      builder: (BuildContext context) => LanguageSetting(sharedPreferences)));
                 },
               ),
               SettingsTile(
