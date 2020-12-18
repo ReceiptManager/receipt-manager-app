@@ -18,31 +18,43 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+
 import 'package:receipt_manager/generated/l10n.dart';
-import 'package:receipt_manager/theme/color/color.dart';
+import 'package:receipt_manager/localisation/easy_language_loader.dart';
 import 'package:settings_ui/settings_ui.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LanguageSetting extends StatefulWidget {
+  SharedPreferences sharedPreferences;
+
+  LanguageSetting(this.sharedPreferences);
+
   @override
-  _LanguageSettingState createState() => _LanguageSettingState();
+  _LanguageSettingState createState() =>
+      _LanguageSettingState(this.sharedPreferences);
 }
 
 class _LanguageSettingState extends State<LanguageSetting> {
   String currentLanguage = Intl.getCurrentLocale();
+  SharedPreferences sharedPreferences;
+  EasyLanguageLoader _loader;
   int languageIndex = 0;
 
-  List<Locale> locales = S.delegate.supportedLocales;
   List<Locale> sortedLocals;
+
+  _LanguageSettingState(this.sharedPreferences);
 
   @override
   void initState() {
-    log(Intl.getCurrentLocale());
-    sortedLocals = List.from(locales);
-    sortedLocals
-        .sort((Locale a, Locale b) => a.toString().compareTo(b.toString()));
+    _loader = EasyLanguageLoader(sharedPreferences);
+    sortedLocals = _loader.getLanguageArray();
 
-    languageIndex = sortedLocals
-        .indexWhere((element) => element.toString() == currentLanguage);
+    String storedLanguage = sharedPreferences.getString("language");
+    if (storedLanguage == null) {
+      languageIndex = _loader.findLanguageIndex(currentLanguage);
+    } else {
+      languageIndex = _loader.findLanguageIndex(storedLanguage);
+    }
 
     super.initState();
   }
@@ -62,18 +74,8 @@ class _LanguageSettingState extends State<LanguageSetting> {
                 S.load(sortedLocals[0]);
               },
             ),
-            /*
             SettingsTile(
-              title: "English (GB)",
-              leading: trailingWidget(1),
-              onTap: () {
-                changeLanguage(1);
-                S.load(sortedLocals[1]);
-              },
-            )
-             */
-            SettingsTile(
-              title: "English (US)",
+              title: "English",
               leading: trailingWidget(2),
               onTap: () {
                 changeLanguage(2);
@@ -93,6 +95,8 @@ class _LanguageSettingState extends State<LanguageSetting> {
   }
 
   void changeLanguage(int pos) {
+    sharedPreferences.setString("language", sortedLocals[pos].toString());
+
     setState(() {
       languageIndex = pos;
     });
