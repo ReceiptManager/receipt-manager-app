@@ -88,9 +88,7 @@ class _ServerSettingsState extends State<ServerSettings> {
       key: _scaffoldKey2,
       appBar: AppBar(title: Text(S.of(context).serverSettings)),
       body: Column(children: [
-        Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: serverTextfield()),
+        Padding(padding: const EdgeInsets.all(16.0), child: serverTextfield()),
         Stack(children: [
           Align(
               alignment: Alignment.bottomRight,
@@ -124,7 +122,8 @@ class _ServerSettingsState extends State<ServerSettings> {
                                     description: Text(
                                       S.of(context).invalidServerIP,
                                       textAlign: TextAlign.center,
-                                      style: TextStyle(fontWeight: FontWeight.w100),
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.w100),
                                     ),
                                     onCancelButtonPressed: () {
                                       Navigator.of(context).pop();

@@ -35,10 +35,8 @@ import 'package:receipt_manager/factory/padding_factory.dart';
 import 'package:receipt_manager/factory/text_form_history.dart';
 import 'package:receipt_manager/generated/l10n.dart';
 import 'package:receipt_manager/model/receipt_category.dart';
-import 'package:receipt_manager/painter/curved_painter.dart';
 import 'package:receipt_manager/theme/color/color.dart';
 import 'package:receipt_manager/theme/theme_manager.dart';
-import 'package:receipt_manager/util/dimensions.dart';
 
 class HistoryWidget extends StatefulWidget {
   final DbBloc _bloc;

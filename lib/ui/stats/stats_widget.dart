@@ -58,17 +58,17 @@ class StatsWidgetState extends State<StatsWidget> {
           final receipts = state.receipt;
           return SingleChildScrollView(
               child: Column(children: <Widget>[
-                WeeklyOverviewScreen(receipts),
-                CategoryOverviewScreen(receipts)
-              ]));
+            WeeklyOverviewScreen(receipts),
+            CategoryOverviewScreen(receipts)
+          ]));
         }
 
         return Container(
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.all(Radius.circular(20)),
                 boxShadow: <BoxShadow>[
-                  BoxShadow(offset: Offset(0, 5), blurRadius: 10)
-                ]));
+              BoxShadow(offset: Offset(0, 5), blurRadius: 10)
+            ]));
       },
     );
   }

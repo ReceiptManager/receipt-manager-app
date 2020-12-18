@@ -22,8 +22,8 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:intl/intl.dart';
 import 'package:http_parser/http_parser.dart' as mime;
+import 'package:intl/intl.dart';
 import 'package:path/path.dart';
 import 'package:receipt_manager/database/receipt_database.dart';
 import 'package:receipt_manager/generated/l10n.dart';
@@ -189,8 +189,8 @@ class NetworkClient {
 
       key.currentState
         ..hideCurrentSnackBar()
-        ..showSnackBar(SnackBar(
-            content: Text(msg), backgroundColor: Colors.red));
+        ..showSnackBar(
+            SnackBar(content: Text(msg), backgroundColor: Colors.red));
 
       Navigator.push(context,
           MaterialPageRoute(builder: (context) => HomeScreen(null, true)));
@@ -206,9 +206,8 @@ class NetworkClient {
       }
       key.currentState
         ..hideCurrentSnackBar()
-        ..showSnackBar(SnackBar(
-            content: Text(msg),
-            backgroundColor: Colors.red));
+        ..showSnackBar(
+            SnackBar(content: Text(msg), backgroundColor: Colors.red));
       await Future.delayed(
           const Duration(seconds: _transactionDuration), () {});
       Navigator.push(context,
@@ -224,9 +223,8 @@ class NetworkClient {
 
       key.currentState
         ..hideCurrentSnackBar()
-        ..showSnackBar(SnackBar(
-            content: Text(msg),
-            backgroundColor: Colors.red));
+        ..showSnackBar(
+            SnackBar(content: Text(msg), backgroundColor: Colors.red));
 
       Navigator.push(context,
           MaterialPageRoute(builder: (context) => HomeScreen(null, true)));
