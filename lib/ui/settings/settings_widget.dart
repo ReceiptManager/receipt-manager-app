@@ -17,9 +17,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:receipt_manager/generated/l10n.dart';
-import 'package:receipt_manager/painter/curved_painter.dart';
 import 'package:receipt_manager/ui/settings/api_settings.dart';
-import 'package:receipt_manager/ui/settings/open_source.dart';
 import 'package:receipt_manager/ui/settings/server_settings.dart';
 import 'package:settings_ui/settings_ui.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -36,8 +34,8 @@ class SettingsWidget extends StatefulWidget {
 }
 
 class _SettingsWidgetState extends State<SettingsWidget> {
-  bool enableDebugOutput = true;
-  bool notificationsEnabled = true;
+  // fallback settings
+  bool enableDebugOutput = false;
 
   final SharedPreferences sharedPreferences;
 
@@ -45,6 +43,9 @@ class _SettingsWidgetState extends State<SettingsWidget> {
 
   @override
   Widget build(BuildContext context) {
+    bool _tmp = sharedPreferences.getBool("enable_debug_output");
+    if (_tmp != null) enableDebugOutput = _tmp;
+
     return Column(children: [
       SettingsList(
         shrinkWrap: true,
@@ -91,7 +92,6 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                 onToggle: (bool value) {
                   setState(() {
                     enableDebugOutput = value;
-                    notificationsEnabled = value;
                     sharedPreferences.setBool("enable_debug_output", value);
                   });
                 },
