@@ -31,3 +31,6 @@
   - [Screenshot](https://github.com/ReceiptManager/receipt-parser-app/wiki/Screenshots)
   - [Credits](https://github.com/ReceiptManager/receipt-parser-app/wiki/Credits)
   
+---
+
+Please read the parser [wiki](https://github.com/ReceiptManager/receipt-parser-server/wiki/Install-using-pip).
