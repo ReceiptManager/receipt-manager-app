@@ -9,7 +9,9 @@
 [![Codemagic build status](https://api.codemagic.io/apps/5fcbc24c59d78f5801f494d8/5fcbc24c59d78f5801f494d7/status_badge.svg)](https://codemagic.io/apps/5fcbc24c59d78f5801f494d8/5fcbc24c59d78f5801f494d7/latest_build) 
 
 
-All the needed info about how to  use the `receipt-parser-app` is present at your [wiki](https://github.com/ReceiptManager/receipt-parser-app/wiki).
+* All the needed info about how to  use the `receipt-manager-app` is present at your [wiki](https://github.com/ReceiptManager/receipt-manager-app/wiki). 
+
+* :star: We appreciate your star, it helps!
 
 ---
 
