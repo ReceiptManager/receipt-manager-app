@@ -5,8 +5,6 @@
 
   <img width=200 src="https://i.imgur.com/7tkfz75.png">
 
-  <img width=200 src="https://i.imgur.com/uVoHaZb.png">
-
 </p>
 
 # Receipt manager
