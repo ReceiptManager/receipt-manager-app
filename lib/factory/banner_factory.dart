@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:receipt_manager/painter/curved_painter.dart';
+import 'package:receipt_manager/out/curved_painter.dart';
 import 'package:receipt_manager/util/dimensions.dart';
 
 class BannerFactory {
+  static String ft;
+  static String st;
+  static Stack banner;
+
   static get(String content, BuildContext context) {
     List<String> contentArr = content.split(" ");
     String firstText = "";
@@ -16,7 +20,11 @@ class BannerFactory {
     firstText = firstText == null ? "" : firstText;
     secondText = secondText == null ? "" : secondText;
 
-    return Stack(
+    if (firstText == ft && secondText == st && banner != null) {
+      return banner;
+    }
+
+    banner = Stack(
       children: [
         CustomPaint(
           child: Container(
@@ -52,5 +60,7 @@ class BannerFactory {
                 ))),
       ],
     );
+
+    return banner;
   }
 }

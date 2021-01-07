@@ -35,7 +35,10 @@ class SettingsWidget extends StatefulWidget {
 
 class _SettingsWidgetState extends State<SettingsWidget> {
   // fallback settings
-  bool enableDebugOutput = false;
+  bool enableHighContrast = false;
+  bool enableDebug = false;
+  bool legacyParser = true;
+
 
   final SharedPreferences sharedPreferences;
 
@@ -43,10 +46,11 @@ class _SettingsWidgetState extends State<SettingsWidget> {
 
   @override
   Widget build(BuildContext context) {
-    bool _tmp = sharedPreferences.getBool("enable_debug_output");
-    if (_tmp != null) enableDebugOutput = _tmp;
+     enableDebug = sharedPreferences.getBool("enable_debug_output") == null ? enableDebug : sharedPreferences.getBool("enable_debug_output") ;
+     legacyParser = sharedPreferences.getBool("legacyParser") == null ? legacyParser : sharedPreferences.getBool("legacyParser") ;
+     enableHighContrast = sharedPreferences.getBool("high_contrast") == null ? enableDebug : sharedPreferences.getBool("high_contrast") ;
 
-    return Column(children: [
+     return Column(children: [
       SettingsList(
         shrinkWrap: true,
         sections: [
@@ -83,15 +87,53 @@ class _SettingsWidgetState extends State<SettingsWidget> {
             ],
           ),
           SettingsSection(
+            title: S.of(context).ocrTitle,
+            tiles: [
+              SettingsTile.switchTile(
+                title: S.of(context).highContrast,
+                leading: Icon(Icons.wb_incandescent_outlined),
+                switchValue: enableHighContrast,
+                onToggle: (bool value) {
+                  setState(() {
+                    enableHighContrast = value;
+                    sharedPreferences.setBool("high_contrast", value);
+                  });
+                },
+              ),
+              SettingsTile.switchTile(
+                title: S.of(context).neuronalNetworkParser,
+                leading: Icon(Icons.camera_enhance_outlined),
+                switchValue: !legacyParser,
+                onToggle: (bool value) {
+                  setState(() {
+                    legacyParser = !value;
+                    sharedPreferences.setBool("legacyParser", !value);
+                  });
+                },
+              ),
+              SettingsTile.switchTile(
+                title: S.of(context).fuzzyParser,
+                leading: Icon(Icons.camera_enhance_rounded),
+                switchValue: legacyParser,
+                onToggle: (bool value) {
+                  setState(() {
+                    legacyParser = value;
+                    sharedPreferences.setBool("legacyParser", value);
+                  });
+                },
+              ),
+            ],
+          ),
+          SettingsSection(
             title: S.of(context).settingsDevelopmentTitle,
             tiles: [
               SettingsTile.switchTile(
                 title: S.of(context).enableDebugOutput,
                 leading: Icon(Icons.bug_report),
-                switchValue: enableDebugOutput,
+                switchValue: enableDebug,
                 onToggle: (bool value) {
                   setState(() {
-                    enableDebugOutput = value;
+                    enableDebug = value;
                     sharedPreferences.setBool("enable_debug_output", value);
                   });
                 },
