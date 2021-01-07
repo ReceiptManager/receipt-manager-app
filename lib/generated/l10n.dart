@@ -924,6 +924,56 @@ class S {
       args: [],
     );
   }
+
+  /// `OCR Einstellungen`
+  String get ocr {
+    return Intl.message(
+      'OCR Einstellungen',
+      name: 'ocr',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Hoher Kontrast`
+  String get highContrast {
+    return Intl.message(
+      'Hoher Kontrast',
+      name: 'highContrast',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Kamera Einstellungen`
+  String get cameraSettings {
+    return Intl.message(
+      'Kamera Einstellungen',
+      name: 'cameraSettings',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Neuronal network parser`
+  String get neuronalNetworkParser {
+    return Intl.message(
+      'Neuronal network parser',
+      name: 'neuronalNetworkParser',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Fuzzy Regel parser`
+  String get fuzzyParser {
+    return Intl.message(
+      'Fuzzy Regel parser',
+      name: 'fuzzyParser',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

@@ -88,5 +88,10 @@
   "insertServerApiToken": "Insert server API token",
   "invalidApiToken": "Invalid API token",
   "updateApiTokenSuccessfully": "Update API token successfully",
-  "dashboard": "Dashboard"
+  "dashboard": "Dashboard",
+  "ocr": "OCR settings",
+  "highContrast": "High contrast",
+  "cameraSettings": "Camera settings",
+  "neuronalNetworkParser": "Neuronal network parser",
+  "fuzzyParser": "Legacy parser"
 }
