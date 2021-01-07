@@ -87,7 +87,7 @@ class _SettingsWidgetState extends State<SettingsWidget> {
             ],
           ),
           SettingsSection(
-            title: S.of(context).ocrTitle,
+            title: S.of(context).cameraSettings,
             tiles: [
               SettingsTile.switchTile(
                 title: S.of(context).highContrast,
