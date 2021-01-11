@@ -51,10 +51,19 @@ class NetworkClient {
     HttpOverrides.global = new SelfSignedHttpAgent();
   }
 
-  static String buildUrl(final ip, final token) {
+  static String buildUrl(final ip, final token, final legacyParser, final gaussian, final grayscale, final rotate) {
     if (token == null || token == "")
-      return _protocol + ip + ":" + _port + _path;
-    return _protocol + ip + ":" + _port + _path + _access_token + token;
+      return _protocol + ip + ":" + _port + _path + "&legacy_parser=" + getValue(legacyParser) + "&grayscale_image=" + getValue(grayscale)  + "&gaussian_blur=" + getValue(gaussian) + "&rotate=" + getValue(rotate);
+    return _protocol + ip + ":" + _port + _path + _access_token + token + "&legacy_parser=" + getValue(legacyParser) + "&grayscale_image=" + getValue(grayscale)  + "&gaussian_blur=" + getValue(gaussian) + "&rotate=" + getValue(rotate);
+  }
+
+  /// Convert boolean values to python boolean values
+  static String getValue(final bool val) {
+    if (val == null || val == false) {
+      return "False";
+    } else {
+      return "True";
+    }
   }
 
   static toNavigationBar(BuildContext context) {
@@ -63,8 +72,16 @@ class NetworkClient {
   }
 
   /// Send image via post request to the server and capture the response.
-  static sendImage(File imageFile, String ip, String token,
-      bool sendDebugOutput, BuildContext context,
+  static sendImage(
+      File imageFile,
+      String ip,
+      String token,
+      bool sendDebugOutput,
+      bool grayscale,
+      bool gaussian,
+      bool legacyParser,
+      bool rotate,
+      BuildContext context,
       [GlobalKey<ScaffoldState> key]) async {
     init();
 
@@ -86,7 +103,7 @@ class NetworkClient {
     stream.cast();
 
     var length = await imageFile.length();
-    var uri = Uri.parse(buildUrl(ip, token));
+    var uri = Uri.parse(buildUrl(ip, token, legacyParser, gaussian, grayscale, rotate));
 
     log(uri.toString());
 
