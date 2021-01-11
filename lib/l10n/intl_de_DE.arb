@@ -93,5 +93,10 @@
   "highContrast": "Hoher Kontrast",
   "cameraSettings": "Kamera Einstellungen",
   "neuronalNetworkParser": "Neuronal network parser",
-  "fuzzyParser": "Fuzzy Regel parser"
+  "fuzzyParser": "Fuzzy Regel parser",
+  "grayscaleImage": "Graustufenbild",
+  "gaussianBlur": "Gauß'scher Weichzeichner ",
+  "rotateImage": "Bild drehen um 90°",
+  "receipt": "Kassenbeleg",
+  "takeAReceipt": "Kassenbeleg scannen"
 }

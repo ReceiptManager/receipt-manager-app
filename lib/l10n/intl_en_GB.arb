@@ -93,5 +93,10 @@
   "highContrast": "High contrast",
   "cameraSettings": "Camera settings",
   "neuronalNetworkParser": "Neuronal network parser",
-  "fuzzyParser": "Legacy parser"
+  "fuzzyParser": "Legacy parser",
+  "grayscaleImage": "Grayscale image",
+  "gaussianBlur": "Gaussian blur",
+  "rotateImage": "Rotate image by 90°",
+  "receipt": "Receipt",
+  "takeAReceipt": "Take a receipt"
 }
