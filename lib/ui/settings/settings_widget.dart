@@ -35,10 +35,11 @@ class SettingsWidget extends StatefulWidget {
 
 class _SettingsWidgetState extends State<SettingsWidget> {
   // fallback settings
-  bool enableHighContrast = false;
+  bool grayscale = false;
+  bool gaussian = false;
   bool enableDebug = false;
   bool legacyParser = true;
-
+  bool rotate = false;
 
   final SharedPreferences sharedPreferences;
 
@@ -48,7 +49,9 @@ class _SettingsWidgetState extends State<SettingsWidget> {
   Widget build(BuildContext context) {
      enableDebug = sharedPreferences.getBool("enable_debug_output") == null ? enableDebug : sharedPreferences.getBool("enable_debug_output") ;
      legacyParser = sharedPreferences.getBool("legacyParser") == null ? legacyParser : sharedPreferences.getBool("legacyParser") ;
-     enableHighContrast = sharedPreferences.getBool("high_contrast") == null ? enableDebug : sharedPreferences.getBool("high_contrast") ;
+     grayscale = sharedPreferences.getBool("grayscale") == null ? grayscale : sharedPreferences.getBool("grayscale") ;
+     gaussian = sharedPreferences.getBool("gaussian") == null ? gaussian : sharedPreferences.getBool("gaussian") ;
+     rotate = sharedPreferences.getBool("rotate") == null ? rotate : sharedPreferences.getBool("rotate") ;
 
      return Column(children: [
       SettingsList(
@@ -88,15 +91,38 @@ class _SettingsWidgetState extends State<SettingsWidget> {
           ),
           SettingsSection(
             title: S.of(context).cameraSettings,
-            tiles: [
+            tiles: [ 
               SettingsTile.switchTile(
-                title: S.of(context).highContrast,
+              title: S.of(context).rotateImage,
+              leading: Icon(Icons.rotate_right_sharp),
+              switchValue: rotate,
+              onToggle: (bool value) {
+                setState(() {
+                  rotate = value;
+                  sharedPreferences.setBool("rotate", value);
+                });
+              },
+            ),
+              
+              SettingsTile.switchTile(
+                title: S.of(context).grayscaleImage,
                 leading: Icon(Icons.wb_incandescent_outlined),
-                switchValue: enableHighContrast,
+                switchValue: grayscale,
                 onToggle: (bool value) {
                   setState(() {
-                    enableHighContrast = value;
-                    sharedPreferences.setBool("high_contrast", value);
+                    grayscale = value;
+                    sharedPreferences.setBool("grayscale", value);
+                  });
+                },
+              ),
+              SettingsTile.switchTile(
+                title: S.of(context).gaussianBlur,
+                leading: Icon(Icons.blur_on_outlined),
+                switchValue: gaussian,
+                onToggle: (bool value) {
+                  setState(() {
+                    gaussian = value;
+                    sharedPreferences.setBool("gaussian", value);
                   });
                 },
               ),
