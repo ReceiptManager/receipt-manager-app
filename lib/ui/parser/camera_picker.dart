@@ -21,6 +21,7 @@ import 'package:camera/camera.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:path/path.dart';
+import 'package:receipt_manager/generated/l10n.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:receipt_manager/ui/parser/display_image.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -62,7 +63,7 @@ class TakePictureScreenState extends State<TakePictureScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: key,
-      appBar: AppBar(title: Text('Take a receipt')),
+      appBar: AppBar(title: Text(S.of(context).takeAReceipt)),
       body: FutureBuilder<void>(
         future: _initializeControllerFuture,
         builder: (context, snapshot) {
