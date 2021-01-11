@@ -18,6 +18,7 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:receipt_manager/generated/l10n.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 import 'package:receipt_manager/factory/padding_factory.dart';
 import 'package:receipt_manager/network/network_client.dart';
@@ -57,60 +58,75 @@ class DisplayPictureScreenState extends State<DisplayPictureScreen> {
         new RoundedLoadingButtonController();
 
     return Scaffold(
-      appBar: AppBar(title: Text('Display the Picture')),
-      key: key2,
-      body: Column(
-        children: [
-          Center(
-              child: PaddingFactory.create(Container(
-                  height: MediaQuery.of(context).size.height / 1.5,
-                  child: Image.file(File(imagePath))))),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              PaddingFactory.create(Center(
-                  child: IgnorePointer(
-                      ignoring: _isButtonDisabled,
-                      child: RoundedLoadingButton(
-                          width: 60,
-                          height: 60,
-                          child: Icon(Icons.clear, color: Colors.white),
-                          animateOnTap: true,
-                          color: _declineButtonColor,
-                          controller: _btnController,
-                          onPressed: () {
-                            Navigator.pop(context);
-                          })))),
-              PaddingFactory.create(Center(
-                  child: IgnorePointer(
-                      ignoring: _isButtonDisabled,
-                      child: RoundedLoadingButton(
-                          width: 60,
-                          height: 60,
-                          child: Icon(Icons.done, color: Colors.white),
-                          animateOnTap: true,
-                          color: _acceptButtonColor,
-                          controller: _btnController,
-                          onPressed: () async {
-                            setState(() {
-                              _isButtonDisabled = true;
-                              _declineButtonColor = Colors.grey;
-                            });
-                            SharedPreferences sharedPrefs =
-                                await SharedPreferences.getInstance();
-                            String ip = sharedPrefs.get("ipv4");
-                            String token = sharedPrefs.get("api_token");
-                            bool sendDebugOutput =
-                                sharedPrefs.get("enable_debug_output");
+        appBar: AppBar(title: Text(S.of(context).receipt)),
+        key: key2,
+        body: Container(
+            color: Colors.black,
+            height: double.infinity,
+            child: Stack(
+              alignment: Alignment.bottomCenter,
+              children: <Widget>[
+                Image.file(File(imagePath), fit: BoxFit.scaleDown),
+                Row(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: <Widget>[
+                      PaddingFactory.create(IgnorePointer(
+                          ignoring: _isButtonDisabled,
+                          child: RoundedLoadingButton(
+                              width: 60,
+                              height: 60,
+                              child: Icon(Icons.clear, color: Colors.white),
+                              animateOnTap: true,
+                              color: _declineButtonColor,
+                              controller: _btnController,
+                              onPressed: () {
+                                Navigator.pop(context);
+                              }))),
+                      PaddingFactory.create(IgnorePointer(
+                          ignoring: _isButtonDisabled,
+                          child: RoundedLoadingButton(
+                              width: 60,
+                              height: 60,
+                              child: Icon(Icons.done, color: Colors.white),
+                              animateOnTap: true,
+                              color: _acceptButtonColor,
+                              controller: _btnController,
+                              onPressed: () async {
+                                setState(() {
+                                  _isButtonDisabled = true;
+                                  _declineButtonColor = Colors.grey;
+                                });
+                                SharedPreferences sharedPrefs =
+                                    await SharedPreferences.getInstance();
 
-                            await NetworkClient.sendImage(File(imagePath), ip,
-                                token, sendDebugOutput, context, key2);
-                            _progress = _progress + 80.0;
-                          })))),
-            ],
-          )
-        ],
-      ),
-    );
+                                String ip = sharedPrefs.get("ipv4");
+                                String token = sharedPrefs.get("api_token");
+
+                                bool debugOutput =
+                                    sharedPrefs.get("enable_debug_output");
+                                bool grayscale = sharedPrefs.get("grayscale");
+                                bool gaussian = sharedPrefs.get("gaussian");
+                                bool legacyParser =
+                                    sharedPrefs.get("legacyParser");
+                                bool rotate = sharedPrefs.get("rotate");
+
+                                await NetworkClient.sendImage(
+                                    File(imagePath),
+                                    ip,
+                                    token,
+                                    debugOutput,
+                                    grayscale,
+                                    gaussian,
+                                    legacyParser,
+                                    rotate,
+                                    context,
+                                    key2);
+                                _progress = _progress + 80.0;
+                              }))),
+                    ])
+              ],
+            )));
   }
 }
