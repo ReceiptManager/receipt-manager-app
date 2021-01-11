@@ -974,6 +974,56 @@ class S {
       args: [],
     );
   }
+
+  /// `Graustufenbild`
+  String get grayscaleImage {
+    return Intl.message(
+      'Graustufenbild',
+      name: 'grayscaleImage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Gauß'scher Weichzeichner `
+  String get gaussianBlur {
+    return Intl.message(
+      'Gauß\'scher Weichzeichner ',
+      name: 'gaussianBlur',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Bild drehen um 90°`
+  String get rotateImage {
+    return Intl.message(
+      'Bild drehen um 90°',
+      name: 'rotateImage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Kassenbeleg`
+  String get receipt {
+    return Intl.message(
+      'Kassenbeleg',
+      name: 'receipt',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Kassenbeleg scannen`
+  String get takeAReceipt {
+    return Intl.message(
+      'Kassenbeleg scannen',
+      name: 'takeAReceipt',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
