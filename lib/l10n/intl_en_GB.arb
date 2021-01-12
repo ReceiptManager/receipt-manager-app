@@ -97,6 +97,6 @@
   "grayscaleImage": "Grayscale image",
   "gaussianBlur": "Gaussian blur",
   "rotateImage": "Rotate image by 90°",
-  "receipt": "Receipt",
+  "receipt": "Show receipt",
   "takeAReceipt": "Take a receipt"
 }

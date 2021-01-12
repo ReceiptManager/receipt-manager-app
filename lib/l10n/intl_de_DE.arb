@@ -97,6 +97,6 @@
   "grayscaleImage": "Graustufenbild",
   "gaussianBlur": "Gauß'scher Weichzeichner ",
   "rotateImage": "Bild drehen um 90°",
-  "receipt": "Kassenbeleg",
+  "receipt": "Kassenbeleg anzeigen",
   "takeAReceipt": "Kassenbeleg scannen"
 }

@@ -72,59 +72,68 @@ class DisplayPictureScreenState extends State<DisplayPictureScreen> {
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: <Widget>[
-                      PaddingFactory.create(IgnorePointer(
-                          ignoring: _isButtonDisabled,
-                          child: RoundedLoadingButton(
-                              width: 60,
-                              height: 60,
-                              child: Icon(Icons.clear, color: Colors.white),
-                              animateOnTap: true,
-                              color: _declineButtonColor,
-                              controller: _btnController,
-                              onPressed: () {
-                                Navigator.pop(context);
-                              }))),
-                      PaddingFactory.create(IgnorePointer(
-                          ignoring: _isButtonDisabled,
-                          child: RoundedLoadingButton(
-                              width: 60,
-                              height: 60,
-                              child: Icon(Icons.done, color: Colors.white),
-                              animateOnTap: true,
-                              color: _acceptButtonColor,
-                              controller: _btnController,
-                              onPressed: () async {
-                                setState(() {
-                                  _isButtonDisabled = true;
-                                  _declineButtonColor = Colors.grey;
-                                });
-                                SharedPreferences sharedPrefs =
-                                    await SharedPreferences.getInstance();
+                      Padding(
+                          padding: EdgeInsets.only(
+                            bottom: 30,
+                          ),
+                          child: IgnorePointer(
+                              ignoring: _isButtonDisabled,
+                              child: RoundedLoadingButton(
+                                  width: 60,
+                                  height: 60,
+                                  child: Icon(Icons.clear, color: Colors.white),
+                                  animateOnTap: true,
+                                  color: _declineButtonColor,
+                                  controller: _btnController,
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  }))),
+                      Padding(
+                        padding: EdgeInsets.only(
+                          bottom: 30,
+                        ),
+                        child: IgnorePointer(
+                            ignoring: _isButtonDisabled,
+                            child: RoundedLoadingButton(
+                                width: 60,
+                                height: 60,
+                                child: Icon(Icons.done, color: Colors.white),
+                                animateOnTap: true,
+                                color: _acceptButtonColor,
+                                controller: _btnController,
+                                onPressed: () async {
+                                  setState(() {
+                                    _isButtonDisabled = true;
+                                    _declineButtonColor = Colors.grey;
+                                  });
+                                  SharedPreferences sharedPrefs =
+                                      await SharedPreferences.getInstance();
 
-                                String ip = sharedPrefs.get("ipv4");
-                                String token = sharedPrefs.get("api_token");
+                                  String ip = sharedPrefs.get("ipv4");
+                                  String token = sharedPrefs.get("api_token");
 
-                                bool debugOutput =
-                                    sharedPrefs.get("enable_debug_output");
-                                bool grayscale = sharedPrefs.get("grayscale");
-                                bool gaussian = sharedPrefs.get("gaussian");
-                                bool legacyParser =
-                                    sharedPrefs.get("legacyParser");
-                                bool rotate = sharedPrefs.get("rotate");
+                                  bool debugOutput =
+                                      sharedPrefs.get("enable_debug_output");
+                                  bool grayscale = sharedPrefs.get("grayscale");
+                                  bool gaussian = sharedPrefs.get("gaussian");
+                                  bool legacyParser =
+                                      sharedPrefs.get("legacyParser");
+                                  bool rotate = sharedPrefs.get("rotate");
 
-                                await NetworkClient.sendImage(
-                                    File(imagePath),
-                                    ip,
-                                    token,
-                                    debugOutput,
-                                    grayscale,
-                                    gaussian,
-                                    legacyParser,
-                                    rotate,
-                                    context,
-                                    key2);
-                                _progress = _progress + 80.0;
-                              }))),
+                                  await NetworkClient.sendImage(
+                                      File(imagePath),
+                                      ip,
+                                      token,
+                                      debugOutput,
+                                      grayscale,
+                                      gaussian,
+                                      legacyParser,
+                                      rotate,
+                                      context,
+                                      key2);
+                                  _progress = _progress + 80.0;
+                                })),
+                      ),
                     ])
               ],
             )));

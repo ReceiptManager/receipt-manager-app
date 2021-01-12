@@ -1005,10 +1005,10 @@ class S {
     );
   }
 
-  /// `Kassenbeleg`
+  /// `Kassenbeleg anzeigen`
   String get receipt {
     return Intl.message(
-      'Kassenbeleg',
+      'Kassenbeleg anzeigen',
       name: 'receipt',
       desc: '',
       args: [],

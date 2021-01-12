@@ -70,7 +70,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "openSourceLicence" : MessageLookupByLibrary.simpleMessage("Open-Source Lizenzen"),
     "overview" : MessageLookupByLibrary.simpleMessage("Wochenübersicht"),
     "overviewExpenses" : MessageLookupByLibrary.simpleMessage("Ausgabenübersicht"),
-    "receipt" : MessageLookupByLibrary.simpleMessage("Kassenbeleg"),
+    "receipt" : MessageLookupByLibrary.simpleMessage("Kassenbeleg anzeigen"),
     "receiptDateDialog" : MessageLookupByLibrary.simpleMessage("Please enter some date"),
     "receiptDateFormat" : MessageLookupByLibrary.simpleMessage("dd.MM.y"),
     "receiptDateHelperText" : MessageLookupByLibrary.simpleMessage("Füge das Datum das Kassenbeleg hinzu"),
