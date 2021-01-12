@@ -98,5 +98,7 @@
   "gaussianBlur": "Gauß'scher Weichzeichner ",
   "rotateImage": "Bild drehen um 90°",
   "receipt": "Kassenbeleg anzeigen",
-  "takeAReceipt": "Kassenbeleg scannen"
+  "takeAReceipt": "Kassenbeleg scannen",
+  "licence": "Licence",
+  "opensourceLicences": "Open-Source Bibliotheken"
 }

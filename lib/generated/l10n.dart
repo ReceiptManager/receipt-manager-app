@@ -1024,6 +1024,26 @@ class S {
       args: [],
     );
   }
+
+  /// `Licence`
+  String get licence {
+    return Intl.message(
+      'Licence',
+      name: 'licence',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Open-Source Bibliotheken`
+  String get opensourceLicences {
+    return Intl.message(
+      'Open-Source Bibliotheken',
+      name: 'opensourceLicences',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
