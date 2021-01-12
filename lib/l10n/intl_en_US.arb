@@ -97,5 +97,7 @@
   "gaussianBlur": "Gaussian blur",
   "rotateImage": "Rotate image by 90°",
   "receipt": "Show receipt",
-  "takeAReceipt": "Take a receipt"
+  "takeAReceipt": "Take a receipt",
+  "licence": "Licences",
+  "opensourceLicences": "Opensource libaries"
 }
