@@ -19,7 +19,6 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:receipt_manager/generated/l10n.dart';
-import 'package:receipt_manager/theme/color/color.dart';
 
 class OpenSourceSettings extends StatefulWidget {
   @override
@@ -27,11 +26,11 @@ class OpenSourceSettings extends StatefulWidget {
 }
 
 class _OpenSourceSettingsState extends State<OpenSourceSettings> {
-  var opensource_licenses = [
+  var licence = [
     "camera: ^0.5.8+9",
     "path_provider:",
     "path: 1.1.0",
-    "curved_navigation_bar: ^0.3.4"
+    "curved_navigation_bar: ^0.3.4",
         "shared_preferences:  ^0.5.12+2",
     "giffy_dialog: ^1.8.0",
     "flutter_bloc: ^6.0.6",
@@ -45,9 +44,7 @@ class _OpenSourceSettingsState extends State<OpenSourceSettings> {
     "flutter_staggered_grid_view: ^0.3.2",
     "permission_handler: ^5.0.1+1",
     "fl_chart: ^0.12.0",
-    "flutter_exif_rotation: ^0.3.1",
     "image: ^2.1.18",
-    "exif: ^1.0.3",
     "progress_dialog: ^1.2.4",
     "rounded_loading_button: ^1.0.0",
     "simple_autocomplete_formfield: ^0.2.7",
@@ -69,16 +66,14 @@ class _OpenSourceSettingsState extends State<OpenSourceSettings> {
     return Scaffold(
         appBar: AppBar(title: Text(S.of(context).openSourceLicence)),
         body: ListView.builder(
-            itemCount: opensource_licenses.length,
+            itemCount: licence.length,
             itemBuilder: (BuildContext context, int index) {
               return Container(
-                height: 50,
-                margin: EdgeInsets.all(4),
-                color: LightColor.brighter,
+                height: 40,
+                color: Colors.white,
                 child: Center(
-                    child: Text(
-                  '${opensource_licenses[index]}',
-                  style: TextStyle(fontSize: 16, color: Colors.white),
+                    child: Text('${licence[index]}',
+                  style: TextStyle(fontSize: 16, color: Colors.black,fontWeight: FontWeight.w300),
                 )),
               );
             }));
