@@ -14,8 +14,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -24,6 +22,7 @@ import 'package:receipt_manager/localisation/easy_language_loader.dart';
 import 'package:settings_ui/settings_ui.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+// ignore: must_be_immutable
 class LanguageSetting extends StatefulWidget {
   SharedPreferences sharedPreferences;
 
