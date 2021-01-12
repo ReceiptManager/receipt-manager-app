@@ -25,35 +25,47 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'language_setting.dart';
 
 class SettingsWidget extends StatefulWidget {
-  final SharedPreferences sharedPreferences;
+  final SharedPreferences _prefs;
 
-  SettingsWidget(this.sharedPreferences);
+  SettingsWidget(this._prefs);
 
   @override
-  _SettingsWidgetState createState() => _SettingsWidgetState(sharedPreferences);
+  _SettingsWidgetState createState() => _SettingsWidgetState(_prefs);
 }
 
 class _SettingsWidgetState extends State<SettingsWidget> {
-  // fallback settings
-  bool grayscale = false;
-  bool gaussian = false;
-  bool enableDebug = false;
-  bool legacyParser = true;
-  bool rotate = false;
+  bool _grayscale = false;
+  bool _gaussian = false;
+  bool _debugOutput = false;
+  bool _legacyParser = true;
+  bool _rotate = false;
 
-  final SharedPreferences sharedPreferences;
+  final SharedPreferences _prefs;
 
-  _SettingsWidgetState(this.sharedPreferences);
+  _SettingsWidgetState(this._prefs);
+
+  readFallbackValues() {
+    _debugOutput = _prefs.getBool("enable_debug_output") == null
+        ? _debugOutput
+        : _prefs.getBool("enable_debug_output");
+    _legacyParser = _prefs.getBool("legacyParser") == null
+        ? _legacyParser
+        : _prefs.getBool("legacyParser");
+    _grayscale = _prefs.getBool("grayscale") == null
+        ? _grayscale
+        : _prefs.getBool("grayscale");
+    _gaussian = _prefs.getBool("gaussian") == null
+        ? _gaussian
+        : _prefs.getBool("gaussian");
+    _rotate =
+        _prefs.getBool("rotate") == null ? _rotate : _prefs.getBool("rotate");
+  }
 
   @override
   Widget build(BuildContext context) {
-     enableDebug = sharedPreferences.getBool("enable_debug_output") == null ? enableDebug : sharedPreferences.getBool("enable_debug_output") ;
-     legacyParser = sharedPreferences.getBool("legacyParser") == null ? legacyParser : sharedPreferences.getBool("legacyParser") ;
-     grayscale = sharedPreferences.getBool("grayscale") == null ? grayscale : sharedPreferences.getBool("grayscale") ;
-     gaussian = sharedPreferences.getBool("gaussian") == null ? gaussian : sharedPreferences.getBool("gaussian") ;
-     rotate = sharedPreferences.getBool("rotate") == null ? rotate : sharedPreferences.getBool("rotate") ;
+    readFallbackValues();
 
-     return Column(children: [
+    return Column(children: [
       SettingsList(
         shrinkWrap: true,
         sections: [
@@ -66,7 +78,8 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                 leading: Icon(Icons.language),
                 onTap: () {
                   Navigator.of(context).push(MaterialPageRoute(
-                      builder: (BuildContext context) => LanguageSetting(sharedPreferences)));
+                      builder: (BuildContext context) =>
+                          LanguageSetting(_prefs)));
                 },
               ),
               SettingsTile(
@@ -75,7 +88,7 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                 onTap: () {
                   Navigator.of(context).push(MaterialPageRoute(
                       builder: (BuildContext context) =>
-                          ServerSettings(sharedPreferences)));
+                          ServerSettings(_prefs)));
                 },
               ),
               SettingsTile(
@@ -83,68 +96,66 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                 leading: Icon(Icons.vpn_key),
                 onTap: () {
                   Navigator.of(context).push(MaterialPageRoute(
-                      builder: (BuildContext context) =>
-                          ApiSettings(sharedPreferences)));
+                      builder: (BuildContext context) => ApiSettings(_prefs)));
                 },
               ),
             ],
           ),
           SettingsSection(
             title: S.of(context).cameraSettings,
-            tiles: [ 
+            tiles: [
               SettingsTile.switchTile(
-              title: S.of(context).rotateImage,
-              leading: Icon(Icons.rotate_right_sharp),
-              switchValue: rotate,
-              onToggle: (bool value) {
-                setState(() {
-                  rotate = value;
-                  sharedPreferences.setBool("rotate", value);
-                });
-              },
-            ),
-              
+                title: S.of(context).rotateImage,
+                leading: Icon(Icons.rotate_right_sharp),
+                switchValue: _rotate,
+                onToggle: (bool value) {
+                  setState(() {
+                    _rotate = value;
+                    _prefs.setBool("rotate", value);
+                  });
+                },
+              ),
               SettingsTile.switchTile(
                 title: S.of(context).grayscaleImage,
                 leading: Icon(Icons.wb_incandescent_outlined),
-                switchValue: grayscale,
+                switchValue: _grayscale,
                 onToggle: (bool value) {
                   setState(() {
-                    grayscale = value;
-                    sharedPreferences.setBool("grayscale", value);
+                    _grayscale = value;
+                    _prefs.setBool("grayscale", value);
                   });
                 },
               ),
               SettingsTile.switchTile(
                 title: S.of(context).gaussianBlur,
                 leading: Icon(Icons.blur_on_outlined),
-                switchValue: gaussian,
+                switchValue: _gaussian,
                 onToggle: (bool value) {
                   setState(() {
-                    gaussian = value;
-                    sharedPreferences.setBool("gaussian", value);
+                    _gaussian = value;
+                    _prefs.setBool("gaussian", value);
                   });
                 },
               ),
               SettingsTile.switchTile(
                 title: S.of(context).neuronalNetworkParser,
                 leading: Icon(Icons.camera_enhance_outlined),
-                switchValue: !legacyParser,
+                switchValue: !_legacyParser,
                 onToggle: (bool value) {
                   setState(() {
-                    legacyParser = !value;
-                    sharedPreferences.setBool("legacyParser", !value);
+                    _legacyParser = !value;
+                    _prefs.setBool("legacyParser", !value);
                   });
                 },
               ),
               SettingsTile.switchTile(
                 title: S.of(context).fuzzyParser,
                 leading: Icon(Icons.camera_enhance_rounded),
-                switchValue: legacyParser,
+                switchValue: _legacyParser,
                 onToggle: (bool value) {
                   setState(() {
-                    legacyParser = value;
-                    sharedPreferences.setBool("legacyParser", value);
+                    _legacyParser = value;
+                    _prefs.setBool("legacyParser", value);
                   });
                 },
               ),
@@ -156,11 +167,11 @@ class _SettingsWidgetState extends State<SettingsWidget> {
               SettingsTile.switchTile(
                 title: S.of(context).enableDebugOutput,
                 leading: Icon(Icons.bug_report),
-                switchValue: enableDebug,
+                switchValue: _debugOutput,
                 onToggle: (bool value) {
                   setState(() {
-                    enableDebug = value;
-                    sharedPreferences.setBool("enable_debug_output", value);
+                    _debugOutput = value;
+                    _prefs.setBool("enable_debug_output", value);
                   });
                 },
               ),
