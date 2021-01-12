@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 
 class DimensionsCalculator {
-  static var fallback_height = 250.0;
-  static var banner_ration = 4;
+  static var height = 250.0;
+  static var banner = 4;
   static var isCalculated = false;
 
   static double getBannerHeight(BuildContext context) {
     if (!isCalculated)
-      fallback_height = MediaQuery.of(context).size.height / banner_ration;
+      height = MediaQuery.of(context).size.height / banner;
 
     isCalculated = true;
-    return fallback_height;
+    return height;
   }
 }

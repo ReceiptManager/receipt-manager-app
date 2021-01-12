@@ -20,7 +20,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:receipt_manager/generated/l10n.dart';
 import 'package:progress_dialog/progress_dialog.dart';
-import 'package:receipt_manager/factory/padding_factory.dart';
 import 'package:receipt_manager/network/network_client.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
 import 'package:shared_preferences/shared_preferences.dart';

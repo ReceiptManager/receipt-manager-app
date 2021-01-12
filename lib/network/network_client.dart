@@ -37,7 +37,7 @@ import '../main.dart';
 class NetworkClient {
   static final _protocol = "https://";
   static final _path = "/api/upload";
-  static final _access_token = "?access_token=";
+  static final _token = "?access_token=";
   static final _port = "8721";
   static final _timeout = 120;
   static const int _transactionDuration = 2;
@@ -54,7 +54,7 @@ class NetworkClient {
   static String buildUrl(final ip, final token, final legacyParser, final gaussian, final grayscale, final rotate) {
     if (token == null || token == "")
       return _protocol + ip + ":" + _port + _path + "&legacy_parser=" + getValue(legacyParser) + "&grayscale_image=" + getValue(grayscale)  + "&gaussian_blur=" + getValue(gaussian) + "&rotate=" + getValue(rotate);
-    return _protocol + ip + ":" + _port + _path + _access_token + token + "&legacy_parser=" + getValue(legacyParser) + "&grayscale_image=" + getValue(grayscale)  + "&gaussian_blur=" + getValue(gaussian) + "&rotate=" + getValue(rotate);
+    return _protocol + ip + ":" + _port + _path + _token + token + "&legacy_parser=" + getValue(legacyParser) + "&grayscale_image=" + getValue(grayscale)  + "&gaussian_blur=" + getValue(gaussian) + "&rotate=" + getValue(rotate);
   }
 
   /// Convert boolean values to python boolean values

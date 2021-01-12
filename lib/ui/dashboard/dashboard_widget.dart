@@ -6,9 +6,7 @@ import 'package:receipt_manager/generated/l10n.dart';
 import 'package:receipt_manager/theme/style.dart';
 
 class DashboardWidget extends StatelessWidget {
-  String _country = 'USA';
-
-  @override
+   @override
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(

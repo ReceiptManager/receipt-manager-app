@@ -501,7 +501,6 @@ class _FilterChipScreenState extends State<FilterChipScreen> {
   @override
   Widget build(BuildContext context) {
     filterCategories = [];
-    ;
 
     return Container(
       height: 65,

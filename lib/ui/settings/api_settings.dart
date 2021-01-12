@@ -35,7 +35,7 @@ class _ApiSettingsState extends State<ApiSettings> {
 
   _ApiSettingsState(this.sharedPreferences);
 
-  String api_token = "";
+  String _token = "";
 
   void dispose() {
     super.dispose();
@@ -46,7 +46,7 @@ class _ApiSettingsState extends State<ApiSettings> {
     return new TextFormField(
       controller: _textController,
       onChanged: (value) {
-        api_token = value;
+        _token = value;
       },
       keyboardType: TextInputType.url,
       decoration: new InputDecoration(
@@ -74,11 +74,11 @@ class _ApiSettingsState extends State<ApiSettings> {
   @override
   Widget build(BuildContext context) {
     if (sharedPreferences.getString("api_token") != null) {
-      api_token = sharedPreferences.getString("api_token");
+      _token = sharedPreferences.getString("api_token");
       _textController.value = TextEditingValue(
-        text: api_token,
+        text: _token,
         selection: TextSelection.fromPosition(
-          TextPosition(offset: api_token.length),
+          TextPosition(offset: _token.length),
         ),
       );
     }
@@ -95,7 +95,7 @@ class _ApiSettingsState extends State<ApiSettings> {
                   padding: const EdgeInsets.all(16.0),
                   child: FloatingActionButton(
                       onPressed: () async {
-                        sharedPreferences.setString("api_token", api_token);
+                        sharedPreferences.setString("api_token", _token);
                         _scaffoldKey2.currentState
                           ..hideCurrentSnackBar()
                           ..showSnackBar(SnackBar(
