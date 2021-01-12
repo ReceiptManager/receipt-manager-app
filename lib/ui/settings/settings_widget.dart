@@ -18,6 +18,7 @@
 import 'package:flutter/material.dart';
 import 'package:receipt_manager/generated/l10n.dart';
 import 'package:receipt_manager/ui/settings/api_settings.dart';
+import 'package:receipt_manager/ui/settings/open_source.dart';
 import 'package:receipt_manager/ui/settings/server_settings.dart';
 import 'package:settings_ui/settings_ui.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -65,9 +66,10 @@ class _SettingsWidgetState extends State<SettingsWidget> {
   Widget build(BuildContext context) {
     readFallbackValues();
 
-    return Column(children: [
+    return
       SettingsList(
         shrinkWrap: true,
+        backgroundColor: Colors.white,
         sections: [
           SettingsSection(
             title: S.of(context).settingsGeneralCategory,
@@ -176,9 +178,22 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                 },
               ),
             ],
+          ),
+          SettingsSection(
+            title: S.of(context).licence,
+            tiles: [
+              SettingsTile(
+                title: S.of(context).opensourceLicences,
+                leading: Icon(Icons.wysiwyg),
+                onTap: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (BuildContext context) =>
+                          OpenSourceSettings()));
+                },
+              ),
+            ],
           )
         ],
-      )
-    ]);
+      );
   }
 }
