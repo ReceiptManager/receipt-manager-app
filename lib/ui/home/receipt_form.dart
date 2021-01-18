@@ -31,9 +31,11 @@ import 'package:receipt_manager/factory/text_form_history.dart';
 import 'package:receipt_manager/generated/l10n.dart';
 import 'package:receipt_manager/generator/receipt_generator.dart';
 import 'package:receipt_manager/model/receipt_category.dart';
+import 'package:receipt_manager/network/network_client.dart';
 import 'package:receipt_manager/theme/theme_manager.dart';
 import 'package:receipt_manager/util/dimensions.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:toggle_switch/toggle_switch.dart';
 
 import '../parser/camera_picker.dart';
 
@@ -320,11 +322,35 @@ class ReceiptInputController extends State<ReceiptForm> {
                                               ),
                                             );
                                           }).toList())))),
-                              new Align(
-                                  alignment: Alignment.bottomRight,
-                                  child: Padding(
-                                      padding: const EdgeInsets.all(16.0),
-                                      child: submitButton())),
+
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    new Align(
+                                        alignment: Alignment.topCenter,
+                                        child: Padding(
+                                            padding: const EdgeInsets.all(8),
+                                            child:
+                                            ToggleSwitch(
+                                              minWidth: 90.0,
+                                              initialLabelIndex: 0,
+                                              activeFgColor: Colors.white,
+                                              inactiveBgColor: Colors.black,
+                                              inactiveFgColor: Colors.white,
+                                              labels: [S.of(context).outcome, S.of(context).income],
+                                              activeBgColors: [Colors.blueAccent, Colors.red],
+                                              onToggle: (index) {
+                                                print('switched to: $index');
+                                              },
+                                            ))),
+                                    new Align(
+                                        alignment: Alignment.bottomRight,
+                                        child: Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: submitButton())),
+                                  ],
+                                )
+
                             ],
                           ),
                         ))),
@@ -362,6 +388,11 @@ class ReceiptInputController extends State<ReceiptForm> {
               reset();
               return;
             }
+
+            // trim negligent whitespaces
+            shopName = shopName.trim();
+            total = total.trim();
+
             _bloc.add(InsertEvent(
                 receipt: ReceiptsCompanion(
                     date: Value(receiptDate),
@@ -369,6 +400,14 @@ class ReceiptInputController extends State<ReceiptForm> {
                     category: Value(jsonEncode(selectedCategory)),
                     shop: Value(shopName))));
             _bloc.add(ReceiptAllFetch());
+
+            bool _submitTrainingData = sharedPrefs.getBool("sendTrainingData");
+            if (_submitTrainingData != null && _submitTrainingData == true && sendImage) {
+              String ip = sharedPrefs.get("ipv4");
+              String token = sharedPrefs.get("api_token");
+              NetworkClient.sendTrainingData(ip, token, shopName, receiptDate.toIso8601String(), total, context);
+            }
+
             reset();
           } else {
             if (receiptCategory == null || receiptCategory.isEmpty) {
