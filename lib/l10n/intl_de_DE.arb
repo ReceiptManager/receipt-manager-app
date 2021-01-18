@@ -12,7 +12,7 @@
   "enableDebugOutput": "Entwicklerinformationen anzeigen",
   "settingsMiscTitle": "Verschiedenes",
   "openSourceLicence": "Open-Source Lizenzen",
-  "addReceipt": "Kassenbeleg hinzufügen",
+  "addReceipt": "Kassenbeleg hinzugefügt",
   "receiptEmpty": "Bitte geben Sie ein Datum ein",
   "receiptDateFormat": "dd.MM.y",
   "receiptDateLabelText": "Datum",
@@ -89,7 +89,7 @@
   "invalidApiToken": "Invalid API token",
   "updateApiTokenSuccessfully": "Update api token successfully",
   "dashboard": "Übersicht",
-   "ocr": "OCR Einstellungen",
+  "ocr": "OCR Einstellungen",
   "highContrast": "Hoher Kontrast",
   "cameraSettings": "Kamera Einstellungen",
   "neuronalNetworkParser": "Neuronal network parser",
@@ -99,6 +99,10 @@
   "rotateImage": "Bild drehen um 90°",
   "receipt": "Kassenbeleg anzeigen",
   "takeAReceipt": "Kassenbeleg scannen",
-  "licence": "Licence",
-  "opensourceLicences": "Open-Source Bibliotheken"
+  "licence": "Lizenzen",
+  "opensourceLicences": "Open-Source Bibliotheken",
+  "outcome": "Ausgabe",
+  "income": "Einnahme",
+  "failedToSubmitTrainingData": "Trainingsdaten konnten nicht übermittelt werden",
+  "sendTrainingData": "Übertrage Trainingsdaten"
 }

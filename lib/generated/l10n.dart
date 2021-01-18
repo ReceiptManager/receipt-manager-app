@@ -155,10 +155,10 @@ class S {
     );
   }
 
-  /// `Kassenbeleg hinzufügen`
+  /// `Kassenbeleg hinzugefügt`
   String get addReceipt {
     return Intl.message(
-      'Kassenbeleg hinzufügen',
+      'Kassenbeleg hinzugefügt',
       name: 'addReceipt',
       desc: '',
       args: [],
@@ -1025,10 +1025,10 @@ class S {
     );
   }
 
-  /// `Licence`
+  /// `Lizenzen`
   String get licence {
     return Intl.message(
-      'Licence',
+      'Lizenzen',
       name: 'licence',
       desc: '',
       args: [],
@@ -1040,6 +1040,46 @@ class S {
     return Intl.message(
       'Open-Source Bibliotheken',
       name: 'opensourceLicences',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Ausgabe`
+  String get outcome {
+    return Intl.message(
+      'Ausgabe',
+      name: 'outcome',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Einnahme`
+  String get income {
+    return Intl.message(
+      'Einnahme',
+      name: 'income',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Trainingsdaten konnten nicht übermittelt werden`
+  String get failedToSubmitTrainingData {
+    return Intl.message(
+      'Trainingsdaten konnten nicht übermittelt werden',
+      name: 'failedToSubmitTrainingData',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Übertrage Trainingsdaten`
+  String get sendTrainingData {
+    return Intl.message(
+      'Übertrage Trainingsdaten',
+      name: 'sendTrainingData',
       desc: '',
       args: [],
     );
