@@ -12,7 +12,7 @@
   "enableDebugOutput": "Enable debug output",
   "settingsMiscTitle": "Misc",
   "openSourceLicence": "Open source licenses",
-  "addReceipt": "Add receipt",
+  "addReceipt": "Added receipt",
   "receiptDateInvalid": "Receipt date is invalid, format:",
   "receiptEmpty": "Please enter some date",
   "receiptDateFormat": "dd/MM/y",
@@ -100,5 +100,9 @@
   "receipt": "Show receipt",
   "takeAReceipt": "Take a receipt",
   "licence": "Licences",
-  "opensourceLicences": "Opensource libaries"
+  "opensourceLicences": "Opensource libaries",
+  "outcome": "Outcome",
+  "income": "Income",
+  "failedToSubmitTrainingData": "Failed to submit training data",
+  "sendTrainingData": "Send training data"
 }
