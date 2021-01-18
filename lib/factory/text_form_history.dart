@@ -105,11 +105,9 @@ class TextFormFactory {
       BuildContext context,
       List<Receipt> receipt) {
     List<String> storeNameList = [];
-    if (receipt != null) {
-      for (Receipt r in receipt) {
-        if (!storeNameList.contains(r.shop)) storeNameList.add(r.shop);
-      }
-    }
+
+    for (Receipt r in receipt)
+      if (!storeNameList.contains(r.shop.trim())) storeNameList.add(r.shop.trim());
 
     return SimpleAutocompleteFormField<String>(
       style: TextStyle(color: Colors.black),
