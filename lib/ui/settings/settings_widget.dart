@@ -40,7 +40,8 @@ class _SettingsWidgetState extends State<SettingsWidget> {
   bool _debugOutput = false;
   bool _legacyParser = true;
   bool _rotate = false;
-
+  bool _sendTrainingData = false;
+  
   final SharedPreferences _prefs;
 
   _SettingsWidgetState(this._prefs);
@@ -60,6 +61,9 @@ class _SettingsWidgetState extends State<SettingsWidget> {
         : _prefs.getBool("gaussian");
     _rotate =
         _prefs.getBool("rotate") == null ? _rotate : _prefs.getBool("rotate");
+
+    _sendTrainingData =
+    _prefs.getBool("sendTrainingData") == null ? _sendTrainingData : _prefs.getBool("sendTrainingData");
   }
 
   @override
@@ -158,6 +162,17 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                   setState(() {
                     _legacyParser = value;
                     _prefs.setBool("legacyParser", value);
+                  });
+                },
+              ),
+              SettingsTile.switchTile(
+                title: S.of(context).sendTrainingData,
+                leading: Icon(Icons.model_training),
+                switchValue: _sendTrainingData,
+                onToggle: (bool value) {
+                  setState(() {
+                    _sendTrainingData = value;
+                    _prefs.setBool("sendTrainingData", value);
                   });
                 },
               ),
