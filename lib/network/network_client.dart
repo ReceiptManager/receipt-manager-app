@@ -22,6 +22,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:http/http.dart';
 import 'package:http_parser/http_parser.dart' as mime;
 import 'package:intl/intl.dart';
 import 'package:path/path.dart';
@@ -31,12 +32,13 @@ import 'package:receipt_manager/generated/l10n.dart';
 import '../main.dart';
 
 /// Network client interact with the python image server.
-/// Iimal post request to the server over https,
+/// Post request to the server over https,
 /// after it will parse the response and update the corresponding
 ///  TextFields.
 class NetworkClient {
   static final _protocol = "https://";
-  static final _path = "/api/upload";
+  static final _uploadPath = "/api/upload";
+  static final _trainingPath = "/api/training";
   static final _token = "?access_token=";
   static final _port = "8721";
   static final _timeout = 120;
@@ -51,10 +53,37 @@ class NetworkClient {
     HttpOverrides.global = new SelfSignedHttpAgent();
   }
 
-  static String buildUrl(final ip, final token, final legacyParser, final gaussian, final grayscale, final rotate) {
+  static String getAPIUrl(final ip, final token, final legacyParser,
+      final gaussian, final grayscale, final rotate) {
     if (token == null || token == "")
-      return _protocol + ip + ":" + _port + _path + "&legacy_parser=" + getValue(legacyParser) + "&grayscale_image=" + getValue(grayscale)  + "&gaussian_blur=" + getValue(gaussian) + "&rotate=" + getValue(rotate);
-    return _protocol + ip + ":" + _port + _path + _token + token + "&legacy_parser=" + getValue(legacyParser) + "&grayscale_image=" + getValue(grayscale)  + "&gaussian_blur=" + getValue(gaussian) + "&rotate=" + getValue(rotate);
+      return _protocol +
+          ip +
+          ":" +
+          _port +
+          _uploadPath +
+          "&legacy_parser=" +
+          getValue(legacyParser) +
+          "&grayscale_image=" +
+          getValue(grayscale) +
+          "&gaussian_blur=" +
+          getValue(gaussian) +
+          "&rotate=" +
+          getValue(rotate);
+    return _protocol +
+        ip +
+        ":" +
+        _port +
+        _uploadPath +
+        _token +
+        token +
+        "&legacy_parser=" +
+        getValue(legacyParser) +
+        "&grayscale_image=" +
+        getValue(grayscale) +
+        "&gaussian_blur=" +
+        getValue(gaussian) +
+        "&rotate=" +
+        getValue(rotate);
   }
 
   /// Convert boolean values to python boolean values
@@ -66,9 +95,33 @@ class NetworkClient {
     }
   }
 
-  static toNavigationBar(BuildContext context) {
+  static toHomeScreen(BuildContext context) async {
+    await Future.delayed(const Duration(seconds: _transactionDuration), () {});
+
     Navigator.push(context,
         MaterialPageRoute(builder: (context) => HomeScreen(null, true)));
+  }
+
+  static sendTrainingData(String ip, String token, String company, String date,
+      String total, BuildContext context) async {
+    init();
+
+    log("Submit training data.");
+    Map<String, String> headers = {"Content-type": "application/json"};
+    String json = '{"company": "$company", "date": "$date","total": "$total"}';
+    Response response =
+        await post(getTrainingUrl(ip, token), headers: headers, body: json);
+    if (response.statusCode != 0) {
+      Scaffold.of(context).showSnackBar(SnackBar(
+        content: Text(S.of(context).failedToSubmitTrainingData),
+        backgroundColor: Colors.red,
+      ));
+    } else {
+      Scaffold.of(context).showSnackBar(SnackBar(
+        content: Text("Submitted training data"),
+        backgroundColor: Colors.green,
+      ));
+    }
   }
 
   /// Send image via post request to the server and capture the response.
@@ -103,7 +156,8 @@ class NetworkClient {
     stream.cast();
 
     var length = await imageFile.length();
-    var uri = Uri.parse(buildUrl(ip, token, legacyParser, gaussian, grayscale, rotate));
+    var uri = Uri.parse(
+        getAPIUrl(ip, token, legacyParser, gaussian, grayscale, rotate));
 
     log(uri.toString());
 
@@ -130,23 +184,18 @@ class NetworkClient {
         onTimeout: () async {
           key.currentState
             ..showSnackBar(SnackBar(
-                content: Text(S.of(context).serverTimeout),
+                content: Text(S
+                    .of(context)
+                    .serverTimeout),
                 backgroundColor: Colors.red));
-          await Future.delayed(
-              const Duration(seconds: _transactionDuration), () {});
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => HomeScreen(null, true)));
 
+          toHomeScreen(context);
           return;
         },
       );
 
       if (response == null) {
-        await Future.delayed(
-            const Duration(seconds: _transactionDuration), () {});
-        Navigator.push(context,
-            MaterialPageRoute(builder: (context) => HomeScreen(null, true)));
-        return;
+        toHomeScreen(context);
       }
 
       int ret = response.statusCode;
@@ -201,7 +250,9 @@ class NetworkClient {
       if (sendDebugOutput == null || sendDebugOutput == false) {
         msg = "General exception";
       } else {
-        msg = S.of(context).serverTimeout + _.toString();
+        msg = S
+            .of(context)
+            .serverTimeout + _.toString();
       }
 
       key.currentState
@@ -209,33 +260,35 @@ class NetworkClient {
         ..showSnackBar(
             SnackBar(content: Text(msg), backgroundColor: Colors.red));
 
-      Navigator.push(context,
-          MaterialPageRoute(builder: (context) => HomeScreen(null, true)));
-
+      toHomeScreen(context);
       return;
     } on SocketException catch (_) {
       log("Get socket exception" + _.toString());
       String msg = "";
       if (sendDebugOutput == null || sendDebugOutput == false) {
-        msg = S.of(context).socketException;
+        msg = S
+            .of(context)
+            .socketException;
       } else {
-        msg = S.of(context).socketException + _.toString();
+        msg = S
+            .of(context)
+            .socketException + _.toString();
       }
       key.currentState
         ..hideCurrentSnackBar()
         ..showSnackBar(
             SnackBar(content: Text(msg), backgroundColor: Colors.red));
-      await Future.delayed(
-          const Duration(seconds: _transactionDuration), () {});
-      Navigator.push(context,
-          MaterialPageRoute(builder: (context) => HomeScreen(null, true)));
+
+      toHomeScreen(context);
       return;
     } on HandshakeException catch (_) {
       String msg = "";
       if (sendDebugOutput == null || sendDebugOutput == false) {
         msg = "General exception";
       } else {
-        msg = S.of(context).handshakeException + _.toString();
+        msg = S
+            .of(context)
+            .handshakeException + _.toString();
       }
 
       key.currentState
@@ -243,29 +296,40 @@ class NetworkClient {
         ..showSnackBar(
             SnackBar(content: Text(msg), backgroundColor: Colors.red));
 
-      Navigator.push(context,
-          MaterialPageRoute(builder: (context) => HomeScreen(null, true)));
-
+      toHomeScreen(context);
       return;
     } catch (_) {
       log("[EXCEPTION] get general exception" + _.toString());
 
       String msg = "";
       if (sendDebugOutput == null || sendDebugOutput == false) {
-        msg = S.of(context).generalException;
+        msg = S
+            .of(context)
+            .generalException;
       } else {
-        msg = S.of(context).generalException + _.toString();
+        msg = S
+            .of(context)
+            .generalException + _.toString();
       }
 
       key.currentState
         ..hideCurrentSnackBar()
         ..showSnackBar(
             SnackBar(content: Text(msg), backgroundColor: Colors.red));
-      Navigator.push(context,
-          MaterialPageRoute(builder: (context) => HomeScreen(null, true)));
 
+      toHomeScreen(context);
       return;
     }
+  }
+
+  static getTrainingUrl(String ip, String token) {
+    return _protocol +
+        ip +
+        ":" +
+        _port +
+        _trainingPath +
+        _token +
+        token;
   }
 }
 
