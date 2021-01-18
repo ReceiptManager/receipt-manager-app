@@ -15,7 +15,7 @@ publish_to: '1.0.8' # Remove this line if you wish to publish to pub.dev
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 1.0.8+48
+version: 1.0.8+57
 
 environment:
   sdk: ">=2.7.0 <3.0.0"
@@ -27,11 +27,9 @@ dependencies:
   flutter_localizations: # added
     sdk: flutter
 
-  # CAMERA MODULE
   camera: ^0.5.8+9
   path_provider:
   path:
-
   curved_navigation_bar: ^0.3.4
   shared_preferences:  ^0.5.12+2
   giffy_dialog: ^1.8.0
@@ -57,7 +55,7 @@ dependencies:
   random_date: ^0.0.5
   flutter_svg: ^0.19.0
   percent_indicator: ^2.1.1
-
+  toggle_switch: "^0.1.8"
 
 
 dev_dependencies:
