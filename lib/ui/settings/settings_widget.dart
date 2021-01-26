@@ -140,7 +140,14 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                   setState(() {
                     _gaussian = value;
                     _prefs.setBool("gaussian", value);
-                  });
+
+                  //The gaussian blur does only work if the image
+                  //is grayscaled
+                  if (value) {
+                    _grayscale = true;
+                    _prefs.setBool("grayscale", value);
+                  }
+                });
                 },
               ),
               SettingsTile.switchTile(
