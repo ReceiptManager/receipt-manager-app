@@ -84,7 +84,7 @@ class _WeeklyOverviewScreenState extends State<WeeklyOverviewScreen> {
     int x,
     double y, {
     bool isTouched = false,
-    Color barColor = LightColor.brighter,
+    Color barColor = Colors.red,
     double width = 22,
     List<int> showTooltips = const [],
   }) {
@@ -103,7 +103,7 @@ class _WeeklyOverviewScreenState extends State<WeeklyOverviewScreen> {
           backDrawRodData: BackgroundBarChartRodData(
             show: true,
             y: maxY,
-            colors: [LightColor.brighterL],
+            colors: [Colors.red],
           ),
         ),
       ],
@@ -189,7 +189,7 @@ class _WeeklyOverviewScreenState extends State<WeeklyOverviewScreen> {
         bottomTitles: SideTitles(
           showTitles: true,
           getTextStyles: (value) => const TextStyle(
-              color: LightColor.brighter,
+              color: Colors.red,
               fontWeight: FontWeight.bold,
               fontSize: 14),
           margin: 16,
@@ -257,7 +257,7 @@ class _WeeklyOverviewScreenState extends State<WeeklyOverviewScreen> {
                     S.of(context).overviewExpenses,
                     style: TextStyle(
                         fontSize: 18,
-                        color: Colors.grey.shade500,
+                        color: Colors.black,
                         fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(
@@ -283,7 +283,7 @@ class _WeeklyOverviewScreenState extends State<WeeklyOverviewScreen> {
               child: Align(
                   alignment: Alignment.topRight,
                   child: Text(
-                    "-" + sum.toStringAsFixed(2) + S.of(context).currency,
+                    sum.toStringAsFixed(2) + S.of(context).currency,
                     style: TextStyle(
                         color: Colors.red,
                         fontSize: 24,
