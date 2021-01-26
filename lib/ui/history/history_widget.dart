@@ -188,9 +188,9 @@ class HistoryWidgetState extends State<HistoryWidget> {
                       contentPadding:
                           EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
                       trailing: Text(
-                        "-" + receipt.total + S.of(context).currency,
+                       receipt.total + S.of(context).currency,
                         style: TextStyle(
-                            color: Colors.redAccent,
+                            color: receipt.total[0] == "-" ? Colors.redAccent : Colors.green,
                             fontWeight: FontWeight.bold,
                             fontSize: 16),
                       ),
