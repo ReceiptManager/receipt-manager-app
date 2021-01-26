@@ -72,6 +72,8 @@ class ReceiptInputController extends State<ReceiptForm> {
   ReceiptsCompanion parsedReceipt;
   ReceiptCategory selectedCategory;
 
+  bool outcome = true;
+
   ReceiptInputController(
       this.parsedReceipt, this.sendImage, this.sharedPrefs, this._bloc);
 
@@ -338,9 +340,13 @@ class ReceiptInputController extends State<ReceiptForm> {
                                               inactiveBgColor: Colors.black,
                                               inactiveFgColor: Colors.white,
                                               labels: [S.of(context).outcome, S.of(context).income],
-                                              activeBgColors: [Colors.blueAccent, Colors.red],
+                                              activeBgColors: [Colors.red, Colors.blue],
                                               onToggle: (index) {
-                                                print('switched to: $index');
+                                                // if the index is
+                                                // odd: outcome
+                                                // even : income
+                                                // since the index toggles between 0 and 1
+                                                outcome = index.isOdd;
                                               },
                                             ))),
                                     new Align(
@@ -392,6 +398,7 @@ class ReceiptInputController extends State<ReceiptForm> {
             // trim negligent whitespaces
             shopName = shopName.trim();
             total = total.trim();
+            total = outcome ? "-" + total : total;
 
             _bloc.add(InsertEvent(
                 receipt: ReceiptsCompanion(
