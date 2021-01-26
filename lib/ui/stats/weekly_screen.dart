@@ -23,7 +23,6 @@ import 'package:receipt_manager/database/receipt_database.dart';
 import 'package:receipt_manager/factory/padding_factory.dart';
 import 'package:receipt_manager/generated/l10n.dart';
 import 'package:receipt_manager/math/math_util.dart';
-import 'package:receipt_manager/theme/color/color.dart';
 
 class WeeklyOverviewScreen extends StatefulWidget {
   final List<Receipt> receipt;
@@ -102,8 +101,7 @@ class _WeeklyOverviewScreenState extends State<WeeklyOverviewScreen> {
           width: width,
           backDrawRodData: BackgroundBarChartRodData(
             show: true,
-            y: maxY,
-            colors: [Colors.red],
+            colors: [Colors.green],
           ),
         ),
       ],
@@ -143,7 +141,7 @@ class _WeeklyOverviewScreenState extends State<WeeklyOverviewScreen> {
     return BarChartData(
       barTouchData: BarTouchData(
         touchTooltipData: BarTouchTooltipData(
-            tooltipBgColor: Colors.grey,
+            tooltipBgColor: Colors.black,
             getTooltipItem: (group, groupIndex, rod, rodIndex) {
               String weekDay;
               switch (group.x.toInt()) {
@@ -170,7 +168,7 @@ class _WeeklyOverviewScreenState extends State<WeeklyOverviewScreen> {
                   break;
               }
               return BarTooltipItem(weekDay + '\n' + (rod.y - 1).toString(),
-                  TextStyle(color: Colors.pink));
+                  TextStyle(color: Colors.red));
             }),
         touchCallback: (barTouchResponse) {
           setState(() {
