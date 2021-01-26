@@ -19,6 +19,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:receipt_manager/bloc/moor/db_bloc.dart';
 import 'package:receipt_manager/bloc/moor/db_state.dart';
+import 'package:receipt_manager/factory/banner_factory.dart';
 import 'package:receipt_manager/generated/l10n.dart';
 import 'package:receipt_manager/ui/stats/categories_screen.dart';
 import 'package:receipt_manager/ui/stats/weekly_screen.dart';
@@ -56,11 +57,14 @@ class StatsWidgetState extends State<StatsWidget> {
         }
         if (state is LoadedState) {
           final receipts = state.receipt;
-          return SingleChildScrollView(
-              child: Column(children: <Widget>[
-            WeeklyOverviewScreen(receipts),
-            CategoryOverviewScreen(receipts)
-          ]));
+          return Column(children: [
+            BannerFactory.get(S.of(context).overviewExpenses, context),
+            SingleChildScrollView(
+                child: Column(children: <Widget>[
+              WeeklyOverviewScreen(receipts),
+              //     CategoryOverviewScreen(receipts)
+            ]))
+          ]);
         }
 
         return Container(
