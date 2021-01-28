@@ -335,20 +335,26 @@ class ReceiptInputController extends State<ReceiptForm> {
                                             child:
                                             ToggleSwitch(
                                               minWidth: 90.0,
-                                              initialLabelIndex: 0,
-                                              activeFgColor: Colors.white,
-                                              inactiveBgColor: Colors.black,
-                                              inactiveFgColor: Colors.white,
-                                              labels: [S.of(context).outcome, S.of(context).income],
-                                              activeBgColors: [Colors.red, Colors.blue],
-                                              onToggle: (index) {
-                                                // if the index is
-                                                // odd: outcome
-                                                // even : income
-                                                // since the index toggles between 0 and 1
-                                                outcome = index.isOdd;
-                                              },
-                                            ))),
+                                            changeOnTap: outcome,
+                                            initialLabelIndex: 0,
+                                            activeFgColor: Colors.white,
+                                            inactiveBgColor: Colors.black,
+                                            inactiveFgColor: Colors.white,
+                                            labels: [
+                                              S.of(context).outcome,
+                                              S.of(context).income
+                                            ],
+                                            activeBgColors: [
+                                              Colors.red,
+                                              Colors.green
+                                            ],
+                                            onToggle: (index) {
+                                              if (index == 0)
+                                                outcome = true;
+                                              else
+                                                outcome = false;
+                                            },
+                                          ))),
                                     new Align(
                                         alignment: Alignment.bottomRight,
                                         child: Padding(
@@ -385,7 +391,7 @@ class ReceiptInputController extends State<ReceiptForm> {
           if (form.validate() || receiptCategory != null) {
             try {
               Scaffold.of(context).showSnackBar(SnackBar(
-                content: Text(S.of(context).addReceipt),
+                content: Text(S.of(context).addedReceipt),
                 backgroundColor: Colors.green,
               ));
               shopName = storeNameController.text;
