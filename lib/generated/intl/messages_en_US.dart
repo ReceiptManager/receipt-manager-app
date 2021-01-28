@@ -22,7 +22,8 @@ class MessageLookup extends MessageLookupByLibrary {
   final messages = _notInlinedMessages(_notInlinedMessages);
   static _notInlinedMessages(_) => <String, Function> {
     "Rent" : MessageLookupByLibrary.simpleMessage("Rent"),
-    "addReceipt" : MessageLookupByLibrary.simpleMessage("Added receipt"),
+    "addReceipt" : MessageLookupByLibrary.simpleMessage("Add receipt"),
+    "addedReceipt" : MessageLookupByLibrary.simpleMessage("Added receipt"),
     "apitoken" : MessageLookupByLibrary.simpleMessage("API Token"),
     "appBarTitle" : MessageLookupByLibrary.simpleMessage("Receipt manager"),
     "cameraSettings" : MessageLookupByLibrary.simpleMessage("Camera settings"),

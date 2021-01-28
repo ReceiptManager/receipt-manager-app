@@ -155,11 +155,21 @@ class S {
     );
   }
 
-  /// `Kassenbeleg hinzugefügt`
+  /// `Kassenbeleg hinzugefügen`
   String get addReceipt {
     return Intl.message(
-      'Kassenbeleg hinzugefügt',
+      'Kassenbeleg hinzugefügen',
       name: 'addReceipt',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Kassenbeleg hinzugefügt`
+  String get addedReceipt {
+    return Intl.message(
+      'Kassenbeleg hinzugefügt',
+      name: 'addedReceipt',
       desc: '',
       args: [],
     );
