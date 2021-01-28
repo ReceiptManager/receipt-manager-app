@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:receipt_manager/out/curved_painter.dart';
+import 'package:receipt_manager/util/curved_painter.dart';
 import 'package:receipt_manager/util/dimensions.dart';
 
 class BannerFactory {
