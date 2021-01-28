@@ -78,7 +78,7 @@ class ReceiptCategoryFactory {
         ReceiptCategory(
             S.of(context).diySupermarkt,
             Icon(Icons.book, color: _rand.randomColor(colorHue: ColorHue.blue)),
-            "bauhaus"),
+            "craft"),
       ];
     }
 
