@@ -24,6 +24,7 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
 import 'package:random_color/random_color.dart';
+import 'package:receipt_manager/api/expenses_api.dart';
 import 'package:receipt_manager/bloc/moor/bloc.dart';
 import 'package:receipt_manager/converter/color_converter.dart';
 import 'package:receipt_manager/database/receipt_database.dart';
@@ -110,9 +111,25 @@ class HistoryWidgetState extends State<HistoryWidget> {
               ],
             );
 
+          ExpensesApi api = ExpensesApi(receipts);
+          api.prepare_data();
+
           return Column(
             children: <Widget>[
               BannerFactory.get(S.of(context).overviewExpenses, context),
+              Container(
+                color: Colors.white,
+                child: Align(
+                    alignment: Alignment.centerRight,
+                    child: PaddingFactory.create(Text(
+        S.of(context).overview + ": " + api.weekly_total.toStringAsFixed(2) +
+                          S.of(context).currency,
+                      style: TextStyle(
+                          fontWeight: FontWeight.w200,
+                          fontSize: 20,
+                          color: Colors.black),
+                    ))),
+              ),
               FilterChipScreen(receipts),
               Expanded(child: _buildList(receipts))
             ],
