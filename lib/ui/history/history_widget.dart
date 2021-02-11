@@ -277,7 +277,7 @@ class HistoryWidgetState extends State<HistoryWidget> {
 
   _showDialog({controller, Receipt receipt}) async {
     this.storeName = receipt.shop;
-    this.receiptTotal = receipt.total;
+    this.receiptTotal = receipt.total.replaceAll(" ", "");
     this.currentReceiptDate = DateManipulator.humanDate(context, receipt.date);
     this.category = receipt.category;
     this.currentReceipt = receipt;
@@ -448,7 +448,9 @@ class HistoryWidgetState extends State<HistoryWidget> {
                 if (currentReceiptDate != null) {
                   try {
                     storeName = storeNameController.text;
+                    storeName.split(" ").join("");
                     receiptTotal = receiptTotalController.text;
+                    receiptTotal.split(" ").join("");
                   } catch (e) {
                     receiptTotalController.clear();
                     storeNameController.clear();

@@ -403,8 +403,9 @@ class ReceiptInputController extends State<ReceiptForm> {
 
             // trim negligent whitespaces
             shopName = shopName.trim();
-            total = total.trim();
+            shopName.split(" ").join("");
             total = outcome ? "-" + total : total;
+            total.split(" ").join("");
 
             _bloc.add(InsertEvent(
                 receipt: ReceiptsCompanion(
