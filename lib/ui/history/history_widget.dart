@@ -35,6 +35,7 @@ import 'package:receipt_manager/factory/logo_factory.dart';
 import 'package:receipt_manager/factory/padding_factory.dart';
 import 'package:receipt_manager/factory/text_form_history.dart';
 import 'package:receipt_manager/generated/l10n.dart';
+import 'package:receipt_manager/memento/receipt_memento.dart';
 import 'package:receipt_manager/model/receipt_category.dart';
 import 'package:receipt_manager/theme/color/color.dart';
 import 'package:receipt_manager/theme/theme_manager.dart';
@@ -49,9 +50,10 @@ class HistoryWidget extends StatefulWidget {
 }
 
 class HistoryWidgetState extends State<HistoryWidget> {
+  ReceiptMemento momentum = ReceiptMemento();
+  final _empty_image_path = "assets/not_empty";
   final _editFormKey = GlobalKey<FormState>();
   final DbBloc _bloc;
-  List<Receipt> receipts;
   DateTime receiptDate;
 
   TextEditingController storeNameController;
@@ -86,8 +88,9 @@ class HistoryWidgetState extends State<HistoryWidget> {
           );
         }
         if (state is LoadedState) {
-          receipts = state.receipt;
-          if (receipts == null || receipts.length == 0)
+          momentum.apply(state.receipt);
+
+          if ( this.momentum.receipts == null ||  this.momentum.receipts.length == 0)
             return new Column(
               children: [
                 BannerFactory.get(S.of(context).overviewExpenses, context),
@@ -97,7 +100,7 @@ class HistoryWidgetState extends State<HistoryWidget> {
                       children: [
                         PaddingFactory.create(
                           SvgPicture.asset(
-                            "assets/not_empty",
+                            this._empty_image_path,
                             height: 250,
                           ),
                         ),
@@ -111,8 +114,8 @@ class HistoryWidgetState extends State<HistoryWidget> {
               ],
             );
 
-          ExpensesApi api = ExpensesApi(receipts);
-          api.prepare_data();
+          ExpensesApi api = ExpensesApi();
+          api.init();
 
           return Column(
             children: <Widget>[
@@ -122,7 +125,7 @@ class HistoryWidgetState extends State<HistoryWidget> {
                 child: Align(
                     alignment: Alignment.centerRight,
                     child: PaddingFactory.create(Text(
-        S.of(context).overview + ": " + api.weekly_total.toStringAsFixed(2) +
+        S.of(context).overview + ": " + api.format(api.weekly_total, 2) +
                           S.of(context).currency,
                       style: TextStyle(
                           fontWeight: FontWeight.w200,
@@ -130,8 +133,18 @@ class HistoryWidgetState extends State<HistoryWidget> {
                           color: Colors.black),
                     ))),
               ),
-              FilterChipScreen(receipts),
-              Expanded(child: _buildList(receipts))
+              FilterChipScreen(),
+              Expanded(
+                child:  Container(
+                    color: Colors.white,
+                    child: ListView.builder(
+                        padding: const EdgeInsets.all(8.0),
+                        itemCount: this.momentum.receipts.length,
+                        itemBuilder: (_, index) {
+                          final receipt = this.momentum.receipts[index];
+                          return _buildListItems(receipt);
+                        }))
+              )
             ],
           );
         }
@@ -144,18 +157,6 @@ class HistoryWidgetState extends State<HistoryWidget> {
                 ]));
       },
     );
-  }
-
-  _buildList(List<Receipt> r) {
-    return new Container(
-        color: Colors.white,
-        child: ListView.builder(
-            padding: const EdgeInsets.all(8.0),
-            itemCount: r.length,
-            itemBuilder: (_, index) {
-              final receipt = r[index];
-              return _buildListItems(receipt);
-            }));
   }
 
   Widget _buildListItems(Receipt receipt) {
@@ -281,7 +282,6 @@ class HistoryWidgetState extends State<HistoryWidget> {
     this.currentReceiptDate = DateManipulator.humanDate(context, receipt.date);
     this.category = receipt.category;
     this.currentReceipt = receipt;
-    // this.currentReceipt = receipt;
 
     this.storeNameController.text = storeName;
     this.receiptTotalController.text = receiptTotal;
@@ -316,7 +316,7 @@ class HistoryWidgetState extends State<HistoryWidget> {
                                       child: TextFormFactory.storeName(
                                           storeNameController,
                                           context,
-                                          receipts))),
+                                          this.momentum.receipts))),
                                   PaddingFactory.create(new Theme(
                                       data: AppTheme.lightTheme,
                                       child: TextFormFactory.total(
@@ -496,31 +496,28 @@ class HistoryWidgetState extends State<HistoryWidget> {
   }
 }
 
-List<Receipt> receipts = [];
 
 class FilterChipScreen extends StatefulWidget {
-  final List<Receipt> _receipts;
-
   @override
-  _FilterChipScreenState createState() => _FilterChipScreenState(_receipts);
+  _FilterChipScreenState createState() => _FilterChipScreenState();
 
-  FilterChipScreen(this._receipts);
+  FilterChipScreen();
 }
 
 class _FilterChipScreenState extends State<FilterChipScreen> {
   var data = ReceiptCategoryFactory.categories;
   var selected = [];
-  List<Receipt> receipts;
   List<ReceiptCategory> filterCategories = [];
+  ReceiptMemento momentum = ReceiptMemento();
 
   RandomColor _rand = RandomColor();
 
-  _FilterChipScreenState(this.receipts);
+  _FilterChipScreenState();
 
   @override
   Widget build(BuildContext context) {
     filterCategories = [];
-
+    var selected = [];
     return Container(
       height: 65,
       child: ListView.builder(
@@ -531,11 +528,14 @@ class _FilterChipScreenState extends State<FilterChipScreen> {
                 FilterChip(
                   label: Text(data[index].name),
                   onSelected: (bool value) {
-                    if (selected.contains(index)) {
+                    if (!value) {
                       selected.remove(index);
+                      removeFilter(index);
                     } else {
                       selected.add(index);
+                      addFilter(index);
                     }
+                    filter();
                   },
                   selected: selected.contains(index),
                   selectedColor: Colors.red,
@@ -556,5 +556,21 @@ class _FilterChipScreenState extends State<FilterChipScreen> {
     if (filterCategories != null && filterCategories.length > index) {
       filterCategories.remove(data[index]);
     }
+  }
+
+  void filter() {
+    List<Receipt> filteredReceipts = [];
+    for(Receipt r in momentum.finalReceipts) {
+     for (ReceiptCategory category in filterCategories) {
+       Map<String, dynamic> json = jsonDecode(r.category);
+
+       if (json['name'] == category.name)
+         filteredReceipts.add(r);
+     }
+    }
+
+   setState(() {
+     momentum.receipts = filteredReceipts;
+   });
   }
 }
