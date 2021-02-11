@@ -78,7 +78,7 @@ class TextFormFactory {
         hintText: S.of(context).totalTitle,
         labelText: S.of(context).totalLabelText,
         helperText: S.of(context).totalHelperText,
-        prefixIcon: const Icon(
+       prefixIcon: const Icon(
           Icons.attach_money,
         ),
         prefixText: ' ',
