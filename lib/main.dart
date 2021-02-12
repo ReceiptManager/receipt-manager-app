@@ -30,7 +30,6 @@ import 'package:receipt_manager/theme/theme_manager.dart';
 import 'package:receipt_manager/ui/history/history_widget.dart';
 import 'package:receipt_manager/ui/home/add_widget.dart';
 import 'package:receipt_manager/ui/settings/settings_widget.dart';
-import 'package:receipt_manager/ui/stats/stats_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 final Repository _repository = Repository();
@@ -115,29 +114,30 @@ class OnboardScreenState extends State<OnboardScreen> {
       create: (_) => OnBoardState(),
       child: Scaffold(
         backgroundColor: Colors.white,
-        body: OnBoard(
-          pageController: _pageController,
-          onSkip: () {
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => HomeScreen(null, false)));
-          },
-          onDone: () {
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => HomeScreen(null, false)));
-          },
-          onBoardData: onBoardData,
-          titleStyles: TextStyle(
-            color: LightColor.black,
-            fontSize: 20,
-            fontWeight: FontWeight.w900,
-            letterSpacing: 0.15,
-          ),
-          descriptionStyles: TextStyle(
-            fontSize: 16,
+          body: Center(
+            child: OnBoard(
+              pageController: _pageController,
+              onSkip: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => HomeScreen(null, false)));
+              },
+              onDone: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => HomeScreen(null, false)));
+              },
+              onBoardData: onBoardData,
+              titleStyles: TextStyle(
+                color: LightColor.black,
+                fontSize: 20,
+                fontWeight: FontWeight.w900,
+                letterSpacing: 0.15,
+              ),
+              descriptionStyles: TextStyle(
+                fontSize: 16,
             color: LightColor.grey,
           ),
           pageIndicatorStyle: PageIndicatorStyle(
@@ -183,9 +183,9 @@ class OnboardScreenState extends State<OnboardScreen> {
               );
             },
           ),
+          ),
         ),
-      ),
-    );
+      ));
   }
 
   void _onNextTap(OnBoardState onBoardState) {
