@@ -88,9 +88,10 @@ class HistoryWidgetState extends State<HistoryWidget> {
           );
         }
         if (state is LoadedState) {
-          momentum.apply(state.receipt);
+          momentum.store(state.receipt);
 
-          if ( this.momentum.receipts == null ||  this.momentum.receipts.length == 0)
+          if (this.momentum.receipts == null ||
+              this.momentum.receipts.length == 0)
             return new Column(
               children: [
                 BannerFactory.get(S.of(context).overviewExpenses, context),
@@ -570,7 +571,7 @@ class _FilterChipScreenState extends State<FilterChipScreen> {
     }
 
    setState(() {
-     momentum.receipts = filteredReceipts;
+     //momentum.receipts = filteredReceipts;
    });
   }
 }

@@ -14,9 +14,8 @@ class ReceiptMemento {
 
   ReceiptMemento._internal();
 
-  void apply(List<Receipt> receipts) {
+  void store(List<Receipt> receipts) {
     this.finalReceipts = receipts;
     this.receipts = receipts;
   }
-
 }
