@@ -20,18 +20,21 @@ import 'dart:convert';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:intl/intl.dart';
 import 'package:receipt_manager/bloc/moor/bloc.dart';
 import 'package:receipt_manager/database/receipt_database.dart';
 import 'package:receipt_manager/date/date_manipulator.dart';
 import 'package:receipt_manager/factory/banner_factory.dart';
 import 'package:receipt_manager/factory/categories_factory.dart';
+import 'package:receipt_manager/factory/logo_factory.dart';
 import 'package:receipt_manager/factory/padding_factory.dart';
 import 'package:receipt_manager/factory/text_form_history.dart';
 import 'package:receipt_manager/generated/l10n.dart';
 import 'package:receipt_manager/generator/receipt_generator.dart';
 import 'package:receipt_manager/model/receipt_category.dart';
 import 'package:receipt_manager/network/network_client.dart';
+import 'package:receipt_manager/theme/color/color.dart';
 import 'package:receipt_manager/theme/theme_manager.dart';
 import 'package:receipt_manager/util/dimensions.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -71,6 +74,7 @@ class ReceiptInputController extends State<ReceiptForm> {
   DateTime receiptDate;
   ReceiptsCompanion parsedReceipt;
   ReceiptCategory selectedCategory;
+  List<dynamic> itemList;
 
   bool outcome = true;
 
@@ -86,6 +90,7 @@ class ReceiptInputController extends State<ReceiptForm> {
     if (parsedReceipt != null) {
       initialStoreName = parsedReceipt.shop.value ?? '';
       initialTotalName = parsedReceipt.total.value ?? '';
+      itemList = jsonDecode(parsedReceipt.items.value);
     }
 
     storeNameController = TextEditingController(text: initialStoreName);
@@ -355,6 +360,7 @@ class ReceiptInputController extends State<ReceiptForm> {
                                                 outcome = false;
                                             },
                                           ))),
+                                    getItems(),
                                     new Align(
                                         alignment: Alignment.bottomRight,
                                         child: Padding(
@@ -381,6 +387,21 @@ class ReceiptInputController extends State<ReceiptForm> {
                 ]));
       },
     );
+  }
+
+  Container getItems() {
+    if (itemList == null || itemList.length == 0)
+      return Container();
+
+    return Container(
+        color: Colors.white,
+        child: ListView.builder(
+            padding: const EdgeInsets.all(8.0),
+            itemCount: itemList.length,
+            itemBuilder: (_, index) {
+              final item = itemList[index];
+              return _buildListItems(item);
+            }));
   }
 
   FloatingActionButton submitButton() {
@@ -462,5 +483,62 @@ class ReceiptInputController extends State<ReceiptForm> {
     receiptTotalController.clear();
     storeNameController.clear();
     dateController.clear();
+  }
+
+  Widget _buildListItems(List<dynamic> item) {
+    //LogoFactory _factory = LogoFactory(receipt, context);
+    //String path = _factory.buildPath().toString();
+
+    return Slidable(
+        actionPane: SlidableDrawerActionPane(),
+        closeOnScroll: true,
+        secondaryActions: <Widget>[
+          IconSlideAction(
+            caption: S.of(context).deleteProduct,
+            color: Colors.red,
+            icon: Icons.delete,
+            onTap: () {
+             // _bloc.add(DeleteEvent(receipt: receipt));
+              // _bloc.add(ReceiptAllFetch());
+            },
+          ),
+          IconSlideAction(
+            caption: S.of(context).editProduct,
+            icon: Icons.update,
+            color: LightColor.black,
+            onTap: () {
+            //  _showDialog(controller: _controller, receipt: receipt);
+            },
+          ),
+        ],
+        child: Card(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(15.0),
+            ),
+            child: ClipPath(
+              child: Container(
+                  color: Colors.white,
+                  child: ListTile(
+                      leading: Text(
+                        item[0],
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16),
+                      ),
+                      contentPadding:
+                      EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
+                      trailing: Text(
+                        item[1] + S.of(context).currency,
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16),
+                      ),
+                    )),
+              clipper: ShapeBorderClipper(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8))),
+            )));
   }
 }
