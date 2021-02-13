@@ -1094,6 +1094,26 @@ class S {
       args: [],
     );
   }
+
+  /// `Produkt löschen`
+  String get deleteProduct {
+    return Intl.message(
+      'Produkt löschen',
+      name: 'deleteProduct',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Produkt editieren`
+  String get editProduct {
+    return Intl.message(
+      'Produkt editieren',
+      name: 'editProduct',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
