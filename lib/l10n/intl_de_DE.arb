@@ -107,5 +107,6 @@
   "failedToSubmitTrainingData": "Trainingsdaten konnten nicht übermittelt werden",
   "sendTrainingData": "Übertrage Trainingsdaten",
   "deleteProduct" : "Produkt löschen",
-  "editProduct" : "Produkt editieren"
+  "editProduct" : "Produkt editieren",
+  "products": "Produkte"
 }
