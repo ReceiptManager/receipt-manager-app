@@ -106,5 +106,6 @@
   "failedToSubmitTrainingData": "Failed to submit training data",
   "sendTrainingData": "Send training data",
   "deleteProduct" : "Delete product",
-  "editProduct" : "Edit product"
+  "editProduct" : "Edit product",
+  "products": "Products"
 }

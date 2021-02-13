@@ -27,7 +27,6 @@ import 'package:receipt_manager/database/receipt_database.dart';
 import 'package:receipt_manager/date/date_manipulator.dart';
 import 'package:receipt_manager/factory/banner_factory.dart';
 import 'package:receipt_manager/factory/categories_factory.dart';
-import 'package:receipt_manager/factory/logo_factory.dart';
 import 'package:receipt_manager/factory/padding_factory.dart';
 import 'package:receipt_manager/factory/text_form_history.dart';
 import 'package:receipt_manager/generated/l10n.dart';
@@ -289,9 +288,6 @@ class ReceiptInputController extends State<ReceiptForm> {
                               PaddingFactory.create(Container(
                                   padding: const EdgeInsets.only(
                                       left: 8.0, right: 8.0),
-                                  decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      border: Border.all(color: Colors.grey)),
                                   child: Theme(
                                       data: AppTheme.lightTheme,
                                       child: DropdownButton<ReceiptCategory>(
@@ -329,17 +325,17 @@ class ReceiptInputController extends State<ReceiptForm> {
                                               ),
                                             );
                                           }).toList())))),
-
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    new Align(
-                                        alignment: Alignment.topCenter,
-                                        child: Padding(
-                                            padding: const EdgeInsets.all(8),
-                                            child:
-                                            ToggleSwitch(
-                                              minWidth: 90.0,
+                              getItems(),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  new Align(
+                                      alignment: Alignment.topCenter,
+                                      child: Padding(
+                                          padding: const EdgeInsets.all(8),
+                                          child: ToggleSwitch(
+                                            minWidth: 90.0,
                                             changeOnTap: outcome,
                                             initialLabelIndex: 0,
                                             activeFgColor: Colors.white,
@@ -360,15 +356,14 @@ class ReceiptInputController extends State<ReceiptForm> {
                                                 outcome = false;
                                             },
                                           ))),
-                                    getItems(),
-                                    new Align(
-                                        alignment: Alignment.bottomRight,
-                                        child: Padding(
-                                            padding: const EdgeInsets.all(8.0),
-                                            child: submitButton())),
-                                  ],
-                                )
-
+                                  //                  getItems(),
+                                  new Align(
+                                      alignment: Alignment.bottomRight,
+                                      child: Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: submitButton())),
+                                ],
+                              ),
                             ],
                           ),
                         ))),
@@ -389,19 +384,80 @@ class ReceiptInputController extends State<ReceiptForm> {
     );
   }
 
-  Container getItems() {
-    if (itemList == null || itemList.length == 0)
-      return Container();
+  Widget _item(List<dynamic> item) {
+    return Slidable(
+        actionPane: SlidableDrawerActionPane(),
+        closeOnScroll: true,
+        secondaryActions: <Widget>[
+          IconSlideAction(
+            caption: S.of(context).deleteReceipt,
+            color: Colors.red,
+            icon: Icons.delete,
+            onTap: () {
+              setState(() {
+                itemList.remove(item);
+              });
+            },
+          ),
+          IconSlideAction(
+            caption: S.of(context).editReceipt,
+            icon: Icons.update,
+            color: LightColor.black,
+            onTap: () {
+              // _showDialog(controller: _controller, receipt: receipt);
+            },
+          ),
+        ],
+        child: Card(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(15.0),
+            ),
+            child: ClipPath(
+              child: Container(
+                  color: Colors.white,
+                  child: ListTile(
+                      // contentPadding:
+                      //   EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
+                      trailing: Text(
+                        item[1] + S.of(context).currency,
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16),
+                      ),
+                      leading: Text(item[0]))),
+              clipper: ShapeBorderClipper(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8))),
+            )));
+  }
 
-    return Container(
-        color: Colors.white,
-        child: ListView.builder(
-            padding: const EdgeInsets.all(8.0),
-            itemCount: itemList.length,
-            itemBuilder: (_, index) {
-              final item = itemList[index];
-              return _buildListItems(item);
-            }));
+  Widget getItems() {
+    if (itemList == null || itemList.length == 0) {
+      return Container();
+    }
+    return Column(children: [
+      PaddingFactory.create(Align(
+        alignment: Alignment.bottomLeft,
+        child: Text("Produkte",
+            style: TextStyle(
+                color: Colors.black,
+                fontSize: 20,
+                fontWeight: FontWeight.w300)),
+      )),
+      Container(
+          color: Colors.white,
+          height: (75 * itemList.length).toDouble(),
+          child: ListView.builder(
+              padding: const EdgeInsets.all(8.0),
+              itemCount: itemList.length,
+              shrinkWrap: true,
+              itemBuilder: (_, index) {
+                final receipt = itemList[index];
+                return _item(receipt);
+              }))
+    ]);
+    ;
   }
 
   FloatingActionButton submitButton() {
@@ -437,10 +493,13 @@ class ReceiptInputController extends State<ReceiptForm> {
             _bloc.add(ReceiptAllFetch());
 
             bool _submitTrainingData = sharedPrefs.getBool("sendTrainingData");
-            if (_submitTrainingData != null && _submitTrainingData == true && sendImage) {
+            if (_submitTrainingData != null &&
+                _submitTrainingData == true &&
+                sendImage) {
               String ip = sharedPrefs.get("ipv4");
               String token = sharedPrefs.get("api_token");
-              NetworkClient.sendTrainingData(ip, token, shopName, receiptDate.toIso8601String(), total, context);
+              NetworkClient.sendTrainingData(ip, token, shopName,
+                  receiptDate.toIso8601String(), total, context);
             }
 
             reset();
@@ -483,62 +542,5 @@ class ReceiptInputController extends State<ReceiptForm> {
     receiptTotalController.clear();
     storeNameController.clear();
     dateController.clear();
-  }
-
-  Widget _buildListItems(List<dynamic> item) {
-    //LogoFactory _factory = LogoFactory(receipt, context);
-    //String path = _factory.buildPath().toString();
-
-    return Slidable(
-        actionPane: SlidableDrawerActionPane(),
-        closeOnScroll: true,
-        secondaryActions: <Widget>[
-          IconSlideAction(
-            caption: S.of(context).deleteProduct,
-            color: Colors.red,
-            icon: Icons.delete,
-            onTap: () {
-             // _bloc.add(DeleteEvent(receipt: receipt));
-              // _bloc.add(ReceiptAllFetch());
-            },
-          ),
-          IconSlideAction(
-            caption: S.of(context).editProduct,
-            icon: Icons.update,
-            color: LightColor.black,
-            onTap: () {
-            //  _showDialog(controller: _controller, receipt: receipt);
-            },
-          ),
-        ],
-        child: Card(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(15.0),
-            ),
-            child: ClipPath(
-              child: Container(
-                  color: Colors.white,
-                  child: ListTile(
-                      leading: Text(
-                        item[0],
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16),
-                      ),
-                      contentPadding:
-                      EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
-                      trailing: Text(
-                        item[1] + S.of(context).currency,
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16),
-                      ),
-                    )),
-              clipper: ShapeBorderClipper(
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8))),
-            )));
   }
 }
