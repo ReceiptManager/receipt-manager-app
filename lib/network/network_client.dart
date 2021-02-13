@@ -17,6 +17,7 @@
 
 import 'dart:async';
 import 'dart:convert';
+import 'dart:core';
 import 'dart:developer';
 import 'dart:io';
 
@@ -212,6 +213,11 @@ class NetworkClient {
             Map<String, dynamic> r = jsonDecode(value);
             DateTime _date;
 
+            log("Receipt item list:");
+            for(List<dynamic> receiptItem in r['receiptItems'] ) {
+              log("\t" + receiptItem[0] + " " + receiptItem[1]);
+            }
+
             String parsedString = r['receiptDate'] == null
                 ? ""
                 : r['receiptDate']
@@ -230,6 +236,7 @@ class NetworkClient {
                 total: Value(r['receiptTotal']),
                 shop: Value(r['storeName']),
                 category: Value(r['category']),
+                items: Value(jsonEncode(r['receiptItems'])),
                 date: Value(_date));
 
             log('StoreName:  ${r['storeName']} ');
