@@ -105,5 +105,7 @@
   "outcome": "Ausgabe",
   "income": "Einnahme",
   "failedToSubmitTrainingData": "Trainingsdaten konnten nicht übermittelt werden",
-  "sendTrainingData": "Übertrage Trainingsdaten"
+  "sendTrainingData": "Übertrage Trainingsdaten",
+  "deleteProduct" : "Produkt löschen",
+  "editProduct" : "Produkt editieren"
 }
