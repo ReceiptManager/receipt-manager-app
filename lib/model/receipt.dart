@@ -26,5 +26,7 @@ class Receipts extends Table {
 
   TextColumn get category => text()();
 
+  TextColumn get items => text()();
+
   DateTimeColumn get date => dateTime()();
 }

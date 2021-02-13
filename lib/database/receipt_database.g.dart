@@ -1,20 +1,3 @@
-/*
- *  Copyright (c) 2020 - William Todt
- *
- *  Licensed under the Apache License, Version 2.0 (the "License");
- *  you may not use this file except in compliance with the License.
- *  You may obtain a copy of the License at
- *
- *  http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
 part of 'receipt_database.dart';
@@ -29,15 +12,15 @@ class Receipt extends DataClass implements Insertable<Receipt> {
   final String total;
   final String shop;
   final String category;
+  final String items;
   final DateTime date;
-
   Receipt(
       {@required this.id,
       @required this.total,
       @required this.shop,
       @required this.category,
+      @required this.items,
       @required this.date});
-
   factory Receipt.fromData(Map<String, dynamic> data, GeneratedDatabase db,
       {String prefix}) {
     final effectivePrefix = prefix ?? '';
@@ -51,11 +34,12 @@ class Receipt extends DataClass implements Insertable<Receipt> {
       shop: stringType.mapFromDatabaseResponse(data['${effectivePrefix}shop']),
       category: stringType
           .mapFromDatabaseResponse(data['${effectivePrefix}category']),
+      items:
+          stringType.mapFromDatabaseResponse(data['${effectivePrefix}items']),
       date:
           dateTimeType.mapFromDatabaseResponse(data['${effectivePrefix}date']),
     );
   }
-
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
@@ -70,6 +54,9 @@ class Receipt extends DataClass implements Insertable<Receipt> {
     }
     if (!nullToAbsent || category != null) {
       map['category'] = Variable<String>(category);
+    }
+    if (!nullToAbsent || items != null) {
+      map['items'] = Variable<String>(items);
     }
     if (!nullToAbsent || date != null) {
       map['date'] = Variable<DateTime>(date);
@@ -86,6 +73,8 @@ class Receipt extends DataClass implements Insertable<Receipt> {
       category: category == null && nullToAbsent
           ? const Value.absent()
           : Value(category),
+      items:
+          items == null && nullToAbsent ? const Value.absent() : Value(items),
       date: date == null && nullToAbsent ? const Value.absent() : Value(date),
     );
   }
@@ -98,10 +87,10 @@ class Receipt extends DataClass implements Insertable<Receipt> {
       total: serializer.fromJson<String>(json['total']),
       shop: serializer.fromJson<String>(json['shop']),
       category: serializer.fromJson<String>(json['category']),
+      items: serializer.fromJson<String>(json['items']),
       date: serializer.fromJson<DateTime>(json['date']),
     );
   }
-
   @override
   Map<String, dynamic> toJson({ValueSerializer serializer}) {
     serializer ??= moorRuntimeOptions.defaultSerializer;
@@ -110,6 +99,7 @@ class Receipt extends DataClass implements Insertable<Receipt> {
       'total': serializer.toJson<String>(total),
       'shop': serializer.toJson<String>(shop),
       'category': serializer.toJson<String>(category),
+      'items': serializer.toJson<String>(items),
       'date': serializer.toJson<DateTime>(date),
     };
   }
@@ -119,15 +109,16 @@ class Receipt extends DataClass implements Insertable<Receipt> {
           String total,
           String shop,
           String category,
+          String items,
           DateTime date}) =>
       Receipt(
         id: id ?? this.id,
         total: total ?? this.total,
         shop: shop ?? this.shop,
         category: category ?? this.category,
+        items: items ?? this.items,
         date: date ?? this.date,
       );
-
   @override
   String toString() {
     return (StringBuffer('Receipt(')
@@ -135,6 +126,7 @@ class Receipt extends DataClass implements Insertable<Receipt> {
           ..write('total: $total, ')
           ..write('shop: $shop, ')
           ..write('category: $category, ')
+          ..write('items: $items, ')
           ..write('date: $date')
           ..write(')'))
         .toString();
@@ -143,9 +135,12 @@ class Receipt extends DataClass implements Insertable<Receipt> {
   @override
   int get hashCode => $mrjf($mrjc(
       id.hashCode,
-      $mrjc(total.hashCode,
-          $mrjc(shop.hashCode, $mrjc(category.hashCode, date.hashCode)))));
-
+      $mrjc(
+          total.hashCode,
+          $mrjc(
+              shop.hashCode,
+              $mrjc(
+                  category.hashCode, $mrjc(items.hashCode, date.hashCode))))));
   @override
   bool operator ==(dynamic other) =>
       identical(this, other) ||
@@ -154,6 +149,7 @@ class Receipt extends DataClass implements Insertable<Receipt> {
           other.total == this.total &&
           other.shop == this.shop &&
           other.category == this.category &&
+          other.items == this.items &&
           other.date == this.date);
 }
 
@@ -162,32 +158,34 @@ class ReceiptsCompanion extends UpdateCompanion<Receipt> {
   final Value<String> total;
   final Value<String> shop;
   final Value<String> category;
+  final Value<String> items;
   final Value<DateTime> date;
-
   const ReceiptsCompanion({
     this.id = const Value.absent(),
     this.total = const Value.absent(),
     this.shop = const Value.absent(),
     this.category = const Value.absent(),
+    this.items = const Value.absent(),
     this.date = const Value.absent(),
   });
-
   ReceiptsCompanion.insert({
     this.id = const Value.absent(),
     @required String total,
     @required String shop,
     @required String category,
+    @required String items,
     @required DateTime date,
   })  : total = Value(total),
         shop = Value(shop),
         category = Value(category),
+        items = Value(items),
         date = Value(date);
-
   static Insertable<Receipt> custom({
     Expression<int> id,
     Expression<String> total,
     Expression<String> shop,
     Expression<String> category,
+    Expression<String> items,
     Expression<DateTime> date,
   }) {
     return RawValuesInsertable({
@@ -195,6 +193,7 @@ class ReceiptsCompanion extends UpdateCompanion<Receipt> {
       if (total != null) 'total': total,
       if (shop != null) 'shop': shop,
       if (category != null) 'category': category,
+      if (items != null) 'items': items,
       if (date != null) 'date': date,
     });
   }
@@ -204,12 +203,14 @@ class ReceiptsCompanion extends UpdateCompanion<Receipt> {
       Value<String> total,
       Value<String> shop,
       Value<String> category,
+      Value<String> items,
       Value<DateTime> date}) {
     return ReceiptsCompanion(
       id: id ?? this.id,
       total: total ?? this.total,
       shop: shop ?? this.shop,
       category: category ?? this.category,
+      items: items ?? this.items,
       date: date ?? this.date,
     );
   }
@@ -229,6 +230,9 @@ class ReceiptsCompanion extends UpdateCompanion<Receipt> {
     if (category.present) {
       map['category'] = Variable<String>(category.value);
     }
+    if (items.present) {
+      map['items'] = Variable<String>(items.value);
+    }
     if (date.present) {
       map['date'] = Variable<DateTime>(date.value);
     }
@@ -242,6 +246,7 @@ class ReceiptsCompanion extends UpdateCompanion<Receipt> {
           ..write('total: $total, ')
           ..write('shop: $shop, ')
           ..write('category: $category, ')
+          ..write('items: $items, ')
           ..write('date: $date')
           ..write(')'))
         .toString();
@@ -251,15 +256,11 @@ class ReceiptsCompanion extends UpdateCompanion<Receipt> {
 class $ReceiptsTable extends Receipts with TableInfo<$ReceiptsTable, Receipt> {
   final GeneratedDatabase _db;
   final String _alias;
-
   $ReceiptsTable(this._db, [this._alias]);
-
   final VerificationMeta _idMeta = const VerificationMeta('id');
   GeneratedIntColumn _id;
-
   @override
   GeneratedIntColumn get id => _id ??= _constructId();
-
   GeneratedIntColumn _constructId() {
     return GeneratedIntColumn('id', $tableName, false,
         hasAutoIncrement: true, declaredAsPrimaryKey: true);
@@ -267,10 +268,8 @@ class $ReceiptsTable extends Receipts with TableInfo<$ReceiptsTable, Receipt> {
 
   final VerificationMeta _totalMeta = const VerificationMeta('total');
   GeneratedTextColumn _total;
-
   @override
   GeneratedTextColumn get total => _total ??= _constructTotal();
-
   GeneratedTextColumn _constructTotal() {
     return GeneratedTextColumn(
       'total',
@@ -281,10 +280,8 @@ class $ReceiptsTable extends Receipts with TableInfo<$ReceiptsTable, Receipt> {
 
   final VerificationMeta _shopMeta = const VerificationMeta('shop');
   GeneratedTextColumn _shop;
-
   @override
   GeneratedTextColumn get shop => _shop ??= _constructShop();
-
   GeneratedTextColumn _constructShop() {
     return GeneratedTextColumn(
       'shop',
@@ -295,10 +292,8 @@ class $ReceiptsTable extends Receipts with TableInfo<$ReceiptsTable, Receipt> {
 
   final VerificationMeta _categoryMeta = const VerificationMeta('category');
   GeneratedTextColumn _category;
-
   @override
   GeneratedTextColumn get category => _category ??= _constructCategory();
-
   GeneratedTextColumn _constructCategory() {
     return GeneratedTextColumn(
       'category',
@@ -307,12 +302,22 @@ class $ReceiptsTable extends Receipts with TableInfo<$ReceiptsTable, Receipt> {
     );
   }
 
+  final VerificationMeta _itemsMeta = const VerificationMeta('items');
+  GeneratedTextColumn _items;
+  @override
+  GeneratedTextColumn get items => _items ??= _constructItems();
+  GeneratedTextColumn _constructItems() {
+    return GeneratedTextColumn(
+      'items',
+      $tableName,
+      false,
+    );
+  }
+
   final VerificationMeta _dateMeta = const VerificationMeta('date');
   GeneratedDateTimeColumn _date;
-
   @override
   GeneratedDateTimeColumn get date => _date ??= _constructDate();
-
   GeneratedDateTimeColumn _constructDate() {
     return GeneratedDateTimeColumn(
       'date',
@@ -322,16 +327,14 @@ class $ReceiptsTable extends Receipts with TableInfo<$ReceiptsTable, Receipt> {
   }
 
   @override
-  List<GeneratedColumn> get $columns => [id, total, shop, category, date];
-
+  List<GeneratedColumn> get $columns =>
+      [id, total, shop, category, items, date];
   @override
   $ReceiptsTable get asDslTable => this;
-
   @override
   String get $tableName => _alias ?? 'receipts';
   @override
   final String actualTableName = 'receipts';
-
   @override
   VerificationContext validateIntegrity(Insertable<Receipt> instance,
       {bool isInserting = false}) {
@@ -358,6 +361,12 @@ class $ReceiptsTable extends Receipts with TableInfo<$ReceiptsTable, Receipt> {
     } else if (isInserting) {
       context.missing(_categoryMeta);
     }
+    if (data.containsKey('items')) {
+      context.handle(
+          _itemsMeta, items.isAcceptableOrUnknown(data['items'], _itemsMeta));
+    } else if (isInserting) {
+      context.missing(_itemsMeta);
+    }
     if (data.containsKey('date')) {
       context.handle(
           _dateMeta, date.isAcceptableOrUnknown(data['date'], _dateMeta));
@@ -369,7 +378,6 @@ class $ReceiptsTable extends Receipts with TableInfo<$ReceiptsTable, Receipt> {
 
   @override
   Set<GeneratedColumn> get $primaryKey => {id};
-
   @override
   Receipt map(Map<String, dynamic> data, {String tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : null;
@@ -385,15 +393,11 @@ class $ReceiptsTable extends Receipts with TableInfo<$ReceiptsTable, Receipt> {
 abstract class _$AppDatabase extends GeneratedDatabase {
   _$AppDatabase(QueryExecutor e) : super(SqlTypeSystem.defaultInstance, e);
   $ReceiptsTable _receipts;
-
   $ReceiptsTable get receipts => _receipts ??= $ReceiptsTable(this);
   ReceiptDao _receiptDao;
-
   ReceiptDao get receiptDao => _receiptDao ??= ReceiptDao(this as AppDatabase);
-
   @override
   Iterable<TableInfo> get allTables => allSchemaEntities.whereType<TableInfo>();
-
   @override
   List<DatabaseSchemaEntity> get allSchemaEntities => [receipts];
 }
