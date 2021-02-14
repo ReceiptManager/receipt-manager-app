@@ -19,7 +19,7 @@ class Receipt extends DataClass implements Insertable<Receipt> {
       @required this.total,
       @required this.shop,
       @required this.category,
-      @required this.items,
+      this.items,
       @required this.date});
   factory Receipt.fromData(Map<String, dynamic> data, GeneratedDatabase db,
       {String prefix}) {
@@ -173,12 +173,11 @@ class ReceiptsCompanion extends UpdateCompanion<Receipt> {
     @required String total,
     @required String shop,
     @required String category,
-    @required String items,
+    this.items = const Value.absent(),
     @required DateTime date,
   })  : total = Value(total),
         shop = Value(shop),
         category = Value(category),
-        items = Value(items),
         date = Value(date);
   static Insertable<Receipt> custom({
     Expression<int> id,
@@ -310,7 +309,7 @@ class $ReceiptsTable extends Receipts with TableInfo<$ReceiptsTable, Receipt> {
     return GeneratedTextColumn(
       'items',
       $tableName,
-      false,
+      true,
     );
   }
 
@@ -364,8 +363,6 @@ class $ReceiptsTable extends Receipts with TableInfo<$ReceiptsTable, Receipt> {
     if (data.containsKey('items')) {
       context.handle(
           _itemsMeta, items.isAcceptableOrUnknown(data['items'], _itemsMeta));
-    } else if (isInserting) {
-      context.missing(_itemsMeta);
     }
     if (data.containsKey('date')) {
       context.handle(
