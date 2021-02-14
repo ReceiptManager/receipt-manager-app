@@ -384,6 +384,7 @@ class ReceiptInputController extends State<ReceiptForm> {
     );
   }
 
+
   Widget _item(List<dynamic> item) {
     return Slidable(
         actionPane: SlidableDrawerActionPane(),
@@ -484,11 +485,15 @@ class ReceiptInputController extends State<ReceiptForm> {
             total = outcome ? "-" + total : total;
             total.split(" ").join("");
 
+            String jsonItemList =
+                itemList == null ? null : jsonEncode(itemList);
+
             _bloc.add(InsertEvent(
                 receipt: ReceiptsCompanion(
                     date: Value(receiptDate),
                     total: Value(total),
                     category: Value(jsonEncode(selectedCategory)),
+                    items: Value(jsonItemList),
                     shop: Value(shopName))));
             _bloc.add(ReceiptAllFetch());
 
