@@ -1114,6 +1114,76 @@ class S {
       args: [],
     );
   }
+
+  /// `Produkte`
+  String get products {
+    return Intl.message(
+      'Produkte',
+      name: 'products',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Artikel`
+  String get itemTitle {
+    return Intl.message(
+      'Artikel',
+      name: 'itemTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Artikel`
+  String get itemLabelText {
+    return Intl.message(
+      'Artikel',
+      name: 'itemLabelText',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Füge den Artikelnamen hinzu`
+  String get itemHelperText {
+    return Intl.message(
+      'Füge den Artikelnamen hinzu',
+      name: 'itemHelperText',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Betrag`
+  String get itemTotalTitle {
+    return Intl.message(
+      'Betrag',
+      name: 'itemTotalTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Betrag`
+  String get itemTotalLabelText {
+    return Intl.message(
+      'Betrag',
+      name: 'itemTotalLabelText',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Füge den Betrag des Artikels hinzu`
+  String get itemTotalHelperText {
+    return Intl.message(
+      'Füge den Betrag des Artikels hinzu',
+      name: 'itemTotalHelperText',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

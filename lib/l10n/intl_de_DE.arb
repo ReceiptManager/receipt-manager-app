@@ -108,5 +108,13 @@
   "sendTrainingData": "Übertrage Trainingsdaten",
   "deleteProduct" : "Produkt löschen",
   "editProduct" : "Produkt editieren",
-  "products": "Produkte"
+  "products": "Produkte",
+
+  "itemTitle": "Artikel",
+  "itemLabelText": "Artikel",
+  "itemHelperText": "Füge den Artikelnamen hinzu",
+
+  "itemTotalTitle": "Betrag",
+  "itemTotalLabelText": "Betrag",
+  "itemTotalHelperText": "Füge den Betrag des Artikels hinzu"
 }
