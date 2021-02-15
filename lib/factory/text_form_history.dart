@@ -78,7 +78,83 @@ class TextFormFactory {
         hintText: S.of(context).totalTitle,
         labelText: S.of(context).totalLabelText,
         helperText: S.of(context).totalHelperText,
-       prefixIcon: const Icon(
+        prefixIcon: const Icon(
+          Icons.attach_money,
+        ),
+        prefixText: ' ',
+      ),
+      controller: receiptTotalController,
+      validator: (value) {
+        if (value.isEmpty) {
+          return S.of(context).emptyTotal;
+        }
+        RegExp totalRegex = new RegExp("^(?=.*[1-9])[0-9]*[.]?[0-9]{2}\$",
+            caseSensitive: false, multiLine: false);
+
+        if (!totalRegex.hasMatch(value)) {
+          return S.of(context).invalidTotal;
+        }
+
+        return null;
+      },
+    );
+  }
+
+  static TextFormField itemName(
+      TextEditingController receiptTotalController, BuildContext context) {
+    return TextFormField(
+      style: TextStyle(color: Colors.black),
+      decoration: new InputDecoration(
+        enabledBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: Colors.grey),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: Colors.grey),
+        ),
+        border: new OutlineInputBorder(
+            borderSide: new BorderSide(color: Colors.grey)),
+        hintText: S.of(context).itemTitle,
+        labelText: S.of(context).itemLabelText,
+        helperText: S.of(context).itemHelperText,
+        prefixIcon: const Icon(
+          Icons.attach_money,
+        ),
+        prefixText: ' ',
+      ),
+      controller: receiptTotalController,
+      validator: (value) {
+        if (value.isEmpty) {
+          return S.of(context).emptyTotal;
+        }
+        RegExp totalRegex = new RegExp("^(?=.*[1-9])[0-9]*[.]?[0-9]{2}\$",
+            caseSensitive: false, multiLine: false);
+
+        if (!totalRegex.hasMatch(value)) {
+          return S.of(context).invalidTotal;
+        }
+
+        return null;
+      },
+    );
+  }
+
+  static TextFormField itemTotal(
+      TextEditingController receiptTotalController, BuildContext context) {
+    return TextFormField(
+      style: TextStyle(color: Colors.black),
+      decoration: new InputDecoration(
+        enabledBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: Colors.grey),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: Colors.grey),
+        ),
+        border: new OutlineInputBorder(
+            borderSide: new BorderSide(color: Colors.grey)),
+        hintText: S.of(context).itemTotalTitle,
+        labelText: S.of(context).itemTotalLabelText,
+        helperText: S.of(context).itemTotalHelperText,
+        prefixIcon: const Icon(
           Icons.attach_money,
         ),
         prefixText: ' ',
@@ -107,7 +183,8 @@ class TextFormFactory {
     List<String> storeNameList = [];
 
     for (Receipt r in receipt)
-      if (!storeNameList.contains(r.shop.trim())) storeNameList.add(r.shop.trim());
+      if (!storeNameList.contains(r.shop.trim()))
+        storeNameList.add(r.shop.trim());
 
     return SimpleAutocompleteFormField<String>(
       style: TextStyle(color: Colors.black),
