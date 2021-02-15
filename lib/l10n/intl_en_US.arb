@@ -107,5 +107,13 @@
   "sendTrainingData": "Send training data",
   "deleteProduct" : "Delete product",
   "editProduct" : "Edit product",
-  "products": "Products"
+  "products": "Products",
+
+  "itemTitle": "Item",
+  "itemLabelText": "Item",
+  "itemHelperText": "Add the item name",
+
+  "itemTotalTitle": "Total",
+  "itemTotalLabelText": "Total",
+  "itemTotalHelperText": "Add the item total"
 }
