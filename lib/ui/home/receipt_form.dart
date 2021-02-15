@@ -16,6 +16,7 @@
  */
 
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
@@ -58,12 +59,18 @@ class ReceiptForm extends StatefulWidget {
 class ReceiptInputController extends State<ReceiptForm> {
   final _formKey = GlobalKey<FormState>();
   final _dropKey = GlobalKey<FormState>();
+
+  final _editFormKey = GlobalKey<FormState>();
   final SharedPreferences sharedPrefs;
   final DbBloc _bloc;
 
   TextEditingController storeNameController;
+
+  TextEditingController itemNameController;
+  TextEditingController itemTotalController;
   TextEditingController receiptTotalController;
   TextEditingController dateController;
+  TextEditingController _controller = TextEditingController();
 
   String shopName;
   String total;
@@ -76,6 +83,7 @@ class ReceiptInputController extends State<ReceiptForm> {
   List<dynamic> itemList;
 
   bool outcome = true;
+  bool showAlert = false;
 
   ReceiptInputController(
       this.parsedReceipt, this.sendImage, this.sharedPrefs, this._bloc);
@@ -90,11 +98,15 @@ class ReceiptInputController extends State<ReceiptForm> {
       initialStoreName = parsedReceipt.shop.value ?? '';
       initialTotalName = parsedReceipt.total.value ?? '';
       itemList = jsonDecode(parsedReceipt.items.value);
+      showAlert = true;
     }
 
     storeNameController = TextEditingController(text: initialStoreName);
     receiptTotalController = TextEditingController(text: initialTotalName);
     dateController = TextEditingController(text: initialDateController);
+    _controller = TextEditingController();
+    itemNameController = TextEditingController();
+    itemTotalController = TextEditingController();
 
     super.initState();
   }
@@ -325,7 +337,6 @@ class ReceiptInputController extends State<ReceiptForm> {
                                               ),
                                             );
                                           }).toList())))),
-                              getItems(),
                               Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
@@ -364,6 +375,7 @@ class ReceiptInputController extends State<ReceiptForm> {
                                           child: submitButton())),
                                 ],
                               ),
+                              getItems(),
                             ],
                           ),
                         ))),
@@ -384,6 +396,96 @@ class ReceiptInputController extends State<ReceiptForm> {
     );
   }
 
+  _showDialog({controller, List<dynamic> item}) async {
+    this.itemNameController.text = item[0];
+    this.itemTotalController.text = item[1];
+
+    await showDialog<String>(
+      context: context,
+      // false = user must tap button, true = tap outside dialog
+      builder: (BuildContext dialogContext) {
+        return AlertDialog(
+          titleTextStyle: TextStyle(
+              color: Colors.black, fontWeight: FontWeight.w400, fontSize: 22),
+          backgroundColor: Colors.white,
+          title: Text(S.of(context).updateReceipt),
+          content: Container(
+            height: 200,
+            width: 250,
+            color: Colors.white,
+            child: CustomScrollView(
+              slivers: [
+                SliverFillRemaining(
+                    hasScrollBody: false,
+                    child: Form(
+                        key: _editFormKey,
+                        child: Column(
+                          children: <Widget>[
+                            Expanded(
+                              child: PaddingFactory.create(Column(
+                                children: <Widget>[
+                                  PaddingFactory.create(new Theme(
+                                      data: AppTheme.lightTheme,
+                                      child: TextFormFactory.itemName(
+                                          itemNameController, context))),
+                                  PaddingFactory.create(new Theme(
+                                      data: AppTheme.lightTheme,
+                                      child: TextFormFactory.itemTotal(
+                                          itemTotalController, context))),
+                                ],
+                              )),
+                            )
+                          ],
+                        )))
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            FlatButton(
+              child: Text(
+                S.of(context).cancel,
+                style: TextStyle(color: Colors.red),
+              ),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            FlatButton(
+              child: Text(
+                S.of(context).update,
+              ),
+              onPressed: () {
+                String itemName;
+                String itemTotal;
+                try {
+                  itemName = itemNameController.text;
+                  itemName.split(" ").join("");
+                  itemTotal = itemTotalController.text;
+                  itemTotal.split(" ").join("");
+
+                  setState(() {
+                    item[0] = itemName;
+                    item[1] = itemTotal;
+                  });
+                } catch (e) {
+                  receiptTotalController.clear();
+                  storeNameController.clear();
+                  dateController.clear();
+                  Navigator.pop(context);
+                  return;
+                }
+                _controller.clear();
+                itemNameController.clear();
+                itemTotalController.clear();
+
+                Navigator.pop(context);
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
 
   Widget _item(List<dynamic> item) {
     return Slidable(
@@ -405,7 +507,7 @@ class ReceiptInputController extends State<ReceiptForm> {
             icon: Icons.update,
             color: LightColor.black,
             onTap: () {
-              // _showDialog(controller: _controller, receipt: receipt);
+              _showDialog(controller: _controller, item: item);
             },
           ),
         ],
@@ -440,7 +542,7 @@ class ReceiptInputController extends State<ReceiptForm> {
     return Column(children: [
       PaddingFactory.create(Align(
         alignment: Alignment.bottomLeft,
-        child: Text("Produkte",
+        child: Text(S.of(context).products,
             style: TextStyle(
                 color: Colors.black,
                 fontSize: 20,
@@ -448,7 +550,7 @@ class ReceiptInputController extends State<ReceiptForm> {
       )),
       Container(
           color: Colors.white,
-          height: (75 * itemList.length).toDouble(),
+          height: (75 * itemList.length).toDouble() - 20,
           child: ListView.builder(
               padding: const EdgeInsets.all(8.0),
               itemCount: itemList.length,
@@ -456,7 +558,28 @@ class ReceiptInputController extends State<ReceiptForm> {
               itemBuilder: (_, index) {
                 final receipt = itemList[index];
                 return _item(receipt);
-              }))
+              })),
+      PaddingFactory.create(Align(
+          alignment: Alignment.topRight,
+          child: RaisedButton(
+            onPressed: () {
+              log("Add itemlist");
+              setState(() {
+                List<dynamic> item = ["Receipt item", "0.00"];
+                this.itemList.add(item);
+              });
+            },
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(18.0),
+                side: BorderSide(color: Colors.black)),
+            child: Column(children: [Icon(Icons.add, color: Colors.white)]),
+            color: Colors.black,
+            textColor: Colors.black,
+            elevation: 5,
+          ))),
+      Container(
+        height: 50,
+      )
     ]);
     ;
   }
@@ -468,10 +591,13 @@ class ReceiptInputController extends State<ReceiptForm> {
           // disable form validation for now
           if (form.validate() || receiptCategory != null) {
             try {
-              Scaffold.of(context).showSnackBar(SnackBar(
-                content: Text(S.of(context).addedReceipt),
-                backgroundColor: Colors.green,
-              ));
+              if (showAlert)
+                Scaffold.of(context).showSnackBar(SnackBar(
+                  content: Text(S.of(context).addedReceipt),
+                  backgroundColor: Colors.green,
+                ));
+
+              showAlert = false;
               shopName = storeNameController.text;
               total = receiptTotalController.text;
             } catch (e) {
@@ -524,6 +650,8 @@ class ReceiptInputController extends State<ReceiptForm> {
   }
 
   void showUpdateSuccess() {
+    if (!showAlert) return;
+
     if (sendImage) {
       if (parsedReceipt == null) {
         Scaffold.of(context)
@@ -540,6 +668,8 @@ class ReceiptInputController extends State<ReceiptForm> {
             backgroundColor: Colors.green,
           ));
       }
+
+      showAlert = false;
     }
   }
 
