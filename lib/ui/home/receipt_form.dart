@@ -376,6 +376,7 @@ class ReceiptInputController extends State<ReceiptForm> {
                                 ],
                               ),
                               getItems(),
+                              getItemListButton()
                             ],
                           ),
                         ))),
@@ -550,7 +551,7 @@ class ReceiptInputController extends State<ReceiptForm> {
       )),
       Container(
           color: Colors.white,
-          height: (75 * itemList.length).toDouble() - 20,
+          height: (50 * itemList.length).toDouble(),
           child: ListView.builder(
               padding: const EdgeInsets.all(8.0),
               itemCount: itemList.length,
@@ -559,27 +560,6 @@ class ReceiptInputController extends State<ReceiptForm> {
                 final receipt = itemList[index];
                 return _item(receipt);
               })),
-      PaddingFactory.create(Align(
-          alignment: Alignment.topRight,
-          child: RaisedButton(
-            onPressed: () {
-              log("Add itemlist");
-              setState(() {
-                List<dynamic> item = ["Receipt item", "0.00"];
-                this.itemList.add(item);
-              });
-            },
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(18.0),
-                side: BorderSide(color: Colors.black)),
-            child: Column(children: [Icon(Icons.add, color: Colors.white)]),
-            color: Colors.black,
-            textColor: Colors.black,
-            elevation: 5,
-          ))),
-      Container(
-        height: 50,
-      )
     ]);
     ;
   }
@@ -677,5 +657,28 @@ class ReceiptInputController extends State<ReceiptForm> {
     receiptTotalController.clear();
     storeNameController.clear();
     dateController.clear();
+  }
+
+  Widget getItemListButton() {
+    if (itemList == null) return Container();
+
+    return PaddingFactory.create(Align(
+        alignment: Alignment.topRight,
+        child: RaisedButton(
+          onPressed: () {
+            log("Add itemlist");
+            setState(() {
+              List<dynamic> item = ["Receipt item", "0.00"];
+              this.itemList.add(item);
+            });
+          },
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(18.0),
+              side: BorderSide(color: Colors.black)),
+          child: Column(children: [Icon(Icons.add, color: Colors.white)]),
+          color: Colors.black,
+          textColor: Colors.black,
+          elevation: 5,
+        )));
   }
 }
