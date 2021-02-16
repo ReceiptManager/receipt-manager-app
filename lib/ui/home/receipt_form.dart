@@ -570,7 +570,6 @@ class ReceiptInputController extends State<ReceiptForm> {
                 return _item(receipt);
               })),
     ]);
-    ;
   }
 
   ButtonTheme submitButton() {

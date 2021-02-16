@@ -51,7 +51,7 @@ class HistoryWidget extends StatefulWidget {
 
 class HistoryWidgetState extends State<HistoryWidget> {
   ReceiptMemento momentum = ReceiptMemento();
-  final _empty_image_path = "assets/not_empty";
+  final emptyImagePath = "assets/not_empty";
   final _editFormKey = GlobalKey<FormState>();
   final DbBloc _bloc;
   DateTime receiptDate;
@@ -101,7 +101,7 @@ class HistoryWidgetState extends State<HistoryWidget> {
                       children: [
                         PaddingFactory.create(
                           SvgPicture.asset(
-                            this._empty_image_path,
+                            this.emptyImagePath,
                             height: 250,
                           ),
                         ),
@@ -128,7 +128,7 @@ class HistoryWidgetState extends State<HistoryWidget> {
                     child: PaddingFactory.create(Text(
                       S.of(context).overview +
                           ": " +
-                          api.format(api.weekly_total, 2) +
+                          api.format(api.WEEKLY_TOTAL, 2) +
                           S.of(context).currency,
                       style: TextStyle(
                           fontWeight: FontWeight.w200,
