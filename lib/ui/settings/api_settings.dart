@@ -16,7 +16,6 @@
  */
 
 import 'package:flutter/material.dart';
-import 'package:receipt_manager/converter/color_converter.dart';
 import 'package:receipt_manager/generated/l10n.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -50,16 +49,18 @@ class _ApiSettingsState extends State<ApiSettings> {
       },
       keyboardType: TextInputType.url,
       decoration: new InputDecoration(
+        filled: true,
+        fillColor: Colors.grey[100],
         enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: HexColor.fromHex("#232F34")),
+          borderSide: BorderSide(color: Colors.grey[100]),
         ),
         focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: HexColor.fromHex("#232F34")),
+          borderSide: BorderSide(color: Colors.grey),
         ),
         border: new OutlineInputBorder(
-            borderSide: new BorderSide(color: HexColor.fromHex("#232F34"))),
+            borderSide: new BorderSide(color: Colors.grey[100])),
         hintText: S.of(context).insertYourApiToken,
-        labelText: S.of(context).apitoken,
+        //labelText: S.of(context).apitoken,
         helperText: S.of(context).insertServerApiToken,
         prefixIcon: const Icon(
           Icons.vpn_key,

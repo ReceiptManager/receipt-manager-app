@@ -38,7 +38,6 @@ import 'package:receipt_manager/theme/color/color.dart';
 import 'package:receipt_manager/theme/theme_manager.dart';
 import 'package:receipt_manager/util/dimensions.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:toggle_switch/toggle_switch.dart';
 
 import '../parser/camera_picker.dart';
 
@@ -214,9 +213,11 @@ class ReceiptInputController extends State<ReceiptForm> {
                                   child: TextFormField(
                                     style: TextStyle(color: Colors.black),
                                     decoration: new InputDecoration(
+                                        filled: true,
+                                        fillColor: Colors.grey[100],
                                         enabledBorder: OutlineInputBorder(
                                           borderSide:
-                                              BorderSide(color: Colors.grey),
+                                              BorderSide(color: Colors.grey[100]),
                                         ),
                                         focusedBorder: OutlineInputBorder(
                                           borderSide:
@@ -224,11 +225,11 @@ class ReceiptInputController extends State<ReceiptForm> {
                                         ),
                                         border: new OutlineInputBorder(
                                             borderSide: new BorderSide(
-                                                color: Colors.grey)),
+                                                color: Colors.grey[100])),
                                         hintText:
                                             S.of(context).receiptDateFormat,
-                                        labelText:
-                                            S.of(context).receiptDateLabelText,
+                                        // labelText:
+                                        //   S.of(context).receiptDateLabelText,
                                         helperText:
                                             S.of(context).receiptDateHelperText,
                                         prefixIcon: IconButton(
@@ -302,8 +303,12 @@ class ReceiptInputController extends State<ReceiptForm> {
                                       left: 8.0, right: 8.0),
                                   child: Theme(
                                       data: AppTheme.lightTheme,
-                                      child: DropdownButton<ReceiptCategory>(
+                                      child: DropdownButtonFormField<
+                                              ReceiptCategory>(
                                           key: _dropKey,
+                                          decoration: const InputDecoration(
+                                            border: const OutlineInputBorder(),
+                                          ),
                                           hint: Text(S
                                               .of(context)
                                               .receiptSelectCategory),
@@ -315,7 +320,7 @@ class ReceiptInputController extends State<ReceiptForm> {
                                               selectedCategory = value;
                                             });
                                           },
-                                          dropdownColor: Colors.white,
+                                          dropdownColor: Colors.grey[100],
                                           items: ReceiptCategoryFactory.get(
                                                   context)
                                               .map((ReceiptCategory user) {
@@ -338,10 +343,12 @@ class ReceiptInputController extends State<ReceiptForm> {
                                             );
                                           }).toList())))),
                               Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment: MainAxisAlignment
+                                    .end, //Center Row contents horizontally,
+                                crossAxisAlignment: CrossAxisAlignment
+                                    .end, //Center Row contents vertically,
                                 children: [
-                                  new Align(
+                                  /* new Align(
                                       alignment: Alignment.topCenter,
                                       child: Padding(
                                           padding: const EdgeInsets.all(8),
@@ -366,13 +373,15 @@ class ReceiptInputController extends State<ReceiptForm> {
                                               else
                                                 outcome = false;
                                             },
-                                          ))),
+                                          ))),*/
                                   //                  getItems(),
-                                  new Align(
-                                      alignment: Alignment.bottomRight,
-                                      child: Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: submitButton())),
+                                  Center(
+                                    child: new Align(
+                                        alignment: Alignment.center,
+                                        child: Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: submitButton())),
+                                  )
                                 ],
                               ),
                               getItems(),
@@ -564,69 +573,78 @@ class ReceiptInputController extends State<ReceiptForm> {
     ;
   }
 
-  FloatingActionButton submitButton() {
-    return new FloatingActionButton(
-        onPressed: () {
-          final form = _formKey.currentState;
-          // disable form validation for now
-          if (form.validate() || receiptCategory != null) {
-            try {
-              if (showAlert)
-                Scaffold.of(context).showSnackBar(SnackBar(
-                  content: Text(S.of(context).addedReceipt),
-                  backgroundColor: Colors.green,
-                ));
+  ButtonTheme submitButton() {
+    return new ButtonTheme(
+        minWidth: 150.0,
+        height: 50.0,
+        child: RaisedButton(
+            color: Colors.black,
+            shape: StadiumBorder(),
+            onPressed: () {
+              final form = _formKey.currentState;
+              // disable form validation for now
+              if (form.validate() || receiptCategory != null) {
+                try {
+                  if (showAlert)
+                    Scaffold.of(context).showSnackBar(SnackBar(
+                      content: Text(S.of(context).addedReceipt),
+                      backgroundColor: Colors.green,
+                    ));
 
-              showAlert = false;
-              shopName = storeNameController.text;
-              total = receiptTotalController.text;
-            } catch (e) {
-              reset();
-              return;
-            }
+                  showAlert = false;
+                  shopName = storeNameController.text;
+                  total = receiptTotalController.text;
+                } catch (e) {
+                  reset();
+                  return;
+                }
 
-            // trim negligent whitespaces
-            shopName = shopName.trim();
-            shopName.split(" ").join("");
-            total = outcome ? "-" + total : total;
-            total.split(" ").join("");
+                // trim negligent whitespaces
+                shopName = shopName.trim();
+                shopName.split(" ").join("");
+                total = outcome ? "-" + total : total;
+                total.split(" ").join("");
 
-            String jsonItemList =
-                itemList == null ? null : jsonEncode(itemList);
+                String jsonItemList =
+                    itemList == null ? null : jsonEncode(itemList);
 
-            _bloc.add(InsertEvent(
-                receipt: ReceiptsCompanion(
-                    date: Value(receiptDate),
-                    total: Value(total),
-                    category: Value(jsonEncode(selectedCategory)),
-                    items: Value(jsonItemList),
-                    shop: Value(shopName))));
-            _bloc.add(ReceiptAllFetch());
+                _bloc.add(InsertEvent(
+                    receipt: ReceiptsCompanion(
+                        date: Value(receiptDate),
+                        total: Value(total),
+                        category: Value(jsonEncode(selectedCategory)),
+                        items: Value(jsonItemList),
+                        shop: Value(shopName))));
+                _bloc.add(ReceiptAllFetch());
 
-            bool _submitTrainingData = sharedPrefs.getBool("sendTrainingData");
-            if (_submitTrainingData != null &&
-                _submitTrainingData == true &&
-                sendImage) {
-              String ip = sharedPrefs.get("ipv4");
-              String token = sharedPrefs.get("api_token");
-              NetworkClient.sendTrainingData(ip, token, shopName,
-                  receiptDate.toIso8601String(), total, context);
-            }
+                bool _submitTrainingData =
+                    sharedPrefs.getBool("sendTrainingData");
+                if (_submitTrainingData != null &&
+                    _submitTrainingData == true &&
+                    sendImage) {
+                  String ip = sharedPrefs.get("ipv4");
+                  String token = sharedPrefs.get("api_token");
+                  NetworkClient.sendTrainingData(ip, token, shopName,
+                      receiptDate.toIso8601String(), total, context);
+                }
 
-            reset();
-          } else {
-            if (receiptCategory == null || receiptCategory.isEmpty) {
-              Scaffold.of(context).showSnackBar(SnackBar(
-                  content: Text(S.of(context).receiptSelectCategory),
-                  backgroundColor: Colors.red));
-            } else {
-              Scaffold.of(context).showSnackBar(SnackBar(
-                  content: Text(S.of(context).invalidInput),
-                  backgroundColor: Colors.red));
-            }
-          }
-        },
-        child: Icon(Icons.done_all));
+                reset();
+              } else {
+                if (receiptCategory == null || receiptCategory.isEmpty) {
+                  Scaffold.of(context).showSnackBar(SnackBar(
+                      content: Text(S.of(context).receiptSelectCategory),
+                      backgroundColor: Colors.red));
+                } else {
+                  Scaffold.of(context).showSnackBar(SnackBar(
+                      content: Text(S.of(context).invalidInput),
+                      backgroundColor: Colors.red));
+                }
+              }
+            },
+            child: Text(
+              S.of(context).confirm,
+              style: TextStyle(color: Colors.white),
+            )));
   }
 
   void showUpdateSuccess() {
