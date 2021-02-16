@@ -15,11 +15,11 @@
   "addReceipt": "Add receipt",
   "addedReceipt": "Added receipt",
   "receiptDateInvalid": "Receipt date is invalid, format:",
-  "receiptEmpty": "Please enter some date",
+  "receiptEmpty": "Please enter a receipt date",
   "receiptDateFormat": "dd/MM/y",
   "receiptDateLabelText": "Receipt date",
   "receiptDateHelperText": "Set the receipt date",
-  "receiptDateDialog": "Please enter some date",
+  "receiptDateDialog": "Please enter a receipt date",
   "receiptDateNotFormatted": "Date is not formatted",
   "receiptSelectCategory": "Select receipt category",
   "invalidInput": "Input appears invalid.",
@@ -115,5 +115,6 @@
 
   "itemTotalTitle": "Total",
   "itemTotalLabelText": "Total",
-  "itemTotalHelperText": "Add the item total"
+  "itemTotalHelperText": "Add the item total",
+  "confirm": "Confirm"
 }

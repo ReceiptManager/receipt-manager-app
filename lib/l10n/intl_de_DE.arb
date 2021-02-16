@@ -19,7 +19,7 @@
   "receiptDateLabelText": "Datum",
   "receiptDateInvalid": "Receipt date is invalid, format:",
   "receiptDateHelperText": "Füge das Datum das Kassenbeleg hinzu",
-  "receiptDateDialog": "Please enter some date",
+  "receiptDateDialog": "Bitte gebe ein Datum an",
   "receiptDateNotFormatted": "Eingabeformat ungültig",
   "receiptSelectCategory": "Wähle eine Kategorie",
   "invalidInput": "Eingabe is ungültig",
@@ -116,5 +116,6 @@
 
   "itemTotalTitle": "Betrag",
   "itemTotalLabelText": "Betrag",
-  "itemTotalHelperText": "Füge den Betrag des Artikels hinzu"
+  "itemTotalHelperText": "Füge den Betrag des Artikels hinzu",
+  "confirm": "Bestätigen"
 }

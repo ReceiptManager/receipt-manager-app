@@ -28,6 +28,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "appBarTitle" : MessageLookupByLibrary.simpleMessage("Mein Haushaltsbuch"),
     "cameraSettings" : MessageLookupByLibrary.simpleMessage("Kamera Einstellungen"),
     "cancel" : MessageLookupByLibrary.simpleMessage("Abbrechen"),
+    "confirm" : MessageLookupByLibrary.simpleMessage("Bestätigen"),
     "currency" : MessageLookupByLibrary.simpleMessage("€"),
     "currentLanguage" : MessageLookupByLibrary.simpleMessage("Deutsch"),
     "dashboard" : MessageLookupByLibrary.simpleMessage("Übersicht"),

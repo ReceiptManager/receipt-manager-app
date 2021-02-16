@@ -28,6 +28,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "appBarTitle" : MessageLookupByLibrary.simpleMessage("Receipt manager"),
     "cameraSettings" : MessageLookupByLibrary.simpleMessage("Camera settings"),
     "cancel" : MessageLookupByLibrary.simpleMessage("Cancel"),
+    "confirm" : MessageLookupByLibrary.simpleMessage("Confirm"),
     "currency" : MessageLookupByLibrary.simpleMessage("\$"),
     "currentLanguage" : MessageLookupByLibrary.simpleMessage("English"),
     "dashboard" : MessageLookupByLibrary.simpleMessage("Dashboard"),
