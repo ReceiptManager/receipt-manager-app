@@ -23,12 +23,14 @@ class AppTheme {
 
   static ThemeData lightTheme = ThemeData(
     primarySwatch: Colors.red,
-    backgroundColor: LightColor.background,
+    backgroundColor: Colors.grey[200],
     primaryColor: LightColor.black,
     accentColor: Colors.red,
     primaryColorDark: LightColor.black,
     primaryColorLight: LightColor.black,
-    cardTheme: CardTheme(color: LightColor.background),
+    fontFamily: "Encode Sans",
+    canvasColor: Colors.grey[200],
+    cardTheme: CardTheme(color: Colors.grey[200]),
     // ignore: deprecated_member_use
     textTheme: TextTheme(display1: TextStyle(color: LightColor.black)),
     iconTheme: IconThemeData(color: LightColor.darkBlue),
