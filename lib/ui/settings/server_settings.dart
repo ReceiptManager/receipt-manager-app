@@ -17,7 +17,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:giffy_dialog/giffy_dialog.dart';
-import 'package:receipt_manager/converter/color_converter.dart';
 import 'package:receipt_manager/generated/l10n.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -51,16 +50,18 @@ class _ServerSettingsState extends State<ServerSettings> {
       },
       keyboardType: TextInputType.url,
       decoration: new InputDecoration(
+        filled: true,
+        fillColor: Colors.grey[100],
         enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: HexColor.fromHex("#232F34")),
+          borderSide: BorderSide(color: Colors.grey[100]),
         ),
         focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: HexColor.fromHex("#232F34")),
+          borderSide: BorderSide(color: Colors.grey),
         ),
         border: new OutlineInputBorder(
-            borderSide: new BorderSide(color: HexColor.fromHex("#232F34"))),
+            borderSide: new BorderSide(color: Colors.grey[100])),
         hintText: S.of(context).serverIP,
-        labelText: S.of(context).serverIPLabelText,
+        // labelText: S.of(context).serverIPLabelText,
         helperText: S.of(context).serverIPHelpText,
         prefixIcon: const Icon(
           Icons.network_wifi,

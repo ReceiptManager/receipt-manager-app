@@ -28,16 +28,18 @@ class TextFormFactory {
     return TextFormField(
       style: TextStyle(color: Colors.black),
       decoration: new InputDecoration(
+          filled: true,
+          fillColor: Colors.grey[100],
           enabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: Colors.grey),
+            borderSide: BorderSide(color: Colors.grey[100]),
           ),
           focusedBorder: OutlineInputBorder(
             borderSide: BorderSide(color: Colors.grey),
           ),
           border: new OutlineInputBorder(
-              borderSide: new BorderSide(color: Colors.grey)),
+              borderSide: new BorderSide(color: Colors.grey[100])),
           hintText: S.of(context).receiptDateFormat,
-          labelText: S.of(context).receiptDateLabelText,
+          //labelText: S.of(context).receiptDateLabelText,
           helperText: S.of(context).receiptDateHelperText,
           prefixIcon: ButtonFactory.buildDateButton(
               receiptDate, dateController, context)),
@@ -67,16 +69,18 @@ class TextFormFactory {
     return TextFormField(
       style: TextStyle(color: Colors.black),
       decoration: new InputDecoration(
+        filled: true,
+        fillColor: Colors.grey[100],
         enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.grey),
+          borderSide: BorderSide(color: Colors.grey[100]),
         ),
         focusedBorder: OutlineInputBorder(
           borderSide: BorderSide(color: Colors.grey),
         ),
         border: new OutlineInputBorder(
-            borderSide: new BorderSide(color: Colors.grey)),
+            borderSide: new BorderSide(color: Colors.grey[100])),
         hintText: S.of(context).totalTitle,
-        labelText: S.of(context).totalLabelText,
+        // labelText: S.of(context).totalLabelText,
         helperText: S.of(context).totalHelperText,
         prefixIcon: const Icon(
           Icons.attach_money,
@@ -105,16 +109,18 @@ class TextFormFactory {
     return TextFormField(
       style: TextStyle(color: Colors.black),
       decoration: new InputDecoration(
+        filled: true,
+        fillColor: Colors.grey[100],
         enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.grey),
+          borderSide: BorderSide(color: Colors.grey[100]),
         ),
         focusedBorder: OutlineInputBorder(
           borderSide: BorderSide(color: Colors.grey),
         ),
         border: new OutlineInputBorder(
-            borderSide: new BorderSide(color: Colors.grey)),
+            borderSide: new BorderSide(color: Colors.grey[100])),
         hintText: S.of(context).itemTitle,
-        labelText: S.of(context).itemLabelText,
+        //labelText: S.of(context).itemLabelText,
         helperText: S.of(context).itemHelperText,
         prefixIcon: const Icon(
           Icons.attach_money,
@@ -143,16 +149,18 @@ class TextFormFactory {
     return TextFormField(
       style: TextStyle(color: Colors.black),
       decoration: new InputDecoration(
+        filled: true,
+        fillColor: Colors.grey[100],
         enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.grey),
+          borderSide: BorderSide(color: Colors.grey[100]),
         ),
         focusedBorder: OutlineInputBorder(
           borderSide: BorderSide(color: Colors.grey),
         ),
         border: new OutlineInputBorder(
-            borderSide: new BorderSide(color: Colors.grey)),
+            borderSide: new BorderSide(color: Colors.grey[100])),
         hintText: S.of(context).itemTotalTitle,
-        labelText: S.of(context).itemTotalLabelText,
+        //labelText: S.of(context).itemTotalLabelText,
         helperText: S.of(context).itemTotalHelperText,
         prefixIcon: const Icon(
           Icons.attach_money,
@@ -189,16 +197,18 @@ class TextFormFactory {
     return SimpleAutocompleteFormField<String>(
       style: TextStyle(color: Colors.black),
       decoration: new InputDecoration(
+        filled: true,
+        fillColor: Colors.grey[100],
         enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.grey),
+          borderSide: BorderSide(color: Colors.grey[100]),
         ),
         focusedBorder: OutlineInputBorder(
           borderSide: BorderSide(color: Colors.grey),
         ),
         border: new OutlineInputBorder(
-            borderSide: new BorderSide(color: Colors.black)),
+            borderSide: new BorderSide(color: Colors.grey[100])),
         hintText: S.of(context).storeNameHint,
-        labelText: S.of(context).storeNameTitle,
+        //labelText: S.of(context).storeNameTitle,
         helperText: S.of(context).storeNameHelper,
         prefixIcon: const Icon(Icons.storefront_outlined),
         prefixText: ' ',

@@ -126,7 +126,9 @@ class HistoryWidgetState extends State<HistoryWidget> {
                 child: Align(
                     alignment: Alignment.centerRight,
                     child: PaddingFactory.create(Text(
-        S.of(context).overview + ": " + api.format(api.weekly_total, 2) +
+                      S.of(context).overview +
+                          ": " +
+                          api.format(api.weekly_total, 2) +
                           S.of(context).currency,
                       style: TextStyle(
                           fontWeight: FontWeight.w200,
@@ -136,16 +138,15 @@ class HistoryWidgetState extends State<HistoryWidget> {
               ),
               FilterChipScreen(),
               Expanded(
-                child:  Container(
-                    color: Colors.white,
-                    child: ListView.builder(
-                        padding: const EdgeInsets.all(8.0),
-                        itemCount: this.momentum.receipts.length,
-                        itemBuilder: (_, index) {
-                          final receipt = this.momentum.receipts[index];
-                          return _buildListItems(receipt);
-                        }))
-              )
+                  child: Container(
+                      color: Colors.white,
+                      child: ListView.builder(
+                          padding: const EdgeInsets.all(8.0),
+                          itemCount: this.momentum.receipts.length,
+                          itemBuilder: (_, index) {
+                            final receipt = this.momentum.receipts[index];
+                            return _buildListItems(receipt);
+                          })))
             ],
           );
         }
@@ -207,9 +208,11 @@ class HistoryWidgetState extends State<HistoryWidget> {
                       contentPadding:
                           EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
                       trailing: Text(
-                       receipt.total + S.of(context).currency,
+                        receipt.total + S.of(context).currency,
                         style: TextStyle(
-                            color: receipt.total[0] == "-" ? Colors.redAccent : Colors.green,
+                            color: receipt.total[0] == "-"
+                                ? Colors.redAccent
+                                : Colors.green,
                             fontWeight: FontWeight.bold,
                             fontSize: 16),
                       ),
@@ -329,32 +332,31 @@ class HistoryWidgetState extends State<HistoryWidget> {
                                             color: HexColor.fromHex("#232F34")),
                                         keyboardType: TextInputType.number,
                                         decoration: new InputDecoration(
+                                            filled: true,
+                                            fillColor: Colors.grey[100],
                                             enabledBorder: OutlineInputBorder(
                                               borderSide: BorderSide(
-                                                  color: HexColor.fromHex(
-                                                      "#232F34")),
+                                                  color: Colors.grey[100]),
                                             ),
                                             focusedBorder: OutlineInputBorder(
                                               borderSide: BorderSide(
-                                                  color: HexColor.fromHex(
-                                                      "#232F34")),
+                                                  color: Colors.grey),
                                             ),
                                             border: new OutlineInputBorder(
                                                 borderSide: new BorderSide(
-                                                    color: HexColor.fromHex(
-                                                        "#232F34"))),
+                                                    color: Colors.grey[100])),
                                             hintText:
                                                 S.of(context).receiptDateFormat,
-                                            labelText: S
-                                                .of(context)
-                                                .receiptDateLabelText,
+                                            //  labelText: S
+                                            //      .of(context)
+                                            //  .receiptDateLabelText,
                                             helperText: S
                                                 .of(context)
                                                 .receiptDateHelperText,
                                             prefixIcon: IconButton(
                                                 icon: Icon(
                                                   Icons.calendar_today,
-                                                  color: Colors.purple,
+                                                  color: Colors.grey,
                                                 ),
                                                 splashColor: Colors.black,
                                                 color: Colors.black,
@@ -497,7 +499,6 @@ class HistoryWidgetState extends State<HistoryWidget> {
   }
 }
 
-
 class FilterChipScreen extends StatefulWidget {
   @override
   _FilterChipScreenState createState() => _FilterChipScreenState();
@@ -561,17 +562,16 @@ class _FilterChipScreenState extends State<FilterChipScreen> {
 
   void filter() {
     List<Receipt> filteredReceipts = [];
-    for(Receipt r in momentum.finalReceipts) {
-     for (ReceiptCategory category in filterCategories) {
-       Map<String, dynamic> json = jsonDecode(r.category);
+    for (Receipt r in momentum.finalReceipts) {
+      for (ReceiptCategory category in filterCategories) {
+        Map<String, dynamic> json = jsonDecode(r.category);
 
-       if (json['name'] == category.name)
-         filteredReceipts.add(r);
-     }
+        if (json['name'] == category.name) filteredReceipts.add(r);
+      }
     }
 
-   setState(() {
-     //momentum.receipts = filteredReceipts;
-   });
+    setState(() {
+      //momentum.receipts = filteredReceipts;
+    });
   }
 }
