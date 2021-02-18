@@ -392,13 +392,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.16.1"
-  intl_translation:
-    dependency: "direct dev"
-    description:
-      name: intl_translation
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.17.10+1"
   io:
     dependency: transitive
     description:
@@ -489,7 +482,7 @@ packages:
       name: node_io
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.2.0"
+    version: "1.1.1"
   package_config:
     dependency: transitive
     description:
@@ -859,20 +852,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.4.0"
-  syncfusion_flutter_charts:
-    dependency: "direct main"
-    description:
-      name: syncfusion_flutter_charts
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "18.4.42"
-  syncfusion_flutter_core:
-    dependency: transitive
-    description:
-      name: syncfusion_flutter_core
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "18.4.42"
   synchronized:
     dependency: transitive
     description:
