@@ -27,8 +27,8 @@ class ReceiptCategory {
   final Icon icon;
 
   ReceiptCategory.fromJson(Map<String, dynamic> json)
-      : name = json['name'],
-        path = json['path'],
+      : name = json == null ? "util" : json['name'],
+        path = json == null ? "util" : json['path'],
         icon = null;
 
   Map<String, dynamic> toJson() => {'name': name, 'path': path};
