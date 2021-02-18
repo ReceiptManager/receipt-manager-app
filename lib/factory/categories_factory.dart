@@ -68,7 +68,7 @@ class ReceiptCategoryFactory {
             "util"),
         ReceiptCategory(
             S.of(context).travel,
-            Icon(Icons.edit,
+            Icon(Icons.airplanemode_active,
                 color: _rand.randomColor(colorHue: ColorHue.purple)),
             "globe"),
         ReceiptCategory(
@@ -77,7 +77,8 @@ class ReceiptCategoryFactory {
             "education"),
         ReceiptCategory(
             S.of(context).diySupermarkt,
-            Icon(Icons.book, color: _rand.randomColor(colorHue: ColorHue.blue)),
+            Icon(Icons.handyman,
+                color: _rand.randomColor(colorHue: ColorHue.blue)),
             "craft"),
       ];
     }
