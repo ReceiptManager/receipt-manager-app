@@ -677,7 +677,7 @@ class ReceiptInputController extends State<ReceiptForm> {
   }
 
   Widget getItemListButton() {
-    if (itemList == null) return Container();
+    if (itemList == null || itemList.length == 0) return Container();
 
     return PaddingFactory.create(Align(
         alignment: Alignment.topRight,
