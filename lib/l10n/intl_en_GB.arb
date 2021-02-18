@@ -109,5 +109,6 @@
   "deleteProduct" : "Delete product",
   "editProduct" : "Edit product",
   "products": "Products",
-  "confirm": "Confirm"
+  "confirm": "Confirm",
+  "misc" : "Misc"
 }
