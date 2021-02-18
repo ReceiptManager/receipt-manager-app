@@ -21,6 +21,7 @@ import 'dart:core';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
 import 'package:random_color/random_color.dart';
@@ -140,13 +141,24 @@ class HistoryWidgetState extends State<HistoryWidget> {
               Expanded(
                   child: Container(
                       color: Colors.white,
-                      child: ListView.builder(
-                          padding: const EdgeInsets.all(8.0),
-                          itemCount: this.momentum.receipts.length,
-                          itemBuilder: (_, index) {
-                            final receipt = this.momentum.receipts[index];
-                            return _buildListItems(receipt);
-                          })))
+                      child: AnimationLimiter(
+                          child: ListView.builder(
+                              padding: const EdgeInsets.all(8.0),
+                              itemCount: this.momentum.receipts.length,
+                              itemBuilder: (_, index) {
+                                final receipt = this.momentum.receipts[index];
+
+                                return AnimationConfiguration.staggeredList(
+                                  position: index,
+                                  duration: const Duration(milliseconds: 375),
+                                  child: SlideAnimation(
+                                    verticalOffset: 50.0,
+                                    child: FadeInAnimation(
+                                      child: _buildListItems(receipt),
+                                    ),
+                                  ),
+                                );
+                              }))))
             ],
           );
         }

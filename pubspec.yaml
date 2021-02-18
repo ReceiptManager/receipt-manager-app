@@ -57,7 +57,7 @@ dependencies:
   percent_indicator: ^2.1.1
   toggle_switch: "^0.1.8"
   syncfusion_flutter_charts: ^18.4.35
-
+  flutter_staggered_animations: "^0.1.2"
 
 dev_dependencies:
   flutter_test:
