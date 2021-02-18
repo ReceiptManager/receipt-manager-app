@@ -117,5 +117,6 @@
   "itemTotalTitle": "Betrag",
   "itemTotalLabelText": "Betrag",
   "itemTotalHelperText": "Füge den Betrag des Artikels hinzu",
-  "confirm": "Bestätigen"
+  "confirm": "Bestätigen",
+  "misc" : "Sonstiges"
 }

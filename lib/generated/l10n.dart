@@ -225,10 +225,10 @@ class S {
     );
   }
 
-  /// `Please enter some date`
+  /// `Bitte gebe ein Datum an`
   String get receiptDateDialog {
     return Intl.message(
-      'Please enter some date',
+      'Bitte gebe ein Datum an',
       name: 'receiptDateDialog',
       desc: '',
       args: [],
@@ -1190,6 +1190,16 @@ class S {
     return Intl.message(
       'Bestätigen',
       name: 'confirm',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Sonstiges`
+  String get misc {
+    return Intl.message(
+      'Sonstiges',
+      name: 'misc',
       desc: '',
       args: [],
     );

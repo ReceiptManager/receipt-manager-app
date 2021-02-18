@@ -116,5 +116,6 @@
   "itemTotalTitle": "Total",
   "itemTotalLabelText": "Total",
   "itemTotalHelperText": "Add the item total",
-  "confirm": "Confirm"
+  "confirm": "Confirm",
+  "misc" : "Misc"
 }
