@@ -216,8 +216,8 @@ class ReceiptInputController extends State<ReceiptForm> {
                                         filled: true,
                                         fillColor: Colors.grey[100],
                                         enabledBorder: OutlineInputBorder(
-                                          borderSide:
-                                              BorderSide(color: Colors.grey[100]),
+                                          borderSide: BorderSide(
+                                              color: Colors.grey[100]),
                                         ),
                                         focusedBorder: OutlineInputBorder(
                                           borderSide:
@@ -580,9 +580,9 @@ class ReceiptInputController extends State<ReceiptForm> {
             color: Colors.black,
             shape: StadiumBorder(),
             onPressed: () {
-              final form = _formKey.currentState;
-              // disable form validation for now
-              if (form.validate() || receiptCategory != null) {
+              if (_formKey.currentState.validate() &&
+                  receiptCategory != null &&
+                  selectedCategory != null) {
                 try {
                   if (showAlert)
                     Scaffold.of(context).showSnackBar(SnackBar(
