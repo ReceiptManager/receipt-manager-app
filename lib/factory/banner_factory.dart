@@ -16,15 +16,31 @@
  */
 
 import 'package:flutter/material.dart';
+import 'package:receipt_manager/generated/l10n.dart';
 import 'package:receipt_manager/util/curved_painter.dart';
 import 'package:receipt_manager/util/dimensions.dart';
 
-class BannerFactory {
-  static String ft;
-  static String st;
-  static Stack banner;
+enum BANNER_MODES { ADD_RECEIPT, DASHBOARD, OVERVIEW_EXPENSES }
 
-  static get(String content, BuildContext context) {
+class BannerFactory {
+  static get(BANNER_MODES modes, BuildContext context) {
+    String content;
+    switch (modes) {
+      case BANNER_MODES.ADD_RECEIPT:
+        content = S.of(context).addReceipt;
+        break;
+      case BANNER_MODES.DASHBOARD:
+        content = S.of(context).dashboard;
+        break;
+      case BANNER_MODES.OVERVIEW_EXPENSES:
+        content = S.of(context).overviewExpenses;
+        break;
+    }
+
+    String ft;
+    String st;
+    Stack banner;
+
     List<String> contentArr = content.split(" ");
     String firstText = "";
     String secondText = "";

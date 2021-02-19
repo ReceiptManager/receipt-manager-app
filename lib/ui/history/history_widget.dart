@@ -94,7 +94,7 @@ class HistoryWidgetState extends State<HistoryWidget> {
               this.momentum.receipts.length == 0)
             return new Column(
               children: [
-                BannerFactory.get(S.of(context).overviewExpenses, context),
+                BannerFactory.get(BANNER_MODES.OVERVIEW_EXPENSES, context),
                 Container(
                     color: Colors.white,
                     child: PaddingFactory.create(Column(
@@ -120,7 +120,7 @@ class HistoryWidgetState extends State<HistoryWidget> {
 
           return Column(
             children: <Widget>[
-              BannerFactory.get(S.of(context).overviewExpenses, context),
+              BannerFactory.get(BANNER_MODES.OVERVIEW_EXPENSES, context),
               Container(
                 color: Colors.white,
                 child: Align(
