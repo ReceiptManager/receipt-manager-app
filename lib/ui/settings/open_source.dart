@@ -1,18 +1,18 @@
 /*
- *  Copyright (c) 2020 - William Todt
+ * Copyright (c) 2020 - 2021 : William Todt
  *
- *  Licensed under the Apache License, Version 2.0 (the "License");
- *  you may not use this file except in compliance with the License.
- *  You may obtain a copy of the License at
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
  *
- *  http://www.apache.org/licenses/LICENSE-2.0
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 import 'dart:developer';
 
@@ -31,7 +31,7 @@ class _OpenSourceSettingsState extends State<OpenSourceSettings> {
     "path_provider:",
     "path: 1.1.0",
     "curved_navigation_bar: ^0.3.4",
-        "shared_preferences:  ^0.5.12+2",
+    "shared_preferences:  ^0.5.12+2",
     "giffy_dialog: ^1.8.0",
     "flutter_bloc: ^6.0.6",
     "equatable: ^1.2.5",
@@ -72,8 +72,12 @@ class _OpenSourceSettingsState extends State<OpenSourceSettings> {
                 height: 40,
                 color: Colors.white,
                 child: Center(
-                    child: Text('${licence[index]}',
-                  style: TextStyle(fontSize: 16, color: Colors.black,fontWeight: FontWeight.w300),
+                    child: Text(
+                  '${licence[index]}',
+                  style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.black,
+                      fontWeight: FontWeight.w300),
                 )),
               );
             }));

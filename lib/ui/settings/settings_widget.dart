@@ -1,18 +1,18 @@
 /*
- *  Copyright (c) 2020 - William Todt
+ * Copyright (c) 2020 - 2021 : William Todt
  *
- *  Licensed under the Apache License, Version 2.0 (the "License");
- *  you may not use this file except in compliance with the License.
- *  You may obtain a copy of the License at
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
  *
- *  http://www.apache.org/licenses/LICENSE-2.0
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 import 'package:flutter/material.dart';
@@ -41,7 +41,7 @@ class _SettingsWidgetState extends State<SettingsWidget> {
   bool _legacyParser = true;
   bool _rotate = false;
   bool _sendTrainingData = false;
-  
+
   final SharedPreferences _prefs;
 
   _SettingsWidgetState(this._prefs);
@@ -62,84 +62,83 @@ class _SettingsWidgetState extends State<SettingsWidget> {
     _rotate =
         _prefs.getBool("rotate") == null ? _rotate : _prefs.getBool("rotate");
 
-    _sendTrainingData =
-    _prefs.getBool("sendTrainingData") == null ? _sendTrainingData : _prefs.getBool("sendTrainingData");
+    _sendTrainingData = _prefs.getBool("sendTrainingData") == null
+        ? _sendTrainingData
+        : _prefs.getBool("sendTrainingData");
   }
 
   @override
   Widget build(BuildContext context) {
     readFallbackValues();
 
-    return
-      SettingsList(
-        shrinkWrap: true,
-        backgroundColor: Colors.white,
-        sections: [
-          SettingsSection(
-            title: S.of(context).settingsGeneralCategory,
-            tiles: [
-              SettingsTile(
-                title: S.of(context).settingsLanguageTitle,
-                subtitle: S.of(context).currentLanguage,
-                leading: Icon(Icons.language),
-                onTap: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (BuildContext context) =>
-                          LanguageSetting(_prefs)));
-                },
-              ),
-              SettingsTile(
-                title: S.of(context).settingsServerTitle,
-                leading: Icon(Icons.wifi),
-                onTap: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (BuildContext context) =>
-                          ServerSettings(_prefs)));
-                },
-              ),
-              SettingsTile(
-                title: S.of(context).apitoken,
-                leading: Icon(Icons.vpn_key),
-                onTap: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (BuildContext context) => ApiSettings(_prefs)));
-                },
-              ),
-            ],
-          ),
-          SettingsSection(
-            title: S.of(context).cameraSettings,
-            tiles: [
-              SettingsTile.switchTile(
-                title: S.of(context).rotateImage,
-                leading: Icon(Icons.rotate_right_sharp),
-                switchValue: _rotate,
-                onToggle: (bool value) {
-                  setState(() {
-                    _rotate = value;
-                    _prefs.setBool("rotate", value);
-                  });
-                },
-              ),
-              SettingsTile.switchTile(
-                title: S.of(context).grayscaleImage,
-                leading: Icon(Icons.wb_incandescent_outlined),
-                switchValue: _grayscale,
-                onToggle: (bool value) {
-                  setState(() {
-                    _grayscale = value;
-                    _prefs.setBool("grayscale", value);
-                  });
-                },
-              ),
-              SettingsTile.switchTile(
-                title: S.of(context).gaussianBlur,
-                leading: Icon(Icons.blur_on_outlined),
-                switchValue: _gaussian,
-                onToggle: (bool value) {
-                  setState(() {
-                    _gaussian = value;
-                    _prefs.setBool("gaussian", value);
+    return SettingsList(
+      shrinkWrap: true,
+      backgroundColor: Colors.white,
+      sections: [
+        SettingsSection(
+          title: S.of(context).settingsGeneralCategory,
+          tiles: [
+            SettingsTile(
+              title: S.of(context).settingsLanguageTitle,
+              subtitle: S.of(context).currentLanguage,
+              leading: Icon(Icons.language),
+              onTap: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (BuildContext context) =>
+                        LanguageSetting(_prefs)));
+              },
+            ),
+            SettingsTile(
+              title: S.of(context).settingsServerTitle,
+              leading: Icon(Icons.wifi),
+              onTap: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (BuildContext context) => ServerSettings(_prefs)));
+              },
+            ),
+            SettingsTile(
+              title: S.of(context).apitoken,
+              leading: Icon(Icons.vpn_key),
+              onTap: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (BuildContext context) => ApiSettings(_prefs)));
+              },
+            ),
+          ],
+        ),
+        SettingsSection(
+          title: S.of(context).cameraSettings,
+          tiles: [
+            SettingsTile.switchTile(
+              title: S.of(context).rotateImage,
+              leading: Icon(Icons.rotate_right_sharp),
+              switchValue: _rotate,
+              onToggle: (bool value) {
+                setState(() {
+                  _rotate = value;
+                  _prefs.setBool("rotate", value);
+                });
+              },
+            ),
+            SettingsTile.switchTile(
+              title: S.of(context).grayscaleImage,
+              leading: Icon(Icons.wb_incandescent_outlined),
+              switchValue: _grayscale,
+              onToggle: (bool value) {
+                setState(() {
+                  _grayscale = value;
+                  _prefs.setBool("grayscale", value);
+                });
+              },
+            ),
+            SettingsTile.switchTile(
+              title: S.of(context).gaussianBlur,
+              leading: Icon(Icons.blur_on_outlined),
+              switchValue: _gaussian,
+              onToggle: (bool value) {
+                setState(() {
+                  _gaussian = value;
+                  _prefs.setBool("gaussian", value);
 
                   //The gaussian blur does only work if the image
                   //is grayscaled
@@ -148,74 +147,73 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                     _prefs.setBool("grayscale", value);
                   }
                 });
-                },
-              ),
-              SettingsTile.switchTile(
-                title: S.of(context).neuronalNetworkParser,
-                leading: Icon(Icons.camera_enhance_outlined),
-                switchValue: !_legacyParser,
-                onToggle: (bool value) {
-                  setState(() {
-                    _legacyParser = !value;
-                    _prefs.setBool("legacyParser", !value);
-                  });
-                },
-              ),
-              SettingsTile.switchTile(
-                title: S.of(context).fuzzyParser,
-                leading: Icon(Icons.camera_enhance_rounded),
-                switchValue: _legacyParser,
-                onToggle: (bool value) {
-                  setState(() {
-                    _legacyParser = value;
-                    _prefs.setBool("legacyParser", value);
-                  });
-                },
-              ),
-              SettingsTile.switchTile(
-                title: S.of(context).sendTrainingData,
-                leading: Icon(Icons.model_training),
-                switchValue: _sendTrainingData,
-                onToggle: (bool value) {
-                  setState(() {
-                    _sendTrainingData = value;
-                    _prefs.setBool("sendTrainingData", value);
-                  });
-                },
-              ),
-            ],
-          ),
-          SettingsSection(
-            title: S.of(context).settingsDevelopmentTitle,
-            tiles: [
-              SettingsTile.switchTile(
-                title: S.of(context).enableDebugOutput,
-                leading: Icon(Icons.bug_report),
-                switchValue: _debugOutput,
-                onToggle: (bool value) {
-                  setState(() {
-                    _debugOutput = value;
-                    _prefs.setBool("enable_debug_output", value);
-                  });
-                },
-              ),
-            ],
-          ),
-          SettingsSection(
-            title: S.of(context).licence,
-            tiles: [
-              SettingsTile(
-                title: S.of(context).opensourceLicences,
-                leading: Icon(Icons.wysiwyg),
-                onTap: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (BuildContext context) =>
-                          OpenSourceSettings()));
-                },
-              ),
-            ],
-          )
-        ],
-      );
+              },
+            ),
+            SettingsTile.switchTile(
+              title: S.of(context).neuronalNetworkParser,
+              leading: Icon(Icons.camera_enhance_outlined),
+              switchValue: !_legacyParser,
+              onToggle: (bool value) {
+                setState(() {
+                  _legacyParser = !value;
+                  _prefs.setBool("legacyParser", !value);
+                });
+              },
+            ),
+            SettingsTile.switchTile(
+              title: S.of(context).fuzzyParser,
+              leading: Icon(Icons.camera_enhance_rounded),
+              switchValue: _legacyParser,
+              onToggle: (bool value) {
+                setState(() {
+                  _legacyParser = value;
+                  _prefs.setBool("legacyParser", value);
+                });
+              },
+            ),
+            SettingsTile.switchTile(
+              title: S.of(context).sendTrainingData,
+              leading: Icon(Icons.model_training),
+              switchValue: _sendTrainingData,
+              onToggle: (bool value) {
+                setState(() {
+                  _sendTrainingData = value;
+                  _prefs.setBool("sendTrainingData", value);
+                });
+              },
+            ),
+          ],
+        ),
+        SettingsSection(
+          title: S.of(context).settingsDevelopmentTitle,
+          tiles: [
+            SettingsTile.switchTile(
+              title: S.of(context).enableDebugOutput,
+              leading: Icon(Icons.bug_report),
+              switchValue: _debugOutput,
+              onToggle: (bool value) {
+                setState(() {
+                  _debugOutput = value;
+                  _prefs.setBool("enable_debug_output", value);
+                });
+              },
+            ),
+          ],
+        ),
+        SettingsSection(
+          title: S.of(context).licence,
+          tiles: [
+            SettingsTile(
+              title: S.of(context).opensourceLicences,
+              leading: Icon(Icons.wysiwyg),
+              onTap: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (BuildContext context) => OpenSourceSettings()));
+              },
+            ),
+          ],
+        )
+      ],
+    );
   }
 }
