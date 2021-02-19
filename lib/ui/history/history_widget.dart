@@ -27,7 +27,6 @@ import 'package:intl/intl.dart';
 import 'package:random_color/random_color.dart';
 import 'package:receipt_manager/api/expenses_api.dart';
 import 'package:receipt_manager/bloc/moor/bloc.dart';
-import 'package:receipt_manager/converter/color_converter.dart';
 import 'package:receipt_manager/database/receipt_database.dart';
 import 'package:receipt_manager/date/date_manipulator.dart';
 import 'package:receipt_manager/factory/banner_factory.dart';
@@ -340,8 +339,7 @@ class HistoryWidgetState extends State<HistoryWidget> {
                                   PaddingFactory.create(new Theme(
                                       data: AppTheme.lightTheme,
                                       child: TextFormField(
-                                        style: TextStyle(
-                                            color: HexColor.fromHex("#232F34")),
+                                        style: TextStyle(color: Colors.black),
                                         keyboardType: TextInputType.number,
                                         decoration: new InputDecoration(
                                             filled: true,
