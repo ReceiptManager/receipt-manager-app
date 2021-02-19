@@ -62,6 +62,9 @@ class WeeklyApi extends AbstractApi {
             log("[WARNING]: can't calculate receipt.");
           }
         }
+      }
+
+      for (int i = 0; i < 7; i++) {
         expenses[i] = MathUtil.roundDouble(expenses[i], 2);
         weeklyTotal += expenses[i];
       }

@@ -84,6 +84,8 @@ class ReceiptInputController extends State<ReceiptForm> {
   bool outcome = true;
   bool showAlert = false;
 
+  NetworkClient client = NetworkClient();
+
   ReceiptInputController(
       this.parsedReceipt, this.sendImage, this.sharedPrefs, this._bloc);
 
@@ -623,7 +625,7 @@ class ReceiptInputController extends State<ReceiptForm> {
                     sendImage) {
                   String ip = sharedPrefs.get("ipv4");
                   String token = sharedPrefs.get("api_token");
-                  NetworkClient.sendTrainingData(ip, token, shopName,
+                  client.sendTrainingData(ip, token, shopName,
                       receiptDate.toIso8601String(), total, context);
                 }
 
