@@ -21,8 +21,8 @@ import 'package:flutter/material.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 import 'package:receipt_manager/generated/l10n.dart';
 import 'package:receipt_manager/network/network_client.dart';
+import 'package:receipt_manager/network/network_client_holder.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class DisplayPictureScreen extends StatefulWidget {
   final String imagePath;
@@ -36,6 +36,10 @@ class DisplayPictureScreen extends StatefulWidget {
 class DisplayPictureScreenState extends State<DisplayPictureScreen> {
   final String imagePath;
   final GlobalKey<ScaffoldState> key2 = GlobalKey<ScaffoldState>();
+
+  NetworkClient client = NetworkClient();
+  NetworkClientHolder holder = NetworkClientHolder();
+
   Color _acceptButtonColor = Colors.green;
   Color _declineButtonColor = Colors.red;
   double _progress = 0.0;
@@ -110,31 +114,11 @@ class DisplayPictureScreenState extends State<DisplayPictureScreen> {
                                     _isButtonDisabled = true;
                                     _declineButtonColor = Colors.grey;
                                   });
-                                  SharedPreferences sharedPrefs =
-                                      await SharedPreferences.getInstance();
 
-                                  String ip = sharedPrefs.get("ipv4");
-                                  String token = sharedPrefs.get("api_token");
+                                  holder.readOptions();
 
-                                  bool debugOutput =
-                                      sharedPrefs.get("enable_debug_output");
-                                  bool grayscale = sharedPrefs.get("grayscale");
-                                  bool gaussian = sharedPrefs.get("gaussian");
-                                  bool legacyParser =
-                                      sharedPrefs.get("legacyParser");
-                                  bool rotate = sharedPrefs.get("rotate");
-
-                                  await NetworkClient.sendImage(
-                                      File(imagePath),
-                                      ip,
-                                      token,
-                                      debugOutput,
-                                      grayscale,
-                                      gaussian,
-                                      legacyParser,
-                                      rotate,
-                                      context,
-                                      key2);
+                                  await client.sendImage(
+                                      File(imagePath), holder, context, key2);
                                   _progress = _progress + 80.0;
                                 })),
                       ),
