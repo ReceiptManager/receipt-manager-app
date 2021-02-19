@@ -217,8 +217,10 @@ class NetworkClient {
             DateTime _date;
 
             log("Receipt item list:");
-            for (List<dynamic> receiptItem in r['receiptItems']) {
-              log("\t" + receiptItem[0] + " " + receiptItem[1]);
+            if (holder.showItemList == false) {
+              for (List<dynamic> receiptItem in r['receiptItems']) {
+                log("\t" + receiptItem[0] + " " + receiptItem[1]);
+              }
             }
 
             String parsedString = r['receiptDate'] == null
@@ -239,7 +241,9 @@ class NetworkClient {
                 total: Value(r['receiptTotal']),
                 shop: Value(r['storeName']),
                 category: Value(r['category']),
-                items: Value(jsonEncode(r['receiptItems'])),
+                items: Value(holder.showItemList == false
+                    ? null
+                    : jsonEncode(r['receiptItems'])),
                 date: Value(_date));
 
             log('StoreName:  ${r['storeName']} ');
