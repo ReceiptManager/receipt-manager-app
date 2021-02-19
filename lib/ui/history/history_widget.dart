@@ -28,7 +28,6 @@ import 'package:random_color/random_color.dart';
 import 'package:receipt_manager/api/expenses_api.dart';
 import 'package:receipt_manager/bloc/moor/bloc.dart';
 import 'package:receipt_manager/database/receipt_database.dart';
-import 'package:receipt_manager/date/date_manipulator.dart';
 import 'package:receipt_manager/factory/banner_factory.dart';
 import 'package:receipt_manager/factory/categories_factory.dart';
 import 'package:receipt_manager/factory/logo_factory.dart';
@@ -39,6 +38,7 @@ import 'package:receipt_manager/memento/receipt_memento.dart';
 import 'package:receipt_manager/model/receipt_category.dart';
 import 'package:receipt_manager/theme/color/color.dart';
 import 'package:receipt_manager/theme/theme_manager.dart';
+import 'package:receipt_manager/util/date_manipulator.dart';
 
 class HistoryWidget extends StatefulWidget {
   final DbBloc _bloc;
