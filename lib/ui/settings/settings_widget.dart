@@ -41,6 +41,7 @@ class _SettingsWidgetState extends State<SettingsWidget> {
   bool _legacyParser = true;
   bool _rotate = false;
   bool _sendTrainingData = false;
+  bool _showItemList = false;
 
   final SharedPreferences _prefs;
 
@@ -65,6 +66,10 @@ class _SettingsWidgetState extends State<SettingsWidget> {
     _sendTrainingData = _prefs.getBool("sendTrainingData") == null
         ? _sendTrainingData
         : _prefs.getBool("sendTrainingData");
+
+    _showItemList = _prefs.getBool("showItemList") == null
+        ? _showItemList
+        : _prefs.getBool("showItemList");
   }
 
   @override
@@ -195,6 +200,17 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                 setState(() {
                   _debugOutput = value;
                   _prefs.setBool("enable_debug_output", value);
+                });
+              },
+            ),
+            SettingsTile.switchTile(
+              title: S.of(context).showListView,
+              leading: Icon(Icons.category),
+              switchValue: _showItemList,
+              onToggle: (bool value) {
+                setState(() {
+                  _showItemList = value;
+                  _prefs.setBool("showItemList", value);
                 });
               },
             ),
