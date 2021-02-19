@@ -29,23 +29,37 @@ import 'package:intl/intl.dart';
 import 'package:path/path.dart';
 import 'package:receipt_manager/database/receipt_database.dart';
 import 'package:receipt_manager/generated/l10n.dart';
+import 'package:receipt_manager/network/network_client_holder.dart';
 
 import '../main.dart';
 
-/// Network client interact with the python image server.
-/// Post request to the server over https,
-/// after it will parse the response and update the corresponding
-///  TextFields.
+/// The [NetworkClient] interact with the python image server.
+/// Based on the submitted server ip, port and api token
+/// and post request is crafted.
+///
+/// The server return the parsed receipt via json. This json
+/// response is parsed using the [NetworkClient].
+///
+/// After, a new receipt object is crafted and send to the [ReceiptForm].
+/// The receipt form uses this object to fill the corresponding text fields.
 class NetworkClient {
-  static final _protocol = "https://";
-  static final _uploadPath = "/api/upload";
-  static final _trainingPath = "/api/training";
-  static final _token = "?access_token=";
-  static final _port = "8721";
-  static final _timeout = 120;
+  final _protocol = "https://";
+  final _uploadPath = "/api/upload";
+  final _trainingPath = "/api/training";
+  final _token = "?access_token=";
+  final _port = "8721";
+  final _timeout = 120;
   static const int _transactionDuration = 2;
 
-  static init() {
+  static final NetworkClient _client = NetworkClient._internal();
+
+  factory NetworkClient() {
+    return _client;
+  }
+
+  NetworkClient._internal();
+
+  init() {
     /// override the agent to provide support for self signed
     /// certificates.
     ///
@@ -54,8 +68,8 @@ class NetworkClient {
     HttpOverrides.global = new SelfSignedHttpAgent();
   }
 
-  static String getAPIUrl(final ip, final token, final legacyParser,
-      final gaussian, final grayscale, final rotate) {
+  String getAPIUrl(final ip, final token, final legacyParser, final gaussian,
+      final grayscale, final rotate) {
     if (token == null || token == "")
       return _protocol +
           ip +
@@ -88,7 +102,7 @@ class NetworkClient {
   }
 
   /// Convert boolean values to python boolean values
-  static String getValue(final bool val) {
+  String getValue(final bool val) {
     if (val == null || val == false) {
       return "False";
     } else {
@@ -96,14 +110,14 @@ class NetworkClient {
     }
   }
 
-  static toHomeScreen(BuildContext context) async {
+  toHomeScreen(BuildContext context) async {
     await Future.delayed(const Duration(seconds: _transactionDuration), () {});
 
     Navigator.push(context,
         MaterialPageRoute(builder: (context) => HomeScreen(null, true)));
   }
 
-  static sendTrainingData(String ip, String token, String company, String date,
+  sendTrainingData(String ip, String token, String company, String date,
       String total, BuildContext context) async {
     init();
 
@@ -126,21 +140,12 @@ class NetworkClient {
   }
 
   /// Send image via post request to the server and capture the response.
-  static sendImage(
-      File imageFile,
-      String ip,
-      String token,
-      bool sendDebugOutput,
-      bool grayscale,
-      bool gaussian,
-      bool legacyParser,
-      bool rotate,
-      BuildContext context,
+  sendImage(File imageFile, NetworkClientHolder holder, BuildContext context,
       [GlobalKey<ScaffoldState> key]) async {
     init();
 
     log("Try to upload new image.");
-    if (ip == null || ip.isEmpty) {
+    if (holder.ip == null || holder.ip.isEmpty) {
       log("ip appears invalid.");
       key.currentState
         ..showSnackBar(SnackBar(
@@ -157,8 +162,8 @@ class NetworkClient {
     stream.cast();
 
     var length = await imageFile.length();
-    var uri = Uri.parse(
-        getAPIUrl(ip, token, legacyParser, gaussian, grayscale, rotate));
+    var uri = Uri.parse(getAPIUrl(holder.ip, holder.token, holder.legacyParser,
+        holder.gaussian, holder.grayscale, holder.rotate));
 
     log(uri.toString());
 
@@ -252,7 +257,7 @@ class NetworkClient {
     } on TimeoutException catch (_) {
       log("[EXCEPTION] get timeout exception" + _.toString());
       String msg = S.of(context).serverTimeout;
-      if (sendDebugOutput == null || sendDebugOutput == false) {
+      if (holder.sendDebugOutput == null || holder.sendDebugOutput == false) {
         msg = "General exception";
       } else {
         msg = S.of(context).serverTimeout + _.toString();
@@ -268,7 +273,7 @@ class NetworkClient {
     } on SocketException catch (_) {
       log("Get socket exception" + _.toString());
       String msg = "";
-      if (sendDebugOutput == null || sendDebugOutput == false) {
+      if (holder.sendDebugOutput == null || holder.sendDebugOutput == false) {
         msg = S.of(context).socketException;
       } else {
         msg = S.of(context).socketException + _.toString();
@@ -282,7 +287,7 @@ class NetworkClient {
       return;
     } on HandshakeException catch (_) {
       String msg = "";
-      if (sendDebugOutput == null || sendDebugOutput == false) {
+      if (holder.sendDebugOutput == null || holder.sendDebugOutput == false) {
         msg = "General exception";
       } else {
         msg = S.of(context).handshakeException + _.toString();
@@ -299,7 +304,7 @@ class NetworkClient {
       log("[EXCEPTION] get general exception" + _.toString());
 
       String msg = "";
-      if (sendDebugOutput == null || sendDebugOutput == false) {
+      if (holder.sendDebugOutput == null || holder.sendDebugOutput == false) {
         msg = S.of(context).generalException;
       } else {
         msg = S.of(context).generalException + _.toString();
@@ -315,7 +320,7 @@ class NetworkClient {
     }
   }
 
-  static getTrainingUrl(String ip, String token) {
+  getTrainingUrl(String ip, String token) {
     return _protocol + ip + ":" + _port + _trainingPath + _token + token;
   }
 }
