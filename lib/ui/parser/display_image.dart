@@ -23,6 +23,7 @@ import 'package:receipt_manager/generated/l10n.dart';
 import 'package:receipt_manager/network/network_client.dart';
 import 'package:receipt_manager/network/network_client_holder.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class DisplayPictureScreen extends StatefulWidget {
   final String imagePath;
@@ -115,7 +116,9 @@ class DisplayPictureScreenState extends State<DisplayPictureScreen> {
                                     _declineButtonColor = Colors.grey;
                                   });
 
-                                  holder.readOptions();
+                                  SharedPreferences sharedPrefs =
+                                      await SharedPreferences.getInstance();
+                                  holder.readOptions(sharedPrefs);
 
                                   await client.sendImage(
                                       File(imagePath), holder, context, key2);

@@ -52,8 +52,6 @@ class NetworkClientHolder {
   /// Show receipt article list
   bool showItemList;
 
-  SharedPreferences sharedPrefs;
-
   static final NetworkClientHolder _networkClientHolder =
       NetworkClientHolder._internal();
 
@@ -61,8 +59,7 @@ class NetworkClientHolder {
   factory NetworkClientHolder() {
     return _networkClientHolder;
   }
-  void readOptions() async {
-    sharedPrefs = await SharedPreferences.getInstance();
+  void readOptions(SharedPreferences sharedPrefs) {
     ip = sharedPrefs.get("ipv4");
     token = sharedPrefs.get("api_token");
     sendDebugOutput = sharedPrefs.get("enable_debug_output");
