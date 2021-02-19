@@ -4,15 +4,22 @@ import 'package:receipt_manager/database/receipt_database.dart';
 import 'package:receipt_manager/math/math_util.dart';
 import 'package:receipt_manager/memento/receipt_memento.dart';
 
+/// # Expenses API
+/// The expenses api handle various of expenses calculation tasks.
+/// The [ExpensesApi] uses an singleton in order to submit
+/// the same object.
+///
+/// First an initial call needs to be made, in order to calculate weekly expenses
+/// and maximum but additionally, other features are planned.
 class ExpensesApi {
+  /// The [ReceiptMomentum] is used to store receipts in the list.
+  /// This increase the performance, since no additionally database
+  /// call is required
   ReceiptMemento _momentum = ReceiptMemento();
 
-  // ignore: non_constant_identifier_names
-  double WEEKLY_TOTAL = 0;
-  // ignore: non_constant_identifier_names
-  double WEEKLY_MAXIMUM = 0;
-
-  List<double> expenses = [0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00];
+  /// Store weekly total and weekly maximum in a double
+  double weeklyTotal = 0;
+  double weeklyMaximum = 0;
 
   DateTime getDate(DateTime d) => DateTime(d.year, d.month, d.day);
 
@@ -21,36 +28,46 @@ class ExpensesApi {
     return amount.toStringAsFixed(decimalPlaces);
   }
 
-  /// Init data
-  void init() {
+  /// The [calculateWeekly] method is used to calculated the weekly maximum
+  /// and total. This function should not be called from outside. Instead,
+  /// the [init] method call the [calculateWeekly] method.
+  void calculateWeekly() {
     final _date = DateTime.now();
-    expenses = [0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00];
-    WEEKLY_TOTAL = 0.00;
-    final startDate =
+    List<double> expenses = [0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00];
+
+    weeklyTotal = 0.00;
+    weeklyMaximum = 0.00;
+    final firstWeekDate =
         getDate(_date.subtract(Duration(days: _date.weekday - 1)));
 
     for (Receipt receipt in _momentum.receipts) {
       for (int i = 0; i < 7; i++) {
-        var d =
-            new DateTime(startDate.year, startDate.month, startDate.day + i);
-        if (receipt.date.year == d.year &&
-            receipt.date.month == d.month &&
-            receipt.date.day == d.day) {
+        // create an date object in order to increase the date
+        // this allows to keep the code simple and
+        // remove edge cases
+        var currentDate = new DateTime(
+            firstWeekDate.year, firstWeekDate.month, firstWeekDate.day + i);
+        if (receipt.date.year == currentDate.year &&
+            receipt.date.month == currentDate.month &&
+            receipt.date.day == currentDate.day) {
           try {
             expenses[i] += double.parse(receipt.total.replaceAll(" ", ""));
           } catch (e) {
-            log("Can't process expenses, because an invalid entry appear");
-            log("Ignoring ...");
+            log("[WARNING]: can't calculate receipt.");
           }
         }
+        expenses[i] = MathUtil.roundDouble(expenses[i], 2);
+        weeklyTotal += expenses[i];
       }
     }
 
-    for (int i = 0; i < 7; i++) {
-      expenses[i] = MathUtil.roundDouble(expenses[i], 2);
-      WEEKLY_TOTAL += expenses[i];
-    }
-    WEEKLY_MAXIMUM =
+    weeklyMaximum =
         expenses.reduce((current, next) => current > next ? current : next);
+  }
+
+  /// # API init method
+  /// Main entry point of the expenses api.
+  void init() {
+    calculateWeekly();
   }
 }

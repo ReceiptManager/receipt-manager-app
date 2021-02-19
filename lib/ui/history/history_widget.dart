@@ -129,7 +129,7 @@ class HistoryWidgetState extends State<HistoryWidget> {
                     child: PaddingFactory.create(Text(
                       S.of(context).overview +
                           ": " +
-                          api.format(api.WEEKLY_TOTAL, 2) +
+                          api.format(api.weeklyTotal, 2) +
                           S.of(context).currency,
                       style: TextStyle(
                           fontWeight: FontWeight.w200,
