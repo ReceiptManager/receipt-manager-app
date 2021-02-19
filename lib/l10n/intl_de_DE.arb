@@ -118,5 +118,6 @@
   "itemTotalLabelText": "Betrag",
   "itemTotalHelperText": "Füge den Betrag des Artikels hinzu",
   "confirm": "Bestätigen",
-  "misc" : "Sonstiges"
+  "misc" : "Sonstiges",
+  "showListView": "Artikel anzeigen"
 }

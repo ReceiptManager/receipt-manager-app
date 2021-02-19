@@ -110,5 +110,6 @@
   "editProduct" : "Edit product",
   "products": "Products",
   "confirm": "Confirm",
-  "misc" : "Misc"
+  "misc" : "Misc",
+  "showListView": "Show articles"
 }
