@@ -22,6 +22,8 @@ import 'package:receipt_manager/factory/button_factory.dart';
 import 'package:receipt_manager/generated/l10n.dart';
 import 'package:simple_autocomplete_formfield/simple_autocomplete_formfield.dart';
 
+enum FORM_MODES { DATE, TOTAL, ITEM_NAME, ITEM_TOTAL, STORE_NAME }
+
 class TextFormFactory {
   static TextFormField date(TextEditingController dateController,
       DateTime receiptDate, BuildContext context) {
