@@ -19,7 +19,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:receipt_manager/factory/banner_factory.dart';
-import 'package:receipt_manager/generated/l10n.dart';
 import 'package:receipt_manager/theme/style.dart';
 
 class DashboardWidget extends StatelessWidget {
@@ -31,7 +30,7 @@ class DashboardWidget extends StatelessWidget {
         // BannerFactory.get(S.of(context).dashboard, context),
         body: Column(
       children: [
-        BannerFactory.get(S.of(context).dashboard, context),
+        BannerFactory.get(BANNER_MODES.DASHBOARD, context),
         CustomScrollView(
           physics: ClampingScrollPhysics(),
           slivers: <Widget>[

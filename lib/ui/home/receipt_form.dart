@@ -165,7 +165,7 @@ class ReceiptInputController extends State<ReceiptForm> {
                                           _bloc.add(ReceiptAllFetch());
                                         },
                                         child: BannerFactory.get(
-                                            S.of(context).addReceipt,
+                                            BANNER_MODES.ADD_RECEIPT,
                                             context))),
                                 Padding(
                                     padding: EdgeInsets.only(

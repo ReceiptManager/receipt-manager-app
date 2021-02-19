@@ -57,7 +57,7 @@ class StatsWidgetState extends State<StatsWidget> {
         if (state is LoadedState) {
           final receipts = state.receipt;
           return Column(children: [
-            BannerFactory.get(S.of(context).overviewExpenses, context),
+            BannerFactory.get(BANNER_MODES.OVERVIEW_EXPENSES, context),
             SingleChildScrollView(
                 child: Column(children: <Widget>[
               WeeklyOverviewScreen(receipts),
