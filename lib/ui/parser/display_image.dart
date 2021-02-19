@@ -60,12 +60,17 @@ class DisplayPictureScreenState extends State<DisplayPictureScreen> {
         appBar: AppBar(title: Text(S.of(context).receipt)),
         key: key2,
         body: Container(
-            color: Colors.black,
             height: double.infinity,
+            decoration: new BoxDecoration(
+                image: new DecorationImage(
+              image: new FileImage(File(imagePath)),
+              fit: BoxFit.fitHeight,
+            )),
             child: Stack(
               alignment: Alignment.bottomCenter,
               children: <Widget>[
-                Image.file(File(imagePath), fit: BoxFit.scaleDown),
+                //Center(child: Image.file(File(imagePath), fit: BoxFit.fitHeight)),
+
                 Row(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     mainAxisSize: MainAxisSize.max,
