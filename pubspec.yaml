@@ -112,6 +112,7 @@ flutter:
   # see https://flutter.dev/custom-fonts/#from-packages
   assets:
     - assets/
+
 flutter_intl:
   main_locale: de_DE
   enabled: true
