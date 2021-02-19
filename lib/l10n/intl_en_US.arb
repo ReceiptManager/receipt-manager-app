@@ -117,5 +117,6 @@
   "itemTotalLabelText": "Total",
   "itemTotalHelperText": "Add the item total",
   "confirm": "Confirm",
-  "misc" : "Misc"
+  "misc" : "Misc",
+  "showListView": "Show articles"
 }
