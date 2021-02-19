@@ -1,18 +1,18 @@
 /*
- *  Copyright (c) 2020 - William Todt
+ * Copyright (c) 2020 - 2021 : William Todt
  *
- *  Licensed under the Apache License, Version 2.0 (the "License");
- *  you may not use this file except in compliance with the License.
- *  You may obtain a copy of the License at
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
  *
- *  http://www.apache.org/licenses/LICENSE-2.0
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
@@ -111,9 +111,9 @@ class OnboardScreenState extends State<OnboardScreen> {
     ];
 
     return Provider<OnBoardState>(
-      create: (_) => OnBoardState(),
-      child: Scaffold(
-        backgroundColor: Colors.white,
+        create: (_) => OnBoardState(),
+        child: Scaffold(
+          backgroundColor: Colors.white,
           body: Center(
             child: OnBoard(
               pageController: _pageController,
@@ -138,54 +138,57 @@ class OnboardScreenState extends State<OnboardScreen> {
               ),
               descriptionStyles: TextStyle(
                 fontSize: 16,
-            color: LightColor.grey,
-          ),
-          pageIndicatorStyle: PageIndicatorStyle(
-            width: 100,
-            inactiveSize: Size(8, 8),
-            activeSize: Size(12, 12),
-          ),
-          skipButton: FlatButton(
-            onPressed: () {
-              sharedPrefs.setBool("skip", true);
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => HomeScreen(null, false)));
-            },
-            child: Text(
-              S.of(context).skip,
-              style: TextStyle(color: LightColor.black),
+                color: LightColor.grey,
+              ),
+              pageIndicatorStyle: PageIndicatorStyle(
+                width: 100,
+                inactiveSize: Size(8, 8),
+                activeSize: Size(12, 12),
+              ),
+              skipButton: FlatButton(
+                onPressed: () {
+                  sharedPrefs.setBool("skip", true);
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => HomeScreen(null, false)));
+                },
+                child: Text(
+                  S.of(context).skip,
+                  style: TextStyle(color: LightColor.black),
+                ),
+              ),
+              nextButton: Consumer<OnBoardState>(
+                builder:
+                    (BuildContext context, OnBoardState state, Widget child) {
+                  return InkWell(
+                    onTap: () => _onNextTap(state),
+                    child: Container(
+                      width: 230,
+                      height: 50,
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(30),
+                        gradient: LinearGradient(
+                          colors: [LightColor.black, LightColor.black],
+                        ),
+                      ),
+                      child: Text(
+                        state.isLastPage
+                            ? S.of(context).done
+                            : S.of(context).next,
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  );
+                },
+              ),
             ),
           ),
-          nextButton: Consumer<OnBoardState>(
-            builder: (BuildContext context, OnBoardState state, Widget child) {
-              return InkWell(
-                onTap: () => _onNextTap(state),
-                child: Container(
-                  width: 230,
-                  height: 50,
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(30),
-                    gradient: LinearGradient(
-                      colors: [LightColor.black, LightColor.black],
-                    ),
-                  ),
-                  child: Text(
-                    state.isLastPage ? S.of(context).done : S.of(context).next,
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-              );
-            },
-          ),
-          ),
-        ),
-      ));
+        ));
   }
 
   void _onNextTap(OnBoardState onBoardState) {
@@ -240,7 +243,7 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                 Icon(Icons.add, color: Colors.white, size: 30),
                 Icon(Icons.history, color: Colors.white, size: 30),
                 //
-               // Icon(Icons.analytics_outlined, color: Colors.white, size: 30),
+                // Icon(Icons.analytics_outlined, color: Colors.white, size: 30),
                 Icon(Icons.settings, color: Colors.white, size: 30),
               ],
               color: LightColor.black,

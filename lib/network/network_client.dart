@@ -1,18 +1,18 @@
 /*
- *  Copyright (c) 2020 - William Todt
+ * Copyright (c) 2020 - 2021 : William Todt
  *
- *  Licensed under the Apache License, Version 2.0 (the "License");
- *  you may not use this file except in compliance with the License.
- *  You may obtain a copy of the License at
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
  *
- *  http://www.apache.org/licenses/LICENSE-2.0
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 import 'dart:async';
@@ -185,9 +185,7 @@ class NetworkClient {
         onTimeout: () async {
           key.currentState
             ..showSnackBar(SnackBar(
-                content: Text(S
-                    .of(context)
-                    .serverTimeout),
+                content: Text(S.of(context).serverTimeout),
                 backgroundColor: Colors.red));
 
           toHomeScreen(context);
@@ -214,7 +212,7 @@ class NetworkClient {
             DateTime _date;
 
             log("Receipt item list:");
-            for(List<dynamic> receiptItem in r['receiptItems'] ) {
+            for (List<dynamic> receiptItem in r['receiptItems']) {
               log("\t" + receiptItem[0] + " " + receiptItem[1]);
             }
 
@@ -257,9 +255,7 @@ class NetworkClient {
       if (sendDebugOutput == null || sendDebugOutput == false) {
         msg = "General exception";
       } else {
-        msg = S
-            .of(context)
-            .serverTimeout + _.toString();
+        msg = S.of(context).serverTimeout + _.toString();
       }
 
       key.currentState
@@ -273,13 +269,9 @@ class NetworkClient {
       log("Get socket exception" + _.toString());
       String msg = "";
       if (sendDebugOutput == null || sendDebugOutput == false) {
-        msg = S
-            .of(context)
-            .socketException;
+        msg = S.of(context).socketException;
       } else {
-        msg = S
-            .of(context)
-            .socketException + _.toString();
+        msg = S.of(context).socketException + _.toString();
       }
       key.currentState
         ..hideCurrentSnackBar()
@@ -293,9 +285,7 @@ class NetworkClient {
       if (sendDebugOutput == null || sendDebugOutput == false) {
         msg = "General exception";
       } else {
-        msg = S
-            .of(context)
-            .handshakeException + _.toString();
+        msg = S.of(context).handshakeException + _.toString();
       }
 
       key.currentState
@@ -310,13 +300,9 @@ class NetworkClient {
 
       String msg = "";
       if (sendDebugOutput == null || sendDebugOutput == false) {
-        msg = S
-            .of(context)
-            .generalException;
+        msg = S.of(context).generalException;
       } else {
-        msg = S
-            .of(context)
-            .generalException + _.toString();
+        msg = S.of(context).generalException + _.toString();
       }
 
       key.currentState
@@ -330,13 +316,7 @@ class NetworkClient {
   }
 
   static getTrainingUrl(String ip, String token) {
-    return _protocol +
-        ip +
-        ":" +
-        _port +
-        _trainingPath +
-        _token +
-        token;
+    return _protocol + ip + ":" + _port + _trainingPath + _token + token;
   }
 }
 
