@@ -242,7 +242,6 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                 //Icon(Icons.home_outlined, color: Colors.white, size: 30),
                 Icon(Icons.add, color: Colors.white, size: 30),
                 Icon(Icons.history, color: Colors.white, size: 30),
-                //
                 // Icon(Icons.analytics_outlined, color: Colors.white, size: 30),
                 Icon(Icons.settings, color: Colors.white, size: 30),
               ],
