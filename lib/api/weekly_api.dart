@@ -41,8 +41,6 @@ class WeeklyApi extends AbstractApi {
     final _date = DateTime.now();
     List<double> expenses = [0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00];
 
-    weeklyTotal = 0.00;
-    weeklyMaximum = 0.00;
     final firstWeekDate =
         getDate(_date.subtract(Duration(days: _date.weekday - 1)));
 
@@ -63,11 +61,12 @@ class WeeklyApi extends AbstractApi {
           }
         }
       }
-
-      for (int i = 0; i < 7; i++) {
-        expenses[i] = MathUtil.roundDouble(expenses[i], 2);
-        weeklyTotal += expenses[i];
-      }
+    }
+    weeklyTotal = 0.00;
+    weeklyMaximum = 0.00;
+    for (int i = 0; i < 7; ++i) {
+      expenses[i] = MathUtil.roundDouble(expenses[i], 2);
+      weeklyTotal += expenses[i];
     }
 
     weeklyMaximum =
