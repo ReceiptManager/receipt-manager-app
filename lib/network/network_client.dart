@@ -242,7 +242,7 @@ class NetworkClient {
                 shop: Value(r['storeName']),
                 category: Value(r['category']),
                 items: Value(holder.showItemList == false
-                    ? null
+                    ? jsonEncode([])
                     : jsonEncode(r['receiptItems'])),
                 date: Value(_date));
 
