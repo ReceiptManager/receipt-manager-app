@@ -1,7 +1,3 @@
-Keeping track of your receipt is pretty hard. You need to update the shop names, receipt date and a total of every receipt.
-
-Why do we not use the digital advantage to our advantage? The receipt scanner solves multiple problems. You don’t have to keep track of your receipts, you safe (a lot) of time but still, see every important information in a blink of a second.
-
 <br><b>Features:</b>
 
 * iOS and Android application
