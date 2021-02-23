@@ -9,9 +9,9 @@
 
 # Receipt manager
 <a href="https://android.izzysoft.de/repo/apk/org.receipt_manager"><img width=150 src="https://raw.githubusercontent.com/ReceiptManager/receipt-manager-app/master/docs/assets/fdroid.svg"></a>
-<img width=150 src="https://gitlab.com/IzzyOnDroid/repo/-/raw/master/assets/IzzyOnDroid.png">
-<img width=150 src="https://cdn.rawgit.com/sindresorhus/awesome/d7305f38d29fed78fa85652e3a63e154dd8e8829/media/badge.svg">
+<a href="https://android.izzysoft.de/repo/apk/org.receipt_manager"><img width=150 src="https://gitlab.com/IzzyOnDroid/repo/-/raw/master/assets/IzzyOnDroid.png"></a>
 
+You can find pre-compiled releases on the Github release page or in the FDROID repository.
 All the needed info about how to  use the `receipt-manager-app` is present at your [wiki](https://github.com/ReceiptManager/receipt-manager-app/wiki). 
 * :star: We appreciate your star, it helps!
 
