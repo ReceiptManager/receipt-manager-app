@@ -8,12 +8,11 @@
 </p>
 
 # Receipt manager
-![](https://cdn.rawgit.com/sindresorhus/awesome/d7305f38d29fed78fa85652e3a63e154dd8e8829/media/badge.svg)
-[![Codemagic build status](https://api.codemagic.io/apps/5fcbc24c59d78f5801f494d8/5fcbc24c59d78f5801f494d7/status_badge.svg)](https://codemagic.io/apps/5fcbc24c59d78f5801f494d8/5fcbc24c59d78f5801f494d7/latest_build) 
+<a href="https://android.izzysoft.de/repo/apk/org.receipt_manager"><img width=150 src="https://raw.githubusercontent.com/ReceiptManager/receipt-manager-app/master/docs/assets/fdroid.svg"></a>
+<img width=150 src="https://gitlab.com/IzzyOnDroid/repo/-/raw/master/assets/IzzyOnDroid.png">
+<img width=150 src="https://cdn.rawgit.com/sindresorhus/awesome/d7305f38d29fed78fa85652e3a63e154dd8e8829/media/badge.svg">
 
-
-* All the needed info about how to  use the `receipt-manager-app` is present at your [wiki](https://github.com/ReceiptManager/receipt-manager-app/wiki). 
-
+All the needed info about how to  use the `receipt-manager-app` is present at your [wiki](https://github.com/ReceiptManager/receipt-manager-app/wiki). 
 * :star: We appreciate your star, it helps!
 
 ---
