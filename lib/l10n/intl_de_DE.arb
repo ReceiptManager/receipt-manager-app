@@ -119,5 +119,8 @@
   "itemTotalHelperText": "Füge den Betrag des Artikels hinzu",
   "confirm": "Bestätigen",
   "misc" : "Sonstiges",
-  "showListView": "Artikel anzeigen"
+  "showListView": "Artikel anzeigen",
+  "detectReceiptServer": "Erkenne Receipt Server",
+  "noReceiptServer": "Kein Receipt Server wurde gefunden",
+  "noServicesFound": "No services found"
 }
