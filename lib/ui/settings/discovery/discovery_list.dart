@@ -50,33 +50,35 @@ class ServiceList extends StatelessWidget {
     discoveredServices = model.discoveredServices;
 
     if (discoveredServices.isEmpty) {
-      SmartRefresher(
-          controller: _refreshController,
-          enablePullDown: true,
-          onRefresh: () async {
-            model.start();
-            await Future.delayed(Duration(seconds: 5));
-            _refreshController.refreshCompleted();
-          },
-          child: Center(
-              child: Column(children: [
-            Container(
-                color: Colors.white,
-                child: PaddingFactory.create(Column(
-                  children: [
-                    PaddingFactory.create(
-                      SvgPicture.asset(
-                        this.emptyImagePath,
-                        height: 250,
-                      ),
+      return Stack(children: [
+        Center(
+            child: Column(children: [
+          Container(
+              color: Colors.white,
+              child: PaddingFactory.create(Column(
+                children: [
+                  PaddingFactory.create(
+                    SvgPicture.asset(
+                      this.emptyImagePath,
+                      height: 250,
                     ),
-                    PaddingFactory.create(Text(
-                      S.of(context).noReceiptServer,
-                      style: TextStyle(fontSize: 16, color: LightColor.grey),
-                    ))
-                  ],
-                )))
-          ])));
+                  ),
+                  PaddingFactory.create(Text(
+                    S.of(context).noReceiptServer,
+                    style: TextStyle(fontSize: 16, color: LightColor.grey),
+                  ))
+                ],
+              )))
+        ])),
+        SmartRefresher(
+            controller: _refreshController,
+            enablePullDown: true,
+            onRefresh: () async {
+              await Future.delayed(Duration(seconds: 5));
+              _refreshController.refreshCompleted();
+            },
+            child: Container())
+      ]);
     }
 
     return SmartRefresher(
@@ -136,7 +138,8 @@ class _ServiceWidget extends StatelessWidget {
                       subtitle: Row(
                         children: <Widget>[
                           Text(
-                              "Typ: ${service.type}, Port: ${service.port}, IP: ${service.ip}",
+                              S.of(context).type +
+                                  ": ${service.type}, Port: ${service.port}, IP: ${service.ip}",
                               style:
                                   TextStyle(color: Colors.black, fontSize: 12))
                         ],
