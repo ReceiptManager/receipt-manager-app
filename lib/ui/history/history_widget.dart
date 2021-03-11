@@ -444,7 +444,7 @@ class HistoryWidgetState extends State<HistoryWidget> {
             ),
           ),
           actions: <Widget>[
-            FlatButton(
+            TextButton(
               child: Text(
                 S.of(context).cancel,
                 style: TextStyle(color: Colors.red),
@@ -453,7 +453,7 @@ class HistoryWidgetState extends State<HistoryWidget> {
                 Navigator.of(context).pop();
               },
             ),
-            FlatButton(
+            TextButton(
               child: Text(
                 S.of(context).update,
               ),
