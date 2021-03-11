@@ -1244,6 +1244,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Typ`
+  String get type {
+    return Intl.message(
+      'Typ',
+      name: 'type',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

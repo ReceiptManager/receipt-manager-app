@@ -133,6 +133,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "totalTitle" : MessageLookupByLibrary.simpleMessage("Receipt total"),
     "travel" : MessageLookupByLibrary.simpleMessage("Travel"),
     "tuesday" : MessageLookupByLibrary.simpleMessage("Tuesday"),
+    "type" : MessageLookupByLibrary.simpleMessage("Type"),
     "update" : MessageLookupByLibrary.simpleMessage("Update"),
     "updateApiTokenSuccessfully" : MessageLookupByLibrary.simpleMessage("Update API token successfully"),
     "updateReceipt" : MessageLookupByLibrary.simpleMessage("Update Receipt"),

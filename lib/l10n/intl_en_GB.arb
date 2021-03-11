@@ -114,5 +114,6 @@
   "showListView": "Show articles",
   "detectReceiptServer": "Detect Receipt Server",
   "noReceiptServer": "No receipt server found.",
-  "noServicesFound": "No services found"
+  "noServicesFound": "No services found",
+  "type" : "Type"
 }
