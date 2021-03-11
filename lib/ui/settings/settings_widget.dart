@@ -81,6 +81,19 @@ class _SettingsWidgetState extends State<SettingsWidget> {
       shrinkWrap: true,
       backgroundColor: Colors.white,
       sections: [
+      SettingsSection(
+      title: S.of(context).settingsGeneralCategory,
+      tiles: [
+        SettingsTile(
+          title: S.of(context).detectReceiptServer,
+          leading: Icon(Icons.loupe),
+          onTap: () {
+            Navigator.of(context).push(MaterialPageRoute(
+                builder: (BuildContext context) => DiscoverSettings()));
+          },
+        ),
+      ]),
+
         SettingsSection(
           title: S.of(context).settingsGeneralCategory,
           tiles: [
@@ -110,14 +123,6 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                     builder: (BuildContext context) => ApiSettings(_prefs)));
               },
             ),
-            SettingsTile(
-              title: "Zero conf",
-              leading: Icon(Icons.wifi),
-              onTap: () {
-                Navigator.of(context).push(MaterialPageRoute(
-                    builder: (BuildContext context) => DiscoverSettings()));
-              },
-            ),
           ],
         ),
         SettingsSection(
@@ -142,6 +147,11 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                 setState(() {
                   _grayscale = value;
                   _prefs.setBool("grayscale", value);
+
+                  if(!value && _gaussian) {
+                    _gaussian = false;
+                    _prefs.setBool("gaussian", false);
+                  }
                 });
               },
             ),
