@@ -81,19 +81,6 @@ class _SettingsWidgetState extends State<SettingsWidget> {
       shrinkWrap: true,
       backgroundColor: Colors.white,
       sections: [
-      SettingsSection(
-      title: S.of(context).settingsGeneralCategory,
-      tiles: [
-        SettingsTile(
-          title: S.of(context).detectReceiptServer,
-          leading: Icon(Icons.loupe),
-          onTap: () {
-            Navigator.of(context).push(MaterialPageRoute(
-                builder: (BuildContext context) => DiscoverSettings()));
-          },
-        ),
-      ]),
-
         SettingsSection(
           title: S.of(context).settingsGeneralCategory,
           tiles: [
@@ -105,6 +92,14 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                 Navigator.of(context).push(MaterialPageRoute(
                     builder: (BuildContext context) =>
                         LanguageSetting(_prefs)));
+              },
+            ),
+            SettingsTile(
+              title: S.of(context).detectReceiptServer,
+              leading: Icon(Icons.adb),
+              onTap: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (BuildContext context) => DiscoverSettings(_prefs)));
               },
             ),
             SettingsTile(

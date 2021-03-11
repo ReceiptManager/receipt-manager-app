@@ -20,10 +20,14 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:receipt_manager/generated/l10n.dart';
 import 'package:receipt_manager/ui/settings/discovery/discovery_list.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'discovery/discovery_model.dart';
 
 class DiscoverSettings extends StatelessWidget {
+  SharedPreferences prefs;
+  DiscoverSettings(this.prefs);
+
   @override
   Widget build(BuildContext context) => MultiProvider(
     providers: [
@@ -32,7 +36,7 @@ class DiscoverSettings extends StatelessWidget {
     builder: (context, child) => Scaffold(
       appBar: AppBar(title: Text(S.of(context).detectReceiptServer)),
       backgroundColor: Colors.white,
-      body: ServiceList(),
+      body: ServiceList(prefs),
       ),
   );
 }

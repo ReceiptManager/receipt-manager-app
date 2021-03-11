@@ -22,12 +22,16 @@ import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 import 'package:receipt_manager/factory/padding_factory.dart';
 import 'package:receipt_manager/theme/color/color.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'discovery_model.dart';
 import 'package:receipt_manager/generated/l10n.dart';
 
 /// Allows to display all discovered services.
 class ServiceList extends StatelessWidget {
   final emptyImagePath = "assets/not_empty";
+
+  SharedPreferences prefs;
+  ServiceList(this.prefs);
 
   @override
   Widget build(BuildContext context) {
@@ -57,7 +61,7 @@ class ServiceList extends StatelessWidget {
     return ListView.builder(
       itemCount: discoveredServices.length,
       itemBuilder: (context, index) =>
-          _ServiceWidget(service: discoveredServices[index]),
+          _ServiceWidget(service: discoveredServices[index],  prefs: prefs,),
     );
   }
 }
@@ -67,40 +71,55 @@ class _ServiceWidget extends StatelessWidget {
   /// The discovered service.
   final ResolvedBonsoirService service;
 
+  /// Shared prefs
+  final SharedPreferences prefs;
+
   /// Creates a new service widget.
   const _ServiceWidget({
-    @required this.service,
+    @required this.prefs, @required this.service,
   });
 
   @override
   Widget build(BuildContext context) {
-    return PaddingFactory.create(Card(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(8.0),
-        ),
-        child: ClipPath(
-          child: Container(
-              color: Colors.white,
-              child: ListTile(
-                  contentPadding:
-                      EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
-                  subtitle: Row(
-                    children: <Widget>[
-                      Text(
-                          "Typ: ${service.type}, Port: ${service.port}, IP: ${service.ip}",
-                          style: TextStyle(color: Colors.black, fontSize: 12))
-                    ],
-                  ),
-                  title: Text(
-                    service.name,
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16),
-                  ))),
-          clipper: ShapeBorderClipper(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8))),
-        )));
+    return PaddingFactory.create(InkWell(
+        onTap: () {
+          prefs.setString("ipv4", service.ip);
+
+          Scaffold.of(context)
+            ..hideCurrentSnackBar()
+            ..showSnackBar(SnackBar(
+              content: Text(S.of(context).updateServerIP),
+              backgroundColor: Colors.green,
+            ));
+        },
+        child: Card(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(8.0),
+            ),
+            child: ClipPath(
+              child: Container(
+                  color: Colors.white,
+                  child: ListTile(
+                      contentPadding:
+                          EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
+                      subtitle: Row(
+                        children: <Widget>[
+                          Text(
+                              "Typ: ${service.type}, Port: ${service.port}, IP: ${service.ip}",
+                              style:
+                                  TextStyle(color: Colors.black, fontSize: 12))
+                        ],
+                      ),
+                      title: Text(
+                        service.name,
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16),
+                      ))),
+              clipper: ShapeBorderClipper(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8))),
+            ))));
   }
 }
