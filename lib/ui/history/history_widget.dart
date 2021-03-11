@@ -200,7 +200,7 @@ class HistoryWidgetState extends State<HistoryWidget> {
         ],
         child: Card(
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(15.0),
+              borderRadius: BorderRadius.circular(8.0),
             ),
             child: ClipPath(
               child: Container(
