@@ -20,6 +20,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:receipt_manager/factory/padding_factory.dart';
 import 'package:receipt_manager/theme/color/color.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -29,39 +30,68 @@ import 'package:receipt_manager/generated/l10n.dart';
 /// Allows to display all discovered services.
 class ServiceList extends StatelessWidget {
   final emptyImagePath = "assets/not_empty";
+  final RefreshController _refreshController = RefreshController();
 
   SharedPreferences prefs;
+
   ServiceList(this.prefs);
+
+  List<Widget> buildList(List<ResolvedBonsoirService> discoveredServices) {
+    return List.generate(
+        discoveredServices.length,
+        (index) =>
+            _ServiceWidget(service: discoveredServices[index], prefs: prefs));
+  }
 
   @override
   Widget build(BuildContext context) {
     BonsoirDiscoveryModel model = context.watch<BonsoirDiscoveryModel>();
-    List<ResolvedBonsoirService> discoveredServices = model.discoveredServices;
+    List<ResolvedBonsoirService> discoveredServices;
+    discoveredServices = model.discoveredServices;
+
     if (discoveredServices.isEmpty) {
-      return new Center(
-          child: Column(children: [
-        Container(
-            color: Colors.white,
-            child: PaddingFactory.create(Column(
-              children: [
-                PaddingFactory.create(
-                  SvgPicture.asset(
-                    this.emptyImagePath,
-                    height: 250,
-                  ),
-                ),
-                PaddingFactory.create(Text(
-                  S.of(context).noReceiptServer,
-                  style: TextStyle(fontSize: 16, color: LightColor.grey),
-                ))
-              ],
-            )))
-      ]));
+      SmartRefresher(
+          controller: _refreshController,
+          enablePullDown: true,
+          onRefresh: () async {
+            model.start();
+            await Future.delayed(Duration(seconds: 5));
+            _refreshController.refreshCompleted();
+          },
+          child: Center(
+              child: Column(children: [
+            Container(
+                color: Colors.white,
+                child: PaddingFactory.create(Column(
+                  children: [
+                    PaddingFactory.create(
+                      SvgPicture.asset(
+                        this.emptyImagePath,
+                        height: 250,
+                      ),
+                    ),
+                    PaddingFactory.create(Text(
+                      S.of(context).noReceiptServer,
+                      style: TextStyle(fontSize: 16, color: LightColor.grey),
+                    ))
+                  ],
+                )))
+          ])));
     }
-    return ListView.builder(
-      itemCount: discoveredServices.length,
-      itemBuilder: (context, index) =>
-          _ServiceWidget(service: discoveredServices[index],  prefs: prefs,),
+
+    return SmartRefresher(
+      controller: _refreshController,
+      enablePullDown: true,
+      onRefresh: () async {
+        await Future.delayed(Duration(seconds: 5));
+        _refreshController.refreshCompleted();
+      },
+      child: CustomScrollView(
+        slivers: [
+          SliverList(
+              delegate: SliverChildListDelegate(buildList(discoveredServices)))
+        ],
+      ),
     );
   }
 }
@@ -76,7 +106,8 @@ class _ServiceWidget extends StatelessWidget {
 
   /// Creates a new service widget.
   const _ServiceWidget({
-    @required this.prefs, @required this.service,
+    @required this.prefs,
+    @required this.service,
   });
 
   @override

@@ -30,6 +30,7 @@ class DiscoverSettings extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => MultiProvider(
+
     providers: [
       ChangeNotifierProvider<BonsoirDiscoveryModel>(create: (context) => BonsoirDiscoveryModel()),
     ],
