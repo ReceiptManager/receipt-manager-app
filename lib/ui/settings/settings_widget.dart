@@ -23,6 +23,7 @@ import 'package:receipt_manager/ui/settings/server_settings.dart';
 import 'package:settings_ui/settings_ui.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'discovery_settings.dart';
 import 'language_setting.dart';
 
 class SettingsWidget extends StatefulWidget {
@@ -107,6 +108,14 @@ class _SettingsWidgetState extends State<SettingsWidget> {
               onTap: () {
                 Navigator.of(context).push(MaterialPageRoute(
                     builder: (BuildContext context) => ApiSettings(_prefs)));
+              },
+            ),
+            SettingsTile(
+              title: "Zero conf",
+              leading: Icon(Icons.wifi),
+              onTap: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (BuildContext context) => DiscoverSettings()));
               },
             ),
           ],
