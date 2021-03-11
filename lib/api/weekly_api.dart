@@ -57,7 +57,7 @@ class WeeklyApi extends AbstractApi {
           try {
             expenses[i] += double.parse(receipt.total.replaceAll(" ", ""));
           } catch (e) {
-            log("[WARNING]: can't calculate receipt.");
+            log("[WARNING]: can't calculated receipt.");
           }
         }
       }
