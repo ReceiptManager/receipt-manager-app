@@ -1214,6 +1214,36 @@ class S {
       args: [],
     );
   }
+
+  /// `Erkenne Receipt Server`
+  String get detectReceiptServer {
+    return Intl.message(
+      'Erkenne Receipt Server',
+      name: 'detectReceiptServer',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Kein Receipt Server wurde gefunden`
+  String get noReceiptServer {
+    return Intl.message(
+      'Kein Receipt Server wurde gefunden',
+      name: 'noReceiptServer',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No services found`
+  String get noServicesFound {
+    return Intl.message(
+      'No services found',
+      name: 'noServicesFound',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

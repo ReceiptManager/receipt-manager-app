@@ -111,5 +111,8 @@
   "products": "Products",
   "confirm": "Confirm",
   "misc" : "Misc",
-  "showListView": "Show articles"
+  "showListView": "Show articles",
+  "detectReceiptServer": "Detect Receipt Server",
+  "noReceiptServer": "No receipt server found.",
+  "noServicesFound": "No services found"
 }
