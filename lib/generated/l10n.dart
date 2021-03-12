@@ -1254,6 +1254,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Aktiviere HTTPS`
+  String get https {
+    return Intl.message(
+      'Aktiviere HTTPS',
+      name: 'https',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

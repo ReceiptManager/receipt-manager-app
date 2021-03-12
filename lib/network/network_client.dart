@@ -43,7 +43,8 @@ import '../main.dart';
 /// After, a new receipt object is crafted and send to the [ReceiptForm].
 /// The receipt form uses this object to fill the corresponding text fields.
 class NetworkClient {
-  final _protocol = "https://";
+  final _https = "https://";
+  final _http = "http://";
   final _uploadPath = "/api/upload";
   final _trainingPath = "/api/training";
   final _token = "?access_token=";
@@ -59,19 +60,20 @@ class NetworkClient {
 
   NetworkClient._internal();
 
-  init() {
-    /// override the agent to provide support for self signed
-    /// certificates.
-    ///
-    /// Since the server runs local and the certificate is protected
-    /// with a password, the security risk is small.
-    HttpOverrides.global = new SelfSignedHttpAgent();
-  }
-
   String getAPIUrl(final ip, final token, final legacyParser, final gaussian,
-      final grayscale, final rotate) {
-    if (token == null || token == "")
-      return _protocol +
+      final grayscale, final rotate, final https) {
+
+    if (https)
+      /// override the agent to provide support for self signed
+      /// certificates.
+      ///
+      /// Since the server runs local and the certificate is protected
+      /// with a password, the security risk is small.
+      HttpOverrides.global = new SelfSignedHttpAgent();
+
+    String protocol = https ? _https : _http;
+    if (token == null || token == "") {
+      return protocol +
           ip +
           ":" +
           _port +
@@ -84,7 +86,9 @@ class NetworkClient {
           getValue(gaussian) +
           "&rotate=" +
           getValue(rotate);
-    return _protocol +
+    }
+
+    return protocol +
         ip +
         ":" +
         _port +
@@ -119,7 +123,6 @@ class NetworkClient {
 
   sendTrainingData(String ip, String token, String company, String date,
       String total, BuildContext context) async {
-    init();
 
     log("Submit training data.");
     Map<String, String> headers = {"Content-type": "application/json"};
@@ -142,7 +145,6 @@ class NetworkClient {
   /// Send image via post request to the server and capture the response.
   sendImage(File imageFile, NetworkClientHolder holder, BuildContext context,
       [GlobalKey<ScaffoldState> key]) async {
-    init();
 
     log("Try to upload new image.");
     if (holder.ip == null || holder.ip.isEmpty) {
@@ -163,7 +165,7 @@ class NetworkClient {
 
     var length = await imageFile.length();
     var uri = Uri.parse(getAPIUrl(holder.ip, holder.token, holder.legacyParser,
-        holder.gaussian, holder.grayscale, holder.rotate));
+        holder.gaussian, holder.grayscale, holder.rotate, holder.https));
 
     log(uri.toString());
 
@@ -325,7 +327,7 @@ class NetworkClient {
   }
 
   getTrainingUrl(String ip, String token) {
-    return _protocol + ip + ":" + _port + _trainingPath + _token + token;
+    return _https + ip + ":" + _port + _trainingPath + _token + token;
   }
 }
 

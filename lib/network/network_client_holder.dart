@@ -52,6 +52,9 @@ class NetworkClientHolder {
   /// Show receipt article list
   bool showItemList;
 
+  /// send via https
+  bool https;
+
   static final NetworkClientHolder _networkClientHolder =
       NetworkClientHolder._internal();
 
@@ -59,6 +62,7 @@ class NetworkClientHolder {
   factory NetworkClientHolder() {
     return _networkClientHolder;
   }
+
   void readOptions(SharedPreferences sharedPrefs) {
     ip = sharedPrefs.get("ipv4");
     token = sharedPrefs.get("api_token");
@@ -68,5 +72,6 @@ class NetworkClientHolder {
     legacyParser = sharedPrefs.get("legacyParser");
     rotate = sharedPrefs.get("rotate");
     showItemList = sharedPrefs.get("showItemList");
+    https = sharedPrefs.get("https");
   }
 }

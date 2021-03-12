@@ -43,6 +43,7 @@ class _SettingsWidgetState extends State<SettingsWidget> {
   bool _rotate = false;
   bool _sendTrainingData = false;
   bool _showItemList = false;
+  bool _https = true;
 
   final SharedPreferences _prefs;
 
@@ -71,6 +72,10 @@ class _SettingsWidgetState extends State<SettingsWidget> {
     _showItemList = _prefs.getBool("showItemList") == null
         ? _showItemList
         : _prefs.getBool("showItemList");
+
+    _https = _prefs.getBool("https") == null
+        ? _https
+        : _prefs.getBool("https");
   }
 
   @override
@@ -225,6 +230,17 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                 setState(() {
                   _showItemList = value;
                   _prefs.setBool("showItemList", value);
+                });
+              },
+            ),
+            SettingsTile.switchTile(
+              title: S.of(context).https,
+              leading: Icon(Icons.lock),
+              switchValue: _https,
+              onToggle: (bool value) {
+                setState(() {
+                  _https = value;
+                  _prefs.setBool("https", value);
                 });
               },
             ),

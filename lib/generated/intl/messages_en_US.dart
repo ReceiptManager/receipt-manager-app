@@ -58,6 +58,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "handshakeException" : MessageLookupByLibrary.simpleMessage("Bad certificate. Please regenerate the certificate"),
     "healthCategory" : MessageLookupByLibrary.simpleMessage("Health"),
     "highContrast" : MessageLookupByLibrary.simpleMessage("High contrast"),
+    "https" : MessageLookupByLibrary.simpleMessage("Aktiviere HTTPS"),
     "income" : MessageLookupByLibrary.simpleMessage("Income"),
     "insertServerApiToken" : MessageLookupByLibrary.simpleMessage("Insert server API token"),
     "insertYourApiToken" : MessageLookupByLibrary.simpleMessage("Insert your api token"),

@@ -122,5 +122,6 @@
   "detectReceiptServer": "Detect Receipt Server",
   "noReceiptServer": "No receipt server found.",
   "noServicesFound": "No services found",
-  "type" : "Type"
+  "type" : "Type",
+  "https" : "Aktiviere HTTPS"
 }
