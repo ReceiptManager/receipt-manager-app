@@ -4,7 +4,7 @@ name: Analyze Dart
 
 jobs:
   build:
-    name: Example
+    name: Check dependencies
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
