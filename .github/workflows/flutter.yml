@@ -4,14 +4,13 @@ name: Analyze Dart
 
 jobs:
   build:
-    name: Check dependencies
+    name: Example
     runs-on: ubuntu-latest
-    container:
-      image:  google/dart:latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-      - name: Install dependencies
-        run: flutter pub get
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v1
+      - run: flutter pub get
       - name: Analyze Dart
         uses: zgosalvez/github-actions-analyze-dart@v1
