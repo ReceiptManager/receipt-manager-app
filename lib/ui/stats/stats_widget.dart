@@ -19,9 +19,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:receipt_manager/bloc/moor/db_bloc.dart';
 import 'package:receipt_manager/bloc/moor/db_state.dart';
+import 'package:receipt_manager/database/receipt_database.dart';
 import 'package:receipt_manager/factory/banner_factory.dart';
 import 'package:receipt_manager/generated/l10n.dart';
+import 'package:receipt_manager/math/math_util.dart';
+import 'package:receipt_manager/stats/abstract_chart_data.dart';
+import 'package:receipt_manager/stats/category.dart';
+import 'package:receipt_manager/stats/category_overview.dart';
+import 'package:receipt_manager/stats/chart_data_month.dart';
+import 'package:receipt_manager/stats/monthly_overview.dart';
 import 'package:receipt_manager/ui/stats/weekly_screen.dart';
+import 'package:syncfusion_flutter_charts/charts.dart';
 
 class StatsWidget extends StatefulWidget {
   final DbBloc _bloc;
@@ -39,6 +47,37 @@ class StatsWidgetState extends State<StatsWidget> {
 
   StatsWidgetState(this._bloc);
 
+  SfCircularChart getCategoryChart(List<Receipt> receipts) {
+    CategoryOverview overview = CategoryOverview(receipts);
+    List<CategoryData> data = overview.getData();
+
+    return SfCircularChart(
+        legend: Legend(isVisible: true),
+        series: <CircularSeries>[
+          // Initialize line series
+          PieSeries<CategoryData, String>(
+              dataSource: data,
+              xValueMapper: (CategoryData data, _) => data.label,
+              yValueMapper: (CategoryData data, _) => data.total,
+              name: 'Sales'
+          )
+        ]
+    );
+  }
+
+  SfCartesianChart getMonthChart(List<Receipt> receipts) {
+    MonthlyOverview overview = MonthlyOverview(receipts);
+    List<ReceiptMonthData> data = overview.getData();
+
+    return SfCartesianChart(series: <ChartSeries>[
+      LineSeries<ReceiptMonthData, double>(
+          color: Colors.red,
+          dataSource: data,
+          xValueMapper: (ReceiptMonthData data, _) => data.month.toDouble(),
+          yValueMapper: (ReceiptMonthData data, _) => data.total)
+    ]);
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder(
@@ -51,28 +90,32 @@ class StatsWidgetState extends State<StatsWidget> {
         }
         if (state is ErrorState) {
           return Center(
-            child: Text(S.of(context).receiptLoadFailed),
+            child: Text(S
+                .of(context)
+                .receiptLoadFailed),
           );
         }
         if (state is LoadedState) {
           final receipts = state.receipt;
-          return Column(children: [
-            BannerFactory.get(BANNER_MODES.OVERVIEW_EXPENSES, context),
-            SingleChildScrollView(
-                child: Column(children: <Widget>[
-              WeeklyOverviewScreen(receipts),
-              //     CategoryOverviewScreen(receipts)
-            ]))
-          ]);
+
+          return SingleChildScrollView(
+            child: Column(
+              children: [
+                BannerFactory. get (BANNER_MODES.OVERVIEW_EXPENSES, context),
+                getMonthChart(receipts),
+               getCategoryChart(receipts)
+              ],
+            ),
+          );
         }
 
         return Container(
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.all(Radius.circular(20)),
-                boxShadow: <BoxShadow>[
-              BoxShadow(offset: Offset(0, 5), blurRadius: 10)
-            ]));
-      },
+        decoration: BoxDecoration(
+        borderRadius: BorderRadius.all(Radius.circular(20)),
+        boxShadow: <BoxShadow>[
+        BoxShadow(offset: Offset(0, 5), blurRadius: 10)
+        ]));
+        },
     );
   }
 }

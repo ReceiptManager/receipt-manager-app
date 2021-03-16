@@ -30,6 +30,7 @@ import 'package:receipt_manager/theme/theme_manager.dart';
 import 'package:receipt_manager/ui/history/history_widget.dart';
 import 'package:receipt_manager/ui/home/add_widget.dart';
 import 'package:receipt_manager/ui/settings/settings_widget.dart';
+import 'package:receipt_manager/ui/stats/stats_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 final Repository _repository = Repository();
@@ -227,7 +228,7 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
       //DashboardWidget(),
       HomeWidget(this.receipt, sendImage, sharedPrefs, _bloc),
       HistoryWidget(_bloc),
-      //StatsWidget(_bloc),
+      StatsWidget(_bloc),
       SettingsWidget(sharedPrefs)
     ];
 
@@ -242,7 +243,7 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                 //Icon(Icons.home_outlined, color: Colors.white, size: 30),
                 Icon(Icons.add, color: Colors.white, size: 30),
                 Icon(Icons.history, color: Colors.white, size: 30),
-                // Icon(Icons.analytics_outlined, color: Colors.white, size: 30),
+                Icon(Icons.analytics_outlined, color: Colors.white, size: 30),
                 Icon(Icons.settings, color: Colors.white, size: 30),
               ],
               color: LightColor.black,
