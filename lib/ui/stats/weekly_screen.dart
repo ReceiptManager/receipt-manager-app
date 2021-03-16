@@ -226,7 +226,7 @@ class _WeeklyOverviewScreenState extends State<WeeklyOverviewScreen> {
     generateData();
 
     return PaddingFactory.create(AspectRatio(
-      aspectRatio: 1.2,
+      aspectRatio: 1.0,
       child: Card(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
         color: Colors.white,
@@ -243,7 +243,7 @@ class _WeeklyOverviewScreenState extends State<WeeklyOverviewScreen> {
                     S.of(context).overview,
                     style: TextStyle(
                         color: Colors.black87,
-                        fontSize: 24,
+                        fontSize: 22,
                         fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(
@@ -252,7 +252,7 @@ class _WeeklyOverviewScreenState extends State<WeeklyOverviewScreen> {
                   Text(
                     S.of(context).overviewExpenses,
                     style: TextStyle(
-                        fontSize: 18,
+                        fontSize: 16,
                         color: Colors.black,
                         fontWeight: FontWeight.bold),
                   ),
@@ -262,10 +262,7 @@ class _WeeklyOverviewScreenState extends State<WeeklyOverviewScreen> {
                   Expanded(
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                      child: BarChart(
-                        mainBarData(),
-                        swapAnimationDuration: animDuration,
-                      ),
+                      child: Text("")
                     ),
                   ),
                   const SizedBox(
@@ -273,18 +270,6 @@ class _WeeklyOverviewScreenState extends State<WeeklyOverviewScreen> {
                   ),
                 ],
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Align(
-                  alignment: Alignment.topRight,
-                  child: Text(
-                    sum.toStringAsFixed(2) + S.of(context).currency,
-                    style: TextStyle(
-                        color: Colors.red,
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold),
-                  )),
             ),
           ],
         ),

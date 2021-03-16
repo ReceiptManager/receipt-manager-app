@@ -76,6 +76,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "licence" : MessageLookupByLibrary.simpleMessage("Lizenzen"),
     "misc" : MessageLookupByLibrary.simpleMessage("Sonstiges"),
     "monday" : MessageLookupByLibrary.simpleMessage("Montag"),
+    "monthOverview" : MessageLookupByLibrary.simpleMessage("Monatsübersicht"),
     "neuronalNetworkParser" : MessageLookupByLibrary.simpleMessage("Neuronal network parser"),
     "next" : MessageLookupByLibrary.simpleMessage("Weiter"),
     "noData" : MessageLookupByLibrary.simpleMessage("Data N/A"),
@@ -143,6 +144,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "uploadFailed" : MessageLookupByLibrary.simpleMessage("Bild konnte nicht hochgeladen werden"),
     "uploadSuccess" : MessageLookupByLibrary.simpleMessage("Bild erfolgreich hochgeladen"),
     "util" : MessageLookupByLibrary.simpleMessage("Sonstiges"),
-    "wednesday" : MessageLookupByLibrary.simpleMessage("Mittwoch")
+    "wednesday" : MessageLookupByLibrary.simpleMessage("Mittwoch"),
+    "yearOverview" : MessageLookupByLibrary.simpleMessage("Jahresübersicht")
   };
 }

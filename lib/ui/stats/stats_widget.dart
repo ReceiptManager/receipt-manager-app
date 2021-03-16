@@ -21,6 +21,7 @@ import 'package:receipt_manager/bloc/moor/db_bloc.dart';
 import 'package:receipt_manager/bloc/moor/db_state.dart';
 import 'package:receipt_manager/database/receipt_database.dart';
 import 'package:receipt_manager/factory/banner_factory.dart';
+import 'package:receipt_manager/factory/padding_factory.dart';
 import 'package:receipt_manager/generated/l10n.dart';
 import 'package:receipt_manager/math/math_util.dart';
 import 'package:receipt_manager/stats/abstract_chart_data.dart';
@@ -28,6 +29,8 @@ import 'package:receipt_manager/stats/category.dart';
 import 'package:receipt_manager/stats/category_overview.dart';
 import 'package:receipt_manager/stats/chart_data_month.dart';
 import 'package:receipt_manager/stats/monthly_overview.dart';
+import 'package:receipt_manager/stats/weekly_chart_data.dart';
+import 'package:receipt_manager/stats/weekly_overview.dart';
 import 'package:receipt_manager/ui/stats/weekly_screen.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
@@ -56,13 +59,12 @@ class StatsWidgetState extends State<StatsWidget> {
         series: <CircularSeries>[
           // Initialize line series
           PieSeries<CategoryData, String>(
+              enableTooltip: true,
               dataSource: data,
               xValueMapper: (CategoryData data, _) => data.label,
               yValueMapper: (CategoryData data, _) => data.total,
-              name: 'Sales'
-          )
-        ]
-    );
+              name: 'Sales')
+        ]);
   }
 
   SfCartesianChart getMonthChart(List<Receipt> receipts) {
@@ -70,11 +72,27 @@ class StatsWidgetState extends State<StatsWidget> {
     List<ReceiptMonthData> data = overview.getData();
 
     return SfCartesianChart(series: <ChartSeries>[
-      LineSeries<ReceiptMonthData, double>(
+      LineSeries<ReceiptMonthData, int>(
           color: Colors.red,
           dataSource: data,
-          xValueMapper: (ReceiptMonthData data, _) => data.month.toDouble(),
+          xValueMapper: (ReceiptMonthData data, _) => data.month,
           yValueMapper: (ReceiptMonthData data, _) => data.total)
+    ]);
+  }
+
+  SfCartesianChart getWeeklyChart(
+      List<Receipt> receipts, BuildContext context) {
+    WeeklyOverview overview = WeeklyOverview(receipts, context);
+    List<WeeklyChartData> data = overview.getData();
+
+    return SfCartesianChart(series: <ChartSeries>[
+      ColumnSeries<WeeklyChartData, int>(
+        dataSource: data,
+        xValueMapper: (WeeklyChartData data, _) => data.day,
+        yValueMapper: (WeeklyChartData data, _) => data.total,
+        enableTooltip: true,
+        width: 0.5
+      )
     ]);
   }
 
@@ -90,9 +108,7 @@ class StatsWidgetState extends State<StatsWidget> {
         }
         if (state is ErrorState) {
           return Center(
-            child: Text(S
-                .of(context)
-                .receiptLoadFailed),
+            child: Text(S.of(context).receiptLoadFailed),
           );
         }
         if (state is LoadedState) {
@@ -101,21 +117,149 @@ class StatsWidgetState extends State<StatsWidget> {
           return SingleChildScrollView(
             child: Column(
               children: [
-                BannerFactory. get (BANNER_MODES.OVERVIEW_EXPENSES, context),
-                getMonthChart(receipts),
-               getCategoryChart(receipts)
+                BannerFactory.get(BANNER_MODES.OVERVIEW_EXPENSES, context),
+                PaddingFactory.create(AspectRatio(
+                    aspectRatio: 1.25,
+                    child: Card(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(18)),
+                      color: Colors.white,
+                      child: Stack(
+                        children: <Widget>[
+                          Padding(
+                            padding: const EdgeInsets.all(16),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              mainAxisSize: MainAxisSize.max,
+                              children: <Widget>[
+                                Text(
+                                  S.of(context).overview,
+                                  style: TextStyle(
+                                      color: Colors.black87,
+                                      fontSize: 24,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                const SizedBox(
+                                  height: 4,
+                                ),
+                                Text(
+                                  S.of(context).monthOverview,
+                                  style: TextStyle(
+                                      fontSize: 18,
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.w300),
+                                ),
+                                const SizedBox(
+                                  height: 20,
+                                ),
+                                Expanded(
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 8.0),
+                                    child: getMonthChart(receipts),
+                                  ),
+                                ),
+                                const SizedBox(
+                                  height: 12,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ))),
+                PaddingFactory.create(AspectRatio(
+                    aspectRatio: 1.25,
+                    child: Card(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(18)),
+                      color: Colors.white,
+                      child: Stack(
+                        children: <Widget>[
+                          Padding(
+                            padding: const EdgeInsets.all(16),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              mainAxisSize: MainAxisSize.max,
+                              children: <Widget>[
+                                Text(
+                                  S.of(context).overview,
+                                  style: TextStyle(
+                                      color: Colors.black87,
+                                      fontSize: 24,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                Text(
+                                  S.of(context).overviewExpenses,
+                                  style: TextStyle(
+                                      fontSize: 18,
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.w300),
+                                ),
+                                const SizedBox(
+                                  height: 20,
+                                ),
+                                Expanded(
+                                  child: getWeeklyChart(receipts, context),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ))),
+                PaddingFactory.create(AspectRatio(
+                    aspectRatio: 1.25,
+                    child: Card(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(18)),
+                      color: Colors.white,
+                      child: Stack(
+                        children: <Widget>[
+                          Padding(
+                            padding: const EdgeInsets.all(16),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              mainAxisSize: MainAxisSize.max,
+                              children: <Widget>[
+                                Text(
+                                  S.of(context).expensesByCategory,
+                                  style: TextStyle(
+                                      color: Colors.black87,
+                                      fontSize: 24,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                Text(
+                                  S.of(context).yearOverview,
+                                  style: TextStyle(
+                                      fontSize: 18,
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.w300),
+                                ),
+                                Expanded(
+                                  child: getCategoryChart(receipts),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ))),
               ],
             ),
           );
         }
 
         return Container(
-        decoration: BoxDecoration(
-        borderRadius: BorderRadius.all(Radius.circular(20)),
-        boxShadow: <BoxShadow>[
-        BoxShadow(offset: Offset(0, 5), blurRadius: 10)
-        ]));
-        },
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.all(Radius.circular(20)),
+                boxShadow: <BoxShadow>[
+              BoxShadow(offset: Offset(0, 5), blurRadius: 10)
+            ]));
+      },
     );
   }
 }

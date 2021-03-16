@@ -1264,6 +1264,26 @@ class S {
       args: [],
     );
   }
+
+  /// `Monatsübersicht`
+  String get monthOverview {
+    return Intl.message(
+      'Monatsübersicht',
+      name: 'monthOverview',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Jahresübersicht`
+  String get yearOverview {
+    return Intl.message(
+      'Jahresübersicht',
+      name: 'yearOverview',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
