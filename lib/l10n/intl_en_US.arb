@@ -123,5 +123,7 @@
   "noReceiptServer": "No receipt server found.",
   "noServicesFound": "No services found",
   "type" : "Type",
-  "https" : "Aktiviere HTTPS"
+  "https" : "Aktiviere HTTPS",
+  "monthOverview" : "Monthly overview",
+  "yearOverview": "Yearly overview"
 }
