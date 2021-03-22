@@ -18,6 +18,7 @@
 import 'package:flutter/material.dart';
 import 'package:receipt_manager/generated/l10n.dart';
 import 'package:receipt_manager/ui/settings/api_settings.dart';
+import 'package:receipt_manager/ui/settings/domain.dart';
 import 'package:receipt_manager/ui/settings/open_source.dart';
 import 'package:receipt_manager/ui/settings/server_settings.dart';
 import 'package:settings_ui/settings_ui.dart';
@@ -44,6 +45,7 @@ class _SettingsWidgetState extends State<SettingsWidget> {
   bool _sendTrainingData = false;
   bool _showItemList = false;
   bool _https = true;
+  bool _reverseProxy = false;
 
   final SharedPreferences _prefs;
 
@@ -76,6 +78,10 @@ class _SettingsWidgetState extends State<SettingsWidget> {
     _https = _prefs.getBool("https") == null
         ? _https
         : _prefs.getBool("https");
+
+    _reverseProxy = _prefs.getBool("domain") == null
+        ? _reverseProxy
+        : _prefs.getBool("domain");
   }
 
   @override
@@ -211,6 +217,25 @@ class _SettingsWidgetState extends State<SettingsWidget> {
         SettingsSection(
           title: S.of(context).settingsDevelopmentTitle,
           tiles: [
+            SettingsTile(
+              title: S.of(context).reverseProxy,
+              leading: Icon(Icons.web),
+              onTap: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (BuildContext context) => DomainSettings(_prefs)));
+              },
+            ),
+            SettingsTile.switchTile(
+              title: S.of(context).reverseProxy,
+              leading: Icon(Icons.web),
+              switchValue: _reverseProxy,
+              onToggle: (bool value) {
+                setState(() {
+                  _reverseProxy = value;
+                  _prefs.setBool("reverseProxy", value);
+                });
+              },
+            ),
             SettingsTile.switchTile(
               title: S.of(context).enableDebugOutput,
               leading: Icon(Icons.bug_report),

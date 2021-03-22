@@ -125,5 +125,7 @@
   "type" : "Type",
   "https" : "Aktiviere HTTPS",
   "monthOverview" : "Monthly overview",
-  "yearOverview": "Yearly overview"
+  "yearOverview": "Yearly overview",
+  "reverseProxy" : "Reverse Proxy",
+  "insertReverseProxy": "Insert reverse proxy "
 }

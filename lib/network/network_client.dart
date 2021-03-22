@@ -61,9 +61,9 @@ class NetworkClient {
   NetworkClient._internal();
 
   String getAPIUrl(final ip, final token, final legacyParser, final gaussian,
-      final grayscale, final rotate, final https) {
-
+      final grayscale, final rotate, final https, final reverseProxy) {
     if (https)
+
       /// override the agent to provide support for self signed
       /// certificates.
       ///
@@ -73,6 +73,20 @@ class NetworkClient {
 
     String protocol = https ? _https : _http;
     if (token == null || token == "") {
+      if (reverseProxy)
+        return protocol +
+            ip +
+            "/" +
+            _uploadPath +
+            "&legacy_parser=" +
+            getValue(legacyParser) +
+            "&grayscale_image=" +
+            getValue(grayscale) +
+            "&gaussian_blur=" +
+            getValue(gaussian) +
+            "&rotate=" +
+            getValue(rotate);
+
       return protocol +
           ip +
           ":" +
@@ -87,6 +101,22 @@ class NetworkClient {
           "&rotate=" +
           getValue(rotate);
     }
+
+    if (reverseProxy)
+      return protocol +
+          ip +
+          "/" +
+          _uploadPath +
+          _token +
+          token +
+          "&legacy_parser=" +
+          getValue(legacyParser) +
+          "&grayscale_image=" +
+          getValue(grayscale) +
+          "&gaussian_blur=" +
+          getValue(gaussian) +
+          "&rotate=" +
+          getValue(rotate);
 
     return protocol +
         ip +
@@ -123,7 +153,6 @@ class NetworkClient {
 
   sendTrainingData(String ip, String token, String company, String date,
       String total, BuildContext context) async {
-
     log("Submit training data.");
     Map<String, String> headers = {"Content-type": "application/json"};
     String json = '{"company": "$company", "date": "$date","total": "$total"}';
@@ -145,9 +174,10 @@ class NetworkClient {
   /// Send image via post request to the server and capture the response.
   sendImage(File imageFile, NetworkClientHolder holder, BuildContext context,
       [GlobalKey<ScaffoldState> key]) async {
-
     log("Try to upload new image.");
-    if (holder.ip == null || holder.ip.isEmpty) {
+    if ((!holder.reverseProxy && (holder.ip == null || holder.ip.isEmpty)) ||
+        (holder.reverseProxy &&
+            (holder.domain == null || holder.domain.isEmpty))) {
       log("ip appears invalid.");
       key.currentState
         ..showSnackBar(SnackBar(
@@ -164,8 +194,27 @@ class NetworkClient {
     stream.cast();
 
     var length = await imageFile.length();
-    var uri = Uri.parse(getAPIUrl(holder.ip, holder.token, holder.legacyParser,
-        holder.gaussian, holder.grayscale, holder.rotate, holder.https));
+    var uri;
+    if (!holder.reverseProxy)
+      uri = Uri.parse(getAPIUrl(
+          holder.ip,
+          holder.token,
+          holder.legacyParser,
+          holder.gaussian,
+          holder.grayscale,
+          holder.rotate,
+          holder.https,
+          true));
+    else
+      uri = Uri.parse(getAPIUrl(
+          holder.domain,
+          holder.token,
+          holder.legacyParser,
+          holder.gaussian,
+          holder.grayscale,
+          holder.rotate,
+          holder.https,
+          false));
 
     log(uri.toString());
 

@@ -562,6 +562,11 @@ class _FilterChipScreenState extends State<FilterChipScreen> {
 
   void addFilter(int index) {
     filterCategories.add(data[index]);
+
+
+    setState(() {
+      momentum.receipts = [];
+    });
   }
 
   void removeFilter(int index) {
@@ -581,7 +586,7 @@ class _FilterChipScreenState extends State<FilterChipScreen> {
     }
 
     setState(() {
-      //momentum.receipts = filteredReceipts;
+      momentum.receipts = filteredReceipts;
     });
   }
 }

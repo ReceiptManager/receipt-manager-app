@@ -86,8 +86,8 @@
   "diySupermarkt": "DIY supermarkt",
   "insertYourApiToken": "Insert your api token",
   "apitoken": "API Token",
-  "insertServerApiToken": "Insert server api token",
-  "invalidApiToken": "Invalid API token",
+  "insertServerApiToken": "Füge server api token hinzu",
+  "invalidApiToken": "Ungültiger API token",
   "updateApiTokenSuccessfully": "Update api token successfully",
   "dashboard": "Übersicht",
   "ocr": "OCR Einstellungen",
@@ -126,6 +126,8 @@
   "type" : "Typ",
   "https" : "Aktiviere HTTPS",
   "monthOverview" : "Monatsübersicht",
-  "yearOverview": "Jahresübersicht"
+  "yearOverview": "Jahresübersicht",
+  "reverseProxy" : "Reverse Proxy",
+  "insertReverseProxy": "Reverse Proxy hinzufügen"
 
 }

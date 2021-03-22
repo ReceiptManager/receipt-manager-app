@@ -895,20 +895,20 @@ class S {
     );
   }
 
-  /// `Insert server api token`
+  /// `Füge server api token hinzu`
   String get insertServerApiToken {
     return Intl.message(
-      'Insert server api token',
+      'Füge server api token hinzu',
       name: 'insertServerApiToken',
       desc: '',
       args: [],
     );
   }
 
-  /// `Invalid API token`
+  /// `Ungültiger API token`
   String get invalidApiToken {
     return Intl.message(
-      'Invalid API token',
+      'Ungültiger API token',
       name: 'invalidApiToken',
       desc: '',
       args: [],
@@ -1280,6 +1280,26 @@ class S {
     return Intl.message(
       'Jahresübersicht',
       name: 'yearOverview',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Reverse Proxy`
+  String get reverseProxy {
+    return Intl.message(
+      'Reverse Proxy',
+      name: 'reverseProxy',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Reverse Proxy hinzufügen`
+  String get insertReverseProxy {
+    return Intl.message(
+      'Reverse Proxy hinzufügen',
+      name: 'insertReverseProxy',
       desc: '',
       args: [],
     );
