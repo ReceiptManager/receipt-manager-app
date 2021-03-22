@@ -134,7 +134,7 @@ class StatsWidgetState extends State<StatsWidget> {
                               mainAxisSize: MainAxisSize.max,
                               children: <Widget>[
                                 Text(
-                                  S.of(context).overview,
+                                  S.of(context).overviewExpenses,
                                   style: TextStyle(
                                       color: Colors.black87,
                                       fontSize: 24,
@@ -144,7 +144,7 @@ class StatsWidgetState extends State<StatsWidget> {
                                   height: 4,
                                 ),
                                 Text(
-                                  S.of(context).monthOverview,
+                                  S.of(context).yearOverview,
                                   style: TextStyle(
                                       fontSize: 18,
                                       color: Colors.black,
@@ -192,7 +192,7 @@ class StatsWidgetState extends State<StatsWidget> {
                                       fontWeight: FontWeight.bold),
                                 ),
                                 Text(
-                                  S.of(context).overviewExpenses,
+                                  S.of(context).yearOverview,
                                   style: TextStyle(
                                       fontSize: 18,
                                       color: Colors.black,
