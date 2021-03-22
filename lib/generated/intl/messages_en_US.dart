@@ -143,9 +143,11 @@ class MessageLookup extends MessageLookupByLibrary {
     "updateReceipt" : MessageLookupByLibrary.simpleMessage("Update Receipt"),
     "updateReceiptSuccessful" : MessageLookupByLibrary.simpleMessage("Update receipt successfully"),
     "updateServerIP" : MessageLookupByLibrary.simpleMessage("Server ip is set."),
+    "updateWebsiteUrl" : MessageLookupByLibrary.simpleMessage("Update receipt parser domain successfully"),
     "uploadFailed" : MessageLookupByLibrary.simpleMessage("Failed to upload image."),
     "uploadSuccess" : MessageLookupByLibrary.simpleMessage("Image successfully uploaded."),
     "util" : MessageLookupByLibrary.simpleMessage("Util"),
+    "websiteSettings" : MessageLookupByLibrary.simpleMessage("Website Settings"),
     "wednesday" : MessageLookupByLibrary.simpleMessage("Wednesday"),
     "yearOverview" : MessageLookupByLibrary.simpleMessage("Yearly overview")
   };

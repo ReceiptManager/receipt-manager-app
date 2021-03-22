@@ -100,7 +100,7 @@ class _DomainSettingsState extends State<DomainSettings> {
                           ..hideCurrentSnackBar()
                           ..showSnackBar(SnackBar(
                             content:
-                                Text(S.of(context).updateApiTokenSuccessfully),
+                                Text(S.of(context).updateWebsiteUrl),
                             backgroundColor: Colors.green,
                           ));
                       },

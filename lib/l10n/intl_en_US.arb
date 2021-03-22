@@ -127,5 +127,7 @@
   "monthOverview" : "Monthly overview",
   "yearOverview": "Yearly overview",
   "reverseProxy" : "Reverse Proxy",
-  "insertReverseProxy": "Insert reverse proxy "
+  "insertReverseProxy": "Insert reverse proxy ",
+  "websiteSettings": "Website Settings",
+  "updateWebsiteUrl" : "Update receipt parser domain successfully"
 }

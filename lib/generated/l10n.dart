@@ -865,20 +865,20 @@ class S {
     );
   }
 
-  /// `DIY supermarkt`
+  /// `Baumarkt`
   String get diySupermarkt {
     return Intl.message(
-      'DIY supermarkt',
+      'Baumarkt',
       name: 'diySupermarkt',
       desc: '',
       args: [],
     );
   }
 
-  /// `Insert your api token`
+  /// `Hinzufügen eines API token`
   String get insertYourApiToken {
     return Intl.message(
-      'Insert your api token',
+      'Hinzufügen eines API token',
       name: 'insertYourApiToken',
       desc: '',
       args: [],
@@ -895,10 +895,10 @@ class S {
     );
   }
 
-  /// `Füge server api token hinzu`
+  /// `Füge server API token hinzu`
   String get insertServerApiToken {
     return Intl.message(
-      'Füge server api token hinzu',
+      'Füge server API token hinzu',
       name: 'insertServerApiToken',
       desc: '',
       args: [],
@@ -915,11 +915,21 @@ class S {
     );
   }
 
-  /// `Update api token successfully`
+  /// `Erfolgreich API token aktualisiert`
   String get updateApiTokenSuccessfully {
     return Intl.message(
-      'Update api token successfully',
+      'Erfolgreich API token aktualisiert',
       name: 'updateApiTokenSuccessfully',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Erfolgreich receipt parser domain aktualisiert`
+  String get updateWebsiteUrl {
+    return Intl.message(
+      'Erfolgreich receipt parser domain aktualisiert',
+      name: 'updateWebsiteUrl',
       desc: '',
       args: [],
     );
@@ -1300,6 +1310,16 @@ class S {
     return Intl.message(
       'Reverse Proxy hinzufügen',
       name: 'insertReverseProxy',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Website Einstellungen`
+  String get websiteSettings {
+    return Intl.message(
+      'Website Einstellungen',
+      name: 'websiteSettings',
       desc: '',
       args: [],
     );
