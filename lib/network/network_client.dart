@@ -76,7 +76,6 @@ class NetworkClient {
       if (reverseProxy)
         return protocol +
             ip +
-            "/" +
             _uploadPath +
             "&legacy_parser=" +
             getValue(legacyParser) +
@@ -105,7 +104,6 @@ class NetworkClient {
     if (reverseProxy)
       return protocol +
           ip +
-          "/" +
           _uploadPath +
           _token +
           token +
@@ -204,7 +202,7 @@ class NetworkClient {
           holder.grayscale,
           holder.rotate,
           holder.https,
-          true));
+          false));
     else
       uri = Uri.parse(getAPIUrl(
           holder.domain,
@@ -214,7 +212,7 @@ class NetworkClient {
           holder.grayscale,
           holder.rotate,
           holder.https,
-          false));
+          true));
 
     log(uri.toString());
 

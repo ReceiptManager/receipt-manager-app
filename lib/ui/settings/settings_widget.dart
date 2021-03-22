@@ -79,9 +79,9 @@ class _SettingsWidgetState extends State<SettingsWidget> {
         ? _https
         : _prefs.getBool("https");
 
-    _reverseProxy = _prefs.getBool("domain") == null
+    _reverseProxy = _prefs.getBool("reverseProxy") == null
         ? _reverseProxy
-        : _prefs.getBool("domain");
+        : _prefs.getBool("reverseProxy");
   }
 
   @override
@@ -218,8 +218,8 @@ class _SettingsWidgetState extends State<SettingsWidget> {
           title: S.of(context).settingsDevelopmentTitle,
           tiles: [
             SettingsTile(
-              title: S.of(context).reverseProxy,
-              leading: Icon(Icons.web),
+              title: S.of(context).websiteSettings,
+              leading: Icon(Icons.domain),
               onTap: () {
                 Navigator.of(context).push(MaterialPageRoute(
                     builder: (BuildContext context) => DomainSettings(_prefs)));

@@ -83,12 +83,13 @@
   "education": "Bildung",
   "noData": "Data N/A",
   "expensesByCategory": "Kategorieübersicht",
-  "diySupermarkt": "DIY supermarkt",
-  "insertYourApiToken": "Insert your api token",
+  "diySupermarkt": "Baumarkt",
+  "insertYourApiToken": "Hinzufügen eines API token",
   "apitoken": "API Token",
-  "insertServerApiToken": "Füge server api token hinzu",
+  "insertServerApiToken": "Füge server API token hinzu",
   "invalidApiToken": "Ungültiger API token",
-  "updateApiTokenSuccessfully": "Update api token successfully",
+  "updateApiTokenSuccessfully": "Erfolgreich API token aktualisiert",
+  "updateWebsiteUrl" : "Erfolgreich receipt parser domain aktualisiert",
   "dashboard": "Übersicht",
   "ocr": "OCR Einstellungen",
   "highContrast": "Hoher Kontrast",
@@ -128,6 +129,7 @@
   "monthOverview" : "Monatsübersicht",
   "yearOverview": "Jahresübersicht",
   "reverseProxy" : "Reverse Proxy",
-  "insertReverseProxy": "Reverse Proxy hinzufügen"
+  "insertReverseProxy": "Reverse Proxy hinzufügen",
+  "websiteSettings": "Website Einstellungen"
 
 }
