@@ -55,6 +55,12 @@ class NetworkClientHolder {
   /// send via https
   bool https;
 
+  /// specify domain
+  String domain;
+
+  // use reverse proxy
+  bool reverseProxy;
+
   static final NetworkClientHolder _networkClientHolder =
       NetworkClientHolder._internal();
 
@@ -73,5 +79,7 @@ class NetworkClientHolder {
     rotate = sharedPrefs.get("rotate");
     showItemList = sharedPrefs.get("showItemList");
     https = sharedPrefs.get("https");
+    domain = sharedPrefs.get("domain");
+    reverseProxy = sharedPrefs.get("reverseProxy");
   }
 }
