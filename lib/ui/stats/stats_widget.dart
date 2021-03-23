@@ -23,15 +23,12 @@ import 'package:receipt_manager/database/receipt_database.dart';
 import 'package:receipt_manager/factory/banner_factory.dart';
 import 'package:receipt_manager/factory/padding_factory.dart';
 import 'package:receipt_manager/generated/l10n.dart';
-import 'package:receipt_manager/math/math_util.dart';
-import 'package:receipt_manager/stats/abstract_chart_data.dart';
 import 'package:receipt_manager/stats/category.dart';
 import 'package:receipt_manager/stats/category_overview.dart';
 import 'package:receipt_manager/stats/chart_data_month.dart';
 import 'package:receipt_manager/stats/monthly_overview.dart';
 import 'package:receipt_manager/stats/weekly_chart_data.dart';
 import 'package:receipt_manager/stats/weekly_overview.dart';
-import 'package:receipt_manager/ui/stats/weekly_screen.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 class StatsWidget extends StatefulWidget {
@@ -87,12 +84,11 @@ class StatsWidgetState extends State<StatsWidget> {
 
     return SfCartesianChart(series: <ChartSeries>[
       ColumnSeries<WeeklyChartData, int>(
-        dataSource: data,
-        xValueMapper: (WeeklyChartData data, _) => data.day,
-        yValueMapper: (WeeklyChartData data, _) => data.total,
-        enableTooltip: true,
-        width: 0.5
-      )
+          dataSource: data,
+          xValueMapper: (WeeklyChartData data, _) => data.day,
+          yValueMapper: (WeeklyChartData data, _) => data.total,
+          enableTooltip: true,
+          width: 0.5)
     ]);
   }
 
@@ -185,14 +181,14 @@ class StatsWidgetState extends State<StatsWidget> {
                               mainAxisSize: MainAxisSize.max,
                               children: <Widget>[
                                 Text(
-                                  S.of(context).overview,
+                                  S.of(context).overviewExpenses,
                                   style: TextStyle(
                                       color: Colors.black87,
                                       fontSize: 24,
                                       fontWeight: FontWeight.bold),
                                 ),
                                 Text(
-                                  S.of(context).yearOverview,
+                                  S.of(context).overview,
                                   style: TextStyle(
                                       fontSize: 18,
                                       color: Colors.black,
