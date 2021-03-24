@@ -33,6 +33,7 @@ import 'package:receipt_manager/generated/l10n.dart';
 import 'package:receipt_manager/generator/receipt_generator.dart';
 import 'package:receipt_manager/model/receipt_category.dart';
 import 'package:receipt_manager/network/network_client.dart';
+import 'package:receipt_manager/network/network_client_holder.dart';
 import 'package:receipt_manager/theme/color/color.dart';
 import 'package:receipt_manager/theme/theme_manager.dart';
 import 'package:receipt_manager/util/date_manipulator.dart';
@@ -618,15 +619,21 @@ class ReceiptInputController extends State<ReceiptForm> {
                         shop: Value(shopName))));
                 _bloc.add(ReceiptAllFetch());
 
+                NetworkClientHolder holder = NetworkClientHolder();
+                holder.readOptions(sharedPrefs);
+
+                holder.company = shopName;
+                holder.date = receiptDate.toIso8601String();
+                holder.total = total.replaceAll("-", "");
+
                 bool _submitTrainingData =
                     sharedPrefs.getBool("sendTrainingData");
                 if (_submitTrainingData != null &&
                     _submitTrainingData == true &&
                     sendImage) {
-                  String ip = sharedPrefs.get("ipv4");
+
                   String token = sharedPrefs.get("api_token");
-                  client.sendTrainingData(ip, token, shopName,
-                      receiptDate.toIso8601String(), total, context);
+                  client.sendTrainingData(holder, context);
                 }
 
                 reset();

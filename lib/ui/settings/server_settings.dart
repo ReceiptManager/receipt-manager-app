@@ -71,7 +71,7 @@ class _ServerSettingsState extends State<ServerSettings> {
     );
   }
 
-  final GlobalKey<ScaffoldState> _scaffoldKey2 = GlobalKey<ScaffoldState>();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
@@ -93,6 +93,7 @@ class _ServerSettingsState extends State<ServerSettings> {
 
     return Scaffold(
       backgroundColor: Colors.white,
+      key: _scaffoldKey,
       appBar: AppBar(title: Text(S.of(context).serverSettings)),
       body: Column(children: [
         Padding(padding: const EdgeInsets.all(16.0), child: serverTextfield()),
@@ -157,7 +158,7 @@ class _ServerSettingsState extends State<ServerSettings> {
                           sharedPreferences.setBool("reverseProxy", true);
                         }
 
-                        _scaffoldKey2.currentState
+                        _scaffoldKey.currentState
                           ..hideCurrentSnackBar()
                           ..showSnackBar(SnackBar(
                             content: Text(S.of(context).updateServerIP),
