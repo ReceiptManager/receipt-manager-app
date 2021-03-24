@@ -123,7 +123,7 @@
   "noReceiptServer": "No receipt server found.",
   "noServicesFound": "No services found",
   "type" : "Type",
-  "https" : "Aktiviere HTTPS",
+  "https" : "Enable HTTPS",
   "monthOverview" : "Monthly overview",
   "yearOverview": "Yearly overview",
   "reverseProxy" : "Reverse Proxy",
@@ -131,5 +131,7 @@
   "websiteSettings": "Website Settings",
   "updateWebsiteUrl" : "Update receipt parser domain successfully",
   "networkSettings": "Network Settings",
-  "disableHttpsWarning": "Warning unencrypted communication is not recommended"
+  "disableHttpsWarning": "Warning unencrypted communication is not recommended",
+  "connectionFailed": "Connection could not be established",
+  "connectionSuccess": "Connection could be established"
 }
