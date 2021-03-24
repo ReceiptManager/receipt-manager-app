@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import 'package:receipt_manager/stats/abstract_chart_data.dart';
+
 
 class ReceiptMonthData {
   ReceiptMonthData(this.month, this.total);

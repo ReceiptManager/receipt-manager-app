@@ -632,7 +632,6 @@ class ReceiptInputController extends State<ReceiptForm> {
                     _submitTrainingData == true &&
                     sendImage) {
 
-                  String token = sharedPrefs.get("api_token");
                   client.sendTrainingData(holder, context);
                 }
 

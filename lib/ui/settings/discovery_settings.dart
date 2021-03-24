@@ -24,6 +24,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'discovery/discovery_model.dart';
 
+// ignore: must_be_immutable
 class DiscoverSettings extends StatelessWidget {
   SharedPreferences prefs;
   DiscoverSettings(this.prefs);
