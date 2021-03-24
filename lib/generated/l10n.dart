@@ -1324,6 +1324,26 @@ class S {
       args: [],
     );
   }
+
+  /// `Netzwerk Einstellungen`
+  String get networkSettings {
+    return Intl.message(
+      'Netzwerk Einstellungen',
+      name: 'networkSettings',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Warnung unverschlüsselte Kommunikation wird nicht empfohlen`
+  String get disableHttpsWarning {
+    return Intl.message(
+      'Warnung unverschlüsselte Kommunikation wird nicht empfohlen',
+      name: 'disableHttpsWarning',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

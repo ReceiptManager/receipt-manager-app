@@ -47,6 +47,9 @@ class _SettingsWidgetState extends State<SettingsWidget> {
   bool _https = true;
   bool _reverseProxy = false;
 
+  final GlobalKey<ScaffoldState> _scaffoldKey4 = GlobalKey<ScaffoldState>();
+
+
   final SharedPreferences _prefs;
 
   _SettingsWidgetState(this._prefs);
@@ -75,9 +78,7 @@ class _SettingsWidgetState extends State<SettingsWidget> {
         ? _showItemList
         : _prefs.getBool("showItemList");
 
-    _https = _prefs.getBool("https") == null
-        ? _https
-        : _prefs.getBool("https");
+    _https = _prefs.getBool("https") == null ? _https : _prefs.getBool("https");
 
     _reverseProxy = _prefs.getBool("reverseProxy") == null
         ? _reverseProxy
@@ -89,6 +90,7 @@ class _SettingsWidgetState extends State<SettingsWidget> {
     readFallbackValues();
 
     return SettingsList(
+      key:  _scaffoldKey4,
       shrinkWrap: true,
       backgroundColor: Colors.white,
       sections: [
@@ -106,22 +108,6 @@ class _SettingsWidgetState extends State<SettingsWidget> {
               },
             ),
             SettingsTile(
-              title: S.of(context).detectReceiptServer,
-              leading: Icon(Icons.adb),
-              onTap: () {
-                Navigator.of(context).push(MaterialPageRoute(
-                    builder: (BuildContext context) => DiscoverSettings(_prefs)));
-              },
-            ),
-            SettingsTile(
-              title: S.of(context).settingsServerTitle,
-              leading: Icon(Icons.wifi),
-              onTap: () {
-                Navigator.of(context).push(MaterialPageRoute(
-                    builder: (BuildContext context) => ServerSettings(_prefs)));
-              },
-            ),
-            SettingsTile(
               title: S.of(context).apitoken,
               leading: Icon(Icons.vpn_key),
               onTap: () {
@@ -131,6 +117,44 @@ class _SettingsWidgetState extends State<SettingsWidget> {
             ),
           ],
         ),
+        SettingsSection(title: S.of(context).networkSettings, tiles: [
+          SettingsTile(
+            title: S.of(context).detectReceiptServer,
+            leading: Icon(Icons.adb),
+            onTap: () {
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (BuildContext context) => DiscoverSettings(_prefs)));
+            },
+          ),
+          SettingsTile(
+            title: S.of(context).settingsServerTitle,
+            leading: Icon(Icons.wifi),
+            onTap: () {
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (BuildContext context) => ServerSettings(_prefs)));
+            },
+          ),
+          SettingsTile.switchTile(
+            title: S.of(context).https,
+            leading: Icon(Icons.lock),
+            switchValue: _https,
+            onToggle: (bool value) {
+              setState(() {
+                _https = value;
+                _prefs.setBool("https", value);
+              });
+
+              if (!value) {
+                Scaffold.of(context)
+                  ..hideCurrentSnackBar()
+                  ..showSnackBar(SnackBar(
+                    content: Text(S.of(context).disableHttpsWarning),
+                    backgroundColor: Colors.red,
+                  ));
+              }
+            },
+          ),
+        ]),
         SettingsSection(
           title: S.of(context).cameraSettings,
           tiles: [
@@ -154,7 +178,7 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                   _grayscale = value;
                   _prefs.setBool("grayscale", value);
 
-                  if(!value && _gaussian) {
+                  if (!value && _gaussian) {
                     _gaussian = false;
                     _prefs.setBool("gaussian", false);
                   }
@@ -217,25 +241,6 @@ class _SettingsWidgetState extends State<SettingsWidget> {
         SettingsSection(
           title: S.of(context).settingsDevelopmentTitle,
           tiles: [
-            SettingsTile(
-              title: S.of(context).websiteSettings,
-              leading: Icon(Icons.domain),
-              onTap: () {
-                Navigator.of(context).push(MaterialPageRoute(
-                    builder: (BuildContext context) => DomainSettings(_prefs)));
-              },
-            ),
-            SettingsTile.switchTile(
-              title: S.of(context).reverseProxy,
-              leading: Icon(Icons.web),
-              switchValue: _reverseProxy,
-              onToggle: (bool value) {
-                setState(() {
-                  _reverseProxy = value;
-                  _prefs.setBool("reverseProxy", value);
-                });
-              },
-            ),
             SettingsTile.switchTile(
               title: S.of(context).enableDebugOutput,
               leading: Icon(Icons.bug_report),
@@ -255,17 +260,6 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                 setState(() {
                   _showItemList = value;
                   _prefs.setBool("showItemList", value);
-                });
-              },
-            ),
-            SettingsTile.switchTile(
-              title: S.of(context).https,
-              leading: Icon(Icons.lock),
-              switchValue: _https,
-              onToggle: (bool value) {
-                setState(() {
-                  _https = value;
-                  _prefs.setBool("https", value);
                 });
               },
             ),

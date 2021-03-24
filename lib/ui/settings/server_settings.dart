@@ -35,7 +35,7 @@ class _ServerSettingsState extends State<ServerSettings> {
 
   _ServerSettingsState(this.sharedPreferences);
 
-  String ipv4 = "";
+  String url = "";
 
   void dispose() {
     super.dispose();
@@ -46,7 +46,7 @@ class _ServerSettingsState extends State<ServerSettings> {
     return new TextFormField(
       controller: _textController,
       onChanged: (value) {
-        ipv4 = value;
+        url = value;
       },
       keyboardType: TextInputType.url,
       decoration: new InputDecoration(
@@ -60,7 +60,7 @@ class _ServerSettingsState extends State<ServerSettings> {
         ),
         border: new OutlineInputBorder(
             borderSide: new BorderSide(color: Colors.grey[100])),
-        hintText: S.of(context).serverIP,
+        hintText: S.of(context).serverIPHelpText,
         // labelText: S.of(context).serverIPLabelText,
         helperText: S.of(context).serverIPHelpText,
         prefixIcon: const Icon(
@@ -75,18 +75,24 @@ class _ServerSettingsState extends State<ServerSettings> {
 
   @override
   Widget build(BuildContext context) {
-    if (sharedPreferences.getString("ipv4") != null) {
-      ipv4 = sharedPreferences.getString("ipv4");
-      _textController.value = TextEditingValue(
-        text: ipv4,
-        selection: TextSelection.fromPosition(
-          TextPosition(offset: ipv4.length),
-        ),
-      );
+    if (sharedPreferences.getBool("reverseProxy") != null &&
+        sharedPreferences.getBool("reverseProxy")) {
+      url = sharedPreferences.getString("domain");
+    } else if (sharedPreferences.getString("ipv4") != null) {
+      url = sharedPreferences.getString("ipv4");
+    } else {
+      url = "";
     }
+
+    _textController.value = TextEditingValue(
+      text: url,
+      selection: TextSelection.fromPosition(
+        TextPosition(offset: url.length),
+      ),
+    );
+
     return Scaffold(
       backgroundColor: Colors.white,
-      key: _scaffoldKey2,
       appBar: AppBar(title: Text(S.of(context).serverSettings)),
       body: Column(children: [
         Padding(padding: const EdgeInsets.all(16.0), child: serverTextfield()),
@@ -98,12 +104,19 @@ class _ServerSettingsState extends State<ServerSettings> {
                   child: FloatingActionButton(
                       onPressed: () async {
                         final ipv4Regex =
-                            "^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\$";
+                            "^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\$";
+
+                        final domainRegex =
+                            "^((?!-))(xn--)?[a-z0-9][a-z0-9-_]{0,61}[a-z0-9]{0,1}.(xn--)?([a-z0-9-]{1,61}|[a-z0-9-]{1,30}.[a-z]{2,})\$";
+
+                        RegExp urlRegex = new RegExp(domainRegex,
+                            caseSensitive: false, multiLine: false);
 
                         RegExp ipRegex = new RegExp(ipv4Regex,
                             caseSensitive: false, multiLine: false);
 
-                        if (ipv4.isEmpty || !ipRegex.hasMatch(ipv4)) {
+                        if (url.isEmpty ||
+                            (!ipRegex.hasMatch(url) && !urlRegex.hasMatch(url))) {
                           showDialog(
                               context: context,
                               builder: (_) => AssetGiffyDialog(
@@ -136,7 +149,14 @@ class _ServerSettingsState extends State<ServerSettings> {
                           return;
                         }
 
-                        sharedPreferences.setString("ipv4", ipv4);
+                        if (ipRegex.hasMatch(url)) {
+                          sharedPreferences.setString("ipv4", url);
+                          sharedPreferences.setBool("reverseProxy", false);
+                        } else {
+                          sharedPreferences.setString("domain", url);
+                          sharedPreferences.setBool("reverseProxy", true);
+                        }
+
                         _scaffoldKey2.currentState
                           ..hideCurrentSnackBar()
                           ..showSnackBar(SnackBar(

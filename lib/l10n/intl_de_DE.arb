@@ -130,6 +130,8 @@
   "yearOverview": "Jahresübersicht",
   "reverseProxy" : "Reverse Proxy",
   "insertReverseProxy": "Reverse Proxy hinzufügen",
-  "websiteSettings": "Website Einstellungen"
+  "websiteSettings": "Website Einstellungen",
+  "networkSettings": "Netzwerk Einstellungen",
+  "disableHttpsWarning": "Warnung unverschlüsselte Kommunikation wird nicht empfohlen"
 
 }
