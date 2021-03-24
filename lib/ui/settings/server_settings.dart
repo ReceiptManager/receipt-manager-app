@@ -15,6 +15,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:giffy_dialog/giffy_dialog.dart';
 import 'package:receipt_manager/generated/l10n.dart';
@@ -83,7 +85,6 @@ class _ServerSettingsState extends State<ServerSettings> {
     } else {
       url = "";
     }
-
     _textController.value = TextEditingValue(
       text: url,
       selection: TextSelection.fromPosition(
@@ -150,6 +151,27 @@ class _ServerSettingsState extends State<ServerSettings> {
                           return;
                         }
 
+                        try {
+                          final result = await InternetAddress.lookup(url);
+                          if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+                            _scaffoldKey.currentState
+                              ..hideCurrentSnackBar()
+                              ..showSnackBar(SnackBar(
+                                content: Text(S.of(context).connectionSuccess),
+                                backgroundColor: Colors.green,
+                              ));
+                          }
+                        } on SocketException catch (_) {
+                          _scaffoldKey.currentState
+                            ..hideCurrentSnackBar()
+                            ..showSnackBar(SnackBar(
+                              content: Text(S.of(context).connectionFailed),
+                              backgroundColor: Colors.red,
+                            ));
+
+                          return;
+                        }
+
                         if (ipRegex.hasMatch(url)) {
                           sharedPreferences.setString("ipv4", url);
                           sharedPreferences.setBool("reverseProxy", false);
@@ -159,7 +181,6 @@ class _ServerSettingsState extends State<ServerSettings> {
                         }
 
                         _scaffoldKey.currentState
-                          ..hideCurrentSnackBar()
                           ..showSnackBar(SnackBar(
                             content: Text(S.of(context).updateServerIP),
                             backgroundColor: Colors.green,

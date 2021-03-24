@@ -1,7 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-
 import 'intl/messages_all.dart';
 
 // **************************************************************************
@@ -1336,11 +1335,31 @@ class S {
     );
   }
 
-  /// `Warnung unverschlüsselte Kommunikation wird nicht empfohlen`
+  /// `Unverschlüsselte Kommunikation wird nicht empfohlen`
   String get disableHttpsWarning {
     return Intl.message(
-      'Warnung unverschlüsselte Kommunikation wird nicht empfohlen',
+      'Unverschlüsselte Kommunikation wird nicht empfohlen',
       name: 'disableHttpsWarning',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Verbindung konnte nicht hergestellt werden`
+  String get connectionFailed {
+    return Intl.message(
+      'Verbindung konnte nicht hergestellt werden',
+      name: 'connectionFailed',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Verbindung konnte hergestellt werden`
+  String get connectionSuccess {
+    return Intl.message(
+      'Verbindung konnte hergestellt werden',
+      name: 'connectionSuccess',
       desc: '',
       args: [],
     );
