@@ -129,5 +129,7 @@
   "reverseProxy" : "Reverse Proxy",
   "insertReverseProxy": "Insert reverse proxy ",
   "websiteSettings": "Website Settings",
-  "updateWebsiteUrl" : "Update receipt parser domain successfully"
+  "updateWebsiteUrl" : "Update receipt parser domain successfully",
+  "networkSettings": "Network Settings",
+  "disableHttpsWarning": "Warning unencrypted communication is not recommended"
 }
