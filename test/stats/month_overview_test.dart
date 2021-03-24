@@ -16,8 +16,6 @@
  */
 
 import 'package:receipt_manager/database/receipt_database.dart';
-import 'package:receipt_manager/stats/abstract_chart_data.dart';
-import 'package:receipt_manager/stats/abstract_overview.dart';
 import 'package:receipt_manager/stats/chart_data_month.dart';
 import 'package:receipt_manager/stats/monthly_overview.dart';
 import "package:test/test.dart";

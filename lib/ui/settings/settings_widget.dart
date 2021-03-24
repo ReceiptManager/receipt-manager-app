@@ -18,7 +18,6 @@
 import 'package:flutter/material.dart';
 import 'package:receipt_manager/generated/l10n.dart';
 import 'package:receipt_manager/ui/settings/api_settings.dart';
-import 'package:receipt_manager/ui/settings/domain.dart';
 import 'package:receipt_manager/ui/settings/open_source.dart';
 import 'package:receipt_manager/ui/settings/server_settings.dart';
 import 'package:settings_ui/settings_ui.dart';
@@ -36,6 +35,14 @@ class SettingsWidget extends StatefulWidget {
   _SettingsWidgetState createState() => _SettingsWidgetState(_prefs);
 }
 
+class SharedPreferenceKeyHolder {
+  static final enableDebug = "enable_debug_output";
+  static final LEGACY_PARSER = "legacyParser";
+  static final GRAYSCALE = "grayscale";
+  static final GAUSSIAN_BLUR = "gaussian";
+  static final ROTATE = "rotate";
+}
+
 class _SettingsWidgetState extends State<SettingsWidget> {
   bool _grayscale = false;
   bool _gaussian = false;
@@ -49,26 +56,32 @@ class _SettingsWidgetState extends State<SettingsWidget> {
 
   final GlobalKey<ScaffoldState> _scaffoldKey4 = GlobalKey<ScaffoldState>();
 
-
   final SharedPreferences _prefs;
 
   _SettingsWidgetState(this._prefs);
 
   readFallbackValues() {
-    _debugOutput = _prefs.getBool("enable_debug_output") == null
-        ? _debugOutput
-        : _prefs.getBool("enable_debug_output");
-    _legacyParser = _prefs.getBool("legacyParser") == null
-        ? _legacyParser
-        : _prefs.getBool("legacyParser");
-    _grayscale = _prefs.getBool("grayscale") == null
+    _debugOutput =
+        _prefs.getBool(SharedPreferenceKeyHolder.enableDebug) == null
+            ? _debugOutput
+            : _prefs.getBool(SharedPreferenceKeyHolder.enableDebug);
+
+    _legacyParser =
+        _prefs.getBool(SharedPreferenceKeyHolder.LEGACY_PARSER) == null
+            ? _legacyParser
+            : _prefs.getBool(SharedPreferenceKeyHolder.LEGACY_PARSER);
+
+    _grayscale = _prefs.getBool(SharedPreferenceKeyHolder.GRAYSCALE) == null
         ? _grayscale
-        : _prefs.getBool("grayscale");
-    _gaussian = _prefs.getBool("gaussian") == null
+        : _prefs.getBool(SharedPreferenceKeyHolder.GRAYSCALE);
+
+    _gaussian = _prefs.getBool(SharedPreferenceKeyHolder.GAUSSIAN_BLUR) == null
         ? _gaussian
-        : _prefs.getBool("gaussian");
-    _rotate =
-        _prefs.getBool("rotate") == null ? _rotate : _prefs.getBool("rotate");
+        : _prefs.getBool(SharedPreferenceKeyHolder.GAUSSIAN_BLUR);
+
+    _rotate = _prefs.getBool(SharedPreferenceKeyHolder.ROTATE) == null
+        ? _rotate
+        : _prefs.getBool(SharedPreferenceKeyHolder.ROTATE);
 
     _sendTrainingData = _prefs.getBool("sendTrainingData") == null
         ? _sendTrainingData
@@ -90,7 +103,7 @@ class _SettingsWidgetState extends State<SettingsWidget> {
     readFallbackValues();
 
     return SettingsList(
-      key:  _scaffoldKey4,
+      key: _scaffoldKey4,
       shrinkWrap: true,
       backgroundColor: Colors.white,
       sections: [

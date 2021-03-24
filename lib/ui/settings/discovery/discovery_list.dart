@@ -22,12 +22,14 @@ import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:receipt_manager/factory/padding_factory.dart';
+import 'package:receipt_manager/generated/l10n.dart';
 import 'package:receipt_manager/theme/color/color.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
 import 'discovery_model.dart';
-import 'package:receipt_manager/generated/l10n.dart';
 
 /// Allows to display all discovered services.
+// ignore: must_be_immutable
 class ServiceList extends StatelessWidget {
   final emptyImagePath = "assets/not_empty";
   final RefreshController _refreshController = RefreshController();
