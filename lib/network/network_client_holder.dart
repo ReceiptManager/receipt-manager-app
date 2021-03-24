@@ -58,13 +58,26 @@ class NetworkClientHolder {
   /// specify domain
   String domain;
 
-  // use reverse proxy
+  /// use reverse proxy
   bool reverseProxy;
+
+  /// use reverse proxy
+  bool submitTrainingData;
+
+  /// company name
+  String company;
+
+  /// receipt date
+  String date;
+
+  /// receipt total
+  String total;
 
   static final NetworkClientHolder _networkClientHolder =
       NetworkClientHolder._internal();
 
   NetworkClientHolder._internal();
+
   factory NetworkClientHolder() {
     return _networkClientHolder;
   }
@@ -81,5 +94,6 @@ class NetworkClientHolder {
     https = sharedPrefs.get("https");
     domain = sharedPrefs.get("domain");
     reverseProxy = sharedPrefs.get("reverseProxy");
+    submitTrainingData = sharedPrefs.getBool("sendTrainingData");
   }
 }

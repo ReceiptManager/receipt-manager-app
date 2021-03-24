@@ -60,9 +60,8 @@ class NetworkClient {
 
   NetworkClient._internal();
 
-  String getAPIUrl(final ip, final token, final legacyParser, final gaussian,
-      final grayscale, final rotate, final https, final reverseProxy) {
-    if (https)
+  String getAPIUrl(final NetworkClientHolder holder) {
+    if (holder.https)
 
       /// override the agent to provide support for self signed
       /// certificates.
@@ -71,66 +70,66 @@ class NetworkClient {
       /// with a password, the security risk is small.
       HttpOverrides.global = new SelfSignedHttpAgent();
 
-    String protocol = https ? _https : _http;
-    if (token == null || token == "") {
-      if (reverseProxy)
+    String protocol = holder.https ? _https : _http;
+    if (holder.token == null || holder.token == "") {
+      if (holder.reverseProxy)
         return protocol +
-            ip +
+            holder.ip +
             _uploadPath +
             "&legacy_parser=" +
-            getValue(legacyParser) +
+            getValue(holder.legacyParser) +
             "&grayscale_image=" +
-            getValue(grayscale) +
+            getValue(holder.grayscale) +
             "&gaussian_blur=" +
-            getValue(gaussian) +
+            getValue(holder.gaussian) +
             "&rotate=" +
-            getValue(rotate);
+            getValue(holder.rotate);
 
       return protocol +
-          ip +
+          holder.ip +
           ":" +
           _port +
           _uploadPath +
           "&legacy_parser=" +
-          getValue(legacyParser) +
+          getValue(holder.legacyParser) +
           "&grayscale_image=" +
-          getValue(grayscale) +
+          getValue(holder.grayscale) +
           "&gaussian_blur=" +
-          getValue(gaussian) +
+          getValue(holder.gaussian) +
           "&rotate=" +
-          getValue(rotate);
+          getValue(holder.rotate);
     }
 
-    if (reverseProxy)
+    if (holder.reverseProxy)
       return protocol +
-          ip +
+          holder.domain +
           _uploadPath +
           _token +
-          token +
+          holder.token +
           "&legacy_parser=" +
-          getValue(legacyParser) +
+          getValue(holder.legacyParser) +
           "&grayscale_image=" +
-          getValue(grayscale) +
+          getValue(holder.grayscale) +
           "&gaussian_blur=" +
-          getValue(gaussian) +
+          getValue(holder.gaussian) +
           "&rotate=" +
-          getValue(rotate);
+          getValue(holder.rotate);
 
     return protocol +
-        ip +
+        holder.ip +
         ":" +
         _port +
         _uploadPath +
         _token +
-        token +
+        holder.token +
         "&legacy_parser=" +
-        getValue(legacyParser) +
+        getValue(holder.legacyParser) +
         "&grayscale_image=" +
-        getValue(grayscale) +
+        getValue(holder.grayscale) +
         "&gaussian_blur=" +
-        getValue(gaussian) +
+        getValue(holder.gaussian) +
         "&rotate=" +
-        getValue(rotate);
+        getValue(holder.rotate);
   }
 
   /// Convert boolean values to python boolean values
@@ -149,13 +148,13 @@ class NetworkClient {
         MaterialPageRoute(builder: (context) => HomeScreen(null, true)));
   }
 
-  sendTrainingData(String ip, String token, String company, String date,
-      String total, BuildContext context) async {
+  sendTrainingData(NetworkClientHolder holder, BuildContext context) async {
     log("Submit training data.");
     Map<String, String> headers = {"Content-type": "application/json"};
-    String json = '{"company": "$company", "date": "$date","total": "$total"}';
+    String json =
+        '{"company": "${holder.company}", "date": "${holder.date}","total": "${holder.total}"}';
     Response response =
-        await post(getTrainingUrl(ip, token), headers: headers, body: json);
+        await post(getTrainingUrl(holder), headers: headers, body: json);
     if (response.statusCode != 0) {
       Scaffold.of(context).showSnackBar(SnackBar(
         content: Text(S.of(context).failedToSubmitTrainingData),
@@ -192,28 +191,7 @@ class NetworkClient {
     stream.cast();
 
     var length = await imageFile.length();
-    var uri;
-    if (!holder.reverseProxy)
-      uri = Uri.parse(getAPIUrl(
-          holder.ip,
-          holder.token,
-          holder.legacyParser,
-          holder.gaussian,
-          holder.grayscale,
-          holder.rotate,
-          holder.https,
-          false));
-    else
-      uri = Uri.parse(getAPIUrl(
-          holder.domain,
-          holder.token,
-          holder.legacyParser,
-          holder.gaussian,
-          holder.grayscale,
-          holder.rotate,
-          holder.https,
-          true));
-
+    var uri = Uri.parse(getAPIUrl(holder));
     log(uri.toString());
 
     var request = new http.MultipartRequest("POST", uri);
@@ -373,8 +351,18 @@ class NetworkClient {
     }
   }
 
-  getTrainingUrl(String ip, String token) {
-    return _https + ip + ":" + _port + _trainingPath + _token + token;
+  getTrainingUrl(NetworkClientHolder holder) {
+    String protocol = holder.https ? _https : _http;
+    if (!holder.reverseProxy)
+      return protocol +
+          holder.ip +
+          ":" +
+          _port +
+          _trainingPath +
+          _token +
+          holder.token;
+    else
+      return protocol + holder.domain + _trainingPath + _token + holder.token;
   }
 }
 
