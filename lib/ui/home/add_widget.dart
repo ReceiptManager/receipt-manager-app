@@ -17,8 +17,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:receipt_manager/bloc/moor/db_bloc.dart';
-import 'package:receipt_manager/database/receipt_database.dart';
+import 'package:receipt_manager/db/bloc/moor/db_bloc.dart';
+import 'package:receipt_manager/db/receipt_database.dart';
 import 'package:receipt_manager/ui/home/receipt_form.dart';
 
 // ignore: must_be_immutable

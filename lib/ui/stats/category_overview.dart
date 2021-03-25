@@ -17,10 +17,10 @@
 
 import 'dart:convert';
 
-import 'package:receipt_manager/database/receipt_database.dart';
+import 'package:receipt_manager/db/receipt_database.dart';
 import 'package:receipt_manager/factory/categories_factory.dart';
-import 'package:receipt_manager/model/receipt_category.dart';
-import 'package:receipt_manager/stats/category.dart';
+import 'package:receipt_manager/db/model/receipt_category.dart';
+import 'package:receipt_manager/ui/stats/category.dart';
 
 class CategoryOverview {
   final List<Receipt> receipts;

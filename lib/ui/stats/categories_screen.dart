@@ -20,14 +20,14 @@ import 'dart:convert';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:random_color/random_color.dart';
-import 'package:receipt_manager/database/receipt_database.dart';
+import 'package:receipt_manager/db/receipt_database.dart';
 import 'package:receipt_manager/factory/categories_factory.dart';
 import 'package:receipt_manager/factory/padding_factory.dart';
 import 'package:receipt_manager/generated/l10n.dart';
-import 'package:receipt_manager/model/receipt_category.dart';
-import 'package:receipt_manager/theme/color/color.dart';
+import 'package:receipt_manager/db/model/receipt_category.dart';
+import 'package:receipt_manager/ui/theme/color/color.dart';
 
-import 'indicator.dart';
+import '../history/indicator.dart';
 
 class CategoryOverviewScreen extends StatefulWidget {
   final List<Receipt> receipts;
@@ -82,7 +82,9 @@ class _CategoryOverviewScreenState extends State<CategoryOverviewScreen> {
     widgets = [];
     frequency = [];
     total = 0;
-    colorCode = [];
+
+    if (colorCode == null || colorCode.isEmpty)
+      colorCode = [];
 
     if (receipts.isEmpty) {
       widgets.add(Indicator(
@@ -99,7 +101,9 @@ class _CategoryOverviewScreenState extends State<CategoryOverviewScreen> {
     RandomColor _rand = RandomColor();
     for (int i = 0; i < categories.length; i++) {
       frequency.add(0);
-      colorCode.add(_rand.randomColor());
+
+      if (colorCode == null || colorCode.isEmpty)
+        colorCode.add(_rand.randomColor());
 
       for (var receipt in receipts) {
         if (ReceiptCategory.fromJson(jsonDecode(receipt.category)).name ==

@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import 'package:receipt_manager/database/receipt_database.dart';
+import 'package:receipt_manager/db/receipt_database.dart';
 
 class Repository {
   ReceiptDao _dao = ReceiptDao(AppDatabase());

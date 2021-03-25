@@ -23,7 +23,7 @@ import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:receipt_manager/factory/padding_factory.dart';
 import 'package:receipt_manager/generated/l10n.dart';
-import 'package:receipt_manager/theme/color/color.dart';
+import 'package:receipt_manager/ui/theme/color/color.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'discovery_model.dart';

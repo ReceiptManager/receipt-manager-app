@@ -37,10 +37,10 @@ class SettingsWidget extends StatefulWidget {
 
 class SharedPreferenceKeyHolder {
   static final enableDebug = "enable_debug_output";
-  static final LEGACY_PARSER = "legacyParser";
-  static final GRAYSCALE = "grayscale";
-  static final GAUSSIAN_BLUR = "gaussian";
-  static final ROTATE = "rotate";
+  static final legacyParser = "legacyParser";
+  static final grayscale = "grayscale";
+  static final gaussian_blur = "gaussian";
+  static final rotate = "rotate";
 }
 
 class _SettingsWidgetState extends State<SettingsWidget> {
@@ -67,21 +67,21 @@ class _SettingsWidgetState extends State<SettingsWidget> {
             : _prefs.getBool(SharedPreferenceKeyHolder.enableDebug);
 
     _legacyParser =
-        _prefs.getBool(SharedPreferenceKeyHolder.LEGACY_PARSER) == null
+        _prefs.getBool(SharedPreferenceKeyHolder.legacyParser) == null
             ? _legacyParser
-            : _prefs.getBool(SharedPreferenceKeyHolder.LEGACY_PARSER);
+            : _prefs.getBool(SharedPreferenceKeyHolder.legacyParser);
 
-    _grayscale = _prefs.getBool(SharedPreferenceKeyHolder.GRAYSCALE) == null
+    _grayscale = _prefs.getBool(SharedPreferenceKeyHolder.grayscale) == null
         ? _grayscale
-        : _prefs.getBool(SharedPreferenceKeyHolder.GRAYSCALE);
+        : _prefs.getBool(SharedPreferenceKeyHolder.grayscale);
 
-    _gaussian = _prefs.getBool(SharedPreferenceKeyHolder.GAUSSIAN_BLUR) == null
+    _gaussian = _prefs.getBool(SharedPreferenceKeyHolder.gaussian_blur) == null
         ? _gaussian
-        : _prefs.getBool(SharedPreferenceKeyHolder.GAUSSIAN_BLUR);
+        : _prefs.getBool(SharedPreferenceKeyHolder.gaussian_blur);
 
-    _rotate = _prefs.getBool(SharedPreferenceKeyHolder.ROTATE) == null
+    _rotate = _prefs.getBool(SharedPreferenceKeyHolder.rotate) == null
         ? _rotate
-        : _prefs.getBool(SharedPreferenceKeyHolder.ROTATE);
+        : _prefs.getBool(SharedPreferenceKeyHolder.rotate);
 
     _sendTrainingData = _prefs.getBool("sendTrainingData") == null
         ? _sendTrainingData

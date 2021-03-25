@@ -17,18 +17,18 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:receipt_manager/bloc/moor/db_bloc.dart';
-import 'package:receipt_manager/bloc/moor/db_state.dart';
-import 'package:receipt_manager/database/receipt_database.dart';
+import 'package:receipt_manager/db/bloc/moor/db_bloc.dart';
+import 'package:receipt_manager/db/bloc/moor/db_state.dart';
+import 'package:receipt_manager/db/receipt_database.dart';
 import 'package:receipt_manager/factory/banner_factory.dart';
 import 'package:receipt_manager/factory/padding_factory.dart';
 import 'package:receipt_manager/generated/l10n.dart';
-import 'package:receipt_manager/stats/category.dart';
-import 'package:receipt_manager/stats/category_overview.dart';
-import 'package:receipt_manager/stats/chart_data_month.dart';
-import 'package:receipt_manager/stats/monthly_overview.dart';
-import 'package:receipt_manager/stats/weekly_chart_data.dart';
-import 'package:receipt_manager/stats/weekly_overview.dart';
+import 'package:receipt_manager/ui/stats/category.dart';
+import 'package:receipt_manager/ui/stats/category_overview.dart';
+import 'package:receipt_manager/ui/stats/chart_data_month.dart';
+import 'package:receipt_manager/ui/stats/monthly_overview.dart';
+import 'package:receipt_manager/ui/stats/weekly_chart_data.dart';
+import 'package:receipt_manager/ui/stats/weekly_overview.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 class StatsWidget extends StatefulWidget {

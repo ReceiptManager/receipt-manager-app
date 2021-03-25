@@ -27,7 +27,7 @@ import 'package:http/http.dart';
 import 'package:http_parser/http_parser.dart' as mime;
 import 'package:intl/intl.dart';
 import 'package:path/path.dart';
-import 'package:receipt_manager/database/receipt_database.dart';
+import 'package:receipt_manager/db/receipt_database.dart';
 import 'package:receipt_manager/generated/l10n.dart';
 import 'package:receipt_manager/network/network_client_holder.dart';
 

@@ -15,6 +15,24 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-export 'package:receipt_manager/bloc/moor/db_bloc.dart';
-export 'package:receipt_manager/bloc/moor/db_event.dart';
-export 'package:receipt_manager/bloc/moor/db_state.dart';
+import 'dart:core';
+
+import 'package:receipt_manager/db/receipt_database.dart';
+
+class ReceiptMemento {
+  static final ReceiptMemento _receiptShare = ReceiptMemento._internal();
+
+  List<Receipt> receipts;
+  List<Receipt> finalReceipts;
+
+  factory ReceiptMemento() {
+    return _receiptShare;
+  }
+
+  ReceiptMemento._internal();
+
+  void store(List<Receipt> receipts) {
+    this.finalReceipts = receipts;
+    this.receipts = receipts;
+  }
+}

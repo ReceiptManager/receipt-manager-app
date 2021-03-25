@@ -23,8 +23,9 @@ import 'package:flutter/material.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:receipt_manager/generated/l10n.dart';
-import 'package:receipt_manager/ui/parser/display_image.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import 'display_image.dart';
 
 class TakePictureScreen extends StatefulWidget {
   final CameraDescription camera;

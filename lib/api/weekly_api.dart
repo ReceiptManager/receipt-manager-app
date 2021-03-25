@@ -18,9 +18,9 @@
 import 'dart:developer';
 
 import 'package:receipt_manager/api/abstract_api.dart';
-import 'package:receipt_manager/database/receipt_database.dart';
-import 'package:receipt_manager/math/math_util.dart';
-import 'package:receipt_manager/memento/receipt_memento.dart';
+import 'package:receipt_manager/db/receipt_database.dart';
+import 'package:receipt_manager/util/math_util.dart';
+import 'package:receipt_manager/db/memento/receipt_memento.dart';
 
 class WeeklyApi extends AbstractApi {
   /// The [ReceiptMomentum] is used to store receipts in the list.

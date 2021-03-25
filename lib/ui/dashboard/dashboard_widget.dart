@@ -19,7 +19,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:receipt_manager/factory/banner_factory.dart';
-import 'package:receipt_manager/theme/style.dart';
+import 'package:receipt_manager/ui/theme/style.dart';
 
 class DashboardWidget extends StatelessWidget {
   @override

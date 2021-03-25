@@ -16,7 +16,7 @@
  */
 
 import 'package:flutter/material.dart';
-import 'package:receipt_manager/theme/color/color.dart';
+import 'package:receipt_manager/ui/theme/color/color.dart';
 
 class AppTheme {
   const AppTheme();

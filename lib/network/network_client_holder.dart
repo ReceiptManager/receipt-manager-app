@@ -21,6 +21,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 /// The [NetworkClientHolder] is used to store and update submitted
 /// arguments submitted by the user.
+///
 /// All arguments get previously stored in shared preferences.
 /// The NetworkClientHolder first read the options and submit them
 /// to the network client.
