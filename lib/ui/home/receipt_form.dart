@@ -23,24 +23,23 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:intl/intl.dart';
-import 'package:receipt_manager/bloc/moor/bloc.dart';
-import 'package:receipt_manager/database/receipt_database.dart';
+import 'package:receipt_manager/db/bloc/moor/bloc.dart';
+import 'package:receipt_manager/db/receipt_database.dart';
 import 'package:receipt_manager/factory/banner_factory.dart';
 import 'package:receipt_manager/factory/categories_factory.dart';
 import 'package:receipt_manager/factory/padding_factory.dart';
 import 'package:receipt_manager/factory/text_form_history.dart';
 import 'package:receipt_manager/generated/l10n.dart';
-import 'package:receipt_manager/generator/receipt_generator.dart';
-import 'package:receipt_manager/model/receipt_category.dart';
+import 'package:receipt_manager/db/model/receipt_category.dart';
 import 'package:receipt_manager/network/network_client.dart';
 import 'package:receipt_manager/network/network_client_holder.dart';
-import 'package:receipt_manager/theme/color/color.dart';
-import 'package:receipt_manager/theme/theme_manager.dart';
+import 'package:receipt_manager/ui/theme/color/color.dart';
+import 'package:receipt_manager/ui/theme/theme_manager.dart';
+import 'package:receipt_manager/ui/camera/camera_picker.dart';
 import 'package:receipt_manager/util/date_manipulator.dart';
 import 'package:receipt_manager/util/dimensions.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../parser/camera_picker.dart';
 
 class ReceiptForm extends StatefulWidget {
   final ReceiptsCompanion receipt;
@@ -155,21 +154,9 @@ class ReceiptInputController extends State<ReceiptForm> {
                               Stack(children: <Widget>[
                                 new Align(
                                     alignment: Alignment.bottomLeft,
-                                    child: new GestureDetector(
-                                        onLongPress: () {
-                                          ReceiptGenerator generator =
-                                              ReceiptGenerator(context);
-                                          generator.init();
-                                          for (int i = 0; i < 1000; i++) {
-                                            ReceiptsCompanion c =
-                                                generator.get();
-                                            _bloc.add(InsertEvent(receipt: c));
-                                          }
-                                          _bloc.add(ReceiptAllFetch());
-                                        },
                                         child: BannerFactory.get(
                                             BANNER_MODES.ADD_RECEIPT,
-                                            context))),
+                                            context)),
                                 Padding(
                                     padding: EdgeInsets.only(
                                         top: DimensionsCalculator

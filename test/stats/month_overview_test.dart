@@ -15,9 +15,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import 'package:receipt_manager/database/receipt_database.dart';
-import 'package:receipt_manager/stats/chart_data_month.dart';
-import 'package:receipt_manager/stats/monthly_overview.dart';
+import 'package:receipt_manager/db/receipt_database.dart';
+import 'package:receipt_manager/ui/stats/chart_data_month.dart';
+import 'package:receipt_manager/ui/stats/monthly_overview.dart';
 import "package:test/test.dart";
 
 void main() {

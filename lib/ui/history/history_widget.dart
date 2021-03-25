@@ -18,26 +18,28 @@
 import 'dart:convert';
 import 'dart:core';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:random_color/random_color.dart';
 import 'package:receipt_manager/api/expenses_api.dart';
-import 'package:receipt_manager/bloc/moor/bloc.dart';
-import 'package:receipt_manager/database/receipt_database.dart';
+import 'package:receipt_manager/db/bloc/moor/bloc.dart';
+import 'package:receipt_manager/db/receipt_database.dart';
 import 'package:receipt_manager/factory/banner_factory.dart';
 import 'package:receipt_manager/factory/categories_factory.dart';
 import 'package:receipt_manager/factory/logo_factory.dart';
 import 'package:receipt_manager/factory/padding_factory.dart';
 import 'package:receipt_manager/factory/text_form_history.dart';
 import 'package:receipt_manager/generated/l10n.dart';
-import 'package:receipt_manager/memento/receipt_memento.dart';
-import 'package:receipt_manager/model/receipt_category.dart';
-import 'package:receipt_manager/theme/color/color.dart';
-import 'package:receipt_manager/theme/theme_manager.dart';
+import 'package:receipt_manager/db/memento/receipt_memento.dart';
+import 'package:receipt_manager/db/model/receipt_category.dart';
+import 'package:receipt_manager/ui/theme/color/color.dart';
+import 'package:receipt_manager/ui/theme/theme_manager.dart';
 import 'package:receipt_manager/util/date_manipulator.dart';
 
 class HistoryWidget extends StatefulWidget {
@@ -51,29 +53,68 @@ class HistoryWidget extends StatefulWidget {
 
 class HistoryWidgetState extends State<HistoryWidget> {
   ReceiptMemento momentum = ReceiptMemento();
+  List<Receipt> receipts = [];
+
   final emptyImagePath = "assets/not_empty";
   final _editFormKey = GlobalKey<FormState>();
   final DbBloc _bloc;
   DateTime receiptDate;
 
-  TextEditingController storeNameController;
-  TextEditingController receiptTotalController;
-  TextEditingController dateController;
+  RefreshController _refreshController =
+      RefreshController(initialRefresh: false);
+
+  TextEditingController _storeNameController;
+  TextEditingController _receiptTotalController;
+  TextEditingController _dateController;
   TextEditingController _controller = TextEditingController();
 
   HistoryWidgetState(this._bloc);
 
+  void _onRefresh() async {
+    setState(() {
+      momentum.receipts = momentum.receipts;
+    });
+    _refreshController.refreshCompleted();
+  }
+
+  void _onLoading() async {
+    _refreshController.loadComplete();
+  }
+
+
+  FilterChipScreen screen;
+  bool init = false;
+
+  ExpensesApi api = ExpensesApi();
+
+
   @override
   void initState() {
-    storeNameController = TextEditingController();
-    receiptTotalController = TextEditingController();
-    dateController = TextEditingController();
-
     super.initState();
+
+    _storeNameController = TextEditingController();
+    _receiptTotalController = TextEditingController();
+    _dateController = TextEditingController();
+    init = false;
+  }
+
+  onChange() {
+    setState(() {});
+  }
+
+  void callback(List<Receipt> receipts) {
+    setState(() {
+      this.receipts = receipts;
+      this.momentum.receipts = receipts;
+      api.init();
+    });
   }
 
   @override
   Widget build(BuildContext context) {
+    if (!init)
+      screen = FilterChipScreen(callback);
+
     return BlocBuilder(
       cubit: _bloc,
       builder: (BuildContext context, state) {
@@ -88,10 +129,15 @@ class HistoryWidgetState extends State<HistoryWidget> {
           );
         }
         if (state is LoadedState) {
-          momentum.store(state.receipt);
+          if (!init) {
+            this.momentum.store(state.receipt);
+            this.receipts = state.receipt;
+            init = true;
+            api.init();
+          }
 
-          if (this.momentum.receipts == null ||
-              this.momentum.receipts.length == 0)
+          if ( (this.receipts == null ||
+              this.receipts.length == 0) && this.momentum.finalReceipts.length == 0 )
             return new Column(
               children: [
                 BannerFactory.get(BANNER_MODES.OVERVIEW_EXPENSES, context),
@@ -115,9 +161,6 @@ class HistoryWidgetState extends State<HistoryWidget> {
               ],
             );
 
-          ExpensesApi api = ExpensesApi();
-          api.init();
-
           return Column(
             children: <Widget>[
               BannerFactory.get(BANNER_MODES.OVERVIEW_EXPENSES, context),
@@ -136,16 +179,43 @@ class HistoryWidgetState extends State<HistoryWidget> {
                           color: Colors.black),
                     ))),
               ),
-              FilterChipScreen(),
+              screen,
               Expanded(
-                  child: Container(
-                      color: Colors.white,
+                child: Container(
+                  color: Colors.white,
+                  child: SmartRefresher(
+                      enablePullDown: true,
+                      enablePullUp: true,
+                      header: WaterDropHeader(),
+                      footer: CustomFooter(
+                        builder: (BuildContext context, LoadStatus mode) {
+                          Widget body;
+                          if (mode == LoadStatus.idle) {
+                            body = Text("pull up load");
+                          } else if (mode == LoadStatus.loading) {
+                            body = CupertinoActivityIndicator();
+                          } else if (mode == LoadStatus.failed) {
+                            body = Text("Load Failed!Click retry!");
+                          } else if (mode == LoadStatus.canLoading) {
+                            body = Text("release to load more");
+                          } else {
+                            body = Text("No more Data");
+                          }
+                          return Container(
+                            height: 55.0,
+                            child: Center(child: body),
+                          );
+                        },
+                      ),
+                      controller: _refreshController,
+                      onRefresh: _onRefresh,
+                      onLoading: _onLoading,
                       child: AnimationLimiter(
                           child: ListView.builder(
                               padding: const EdgeInsets.all(8.0),
-                              itemCount: this.momentum.receipts.length,
+                              itemCount: this.receipts.length,
                               itemBuilder: (_, index) {
-                                final receipt = this.momentum.receipts[index];
+                                var receipt = this.receipts[index];
 
                                 return AnimationConfiguration.staggeredList(
                                   position: index,
@@ -153,14 +223,16 @@ class HistoryWidgetState extends State<HistoryWidget> {
                                   child: SlideAnimation(
                                     verticalOffset: 50.0,
                                     child: FadeInAnimation(
-                                      child: _buildListItems(receipt),
-                                    ),
+                                        child: _buildListItems(receipt)),
                                   ),
                                 );
-                              }))))
+                              }))),
+                ),
+              )
             ],
           );
         }
+
         return Container(
             color: Colors.white,
             decoration: BoxDecoration(
@@ -285,22 +357,22 @@ class HistoryWidgetState extends State<HistoryWidget> {
     );
   }
 
-  String storeName;
-  String receiptTotal;
-  String currentReceiptDate;
+  String _storeName;
+  String _receiptTotal;
+  String _currentReceiptDate;
   String category;
   Receipt currentReceipt;
 
   _showDialog({controller, Receipt receipt}) async {
-    this.storeName = receipt.shop;
-    this.receiptTotal = receipt.total.replaceAll(" ", "");
-    this.currentReceiptDate = DateManipulator.humanDate(context, receipt.date);
+    this._storeName = receipt.shop;
+    this._receiptTotal = receipt.total.replaceAll(" ", "");
+    this._currentReceiptDate = DateManipulator.humanDate(context, receipt.date);
     this.category = receipt.category;
     this.currentReceipt = receipt;
 
-    this.storeNameController.text = storeName;
-    this.receiptTotalController.text = receiptTotal;
-    this.dateController.text = currentReceiptDate;
+    this._storeNameController.text = _storeName;
+    this._receiptTotalController.text = _receiptTotal;
+    this._dateController.text = _currentReceiptDate;
 
     await showDialog<String>(
       context: context,
@@ -329,13 +401,13 @@ class HistoryWidgetState extends State<HistoryWidget> {
                                   PaddingFactory.create(new Theme(
                                       data: AppTheme.lightTheme,
                                       child: TextFormFactory.storeName(
-                                          storeNameController,
+                                          _storeNameController,
                                           context,
                                           this.momentum.receipts))),
                                   PaddingFactory.create(new Theme(
                                       data: AppTheme.lightTheme,
                                       child: TextFormFactory.total(
-                                          receiptTotalController, context))),
+                                          _receiptTotalController, context))),
                                   PaddingFactory.create(new Theme(
                                       data: AppTheme.lightTheme,
                                       child: TextFormField(
@@ -405,13 +477,13 @@ class HistoryWidgetState extends State<HistoryWidget> {
                                                               DateTime(2010),
                                                           lastDate:
                                                               DateTime(2050));
-                                                  dateController
+                                                  _dateController
                                                       .text = DateFormat(S
                                                           .of(context)
                                                           .receiptDateFormat)
                                                       .format(receiptDate);
                                                 })),
-                                        controller: dateController,
+                                        controller: _dateController,
                                         validator: (value) {
                                           if (value.isEmpty) {
                                             return S
@@ -458,16 +530,16 @@ class HistoryWidgetState extends State<HistoryWidget> {
                 S.of(context).update,
               ),
               onPressed: () {
-                if (currentReceiptDate != null) {
+                if (_currentReceiptDate != null) {
                   try {
-                    storeName = storeNameController.text;
-                    storeName.split(" ").join("");
-                    receiptTotal = receiptTotalController.text;
-                    receiptTotal.split(" ").join("");
+                    _storeName = _storeNameController.text;
+                    _storeName.split(" ").join("");
+                    _receiptTotal = _receiptTotalController.text;
+                    _receiptTotal.split(" ").join("");
                   } catch (e) {
-                    receiptTotalController.clear();
-                    storeNameController.clear();
-                    dateController.clear();
+                    _receiptTotalController.clear();
+                    _storeNameController.clear();
+                    _dateController.clear();
                     Navigator.pop(context);
                     return;
                   }
@@ -475,8 +547,8 @@ class HistoryWidgetState extends State<HistoryWidget> {
                   _bloc.add(UpdateEvent(
                       receipt: currentReceipt.copyWith(
                           category: this.category,
-                          shop: this.storeName,
-                          total: this.receiptTotal,
+                          shop: this._storeName,
+                          total: this._receiptTotal,
                           date: this.receiptDate)));
 
                   _bloc.add(ReceiptAllFetch());
@@ -489,8 +561,8 @@ class HistoryWidgetState extends State<HistoryWidget> {
                     ));
 
                   _controller.clear();
-                  dateController.clear();
-                  receiptTotalController.clear();
+                  _dateController.clear();
+                  _receiptTotalController.clear();
                 } else {
                   Scaffold.of(context)
                     ..hideCurrentSnackBar()
@@ -510,26 +582,42 @@ class HistoryWidgetState extends State<HistoryWidget> {
 }
 
 class FilterChipScreen extends StatefulWidget {
-  @override
-  _FilterChipScreenState createState() => _FilterChipScreenState();
+  RefreshController refreshController;
+  Function callback;
 
-  FilterChipScreen();
+  @override
+  _FilterChipScreenState createState() =>
+      _FilterChipScreenState(callback);
+
+  FilterChipScreen(this.callback);
 }
 
 class _FilterChipScreenState extends State<FilterChipScreen> {
+  RefreshController refreshController;
+  Function callback;
+
   var data = ReceiptCategoryFactory.categories;
-  var selected = [];
+
   List<ReceiptCategory> filterCategories = [];
+  List<Color> colors;
+  var selected = [];
+
   ReceiptMemento momentum = ReceiptMemento();
 
   RandomColor _rand = RandomColor();
 
-  _FilterChipScreenState();
+  _FilterChipScreenState(this.callback);
+
+  @override
+  void initState() {
+    colors = [];
+    for (int i = 0; i < data.length; i++) {
+      colors.add(_rand.randomColor());
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    filterCategories = [];
-    var selected = [];
     return Container(
       height: 65,
       child: ListView.builder(
@@ -540,53 +628,55 @@ class _FilterChipScreenState extends State<FilterChipScreen> {
                 FilterChip(
                   label: Text(data[index].name),
                   onSelected: (bool value) {
-                    if (!value) {
-                      selected.remove(index);
-                      removeFilter(index);
-                    } else {
-                      selected.add(index);
-                      addFilter(index);
-                    }
-                    filter();
+                    setState(() {
+                      if (!value) {
+                        selected.remove(index);
+                        removeFilter(index);
+                      } else {
+                        selected.add(index);
+                        addFilter(index);
+                      }
+                      filter();
+                    });
                   },
                   selected: selected.contains(index),
-                  selectedColor: Colors.red,
+                  selectedColor: colors[index],
                   labelStyle: TextStyle(
                     color: Colors.white,
                   ),
-                  backgroundColor: _rand.randomColor(),
+                  backgroundColor: colors[index],
                 ),
               )),
     );
   }
 
   void addFilter(int index) {
-    filterCategories.add(data[index]);
-
-
-    setState(() {
-      momentum.receipts = [];
-    });
+    if (!filterCategories.contains(data[index]))
+      filterCategories.add(data[index]);
   }
 
   void removeFilter(int index) {
-    if (filterCategories != null && filterCategories.length > index) {
+    if (filterCategories != null) {
       filterCategories.remove(data[index]);
     }
   }
 
   void filter() {
     List<Receipt> filteredReceipts = [];
+    if (filterCategories.length == 0) {
+      setState(() {
+        callback(momentum.finalReceipts);
+      });
+
+      return;
+    }
+
     for (Receipt r in momentum.finalReceipts) {
       for (ReceiptCategory category in filterCategories) {
         Map<String, dynamic> json = jsonDecode(r.category);
-
         if (json['name'] == category.name) filteredReceipts.add(r);
       }
     }
-
-    setState(() {
-      momentum.receipts = filteredReceipts;
-    });
+    callback(filteredReceipts);
   }
 }
