@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import 'package:receipt_manager/database/receipt_database.dart';
+import 'package:receipt_manager/db/receipt_database.dart';
 
 import 'chart_data_month.dart';
 
@@ -49,7 +49,7 @@ class MonthlyOverview {
       if (total < 0) {
         total = -total;
       }
-      chartData[r.date.month].total += total;
+      chartData[r.date.month - 1].total += total;
     }
 
     return chartData;
