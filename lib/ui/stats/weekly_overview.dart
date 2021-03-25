@@ -16,8 +16,8 @@
  */
 
 import 'package:flutter/cupertino.dart';
-import 'package:receipt_manager/database/receipt_database.dart';
-import 'package:receipt_manager/stats/weekly_chart_data.dart';
+import 'package:receipt_manager/db/receipt_database.dart';
+import 'package:receipt_manager/ui/stats/weekly_chart_data.dart';
 
 class WeeklyOverview {
   List<Receipt> receipts;
