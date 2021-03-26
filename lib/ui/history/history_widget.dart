@@ -257,8 +257,12 @@ class HistoryWidgetState extends State<HistoryWidget> {
             color: Colors.red,
             icon: Icons.delete,
             onTap: () {
+              setState(() {
+                receipts.remove(receipt);
+                momentum.delete(receipt);
+              });
               _bloc.add(DeleteEvent(receipt: receipt));
-              _bloc.add(ReceiptAllFetch());
+             // _bloc.add(ReceiptAllFetch());
             },
           ),
           IconSlideAction(

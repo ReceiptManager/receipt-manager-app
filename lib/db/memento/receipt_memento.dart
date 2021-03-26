@@ -35,4 +35,9 @@ class ReceiptMemento {
     this.finalReceipts = receipts;
     this.receipts = receipts;
   }
+
+  void delete(Receipt receipt) {
+    this.finalReceipts.remove(receipts);
+    this.receipts.remove(receipts);
+  }
 }
