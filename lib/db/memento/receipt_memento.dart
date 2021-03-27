@@ -40,4 +40,9 @@ class ReceiptMemento {
     this.finalReceipts.remove(receipts);
     this.receipts.remove(receipts);
   }
+
+  void update(Receipt receipt) {
+    receipts[receipts.indexWhere((element) => element.id == receipt.id)] = receipt;
+    finalReceipts[finalReceipts.indexWhere((element) => element.id == receipt.id)] = receipt;
+  }
 }
