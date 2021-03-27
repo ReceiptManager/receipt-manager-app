@@ -146,7 +146,7 @@ class OnboardScreenState extends State<OnboardScreen> {
                 inactiveSize: Size(8, 8),
                 activeSize: Size(12, 12),
               ),
-              skipButton: FlatButton(
+              skipButton: TextButton(
                 onPressed: () {
                   sharedPrefs.setBool("skip", true);
                   Navigator.push(
