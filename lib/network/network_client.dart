@@ -156,12 +156,12 @@ class NetworkClient {
     Response response =
         await post(getTrainingUrl(holder), headers: headers, body: json);
     if (response.statusCode != 0) {
-      Scaffold.of(context).showSnackBar(SnackBar(
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text(S.of(context).failedToSubmitTrainingData),
         backgroundColor: Colors.red,
       ));
     } else {
-      Scaffold.of(context).showSnackBar(SnackBar(
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text("Submitted training data"),
         backgroundColor: Colors.green,
       ));
@@ -170,7 +170,7 @@ class NetworkClient {
 
   /// Send image via post request to the server and capture the response.
   sendImage(File imageFile, NetworkClientHolder holder, BuildContext context,
-      [GlobalKey<ScaffoldState> key]) async {
+      [GlobalKey<ScaffoldMessengerState> key]) async {
     log("Try to upload new image.");
     if ((!holder.reverseProxy && (holder.ip == null || holder.ip.isEmpty)) ||
         (holder.reverseProxy &&

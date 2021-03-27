@@ -120,7 +120,7 @@ class _ServiceWidget extends StatelessWidget {
         onTap: () {
           prefs.setString("ipv4", service.ip);
 
-          Scaffold.of(context)
+          ScaffoldMessenger.of(context)
             ..hideCurrentSnackBar()
             ..showSnackBar(SnackBar(
               content: Text(S.of(context).updateServerIP),

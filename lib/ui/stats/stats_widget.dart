@@ -53,6 +53,8 @@ class StatsWidgetState extends State<StatsWidget> {
 
   @override
   void initState() {
+    super.initState();
+
     _tooltipBehavior = TooltipBehavior(enable: true);
     _tooltipBehavior2 = TooltipBehavior(enable: true);
   }

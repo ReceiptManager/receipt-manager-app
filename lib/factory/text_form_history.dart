@@ -17,7 +17,6 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:receipt_manager/db/receipt_database.dart';
 import 'package:receipt_manager/factory/button_factory.dart';

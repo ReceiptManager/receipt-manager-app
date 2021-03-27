@@ -534,7 +534,7 @@ class ReceiptInputController extends State<ReceiptForm> {
                   _selectedCategory != null) {
                 try {
                   if (_showAlert)
-                    Scaffold.of(context).showSnackBar(SnackBar(
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                       content: Text(S.of(context).addedReceipt),
                       backgroundColor: Colors.green,
                     ));
@@ -583,11 +583,11 @@ class ReceiptInputController extends State<ReceiptForm> {
                 reset();
               } else {
                 if (_receiptCategory == null || _receiptCategory.isEmpty) {
-                  Scaffold.of(context).showSnackBar(SnackBar(
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                       content: Text(S.of(context).receiptSelectCategory),
                       backgroundColor: Colors.red));
                 } else {
-                  Scaffold.of(context).showSnackBar(SnackBar(
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                       content: Text(S.of(context).invalidInput),
                       backgroundColor: Colors.red));
                 }
@@ -604,14 +604,14 @@ class ReceiptInputController extends State<ReceiptForm> {
 
     if (_sendImage) {
       if (_parsedReceipt == null) {
-        Scaffold.of(context)
+        ScaffoldMessenger.of(context)
           ..hideCurrentSnackBar()
           ..showSnackBar(SnackBar(
             content: Text(S.of(context).uploadFailed),
             backgroundColor: Colors.red,
           ));
       } else {
-        Scaffold.of(context)
+        ScaffoldMessenger.of(context)
           ..hideCurrentSnackBar()
           ..showSnackBar(SnackBar(
             content: Text(S.of(context).uploadSuccess),
