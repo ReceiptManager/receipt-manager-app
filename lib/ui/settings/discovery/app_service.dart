@@ -15,10 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import 'dart:io';
-
 import 'package:bonsoir/bonsoir.dart';
-import 'package:device_info/device_info.dart';
 
 class AppService {
   /// The service type.
@@ -35,15 +32,7 @@ class AppService {
       return _service;
     }
 
-    String name;
-    if (Platform.isAndroid) {
-      name = (await DeviceInfoPlugin().androidInfo).model;
-    } else if (Platform.isIOS) {
-      name = (await DeviceInfoPlugin().iosInfo).localizedModel;
-    } else {
-      name = 'Unknown';
-    }
-    name += ' Receipt server';
+    String name = ' Receipt server';
 
     _service = BonsoirService(name: name, type: type, port: port);
     return _service;
