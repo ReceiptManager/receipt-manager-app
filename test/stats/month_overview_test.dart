@@ -41,7 +41,7 @@ void main() {
 
       MonthlyOverview overview = MonthlyOverview(receipts);
       List<ReceiptMonthData> data = overview.getData();
-      expect(data.elementAt(date.month).total, 2.00);
+      expect(data.elementAt(date.month - 1).total, 2.00);
     });
 
     receipts = [
@@ -51,7 +51,7 @@ void main() {
 
     overview = MonthlyOverview(receipts);
     test("Calculation edge case test", () {
-      expect(overview.getData().elementAt(date.month).total, 1.00);
+      expect(overview.getData().elementAt(date.month - 1).total, 1.00);
     });
   });
 }
