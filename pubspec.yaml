@@ -15,7 +15,7 @@ description: Receipt Manager
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 1.1.2+228
+version: 1.1.2+235
 
 environment:
   sdk: ">=2.7.0 <3.0.0"
@@ -23,13 +23,13 @@ environment:
 dependencies:
   test:
 
-  http: ^0.12.2
+  http: ^0.13.1
   flutter:
     sdk: flutter
   flutter_localizations: # added
     sdk: flutter
 
-  camera: ^0.5.8+9
+  camera: ^0.8.1
   path_provider:
   path:
   curved_navigation_bar: ^0.3.4
@@ -37,33 +37,23 @@ dependencies:
   giffy_dialog: ^1.8.0
   flutter_bloc: ^7.0.0
   equatable: ^2.0.0
-  moor_flutter: ^3.1.0
+  moor_flutter: ^4.0.0
   flutter_slidable: ^0.5.7
-  moor: ^3.3.1
+  moor: ^4.2.1
   cupertino_icons: ^1.0.0
   intl:
   settings_ui: ^0.6.0
   flutter_staggered_grid_view: ^0.3.2
   permission_handler: ^6.1.1
-  fl_chart: ^0.30.0
-  image: ^2.1.18
   progress_dialog: ^1.2.4
   rounded_loading_button: ^1.0.0
   simple_autocomplete_formfield: ^0.3.0
   flutter_onboard: ^1.0.0
-  provider: ^5.0.0
   random_color: ^1.0.5
-  simple_animations: ^3.0.3
-  random_date: ^0.0.5
-  flutter_svg: ^0.19.0
-  percent_indicator: ^3.0.1
-  toggle_switch: "^0.1.8"
+  flutter_svg: ^0.21.0-nullsafety.0
   flutter_staggered_animations: ^1.0.0
   bonsoir: ^1.0.0
-  device_info: ^2.0.0
-  pull_to_refresh: ^1.6.3
-  syncfusion_flutter_charts: ^18.4.48
-
+  syncfusion_flutter_charts: ^18.4.49
 
 flutter_localizations:
   sdk: flutter
@@ -72,14 +62,9 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   moor_generator:
-  build_runner:
-  intl_translation:
-    git:
-      url: https://github.com/nt4f04uNd/intl_translation
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
-
 
 # The following section is specific to Flutter.
 flutter:
