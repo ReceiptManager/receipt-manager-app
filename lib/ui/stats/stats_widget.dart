@@ -17,6 +17,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 import 'package:receipt_manager/db/bloc/moor/db_bloc.dart';
 import 'package:receipt_manager/db/bloc/moor/db_state.dart';
 import 'package:receipt_manager/db/receipt_database.dart';
@@ -47,6 +48,15 @@ class StatsWidgetState extends State<StatsWidget> {
 
   StatsWidgetState(this._bloc);
 
+  TooltipBehavior _tooltipBehavior;
+  TooltipBehavior _tooltipBehavior2;
+
+  @override
+  void initState() {
+    _tooltipBehavior = TooltipBehavior(enable: true);
+    _tooltipBehavior2 = TooltipBehavior(enable: true);
+  }
+
   SfCircularChart getCategoryChart(List<Receipt> receipts) {
     CategoryOverview overview = CategoryOverview(receipts);
     List<CategoryData> data = overview.getData();
@@ -64,17 +74,26 @@ class StatsWidgetState extends State<StatsWidget> {
         ]);
   }
 
+  String dateString(DateTime date) {
+    return DateFormat.E().format(date);
+  }
+
   SfCartesianChart getMonthChart(List<Receipt> receipts) {
     MonthlyOverview overview = MonthlyOverview(receipts);
     List<ReceiptMonthData> data = overview.getData();
 
-    return SfCartesianChart(series: <ChartSeries>[
-      LineSeries<ReceiptMonthData, int>(
-          color: Colors.red,
-          dataSource: data,
-          xValueMapper: (ReceiptMonthData data, _) => data.month,
-          yValueMapper: (ReceiptMonthData data, _) => data.total)
-    ]);
+    int year = DateTime.now().year;
+    return SfCartesianChart(
+        primaryXAxis: CategoryAxis(),
+        tooltipBehavior: _tooltipBehavior,
+        series: <ChartSeries>[
+          LineSeries<ReceiptMonthData, String>(
+              color: Colors.red,
+              dataSource: data,
+              xValueMapper: (ReceiptMonthData data, _) =>
+                  DateFormat.MMM().format((DateTime.utc(year, data.month, 0))),
+              yValueMapper: (ReceiptMonthData data, _) => data.total)
+        ]);
   }
 
   SfCartesianChart getWeeklyChart(
@@ -82,20 +101,27 @@ class StatsWidgetState extends State<StatsWidget> {
     WeeklyOverview overview = WeeklyOverview(receipts, context);
     List<WeeklyChartData> data = overview.getData();
 
-    return SfCartesianChart(series: <ChartSeries>[
-      ColumnSeries<WeeklyChartData, int>(
-          dataSource: data,
-          xValueMapper: (WeeklyChartData data, _) => data.day,
-          yValueMapper: (WeeklyChartData data, _) => data.total,
-          enableTooltip: true,
-          width: 0.5)
-    ]);
+    int year = DateTime.now().year;
+    int month = DateTime.now().month;
+
+    return SfCartesianChart(
+        primaryXAxis: CategoryAxis(),
+        tooltipBehavior: _tooltipBehavior2,
+        series: <ChartSeries>[
+          ColumnSeries<WeeklyChartData, String>(
+              dataSource: data,
+              xValueMapper: (WeeklyChartData data, _) =>
+                  DateFormat.E().format((DateTime.utc(year, month, data.day))),
+              yValueMapper: (WeeklyChartData data, _) => data.total,
+              enableTooltip: true,
+              width: 1)
+        ]);
   }
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder(
-      cubit: _bloc,
+      bloc: _bloc,
       builder: (BuildContext context, state) {
         if (state is LoadingState) {
           return Center(
