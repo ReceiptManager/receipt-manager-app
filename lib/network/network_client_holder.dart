@@ -84,17 +84,35 @@ class NetworkClientHolder {
   }
 
   void readOptions(SharedPreferences sharedPrefs) {
-    ip = sharedPrefs.get("ipv4");
-    token = sharedPrefs.get("api_token");
-    sendDebugOutput = sharedPrefs.get("enable_debug_output");
-    grayscale = sharedPrefs.get("grayscale");
-    gaussian = sharedPrefs.get("gaussian");
-    legacyParser = sharedPrefs.get("legacyParser");
-    rotate = sharedPrefs.get("rotate");
-    showItemList = sharedPrefs.get("showItemList");
-    https = sharedPrefs.get("https");
-    domain = sharedPrefs.get("domain");
-    reverseProxy = sharedPrefs.get("reverseProxy");
-    submitTrainingData = sharedPrefs.getBool("sendTrainingData");
+    ip = sharedPrefs.get("ipv4") == null ? false : sharedPrefs.get("ipv4");
+    token = sharedPrefs.get("api_token") == null
+        ? false
+        : sharedPrefs.get("api_token");
+    sendDebugOutput = sharedPrefs.get("enable_debug_output") == null
+        ? false
+        : sharedPrefs.get("enable_debug_output");
+    grayscale = sharedPrefs.get("grayscale") == null
+        ? false
+        : sharedPrefs.get("grayscale");
+    gaussian = sharedPrefs.get("gaussian") == null
+        ? false
+        : sharedPrefs.get("gaussian");
+    legacyParser = sharedPrefs.get("legacyParser") == null
+        ? false
+        : sharedPrefs.get("legacyParser");
+    rotate =
+        sharedPrefs.get("rotate") == null ? false : sharedPrefs.get("rotate");
+    showItemList = sharedPrefs.get("showItemList") == null
+        ? false
+        : sharedPrefs.get("showItemList");
+    https = sharedPrefs.get("https") == null ? false : sharedPrefs.get("https");
+    domain =
+        sharedPrefs.get("domain") == null ? false : sharedPrefs.get("domain");
+    reverseProxy = sharedPrefs.get("reverseProxy") == null
+        ? false
+        : sharedPrefs.get("reverseProxy");
+    submitTrainingData = sharedPrefs.getBool("sendTrainingData") == null
+        ? false
+        : sharedPrefs.get("sendTrainingData");
   }
 }
