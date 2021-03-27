@@ -82,17 +82,12 @@ class TakePictureScreenState extends State<TakePictureScreen> {
         ),
         onPressed: () async {
           await _initializeControllerFuture;
+          final image = await _controller.takePicture();
 
-          final path = join(
-            (await getTemporaryDirectory()).path,
-            'receipt_${DateTime.now()}.png',
-          );
-
-          await _controller.takePicture(path);
           Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => DisplayPictureScreen(imagePath: path),
+                builder: (context) => DisplayPictureScreen(imagePath: image?.path),
               ));
         },
       ),
