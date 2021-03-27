@@ -67,7 +67,7 @@ class _LanguageSettingState extends State<LanguageSetting> {
             SettingsTile(
               title: "German ",
               leading: trailingWidget(0),
-              onTap: () {
+              onPressed: (context) {
                 changeLanguage(0);
                 S.load(sortedLocals[0]);
               },
@@ -75,7 +75,7 @@ class _LanguageSettingState extends State<LanguageSetting> {
             SettingsTile(
               title: "English",
               leading: trailingWidget(2),
-              onTap: () {
+              onPressed: (context) {
                 changeLanguage(2);
                 S.load(sortedLocals[2]);
               },

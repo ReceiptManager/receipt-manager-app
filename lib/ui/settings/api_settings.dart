@@ -70,7 +70,7 @@ class _ApiSettingsState extends State<ApiSettings> {
     );
   }
 
-  final GlobalKey<ScaffoldState> _scaffoldKey2 = GlobalKey<ScaffoldState>();
+  final GlobalKey<ScaffoldMessengerState> _scaffoldKey2 = GlobalKey<ScaffoldMessengerState>();
 
   @override
   Widget build(BuildContext context) {

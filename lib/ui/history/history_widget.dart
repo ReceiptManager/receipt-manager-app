@@ -594,8 +594,7 @@ class HistoryWidgetState extends State<HistoryWidget> {
 }
 
 class FilterChipScreen extends StatefulWidget {
-  RefreshController refreshController;
-  Function callback;
+  final Function callback;
 
   @override
   _FilterChipScreenState createState() =>
@@ -622,6 +621,8 @@ class _FilterChipScreenState extends State<FilterChipScreen> {
 
   @override
   void initState() {
+    super.initState();
+
     colors = [];
     for (int i = 0; i < data.length; i++) {
       colors.add(_rand.randomColor());

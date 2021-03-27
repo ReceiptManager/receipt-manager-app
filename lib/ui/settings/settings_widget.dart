@@ -39,7 +39,7 @@ class SharedPreferenceKeyHolder {
   static final enableDebug = "enable_debug_output";
   static final legacyParser = "legacyParser";
   static final grayscale = "grayscale";
-  static final gaussian_blur = "gaussian";
+  static final gaussianBlur = "gaussian";
   static final rotate = "rotate";
 }
 
@@ -75,9 +75,9 @@ class _SettingsWidgetState extends State<SettingsWidget> {
         ? _grayscale
         : _prefs.getBool(SharedPreferenceKeyHolder.grayscale);
 
-    _gaussian = _prefs.getBool(SharedPreferenceKeyHolder.gaussian_blur) == null
+    _gaussian = _prefs.getBool(SharedPreferenceKeyHolder.gaussianBlur) == null
         ? _gaussian
-        : _prefs.getBool(SharedPreferenceKeyHolder.gaussian_blur);
+        : _prefs.getBool(SharedPreferenceKeyHolder.gaussianBlur);
 
     _rotate = _prefs.getBool(SharedPreferenceKeyHolder.rotate) == null
         ? _rotate
@@ -114,7 +114,7 @@ class _SettingsWidgetState extends State<SettingsWidget> {
               title: S.of(context).settingsLanguageTitle,
               subtitle: S.of(context).currentLanguage,
               leading: Icon(Icons.language),
-              onTap: () {
+              onPressed: (context) {
                 Navigator.of(context).push(MaterialPageRoute(
                     builder: (BuildContext context) =>
                         LanguageSetting(_prefs)));
@@ -123,7 +123,7 @@ class _SettingsWidgetState extends State<SettingsWidget> {
             SettingsTile(
               title: S.of(context).apitoken,
               leading: Icon(Icons.vpn_key),
-              onTap: () {
+              onPressed: (context) {
                 Navigator.of(context).push(MaterialPageRoute(
                     builder: (BuildContext context) => ApiSettings(_prefs)));
               },
@@ -134,7 +134,7 @@ class _SettingsWidgetState extends State<SettingsWidget> {
           SettingsTile(
             title: S.of(context).detectReceiptServer,
             leading: Icon(Icons.adb),
-            onTap: () {
+            onPressed: (context) {
               Navigator.of(context).push(MaterialPageRoute(
                   builder: (BuildContext context) => DiscoverSettings(_prefs)));
             },
@@ -142,7 +142,7 @@ class _SettingsWidgetState extends State<SettingsWidget> {
           SettingsTile(
             title: S.of(context).settingsServerTitle,
             leading: Icon(Icons.wifi),
-            onTap: () {
+          onPressed: (context) {
               Navigator.of(context).push(MaterialPageRoute(
                   builder: (BuildContext context) => ServerSettings(_prefs)));
             },
@@ -158,7 +158,7 @@ class _SettingsWidgetState extends State<SettingsWidget> {
               });
 
               if (!value) {
-                Scaffold.of(context)
+                ScaffoldMessenger.of(context)
                   ..hideCurrentSnackBar()
                   ..showSnackBar(SnackBar(
                     content: Text(S.of(context).disableHttpsWarning),
@@ -284,7 +284,7 @@ class _SettingsWidgetState extends State<SettingsWidget> {
             SettingsTile(
               title: S.of(context).opensourceLicences,
               leading: Icon(Icons.wysiwyg),
-              onTap: () {
+              onPressed: (context) {
                 Navigator.of(context).push(MaterialPageRoute(
                     builder: (BuildContext context) => OpenSourceSettings()));
               },

@@ -36,7 +36,7 @@ class DisplayPictureScreen extends StatefulWidget {
 
 class DisplayPictureScreenState extends State<DisplayPictureScreen> {
   final String imagePath;
-  final GlobalKey<ScaffoldState> key2 = GlobalKey<ScaffoldState>();
+  final GlobalKey<ScaffoldMessengerState> key2 = GlobalKey<ScaffoldMessengerState>();
 
   NetworkClient client = NetworkClient();
   NetworkClientHolder holder = NetworkClientHolder();
