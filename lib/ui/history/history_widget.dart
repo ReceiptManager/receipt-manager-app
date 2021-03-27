@@ -25,7 +25,6 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
-import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:random_color/random_color.dart';
 import 'package:receipt_manager/api/expenses_api.dart';
 import 'package:receipt_manager/db/bloc/moor/bloc.dart';
@@ -60,27 +59,12 @@ class HistoryWidgetState extends State<HistoryWidget> {
   final DbBloc _bloc;
   DateTime receiptDate;
 
-  RefreshController _refreshController =
-      RefreshController(initialRefresh: false);
-
   TextEditingController _storeNameController;
   TextEditingController _receiptTotalController;
   TextEditingController _dateController;
   TextEditingController _controller = TextEditingController();
 
   HistoryWidgetState(this._bloc);
-
-  void _onRefresh() async {
-    setState(() {
-      momentum.receipts = momentum.receipts;
-    });
-    _refreshController.refreshCompleted();
-  }
-
-  void _onLoading() async {
-    _refreshController.loadComplete();
-  }
-
 
   FilterChipScreen screen;
   bool init = false;
@@ -183,34 +167,7 @@ class HistoryWidgetState extends State<HistoryWidget> {
               Expanded(
                 child: Container(
                   color: Colors.white,
-                  child: SmartRefresher(
-                      enablePullDown: true,
-                      enablePullUp: true,
-                      header: WaterDropHeader(),
-                      footer: CustomFooter(
-                        builder: (BuildContext context, LoadStatus mode) {
-                          Widget body;
-                          if (mode == LoadStatus.idle) {
-                            body = Text("pull up load");
-                          } else if (mode == LoadStatus.loading) {
-                            body = CupertinoActivityIndicator();
-                          } else if (mode == LoadStatus.failed) {
-                            body = Text("Load Failed!Click retry!");
-                          } else if (mode == LoadStatus.canLoading) {
-                            body = Text("release to load more");
-                          } else {
-                            body = Text("No more Data");
-                          }
-                          return Container(
-                            height: 55.0,
-                            child: Center(child: body),
-                          );
-                        },
-                      ),
-                      controller: _refreshController,
-                      onRefresh: _onRefresh,
-                      onLoading: _onLoading,
-                      child: AnimationLimiter(
+                  child:  AnimationLimiter(
                           child: ListView.builder(
                               padding: const EdgeInsets.all(8.0),
                               itemCount: this.receipts.length,
@@ -228,7 +185,6 @@ class HistoryWidgetState extends State<HistoryWidget> {
                                 );
                               }))),
                 ),
-              )
             ],
           );
         }
@@ -604,7 +560,6 @@ class FilterChipScreen extends StatefulWidget {
 }
 
 class _FilterChipScreenState extends State<FilterChipScreen> {
-  RefreshController refreshController;
   Function callback;
 
   var data = ReceiptCategoryFactory.categories;
