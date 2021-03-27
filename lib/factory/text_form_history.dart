@@ -17,6 +17,8 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:receipt_manager/db/receipt_database.dart';
 import 'package:receipt_manager/factory/button_factory.dart';
 import 'package:receipt_manager/generated/l10n.dart';
@@ -230,6 +232,78 @@ class TextFormFactory {
       itemFromString: (string) => storeNameList.singleWhere(
           (_storeName) => _storeName.toLowerCase() == string.toLowerCase(),
           orElse: () => null),
+    );
+  }
+
+  static dateTextField(DateTime _receiptDate,
+      TextEditingController _dateController, BuildContext context) {
+    return TextFormField(
+      style: TextStyle(color: Colors.black),
+      decoration: new InputDecoration(
+          filled: true,
+          fillColor: Colors.grey[100],
+          enabledBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: Colors.grey[100]),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: Colors.grey),
+          ),
+          border: new OutlineInputBorder(
+              borderSide: new BorderSide(color: Colors.grey[100])),
+          hintText: S.of(context).receiptDateFormat,
+          // labelText:
+          //   S.of(context).receiptDateLabelText,
+          helperText: S.of(context).receiptDateHelperText,
+          prefixIcon: IconButton(
+              icon: Icon(
+                Icons.calendar_today,
+                color: Colors.red[350],
+              ),
+              splashColor: Colors.black,
+              color: Colors.black,
+              onPressed: () async {
+                _receiptDate = await showDatePicker(
+                    builder: (BuildContext context, Widget child) {
+                      return Theme(
+                        data: ThemeData.light().copyWith(
+                          primaryColor: Colors.black,
+                          accentColor: Colors.black,
+                          colorScheme: ColorScheme.light(primary: (Colors.red)),
+                          buttonTheme: ButtonThemeData(
+                              textTheme: ButtonTextTheme.primary),
+                        ),
+                        child: child,
+                      );
+                    },
+                    context: context,
+                    initialDate: DateTime.now(),
+                    firstDate: DateTime(2010),
+                    lastDate: DateTime(2050));
+
+                if (_receiptDate == null)
+                  _dateController.text = "";
+                else
+                  _dateController.text =
+                      DateFormat(S.of(context).receiptDateFormat)
+                          .format(_receiptDate);
+              })),
+      controller: _dateController,
+      validator: (value) {
+        if (value.isEmpty) {
+          return S.of(context).receiptDateDialog;
+        }
+
+        try {
+          var format = DateFormat(S.of(context).receiptDateFormat);
+          _receiptDate = format.parse(value);
+          return null;
+        } catch (_) {
+          _receiptDate = null;
+          return S.of(context).receiptDateNotFormatted +
+              " " +
+              S.of(context).receiptDateFormat;
+        }
+      },
     );
   }
 }
