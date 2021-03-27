@@ -20,7 +20,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
-import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:receipt_manager/factory/padding_factory.dart';
 import 'package:receipt_manager/generated/l10n.dart';
 import 'package:receipt_manager/ui/theme/color/color.dart';
@@ -32,7 +31,6 @@ import 'discovery_model.dart';
 // ignore: must_be_immutable
 class ServiceList extends StatelessWidget {
   final emptyImagePath = "assets/not_empty";
-  final RefreshController _refreshController = RefreshController();
 
   SharedPreferences prefs;
 
@@ -72,30 +70,15 @@ class ServiceList extends StatelessWidget {
                 ],
               )))
         ])),
-        SmartRefresher(
-            controller: _refreshController,
-            enablePullDown: true,
-            onRefresh: () async {
-              await Future.delayed(Duration(seconds: 5));
-              _refreshController.refreshCompleted();
-            },
-            child: Container())
+      Container()
       ]);
     }
 
-    return SmartRefresher(
-      controller: _refreshController,
-      enablePullDown: true,
-      onRefresh: () async {
-        await Future.delayed(Duration(seconds: 5));
-        _refreshController.refreshCompleted();
-      },
-      child: CustomScrollView(
+    return CustomScrollView(
         slivers: [
           SliverList(
               delegate: SliverChildListDelegate(buildList(discoveredServices)))
         ],
-      ),
     );
   }
 }
