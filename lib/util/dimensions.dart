@@ -26,6 +26,6 @@ class DimensionsCalculator {
     if (!isCalculated) height = MediaQuery.of(context).size.height / banner;
 
     isCalculated = true;
-    return height;
+    return height - 30;
   }
 }
