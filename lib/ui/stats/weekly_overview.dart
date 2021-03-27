@@ -35,6 +35,7 @@ class WeeklyOverview {
       WeeklyChartData(3, 0),
       WeeklyChartData(4, 0),
       WeeklyChartData(5, 0),
+      WeeklyChartData(6, 0),
       WeeklyChartData(7, 0),
     ];
 
