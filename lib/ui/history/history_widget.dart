@@ -116,7 +116,7 @@ class HistoryWidgetState extends State<HistoryWidget> {
       screen = FilterChipScreen(callback);
 
     return BlocBuilder(
-      cubit: _bloc,
+      bloc: _bloc,
       builder: (BuildContext context, state) {
         if (state is LoadingState) {
           return Center(
@@ -481,11 +481,13 @@ class HistoryWidgetState extends State<HistoryWidget> {
                                                               DateTime(2010),
                                                           lastDate:
                                                               DateTime(2050));
-                                                  _dateController
-                                                      .text = DateFormat(S
-                                                          .of(context)
-                                                          .receiptDateFormat)
-                                                      .format(receiptDate);
+
+                                                  if (receiptDate != null)
+                                                    _dateController
+                                                        .text = DateFormat(S
+                                                            .of(context)
+                                                            .receiptDateFormat)
+                                                        .format(receiptDate);
                                                 })),
                                         controller: _dateController,
                                         validator: (value) {
@@ -548,16 +550,22 @@ class HistoryWidgetState extends State<HistoryWidget> {
                     return;
                   }
 
-                  _bloc.add(UpdateEvent(
-                      receipt: currentReceipt.copyWith(
-                          category: this.category,
-                          shop: this._storeName,
-                          total: this._receiptTotal,
-                          date: this.receiptDate)));
+                  Receipt refreshedReceipt = currentReceipt.copyWith(
+                      category: this.category,
+                      shop: this._storeName,
+                      total: this._receiptTotal,
+                      date: this.receiptDate);
 
-                  _bloc.add(ReceiptAllFetch());
+                  setState(() {
+                    receipts[receipts.indexWhere((element) => element.id == receipt.id)] = refreshedReceipt;
+                    momentum.update(refreshedReceipt);
+                  });
 
-                  Scaffold.of(context)
+                  _bloc.add(UpdateEvent(receipt: refreshedReceipt));
+
+                  //_bloc.add(ReceiptAllFetch());
+
+                  ScaffoldMessenger.of(context)
                     ..hideCurrentSnackBar()
                     ..showSnackBar(SnackBar(
                       content: Text(S.of(context).updateReceiptSuccessful),
@@ -568,7 +576,7 @@ class HistoryWidgetState extends State<HistoryWidget> {
                   _dateController.clear();
                   _receiptTotalController.clear();
                 } else {
-                  Scaffold.of(context)
+                  ScaffoldMessenger.of(context)
                     ..hideCurrentSnackBar()
                     ..showSnackBar(SnackBar(
                       content: Text(S.of(context).failedUpdateReceipt),
