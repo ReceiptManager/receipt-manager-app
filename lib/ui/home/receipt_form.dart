@@ -40,7 +40,6 @@ import 'package:receipt_manager/util/date_manipulator.dart';
 import 'package:receipt_manager/util/dimensions.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-
 class ReceiptForm extends StatefulWidget {
   final ReceiptsCompanion receipt;
   final sharedPrefs;
@@ -58,36 +57,35 @@ class ReceiptForm extends StatefulWidget {
 class ReceiptInputController extends State<ReceiptForm> {
   final _formKey = GlobalKey<FormState>();
   final _dropKey = GlobalKey<FormState>();
-
   final _editFormKey = GlobalKey<FormState>();
-  final SharedPreferences sharedPrefs;
+
+  final SharedPreferences _sharedPrefs;
   final DbBloc _bloc;
 
-  TextEditingController storeNameController;
+  TextEditingController _storeNameController;
+  TextEditingController _itemNameController;
+  TextEditingController _itemTotalController;
+  TextEditingController _receiptTotalController;
+  TextEditingController _dateController;
+  TextEditingController _controller;
 
-  TextEditingController itemNameController;
-  TextEditingController itemTotalController;
-  TextEditingController receiptTotalController;
-  TextEditingController dateController;
-  TextEditingController _controller = TextEditingController();
+  String _shopName;
+  String _total;
+  bool _sendImage;
+  String _receiptCategory;
 
-  String shopName;
-  String total;
-  bool sendImage;
-  String receiptCategory;
+  DateTime _receiptDate;
+  ReceiptsCompanion _parsedReceipt;
+  ReceiptCategory _selectedCategory;
+  List<dynamic> _itemList;
 
-  DateTime receiptDate;
-  ReceiptsCompanion parsedReceipt;
-  ReceiptCategory selectedCategory;
-  List<dynamic> itemList;
+  bool _outcome;
+  bool _showAlert;
 
-  bool outcome = true;
-  bool showAlert = false;
-
-  NetworkClient client = NetworkClient();
+  NetworkClient _client;
 
   ReceiptInputController(
-      this.parsedReceipt, this.sendImage, this.sharedPrefs, this._bloc);
+      this._parsedReceipt, this._sendImage, this._sharedPrefs, this._bloc);
 
   @override
   void initState() {
@@ -95,34 +93,38 @@ class ReceiptInputController extends State<ReceiptForm> {
     String initialTotalName = "";
     String initialDateController = "";
 
-    if (parsedReceipt != null) {
-      initialStoreName = parsedReceipt.shop.value ?? '';
-      initialTotalName = parsedReceipt.total.value ?? '';
-      itemList = jsonDecode(parsedReceipt.items.value);
-      showAlert = true;
+    _outcome = true;
+    _showAlert = false;
+
+    if (_parsedReceipt != null) {
+      initialStoreName = _parsedReceipt.shop.value ?? '';
+      initialTotalName = _parsedReceipt.total.value ?? '';
+      _itemList = jsonDecode(_parsedReceipt.items.value);
+      _showAlert = true;
     }
 
-    storeNameController = TextEditingController(text: initialStoreName);
-    receiptTotalController = TextEditingController(text: initialTotalName);
-    dateController = TextEditingController(text: initialDateController);
+    _storeNameController = TextEditingController(text: initialStoreName);
+    _receiptTotalController = TextEditingController(text: initialTotalName);
+    _dateController = TextEditingController(text: initialDateController);
     _controller = TextEditingController();
-    itemNameController = TextEditingController();
-    itemTotalController = TextEditingController();
+    _itemNameController = TextEditingController();
+    _itemTotalController = TextEditingController();
 
+    _client = NetworkClient();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     setState(() {
-      if (parsedReceipt != null && parsedReceipt.date.value != null)
-        dateController.text =
-            DateManipulator.humanDate(context, parsedReceipt.date.value);
+      if (_parsedReceipt != null && _parsedReceipt.date.value != null)
+        _dateController.text =
+            DateManipulator.humanDate(context, _parsedReceipt.date.value);
     });
 
     WidgetsBinding.instance.addPostFrameCallback((_) => showUpdateSuccess());
     return BlocBuilder(
-      cubit: _bloc,
+      bloc: _bloc,
       builder: (BuildContext context, state) {
         if (state is LoadingState) {
           return Center(
@@ -152,16 +154,12 @@ class ReceiptInputController extends State<ReceiptForm> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
                               Stack(children: <Widget>[
-                                new Align(
-                                    alignment: Alignment.bottomLeft,
-                                        child: BannerFactory.get(
-                                            BANNER_MODES.ADD_RECEIPT,
-                                            context)),
+                                BannerFactory.get(
+                                    BANNER_MODES.ADD_RECEIPT, context),
                                 Padding(
                                     padding: EdgeInsets.only(
                                         top: DimensionsCalculator
-                                                .getBannerHeight(context) -
-                                            30,
+                                            .getBannerHeight(context),
                                         right: 16),
                                     child: Align(
                                         alignment: Alignment.topRight,
@@ -183,117 +181,106 @@ class ReceiptInputController extends State<ReceiptForm> {
                                                 builder: (context) =>
                                                     TakePictureScreen(
                                                         sharedPrefs:
-                                                            sharedPrefs,
+                                                            _sharedPrefs,
                                                         camera: firstCamera),
                                               ),
                                             );
                                           },
                                         ))),
                               ]),
-                              PaddingFactory.create(new Theme(
-                                  data: AppTheme.lightTheme,
-                                  child: TextFormFactory.storeName(
-                                      storeNameController, context, receipt))),
-                              PaddingFactory.create(new Theme(
-                                  data: AppTheme.lightTheme,
-                                  child: TextFormFactory.total(
-                                      receiptTotalController, context))),
-                              PaddingFactory.create(new Theme(
-                                  data: AppTheme.lightTheme,
-                                  child: TextFormField(
-                                    style: TextStyle(color: Colors.black),
-                                    decoration: new InputDecoration(
-                                        filled: true,
-                                        fillColor: Colors.grey[100],
-                                        enabledBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(
-                                              color: Colors.grey[100]),
+                              PaddingFactory.create(TextFormFactory.storeName(
+                                  _storeNameController, context, receipt)),
+                              PaddingFactory.create(TextFormFactory.total(
+                                  _receiptTotalController, context)),
+                              PaddingFactory.create(
+                                  TextFormField(
+                                style: TextStyle(color: Colors.black),
+                                decoration: new InputDecoration(
+                                    filled: true,
+                                    fillColor: Colors.grey[100],
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide:
+                                          BorderSide(color: Colors.grey[100]),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide:
+                                          BorderSide(color: Colors.grey),
+                                    ),
+                                    border: new OutlineInputBorder(
+                                        borderSide: new BorderSide(
+                                            color: Colors.grey[100])),
+                                    hintText: S.of(context).receiptDateFormat,
+                                    // labelText:
+                                    //   S.of(context).receiptDateLabelText,
+                                    helperText:
+                                        S.of(context).receiptDateHelperText,
+                                    prefixIcon: IconButton(
+                                        icon: Icon(
+                                          Icons.calendar_today,
+                                          color: Colors.red[350],
                                         ),
-                                        focusedBorder: OutlineInputBorder(
-                                          borderSide:
-                                              BorderSide(color: Colors.grey),
-                                        ),
-                                        border: new OutlineInputBorder(
-                                            borderSide: new BorderSide(
-                                                color: Colors.grey[100])),
-                                        hintText:
-                                            S.of(context).receiptDateFormat,
-                                        // labelText:
-                                        //   S.of(context).receiptDateLabelText,
-                                        helperText:
-                                            S.of(context).receiptDateHelperText,
-                                        prefixIcon: IconButton(
-                                            icon: Icon(
-                                              Icons.calendar_today,
-                                              color: Colors.red[350],
-                                            ),
-                                            splashColor: Colors.black,
-                                            color: Colors.black,
-                                            onPressed: () async {
-                                              receiptDate =
-                                                  await showDatePicker(
-                                                      builder:
-                                                          (BuildContext context,
-                                                              Widget child) {
-                                                        return Theme(
-                                                          data:
-                                                              ThemeData.light()
-                                                                  .copyWith(
-                                                            primaryColor:
-                                                                Colors.black,
-                                                            accentColor:
-                                                                Colors.black,
-                                                            colorScheme:
-                                                                ColorScheme.light(
-                                                                    primary:
-                                                                        (Colors
-                                                                            .red)),
-                                                            buttonTheme:
-                                                                ButtonThemeData(
-                                                                    textTheme:
-                                                                        ButtonTextTheme
-                                                                            .primary),
-                                                          ),
-                                                          child: child,
-                                                        );
-                                                      },
-                                                      context: context,
-                                                      initialDate:
-                                                          DateTime.now(),
-                                                      firstDate: DateTime(2010),
-                                                      lastDate: DateTime(2050));
-                                              dateController.text = DateFormat(S
-                                                      .of(context)
-                                                      .receiptDateFormat)
-                                                  .format(receiptDate);
-                                            })),
-                                    controller: dateController,
-                                    validator: (value) {
-                                      if (value.isEmpty) {
-                                        return S.of(context).receiptDateDialog;
-                                      }
+                                        splashColor: Colors.black,
+                                        color: Colors.black,
+                                        onPressed: () async {
+                                          _receiptDate = await showDatePicker(
+                                              builder: (BuildContext context,
+                                                  Widget child) {
+                                                return Theme(
+                                                  data: ThemeData.light()
+                                                      .copyWith(
+                                                    primaryColor: Colors.black,
+                                                    accentColor: Colors.black,
+                                                    colorScheme:
+                                                        ColorScheme.light(
+                                                            primary:
+                                                                (Colors.red)),
+                                                    buttonTheme:
+                                                        ButtonThemeData(
+                                                            textTheme:
+                                                                ButtonTextTheme
+                                                                    .primary),
+                                                  ),
+                                                  child: child,
+                                                );
+                                              },
+                                              context: context,
+                                              initialDate: DateTime.now(),
+                                              firstDate: DateTime(2010),
+                                              lastDate: DateTime(2050));
 
-                                      try {
-                                        var format = DateFormat(
-                                            S.of(context).receiptDateFormat);
-                                        receiptDate = format.parse(value);
-                                        return null;
-                                      } catch (_) {
-                                        receiptDate = null;
-                                        return S
-                                                .of(context)
-                                                .receiptDateNotFormatted +
-                                            " " +
-                                            S.of(context).receiptDateFormat;
-                                      }
-                                    },
-                                  ))),
+                                          if (_receiptDate == null)
+                                            _dateController.text = "";
+                                          else
+                                            _dateController.text = DateFormat(S
+                                                    .of(context)
+                                                    .receiptDateFormat)
+                                                .format(_receiptDate);
+                                        })),
+                                controller: _dateController,
+                                validator: (value) {
+                                  if (value.isEmpty) {
+                                    return S.of(context).receiptDateDialog;
+                                  }
+
+                                  try {
+                                    var format = DateFormat(
+                                        S.of(context).receiptDateFormat);
+                                    _receiptDate = format.parse(value);
+                                    return null;
+                                  } catch (_) {
+                                    _receiptDate = null;
+                                    return S
+                                            .of(context)
+                                            .receiptDateNotFormatted +
+                                        " " +
+                                        S.of(context).receiptDateFormat;
+                                  }
+                                },
+                              )),
                               PaddingFactory.create(Container(
                                   padding: const EdgeInsets.only(
                                       left: 8.0, right: 8.0),
-                                  child: Theme(
-                                      data: AppTheme.lightTheme,
-                                      child: DropdownButtonFormField<
+                                  child: DropdownButtonFormField<
                                               ReceiptCategory>(
                                           key: _dropKey,
                                           decoration: const InputDecoration(
@@ -302,12 +289,12 @@ class ReceiptInputController extends State<ReceiptForm> {
                                           hint: Text(S
                                               .of(context)
                                               .receiptSelectCategory),
-                                          value: selectedCategory,
+                                          value: _selectedCategory,
                                           isExpanded: true,
                                           onChanged: (ReceiptCategory value) {
                                             setState(() {
-                                              receiptCategory = value.name;
-                                              selectedCategory = value;
+                                              _receiptCategory = value.name;
+                                              _selectedCategory = value;
                                             });
                                           },
                                           dropdownColor: Colors.grey[100],
@@ -331,40 +318,13 @@ class ReceiptInputController extends State<ReceiptForm> {
                                                 ],
                                               ),
                                             );
-                                          }).toList())))),
+                                          }).toList()))),
                               Row(
-                                mainAxisAlignment: MainAxisAlignment
-                                    .end, //Center Row contents horizontally,
-                                crossAxisAlignment: CrossAxisAlignment
-                                    .end, //Center Row contents vertically,
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                //Center Row contents horizontally,
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                //Center Row contents vertically,
                                 children: [
-                                  /* new Align(
-                                      alignment: Alignment.topCenter,
-                                      child: Padding(
-                                          padding: const EdgeInsets.all(8),
-                                          child: ToggleSwitch(
-                                            minWidth: 90.0,
-                                            changeOnTap: outcome,
-                                            initialLabelIndex: 0,
-                                            activeFgColor: Colors.white,
-                                            inactiveBgColor: Colors.black,
-                                            inactiveFgColor: Colors.white,
-                                            labels: [
-                                              S.of(context).outcome,
-                                              S.of(context).income
-                                            ],
-                                            activeBgColors: [
-                                              Colors.red,
-                                              Colors.green
-                                            ],
-                                            onToggle: (index) {
-                                              if (index == 0)
-                                                outcome = true;
-                                              else
-                                                outcome = false;
-                                            },
-                                          ))),*/
-                                  //                  getItems(),
                                   Center(
                                     child: new Align(
                                         alignment: Alignment.center,
@@ -397,12 +357,11 @@ class ReceiptInputController extends State<ReceiptForm> {
   }
 
   _showDialog({controller, List<dynamic> item}) async {
-    this.itemNameController.text = item[0];
-    this.itemTotalController.text = item[1];
+    this._itemNameController.text = item[0];
+    this._itemTotalController.text = item[1];
 
     await showDialog<String>(
       context: context,
-      // false = user must tap button, true = tap outside dialog
       builder: (BuildContext dialogContext) {
         return AlertDialog(
           titleTextStyle: TextStyle(
@@ -427,11 +386,11 @@ class ReceiptInputController extends State<ReceiptForm> {
                                   PaddingFactory.create(new Theme(
                                       data: AppTheme.lightTheme,
                                       child: TextFormFactory.itemName(
-                                          itemNameController, context))),
+                                          _itemNameController, context))),
                                   PaddingFactory.create(new Theme(
                                       data: AppTheme.lightTheme,
                                       child: TextFormFactory.itemTotal(
-                                          itemTotalController, context))),
+                                          _itemTotalController, context))),
                                 ],
                               )),
                             )
@@ -441,7 +400,7 @@ class ReceiptInputController extends State<ReceiptForm> {
             ),
           ),
           actions: <Widget>[
-            FlatButton(
+            TextButton(
               child: Text(
                 S.of(context).cancel,
                 style: TextStyle(color: Colors.red),
@@ -450,7 +409,7 @@ class ReceiptInputController extends State<ReceiptForm> {
                 Navigator.of(context).pop();
               },
             ),
-            FlatButton(
+            TextButton(
               child: Text(
                 S.of(context).update,
               ),
@@ -458,9 +417,9 @@ class ReceiptInputController extends State<ReceiptForm> {
                 String itemName;
                 String itemTotal;
                 try {
-                  itemName = itemNameController.text;
+                  itemName = _itemNameController.text;
                   itemName.split(" ").join("");
-                  itemTotal = itemTotalController.text;
+                  itemTotal = _itemTotalController.text;
                   itemTotal.split(" ").join("");
 
                   setState(() {
@@ -468,15 +427,15 @@ class ReceiptInputController extends State<ReceiptForm> {
                     item[1] = itemTotal;
                   });
                 } catch (e) {
-                  receiptTotalController.clear();
-                  storeNameController.clear();
-                  dateController.clear();
+                  _receiptTotalController.clear();
+                  _storeNameController.clear();
+                  _dateController.clear();
                   Navigator.pop(context);
                   return;
                 }
                 _controller.clear();
-                itemNameController.clear();
-                itemTotalController.clear();
+                _itemNameController.clear();
+                _itemTotalController.clear();
 
                 Navigator.pop(context);
               },
@@ -498,7 +457,7 @@ class ReceiptInputController extends State<ReceiptForm> {
             icon: Icons.delete,
             onTap: () {
               setState(() {
-                itemList.remove(item);
+                _itemList.remove(item);
               });
             },
           ),
@@ -536,7 +495,7 @@ class ReceiptInputController extends State<ReceiptForm> {
   }
 
   Widget getItems() {
-    if (itemList == null || itemList.length == 0) {
+    if (_itemList == null || _itemList.length == 0) {
       return Container();
     }
     return Column(children: [
@@ -550,13 +509,13 @@ class ReceiptInputController extends State<ReceiptForm> {
       )),
       Container(
           color: Colors.white,
-          height: (50 * itemList.length).toDouble(),
+          height: (50 * _itemList.length).toDouble(),
           child: ListView.builder(
               padding: const EdgeInsets.all(8.0),
-              itemCount: itemList.length,
+              itemCount: _itemList.length,
               shrinkWrap: true,
               itemBuilder: (_, index) {
-                final receipt = itemList[index];
+                final receipt = _itemList[index];
                 return _item(receipt);
               })),
     ]);
@@ -571,60 +530,59 @@ class ReceiptInputController extends State<ReceiptForm> {
             shape: StadiumBorder(),
             onPressed: () {
               if (_formKey.currentState.validate() &&
-                  receiptCategory != null &&
-                  selectedCategory != null) {
+                  _receiptCategory != null &&
+                  _selectedCategory != null) {
                 try {
-                  if (showAlert)
+                  if (_showAlert)
                     Scaffold.of(context).showSnackBar(SnackBar(
                       content: Text(S.of(context).addedReceipt),
                       backgroundColor: Colors.green,
                     ));
 
-                  showAlert = false;
-                  shopName = storeNameController.text;
-                  total = receiptTotalController.text;
+                  _showAlert = false;
+                  _shopName = _storeNameController.text;
+                  _total = _receiptTotalController.text;
                 } catch (e) {
                   reset();
                   return;
                 }
 
                 // trim negligent whitespaces
-                shopName = shopName.trim();
-                shopName.split(" ").join("");
-                total = outcome ? "-" + total : total;
-                total.split(" ").join("");
+                _shopName = _shopName.trim();
+                _shopName.split(" ").join("");
+                _total = _outcome ? "-" + _total : _total;
+                _total.split(" ").join("");
 
                 String jsonItemList =
-                    itemList == null ? null : jsonEncode(itemList);
+                    _itemList == null ? null : jsonEncode(_itemList);
 
                 _bloc.add(InsertEvent(
                     receipt: ReceiptsCompanion(
-                        date: Value(receiptDate),
-                        total: Value(total),
-                        category: Value(jsonEncode(selectedCategory)),
+                        date: Value(_receiptDate),
+                        total: Value(_total),
+                        category: Value(jsonEncode(_selectedCategory)),
                         items: Value(jsonItemList),
-                        shop: Value(shopName))));
+                        shop: Value(_shopName))));
                 _bloc.add(ReceiptAllFetch());
 
                 NetworkClientHolder holder = NetworkClientHolder();
-                holder.readOptions(sharedPrefs);
+                holder.readOptions(_sharedPrefs);
 
-                holder.company = shopName;
-                holder.date = receiptDate.toIso8601String();
-                holder.total = total.replaceAll("-", "");
+                holder.company = _shopName;
+                holder.date = _receiptDate.toIso8601String();
+                holder.total = _total.replaceAll("-", "");
 
                 bool _submitTrainingData =
-                    sharedPrefs.getBool("sendTrainingData");
+                    _sharedPrefs.getBool("sendTrainingData");
                 if (_submitTrainingData != null &&
                     _submitTrainingData == true &&
-                    sendImage) {
-
-                  client.sendTrainingData(holder, context);
+                    _sendImage) {
+                  _client.sendTrainingData(holder, context);
                 }
 
                 reset();
               } else {
-                if (receiptCategory == null || receiptCategory.isEmpty) {
+                if (_receiptCategory == null || _receiptCategory.isEmpty) {
                   Scaffold.of(context).showSnackBar(SnackBar(
                       content: Text(S.of(context).receiptSelectCategory),
                       backgroundColor: Colors.red));
@@ -642,10 +600,10 @@ class ReceiptInputController extends State<ReceiptForm> {
   }
 
   void showUpdateSuccess() {
-    if (!showAlert) return;
+    if (!_showAlert) return;
 
-    if (sendImage) {
-      if (parsedReceipt == null) {
+    if (_sendImage) {
+      if (_parsedReceipt == null) {
         Scaffold.of(context)
           ..hideCurrentSnackBar()
           ..showSnackBar(SnackBar(
@@ -661,18 +619,18 @@ class ReceiptInputController extends State<ReceiptForm> {
           ));
       }
 
-      showAlert = false;
+      _showAlert = false;
     }
   }
 
   void reset() {
-    receiptTotalController.clear();
-    storeNameController.clear();
-    dateController.clear();
+    _receiptTotalController.clear();
+    _storeNameController.clear();
+    _dateController.clear();
   }
 
   Widget getItemListButton() {
-    if (itemList == null || itemList.length == 0) return Container();
+    if (_itemList == null || _itemList.length == 0) return Container();
 
     return PaddingFactory.create(Align(
         alignment: Alignment.topRight,
@@ -681,7 +639,7 @@ class ReceiptInputController extends State<ReceiptForm> {
             log("Add itemlist");
             setState(() {
               List<dynamic> item = ["Receipt item", "0.00"];
-              this.itemList.add(item);
+              this._itemList.add(item);
             });
           },
           shape: RoundedRectangleBorder(
