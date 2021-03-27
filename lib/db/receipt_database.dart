@@ -28,7 +28,7 @@ class AppDatabase extends _$AppDatabase {
       : super(FlutterQueryExecutor.inDatabaseFolder(
             path: "db.sql", logStatements: true));
 
-  int get schemaVersion => 2;
+  int get schemaVersion => 3;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(onCreate: (Migrator m) {
@@ -36,6 +36,8 @@ class AppDatabase extends _$AppDatabase {
       }, onUpgrade: (Migrator m, int from, int to) async {
         if (from == 1 && to == 2) {
           await m.addColumn(receipts, receipts.items);
+        } if (from == 2 && to == 3) {
+        //  await m.addColumn(receipts, receipts.tag);
         }
       });
 }
