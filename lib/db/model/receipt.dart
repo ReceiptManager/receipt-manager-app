@@ -26,6 +26,8 @@ class Receipts extends Table {
 
   TextColumn get category => text()();
 
+  TextColumn get tag => text().nullable()();
+
   TextColumn get items => text().nullable()();
 
   DateTimeColumn get date => dateTime()();
