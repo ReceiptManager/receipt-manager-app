@@ -49,7 +49,7 @@ class MonthlyOverview {
       if (total < 0) {
         total = -total;
       }
-      chartData[r.date.month - 1].total += total;
+      chartData[r.date.month].total += total;
     }
 
     return chartData;
