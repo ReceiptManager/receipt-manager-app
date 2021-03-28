@@ -70,8 +70,6 @@ class _ApiSettingsState extends State<ApiSettings> {
     );
   }
 
-  final GlobalKey<ScaffoldMessengerState> _scaffoldKey2 = GlobalKey<ScaffoldMessengerState>();
-
   @override
   Widget build(BuildContext context) {
     if (sharedPreferences.getString("api_token") != null) {
@@ -85,7 +83,6 @@ class _ApiSettingsState extends State<ApiSettings> {
     }
     return Scaffold(
       backgroundColor: Colors.white,
-      key: _scaffoldKey2,
       appBar: AppBar(title: Text(S.of(context).serverSettings)),
       body: Column(children: [
         Padding(padding: const EdgeInsets.all(16.0), child: serverTextfield()),
@@ -97,7 +94,8 @@ class _ApiSettingsState extends State<ApiSettings> {
                   child: FloatingActionButton(
                       onPressed: () async {
                         sharedPreferences.setString("api_token", _token);
-                        _scaffoldKey2.currentState
+
+                        ScaffoldMessenger.of(context)
                           ..hideCurrentSnackBar()
                           ..showSnackBar(SnackBar(
                             content:
