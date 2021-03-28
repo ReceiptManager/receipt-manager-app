@@ -134,5 +134,7 @@
   "networkSettings": "Netzwerk Einstellungen",
   "disableHttpsWarning": "Unverschlüsselte Kommunikation wird nicht empfohlen",
   "connectionFailed": "Verbindung konnte nicht hergestellt werden",
-  "connectionSuccess": "Verbindung konnte hergestellt werden"
+  "connectionSuccess": "Verbindung konnte hergestellt werden",
+  "detectEdges" : "Erkenne Kanten",
+  "showParsedReceipt": "Tesseract Ergebnis anzeigen"
 }

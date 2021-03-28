@@ -126,5 +126,7 @@
   "networkSettings": "Network Settings",
   "disableHttpsWarning": "Unencrypted communication is not recommended",
   "connectionFailed": "Connection could not be established",
-  "connectionSuccess": "Connection could be established"
+  "connectionSuccess": "Connection could be established",
+  "detectEdges" : "Detect Edges",
+  "showParsedReceipt": "Show tesseract output"
 }
