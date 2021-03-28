@@ -121,7 +121,7 @@ class DisplayPictureScreenState extends State<DisplayPictureScreen> {
                                   holder.readOptions(sharedPrefs);
 
                                   await client.sendImage(
-                                      File(imagePath), holder, context, key2);
+                                      File(imagePath), holder, context);
                                   _progress = _progress + 80.0;
                                 })),
                       ),
