@@ -33,6 +33,7 @@ import 'package:receipt_manager/generated/l10n.dart';
 import 'package:receipt_manager/db/model/receipt_category.dart';
 import 'package:receipt_manager/network/network_client.dart';
 import 'package:receipt_manager/network/network_client_holder.dart';
+import 'package:receipt_manager/ui/camera/edge_detector.dart';
 import 'package:receipt_manager/ui/theme/color/color.dart';
 import 'package:receipt_manager/ui/theme/theme_manager.dart';
 import 'package:receipt_manager/ui/camera/camera_picker.dart';
@@ -101,7 +102,7 @@ class ReceiptInputController extends State<ReceiptForm> {
     if (_parsedReceipt != null) {
       initialStoreName = _parsedReceipt.shop.value ?? '';
       initialTotalName = _parsedReceipt.total.value ?? '';
-      initialTotalName = _parsedReceipt.tag.value ?? '';
+      initialTagName = _parsedReceipt.tag.value ?? '';
 
       _itemList = jsonDecode(_parsedReceipt.items.value);
       _showAlert = true;
@@ -114,7 +115,6 @@ class ReceiptInputController extends State<ReceiptForm> {
 
     _controller = TextEditingController();
     _itemNameController = TextEditingController();
-    _itemTotalController = TextEditingController();
 
     _client = NetworkClient();
     super.initState();
@@ -177,20 +177,14 @@ class ReceiptInputController extends State<ReceiptForm> {
                                             WidgetsFlutterBinding
                                                 .ensureInitialized();
 
-                                            final cameras =
-                                                await availableCameras();
-                                            final firstCamera = cameras.first;
-
                                             Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                builder: (context) =>
-                                                    TakePictureScreen(
-                                                        sharedPrefs:
-                                                            _sharedPrefs,
-                                                        camera: firstCamera),
-                                              ),
-                                            );
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) => Theme(
+                                                      data: AppTheme.lightTheme,
+                                                      child: EdgeDetector()
+                                                      ),
+                                                ));
                                           },
                                         ))),
                               ]),
@@ -198,8 +192,7 @@ class ReceiptInputController extends State<ReceiptForm> {
                                   _storeNameController, context, receipt)),
                               PaddingFactory.create(TextFormFactory.total(
                                   _receiptTotalController, context)),
-                              PaddingFactory.create(
-                                  TextFormField(
+                              PaddingFactory.create(TextFormField(
                                 style: TextStyle(color: Colors.black),
                                 decoration: new InputDecoration(
                                     filled: true,
@@ -287,44 +280,42 @@ class ReceiptInputController extends State<ReceiptForm> {
                                   padding: const EdgeInsets.only(
                                       left: 8.0, right: 8.0),
                                   child: DropdownButtonFormField<
-                                              ReceiptCategory>(
-                                          key: _dropKey,
-                                          decoration: const InputDecoration(
-                                            border: const OutlineInputBorder(),
-                                          ),
-                                          hint: Text(S
-                                              .of(context)
-                                              .receiptSelectCategory),
-                                          value: _selectedCategory,
-                                          isExpanded: true,
-                                          onChanged: (ReceiptCategory value) {
-                                            setState(() {
-                                              _receiptCategory = value.name;
-                                              _selectedCategory = value;
-                                            });
-                                          },
-                                          dropdownColor: Colors.grey[100],
-                                          items: ReceiptCategoryFactory.get(
-                                                  context)
-                                              .map((ReceiptCategory user) {
-                                            return DropdownMenuItem<
-                                                ReceiptCategory>(
-                                              value: user,
-                                              child: Row(
-                                                children: <Widget>[
-                                                  user.icon,
-                                                  SizedBox(
-                                                    width: 10,
-                                                  ),
-                                                  Text(
-                                                    user.name,
-                                                    style: TextStyle(
-                                                        color: Colors.black),
-                                                  ),
-                                                ],
+                                          ReceiptCategory>(
+                                      key: _dropKey,
+                                      decoration: const InputDecoration(
+                                        border: const OutlineInputBorder(),
+                                      ),
+                                      hint: Text(
+                                          S.of(context).receiptSelectCategory),
+                                      value: _selectedCategory,
+                                      isExpanded: true,
+                                      onChanged: (ReceiptCategory value) {
+                                        setState(() {
+                                          _receiptCategory = value.name;
+                                          _selectedCategory = value;
+                                        });
+                                      },
+                                      dropdownColor: Colors.grey[100],
+                                      items: ReceiptCategoryFactory.get(context)
+                                          .map((ReceiptCategory user) {
+                                        return DropdownMenuItem<
+                                            ReceiptCategory>(
+                                          value: user,
+                                          child: Row(
+                                            children: <Widget>[
+                                              user.icon,
+                                              SizedBox(
+                                                width: 10,
                                               ),
-                                            );
-                                          }).toList()))),
+                                              Text(
+                                                user.name,
+                                                style: TextStyle(
+                                                    color: Colors.black),
+                                              ),
+                                            ],
+                                          ),
+                                        );
+                                      }).toList()))),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 //Center Row contents horizontally,
