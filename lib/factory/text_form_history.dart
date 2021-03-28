@@ -107,6 +107,35 @@ class TextFormFactory {
     );
   }
 
+  static TextFormField tag(
+      TextEditingController receiptTagController, BuildContext context) {
+    return TextFormField(
+      style: TextStyle(color: Colors.black),
+      decoration: new InputDecoration(
+        filled: true,
+        fillColor: Colors.grey[100],
+        enabledBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: Colors.grey[100]),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: Colors.grey),
+        ),
+        border: new OutlineInputBorder(
+            borderSide: new BorderSide(color: Colors.grey[100])),
+        hintText: S.of(context).totalTitle,
+        helperText: S.of(context).totalHelperText,
+        prefixIcon: const Icon(
+          Icons.tag,
+        ),
+        prefixText: ' ',
+      ),
+      controller: receiptTagController,
+      validator: (value) {
+        return null;
+      },
+    );
+  }
+
   static TextFormField itemName(
       TextEditingController receiptTotalController, BuildContext context) {
     return TextFormField(

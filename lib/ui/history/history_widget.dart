@@ -71,7 +71,6 @@ class HistoryWidgetState extends State<HistoryWidget> {
 
   ExpensesApi api = ExpensesApi();
 
-
   @override
   void initState() {
     super.initState();
@@ -96,8 +95,7 @@ class HistoryWidgetState extends State<HistoryWidget> {
 
   @override
   Widget build(BuildContext context) {
-    if (!init)
-      screen = FilterChipScreen(callback);
+    if (!init) screen = FilterChipScreen(callback);
 
     return BlocBuilder(
       bloc: _bloc,
@@ -120,8 +118,8 @@ class HistoryWidgetState extends State<HistoryWidget> {
             api.init();
           }
 
-          if ( (this.receipts == null ||
-              this.receipts.length == 0) && this.momentum.finalReceipts.length == 0 )
+          if ((this.receipts == null || this.receipts.length == 0) &&
+              this.momentum.finalReceipts.length == 0)
             return new Column(
               children: [
                 BannerFactory.get(BANNER_MODES.OVERVIEW_EXPENSES, context),
@@ -166,25 +164,25 @@ class HistoryWidgetState extends State<HistoryWidget> {
               screen,
               Expanded(
                 child: Container(
-                  color: Colors.white,
-                  child:  AnimationLimiter(
-                          child: ListView.builder(
-                              padding: const EdgeInsets.all(8.0),
-                              itemCount: this.receipts.length,
-                              itemBuilder: (_, index) {
-                                var receipt = this.receipts[index];
+                    color: Colors.white,
+                    child: AnimationLimiter(
+                        child: ListView.builder(
+                            padding: const EdgeInsets.all(8.0),
+                            itemCount: this.receipts.length,
+                            itemBuilder: (_, index) {
+                              var receipt = this.receipts[index];
 
-                                return AnimationConfiguration.staggeredList(
-                                  position: index,
-                                  duration: const Duration(milliseconds: 375),
-                                  child: SlideAnimation(
-                                    verticalOffset: 50.0,
-                                    child: FadeInAnimation(
-                                        child: _buildListItems(receipt)),
-                                  ),
-                                );
-                              }))),
-                ),
+                              return AnimationConfiguration.staggeredList(
+                                position: index,
+                                duration: const Duration(milliseconds: 375),
+                                child: SlideAnimation(
+                                  verticalOffset: 50.0,
+                                  child: FadeInAnimation(
+                                      child: _buildListItems(receipt)),
+                                ),
+                              );
+                            }))),
+              ),
             ],
           );
         }
@@ -218,7 +216,7 @@ class HistoryWidgetState extends State<HistoryWidget> {
                 momentum.delete(receipt);
               });
               _bloc.add(DeleteEvent(receipt: receipt));
-             // _bloc.add(ReceiptAllFetch());
+              // _bloc.add(ReceiptAllFetch());
             },
           ),
           IconSlideAction(
@@ -267,7 +265,10 @@ class HistoryWidgetState extends State<HistoryWidget> {
                                       .name +
                                   ", " +
                                   DateFormat(S.of(context).receiptDateFormat)
-                                      .format(receipt.date),
+                                      .format(receipt.date) +
+                                  (receipt.tag.isEmpty
+                                      ? ''
+                                      : ', ' + receipt.tag.toString()),
                               style:
                                   TextStyle(color: Colors.black, fontSize: 12))
                         ],
@@ -513,7 +514,9 @@ class HistoryWidgetState extends State<HistoryWidget> {
                       date: this.receiptDate);
 
                   setState(() {
-                    receipts[receipts.indexWhere((element) => element.id == receipt.id)] = refreshedReceipt;
+                    receipts[receipts.indexWhere(
+                            (element) => element.id == receipt.id)] =
+                        refreshedReceipt;
                     momentum.update(refreshedReceipt);
                   });
 
@@ -553,8 +556,7 @@ class FilterChipScreen extends StatefulWidget {
   final Function callback;
 
   @override
-  _FilterChipScreenState createState() =>
-      _FilterChipScreenState(callback);
+  _FilterChipScreenState createState() => _FilterChipScreenState(callback);
 
   FilterChipScreen(this.callback);
 }
