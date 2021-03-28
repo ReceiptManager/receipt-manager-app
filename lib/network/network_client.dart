@@ -70,59 +70,8 @@ class NetworkClient {
       /// with a password, the security risk is small.
       HttpOverrides.global = new SelfSignedHttpAgent();
 
-    String protocol = holder.https ? _https : _http;
-    if (holder.token == null || holder.token == "") {
-      if (holder.reverseProxy)
-        return protocol +
-            holder.ip +
-            _uploadPath +
-            "&legacy_parser=" +
-            getValue(holder.legacyParser) +
-            "&grayscale_image=" +
-            getValue(holder.grayscale) +
-            "&gaussian_blur=" +
-            getValue(holder.gaussian) +
-            "&rotate=" +
-            getValue(holder.rotate);
-
-      return protocol +
-          holder.ip +
-          ":" +
-          _port +
-          _uploadPath +
-          "&legacy_parser=" +
-          getValue(holder.legacyParser) +
-          "&grayscale_image=" +
-          getValue(holder.grayscale) +
-          "&gaussian_blur=" +
-          getValue(holder.gaussian) +
-          "&rotate=" +
-          getValue(holder.rotate);
-    }
-
-    if (holder.reverseProxy)
-      return protocol +
-          holder.domain +
-          _uploadPath +
-          _token +
-          holder.token +
-          "&legacy_parser=" +
-          getValue(holder.legacyParser) +
-          "&grayscale_image=" +
-          getValue(holder.grayscale) +
-          "&gaussian_blur=" +
-          getValue(holder.gaussian) +
-          "&rotate=" +
-          getValue(holder.rotate);
-
-    return protocol +
-        holder.ip +
-        ":" +
-        _port +
-        _uploadPath +
-        _token +
-        holder.token +
-        "&legacy_parser=" +
+    String _protocol = holder.https ? _https : _http;
+    String _parameters = "&legacy_parser=" +
         getValue(holder.legacyParser) +
         "&grayscale_image=" +
         getValue(holder.grayscale) +
@@ -130,15 +79,35 @@ class NetworkClient {
         getValue(holder.gaussian) +
         "&rotate=" +
         getValue(holder.rotate);
+
+    if (holder.token == null || holder.token == "") {
+      if (holder.reverseProxy)
+        return _protocol + holder.ip + _uploadPath + _parameters;
+
+      return _protocol + holder.ip + ":" + _port + _uploadPath + _parameters;
+    }
+
+    if (holder.reverseProxy)
+      return _protocol +
+          holder.domain +
+          _uploadPath +
+          _token +
+          holder.token +
+          _parameters;
+
+    return _protocol +
+        holder.ip +
+        ":" +
+        _port +
+        _uploadPath +
+        _token +
+        holder.token +
+        _parameters;
   }
 
   /// Convert boolean values to python boolean values
   String getValue(final bool val) {
-    if (val == null || val == false) {
-      return "False";
-    } else {
-      return "True";
-    }
+    return val == null || val == false ? "False" : "True";
   }
 
   toHomeScreen(BuildContext context) async {
@@ -148,42 +117,58 @@ class NetworkClient {
         MaterialPageRoute(builder: (context) => HomeScreen(null, true)));
   }
 
+  void show_success(String msg, BuildContext context) {
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: Text(msg),
+      backgroundColor: Colors.green,
+    ));
+  }
+
+  void show_error(String msg, BuildContext context) {
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: Text(msg),
+      backgroundColor: Colors.red,
+    ));
+  }
+
+  Future<void> redirect(BuildContext context) async {
+    await Future.delayed(
+        const Duration(seconds: _transactionDuration), () {});
+
+    Navigator.push(context,
+        MaterialPageRoute(builder: (context) => HomeScreen(null, true)));
+  }
+
   sendTrainingData(NetworkClientHolder holder, BuildContext context) async {
     log("Submit training data.");
+
     Map<String, String> headers = {"Content-type": "application/json"};
-    String json =
-        '{"company": "${holder.company}", "date": "${holder.date}","total": "${holder.total}"}';
+    String json = '{"company": "${holder.company}", '
+        '"date": "${holder.date}",'
+        '"total": "${holder.total}"}';
+
     Response response =
         await post(getTrainingUrl(holder), headers: headers, body: json);
-    if (response.statusCode != 0) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text(S.of(context).failedToSubmitTrainingData),
-        backgroundColor: Colors.red,
-      ));
+
+    if (response.statusCode != 200) {
+      show_error(S.of(context).failedToSubmitTrainingData, context);
     } else {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text("Submitted training data"),
-        backgroundColor: Colors.green,
-      ));
+      show_success("Submitted training data", context);
     }
   }
 
   /// Send image via post request to the server and capture the response.
-  sendImage(File imageFile, NetworkClientHolder holder, BuildContext context,
-      [GlobalKey<ScaffoldMessengerState> key]) async {
+  sendImage(
+      File imageFile, NetworkClientHolder holder, BuildContext context) async {
     log("Try to upload new image.");
+
     if ((!holder.reverseProxy && (holder.ip == null || holder.ip.isEmpty)) ||
         (holder.reverseProxy &&
             (holder.domain == null || holder.domain.isEmpty))) {
-      log("ip appears invalid.");
-      key.currentState
-        ..showSnackBar(SnackBar(
-            content: Text(S.of(context).serverIpIsNotSet),
-            backgroundColor: Colors.red));
-      await Future.delayed(
-          const Duration(seconds: _transactionDuration), () {});
-      Navigator.push(context,
-          MaterialPageRoute(builder: (context) => HomeScreen(null, true)));
+
+      log("IP appears invalid.");
+      show_error(S.of(context).serverIpIsNotSet, context);
+      redirect(context);
       return;
     }
 
@@ -205,22 +190,15 @@ class NetworkClient {
     );
     request.files.add(multipartFile);
 
-    key.currentState
-      ..hideCurrentSnackBar()
-      ..showSnackBar(SnackBar(
-          content: Text("Send to: " + uri.toString()),
-          backgroundColor: Colors.green));
+    show_success("Send to: " + uri.toString(), context);
 
     try {
       var response = await request.send().timeout(
         Duration(seconds: _timeout),
         onTimeout: () async {
-          key.currentState
-            ..showSnackBar(SnackBar(
-                content: Text(S.of(context).serverTimeout),
-                backgroundColor: Colors.red));
-
+          show_error(S.of(context).serverTimeout, context);
           toHomeScreen(context);
+
           return;
         },
       );
@@ -294,7 +272,7 @@ class NetworkClient {
         msg = S.of(context).serverTimeout + _.toString();
       }
 
-      key.currentState
+      ScaffoldMessenger.of(context)
         ..hideCurrentSnackBar()
         ..showSnackBar(
             SnackBar(content: Text(msg), backgroundColor: Colors.red));
@@ -309,7 +287,7 @@ class NetworkClient {
       } else {
         msg = S.of(context).socketException + _.toString();
       }
-      key.currentState
+      ScaffoldMessenger.of(context)
         ..hideCurrentSnackBar()
         ..showSnackBar(
             SnackBar(content: Text(msg), backgroundColor: Colors.red));
@@ -324,7 +302,7 @@ class NetworkClient {
         msg = S.of(context).handshakeException + _.toString();
       }
 
-      key.currentState
+      ScaffoldMessenger.of(context)
         ..hideCurrentSnackBar()
         ..showSnackBar(
             SnackBar(content: Text(msg), backgroundColor: Colors.red));
@@ -341,7 +319,7 @@ class NetworkClient {
         msg = S.of(context).generalException + _.toString();
       }
 
-      key.currentState
+      ScaffoldMessenger.of(context)
         ..hideCurrentSnackBar()
         ..showSnackBar(
             SnackBar(content: Text(msg), backgroundColor: Colors.red));
