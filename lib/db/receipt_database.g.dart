@@ -1,20 +1,3 @@
-/*
- * Copyright (c) 2020 - 2021 : William Todt
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
-
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
 part of 'receipt_database.dart';
@@ -29,6 +12,7 @@ class Receipt extends DataClass implements Insertable<Receipt> {
   final String total;
   final String shop;
   final String category;
+  final String tag;
   final String items;
   final DateTime date;
   Receipt(
@@ -36,6 +20,7 @@ class Receipt extends DataClass implements Insertable<Receipt> {
       @required this.total,
       @required this.shop,
       @required this.category,
+      this.tag,
       this.items,
       @required this.date});
   factory Receipt.fromData(Map<String, dynamic> data, GeneratedDatabase db,
@@ -51,6 +36,7 @@ class Receipt extends DataClass implements Insertable<Receipt> {
       shop: stringType.mapFromDatabaseResponse(data['${effectivePrefix}shop']),
       category: stringType
           .mapFromDatabaseResponse(data['${effectivePrefix}category']),
+      tag: stringType.mapFromDatabaseResponse(data['${effectivePrefix}tag']),
       items:
           stringType.mapFromDatabaseResponse(data['${effectivePrefix}items']),
       date:
@@ -72,6 +58,9 @@ class Receipt extends DataClass implements Insertable<Receipt> {
     if (!nullToAbsent || category != null) {
       map['category'] = Variable<String>(category);
     }
+    if (!nullToAbsent || tag != null) {
+      map['tag'] = Variable<String>(tag);
+    }
     if (!nullToAbsent || items != null) {
       map['items'] = Variable<String>(items);
     }
@@ -90,6 +79,7 @@ class Receipt extends DataClass implements Insertable<Receipt> {
       category: category == null && nullToAbsent
           ? const Value.absent()
           : Value(category),
+      tag: tag == null && nullToAbsent ? const Value.absent() : Value(tag),
       items:
           items == null && nullToAbsent ? const Value.absent() : Value(items),
       date: date == null && nullToAbsent ? const Value.absent() : Value(date),
@@ -104,6 +94,7 @@ class Receipt extends DataClass implements Insertable<Receipt> {
       total: serializer.fromJson<String>(json['total']),
       shop: serializer.fromJson<String>(json['shop']),
       category: serializer.fromJson<String>(json['category']),
+      tag: serializer.fromJson<String>(json['tag']),
       items: serializer.fromJson<String>(json['items']),
       date: serializer.fromJson<DateTime>(json['date']),
     );
@@ -116,6 +107,7 @@ class Receipt extends DataClass implements Insertable<Receipt> {
       'total': serializer.toJson<String>(total),
       'shop': serializer.toJson<String>(shop),
       'category': serializer.toJson<String>(category),
+      'tag': serializer.toJson<String>(tag),
       'items': serializer.toJson<String>(items),
       'date': serializer.toJson<DateTime>(date),
     };
@@ -126,6 +118,7 @@ class Receipt extends DataClass implements Insertable<Receipt> {
           String total,
           String shop,
           String category,
+          String tag,
           String items,
           DateTime date}) =>
       Receipt(
@@ -133,6 +126,7 @@ class Receipt extends DataClass implements Insertable<Receipt> {
         total: total ?? this.total,
         shop: shop ?? this.shop,
         category: category ?? this.category,
+        tag: tag ?? this.tag,
         items: items ?? this.items,
         date: date ?? this.date,
       );
@@ -143,6 +137,7 @@ class Receipt extends DataClass implements Insertable<Receipt> {
           ..write('total: $total, ')
           ..write('shop: $shop, ')
           ..write('category: $category, ')
+          ..write('tag: $tag, ')
           ..write('items: $items, ')
           ..write('date: $date')
           ..write(')'))
@@ -157,7 +152,9 @@ class Receipt extends DataClass implements Insertable<Receipt> {
           $mrjc(
               shop.hashCode,
               $mrjc(
-                  category.hashCode, $mrjc(items.hashCode, date.hashCode))))));
+                  category.hashCode,
+                  $mrjc(
+                      tag.hashCode, $mrjc(items.hashCode, date.hashCode)))))));
   @override
   bool operator ==(dynamic other) =>
       identical(this, other) ||
@@ -166,6 +163,7 @@ class Receipt extends DataClass implements Insertable<Receipt> {
           other.total == this.total &&
           other.shop == this.shop &&
           other.category == this.category &&
+          other.tag == this.tag &&
           other.items == this.items &&
           other.date == this.date);
 }
@@ -175,6 +173,7 @@ class ReceiptsCompanion extends UpdateCompanion<Receipt> {
   final Value<String> total;
   final Value<String> shop;
   final Value<String> category;
+  final Value<String> tag;
   final Value<String> items;
   final Value<DateTime> date;
   const ReceiptsCompanion({
@@ -182,6 +181,7 @@ class ReceiptsCompanion extends UpdateCompanion<Receipt> {
     this.total = const Value.absent(),
     this.shop = const Value.absent(),
     this.category = const Value.absent(),
+    this.tag = const Value.absent(),
     this.items = const Value.absent(),
     this.date = const Value.absent(),
   });
@@ -190,6 +190,7 @@ class ReceiptsCompanion extends UpdateCompanion<Receipt> {
     @required String total,
     @required String shop,
     @required String category,
+    this.tag = const Value.absent(),
     this.items = const Value.absent(),
     @required DateTime date,
   })  : total = Value(total),
@@ -201,6 +202,7 @@ class ReceiptsCompanion extends UpdateCompanion<Receipt> {
     Expression<String> total,
     Expression<String> shop,
     Expression<String> category,
+    Expression<String> tag,
     Expression<String> items,
     Expression<DateTime> date,
   }) {
@@ -209,6 +211,7 @@ class ReceiptsCompanion extends UpdateCompanion<Receipt> {
       if (total != null) 'total': total,
       if (shop != null) 'shop': shop,
       if (category != null) 'category': category,
+      if (tag != null) 'tag': tag,
       if (items != null) 'items': items,
       if (date != null) 'date': date,
     });
@@ -219,6 +222,7 @@ class ReceiptsCompanion extends UpdateCompanion<Receipt> {
       Value<String> total,
       Value<String> shop,
       Value<String> category,
+      Value<String> tag,
       Value<String> items,
       Value<DateTime> date}) {
     return ReceiptsCompanion(
@@ -226,6 +230,7 @@ class ReceiptsCompanion extends UpdateCompanion<Receipt> {
       total: total ?? this.total,
       shop: shop ?? this.shop,
       category: category ?? this.category,
+      tag: tag ?? this.tag,
       items: items ?? this.items,
       date: date ?? this.date,
     );
@@ -246,6 +251,9 @@ class ReceiptsCompanion extends UpdateCompanion<Receipt> {
     if (category.present) {
       map['category'] = Variable<String>(category.value);
     }
+    if (tag.present) {
+      map['tag'] = Variable<String>(tag.value);
+    }
     if (items.present) {
       map['items'] = Variable<String>(items.value);
     }
@@ -262,6 +270,7 @@ class ReceiptsCompanion extends UpdateCompanion<Receipt> {
           ..write('total: $total, ')
           ..write('shop: $shop, ')
           ..write('category: $category, ')
+          ..write('tag: $tag, ')
           ..write('items: $items, ')
           ..write('date: $date')
           ..write(')'))
@@ -318,6 +327,18 @@ class $ReceiptsTable extends Receipts with TableInfo<$ReceiptsTable, Receipt> {
     );
   }
 
+  final VerificationMeta _tagMeta = const VerificationMeta('tag');
+  GeneratedTextColumn _tag;
+  @override
+  GeneratedTextColumn get tag => _tag ??= _constructTag();
+  GeneratedTextColumn _constructTag() {
+    return GeneratedTextColumn(
+      'tag',
+      $tableName,
+      true,
+    );
+  }
+
   final VerificationMeta _itemsMeta = const VerificationMeta('items');
   GeneratedTextColumn _items;
   @override
@@ -344,7 +365,7 @@ class $ReceiptsTable extends Receipts with TableInfo<$ReceiptsTable, Receipt> {
 
   @override
   List<GeneratedColumn> get $columns =>
-      [id, total, shop, category, items, date];
+      [id, total, shop, category, tag, items, date];
   @override
   $ReceiptsTable get asDslTable => this;
   @override
@@ -376,6 +397,10 @@ class $ReceiptsTable extends Receipts with TableInfo<$ReceiptsTable, Receipt> {
           category.isAcceptableOrUnknown(data['category'], _categoryMeta));
     } else if (isInserting) {
       context.missing(_categoryMeta);
+    }
+    if (data.containsKey('tag')) {
+      context.handle(
+          _tagMeta, tag.isAcceptableOrUnknown(data['tag'], _tagMeta));
     }
     if (data.containsKey('items')) {
       context.handle(
