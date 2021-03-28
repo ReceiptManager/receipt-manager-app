@@ -66,6 +66,7 @@ class ReceiptInputController extends State<ReceiptForm> {
   TextEditingController _itemNameController;
   TextEditingController _itemTotalController;
   TextEditingController _receiptTotalController;
+  TextEditingController _receiptTagController;
   TextEditingController _dateController;
   TextEditingController _controller;
 
@@ -91,7 +92,8 @@ class ReceiptInputController extends State<ReceiptForm> {
   void initState() {
     String initialStoreName = "";
     String initialTotalName = "";
-    String initialDateController = "";
+    String initialDateName = "";
+    String initialTagName = "";
 
     _outcome = true;
     _showAlert = false;
@@ -99,13 +101,17 @@ class ReceiptInputController extends State<ReceiptForm> {
     if (_parsedReceipt != null) {
       initialStoreName = _parsedReceipt.shop.value ?? '';
       initialTotalName = _parsedReceipt.total.value ?? '';
+      initialTotalName = _parsedReceipt.tag.value ?? '';
+
       _itemList = jsonDecode(_parsedReceipt.items.value);
       _showAlert = true;
     }
 
     _storeNameController = TextEditingController(text: initialStoreName);
     _receiptTotalController = TextEditingController(text: initialTotalName);
-    _dateController = TextEditingController(text: initialDateController);
+    _dateController = TextEditingController(text: initialDateName);
+    _receiptTagController = TextEditingController(text: initialTagName);
+
     _controller = TextEditingController();
     _itemNameController = TextEditingController();
     _itemTotalController = TextEditingController();
