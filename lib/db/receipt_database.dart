@@ -37,7 +37,7 @@ class AppDatabase extends _$AppDatabase {
         if (from == 1 && to == 2) {
           await m.addColumn(receipts, receipts.items);
         } if (from == 2 && to == 3) {
-        //  await m.addColumn(receipts, receipts.tag);
+          await m.addColumn(receipts, receipts.tag);
         }
       });
 }
