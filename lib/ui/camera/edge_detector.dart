@@ -15,7 +15,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import 'package:camera/camera.dart';
 import 'package:edge_detection/edge_detection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -31,6 +30,9 @@ class _EdgeDetectorState extends State<EdgeDetector> {
     String imagePath;
     try {
       imagePath = await EdgeDetection.detectEdge;
+      if (imagePath == null)
+        Navigator.pop(context);
+
       Navigator.push(
           context,
           MaterialPageRoute(
