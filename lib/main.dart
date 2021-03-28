@@ -96,17 +96,26 @@ class OnboardScreenState extends State<OnboardScreen> {
 
   @override
   Widget build(BuildContext context) {
-    if (sharedPrefs.getBool("skip") == true) return HomeScreen(null, false);
+    if (sharedPrefs.get(SharedPreferenceKeyHolder.showOnboardScreen) == true)
+      return HomeScreen(null, false);
 
     final List<OnBoardModel> onBoardData = [
       OnBoardModel(
-        title: S.of(context).ocrTitle,
-        description: S.of(context).ocrDescription,
+        title: S
+            .of(context)
+            .ocrTitle,
+        description: S
+            .of(context)
+            .ocrDescription,
         imgUrl: "assets/data.png",
       ),
       OnBoardModel(
-        title: S.of(context).statsTitle,
-        description: S.of(context).startsDescription,
+        title: S
+            .of(context)
+            .statsTitle,
+        description: S
+            .of(context)
+            .startsDescription,
         imgUrl: "assets/charts.png",
       ),
     ];
@@ -148,14 +157,19 @@ class OnboardScreenState extends State<OnboardScreen> {
               ),
               skipButton: TextButton(
                 onPressed: () {
-                  sharedPrefs.setBool("skip", true);
+                  setDefaultValues(sharedPrefs);
+                  sharedPrefs.setBool(
+                      SharedPreferenceKeyHolder.showOnboardScreen, true);
+
                   Navigator.push(
                       context,
                       MaterialPageRoute(
                           builder: (context) => HomeScreen(null, false)));
                 },
                 child: Text(
-                  S.of(context).skip,
+                  S
+                      .of(context)
+                      .skip,
                   style: TextStyle(color: LightColor.black),
                 ),
               ),
@@ -176,8 +190,12 @@ class OnboardScreenState extends State<OnboardScreen> {
                       ),
                       child: Text(
                         state.isLastPage
-                            ? S.of(context).done
-                            : S.of(context).next,
+                            ? S
+                            .of(context)
+                            .done
+                            : S
+                            .of(context)
+                            .next,
                         style: TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
@@ -200,10 +218,23 @@ class OnboardScreenState extends State<OnboardScreen> {
         curve: Curves.easeInOutSine,
       );
     } else {
-      sharedPrefs.setBool("skip", true);
+      setDefaultValues(sharedPrefs);
+      sharedPrefs.setBool(SharedPreferenceKeyHolder.showOnboardScreen, true);
       Navigator.push(context,
           MaterialPageRoute(builder: (context) => HomeScreen(null, false)));
     }
+  }
+
+  void setDefaultValues(SharedPreferences _prefs) {
+    _prefs.setBool(SharedPreferenceKeyHolder.enableDebug, false);
+    _prefs.setBool(SharedPreferenceKeyHolder.legacyParser, true);
+    _prefs.setBool(SharedPreferenceKeyHolder.gaussianBlur, false);
+    _prefs.setBool(SharedPreferenceKeyHolder.rotate, false);
+    _prefs.setBool(SharedPreferenceKeyHolder.reverseProxy, false);
+    _prefs.setBool(SharedPreferenceKeyHolder.https, true);
+    _prefs.setBool(SharedPreferenceKeyHolder.grayscale, true);
+    _prefs.setBool(SharedPreferenceKeyHolder.sendTrainingData, false);
+    _prefs.setBool(SharedPreferenceKeyHolder.showItemList, false);
   }
 }
 
