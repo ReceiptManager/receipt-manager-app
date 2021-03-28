@@ -34,6 +34,7 @@ import 'package:receipt_manager/db/model/receipt_category.dart';
 import 'package:receipt_manager/network/network_client.dart';
 import 'package:receipt_manager/network/network_client_holder.dart';
 import 'package:receipt_manager/ui/camera/edge_detector.dart';
+import 'package:receipt_manager/ui/settings/settings_widget.dart';
 import 'package:receipt_manager/ui/theme/color/color.dart';
 import 'package:receipt_manager/ui/theme/theme_manager.dart';
 import 'package:receipt_manager/ui/camera/camera_picker.dart';
@@ -73,6 +74,7 @@ class ReceiptInputController extends State<ReceiptForm> {
 
   String _shopName;
   String _total;
+  String _tag;
   bool _sendImage;
   String _receiptCategory;
 
@@ -129,6 +131,8 @@ class ReceiptInputController extends State<ReceiptForm> {
     });
 
     WidgetsBinding.instance.addPostFrameCallback((_) => showUpdateSuccess());
+    bool edge_detection =
+        this._sharedPrefs.getBool(SharedPreferenceKeyHolder.detectEdges);
     return BlocBuilder(
       bloc: _bloc,
       builder: (BuildContext context, state) {
@@ -177,13 +181,23 @@ class ReceiptInputController extends State<ReceiptForm> {
                                             WidgetsFlutterBinding
                                                 .ensureInitialized();
 
+                                            final cameras =
+                                                await availableCameras();
+                                            final firstCamera = cameras.first;
+
                                             Navigator.push(
                                                 context,
                                                 MaterialPageRoute(
                                                   builder: (context) => Theme(
                                                       data: AppTheme.lightTheme,
-                                                      child: EdgeDetector()
-                                                      ),
+                                                      child: edge_detection
+                                                          ? EdgeDetector()
+                                                          : TakePictureScreen(
+                                                              camera:
+                                                                  firstCamera,
+                                                              key: _formKey,
+                                                              sharedPrefs: this
+                                                                  ._sharedPrefs)),
                                                 ));
                                           },
                                         ))),
@@ -276,6 +290,8 @@ class ReceiptInputController extends State<ReceiptForm> {
                                   }
                                 },
                               )),
+                              PaddingFactory.create(TextFormFactory.tag(
+                                  _receiptTagController, context)),
                               PaddingFactory.create(Container(
                                   padding: const EdgeInsets.only(
                                       left: 8.0, right: 8.0),
@@ -539,6 +555,7 @@ class ReceiptInputController extends State<ReceiptForm> {
                   _showAlert = false;
                   _shopName = _storeNameController.text;
                   _total = _receiptTotalController.text;
+                  _tag = _receiptTagController.text;
                 } catch (e) {
                   reset();
                   return;
@@ -549,6 +566,7 @@ class ReceiptInputController extends State<ReceiptForm> {
                 _shopName.split(" ").join("");
                 _total = _outcome ? "-" + _total : _total;
                 _total.split(" ").join("");
+                _tag = _tag?.trim();
 
                 String jsonItemList =
                     _itemList == null ? null : jsonEncode(_itemList);
@@ -559,7 +577,8 @@ class ReceiptInputController extends State<ReceiptForm> {
                         total: Value(_total),
                         category: Value(jsonEncode(_selectedCategory)),
                         items: Value(jsonItemList),
-                        shop: Value(_shopName))));
+                        shop: Value(_shopName),
+                        tag: Value(_tag))));
                 _bloc.add(ReceiptAllFetch());
 
                 NetworkClientHolder holder = NetworkClientHolder();

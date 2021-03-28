@@ -15,9 +15,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import 'dart:io';
+
 import 'package:edge_detection/edge_detection.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:receipt_manager/ui/camera/display_image.dart';
 
 class EdgeDetector extends StatefulWidget {
@@ -38,7 +39,7 @@ class _EdgeDetectorState extends State<EdgeDetector> {
           MaterialPageRoute(
             builder: (context) => DisplayPictureScreen(imagePath: imagePath),
           ));
-    } on PlatformException {
+    } on FileSystemException {
       imagePath = 'Failed to get cropped image path.';
     }
     if (!mounted) return;
