@@ -1,0 +1,3 @@
+[submodule "modules/edge-detection"]
+	path = modules/edge-detection
+	url = https://github.com/FlutterEdgeDetection/edge-detection
