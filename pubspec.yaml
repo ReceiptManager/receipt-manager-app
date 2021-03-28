@@ -54,6 +54,7 @@ dependencies:
   flutter_staggered_animations: ^1.0.0
   bonsoir: ^1.0.0
   syncfusion_flutter_charts: ^18.4.49
+  edge_detection: ^1.0.5
 
 flutter_localizations:
   sdk: flutter
