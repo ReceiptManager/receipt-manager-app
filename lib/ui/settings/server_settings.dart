@@ -73,8 +73,6 @@ class _ServerSettingsState extends State<ServerSettings> {
     );
   }
 
-  final GlobalKey<ScaffoldMessengerState> _scaffoldKey = GlobalKey<ScaffoldMessengerState>();
-
   @override
   Widget build(BuildContext context) {
     if (sharedPreferences.getBool("reverseProxy") != null &&
@@ -94,7 +92,6 @@ class _ServerSettingsState extends State<ServerSettings> {
 
     return Scaffold(
       backgroundColor: Colors.white,
-      key: _scaffoldKey,
       appBar: AppBar(title: Text(S.of(context).serverSettings)),
       body: Column(children: [
         Padding(padding: const EdgeInsets.all(16.0), child: serverTextfield()),
@@ -154,7 +151,7 @@ class _ServerSettingsState extends State<ServerSettings> {
                         try {
                           final result = await InternetAddress.lookup(url);
                           if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
-                            _scaffoldKey.currentState
+                            ScaffoldMessenger.of(context)
                               ..hideCurrentSnackBar()
                               ..showSnackBar(SnackBar(
                                 content: Text(S.of(context).connectionSuccess),
@@ -162,7 +159,7 @@ class _ServerSettingsState extends State<ServerSettings> {
                               ));
                           }
                         } on SocketException catch (_) {
-                          _scaffoldKey.currentState
+                          ScaffoldMessenger.of(context)
                             ..hideCurrentSnackBar()
                             ..showSnackBar(SnackBar(
                               content: Text(S.of(context).connectionFailed),
@@ -180,7 +177,7 @@ class _ServerSettingsState extends State<ServerSettings> {
                           sharedPreferences.setBool("reverseProxy", true);
                         }
 
-                        _scaffoldKey.currentState
+                        ScaffoldMessenger.of(context)
                           ..showSnackBar(SnackBar(
                             content: Text(S.of(context).updateServerIP),
                             backgroundColor: Colors.green,
