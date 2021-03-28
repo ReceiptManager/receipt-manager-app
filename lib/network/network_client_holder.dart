@@ -84,9 +84,9 @@ class NetworkClientHolder {
   }
 
   void readOptions(SharedPreferences sharedPrefs) {
-    ip = sharedPrefs.get("ipv4") == null ? false : sharedPrefs.get("ipv4");
+    ip = sharedPrefs.get("ipv4") == null ? "" : sharedPrefs.get("ipv4");
     token = sharedPrefs.get("api_token") == null
-        ? false
+        ? ""
         : sharedPrefs.get("api_token");
     sendDebugOutput = sharedPrefs.get("enable_debug_output") == null
         ? false
@@ -107,7 +107,7 @@ class NetworkClientHolder {
         : sharedPrefs.get("showItemList");
     https = sharedPrefs.get("https") == null ? false : sharedPrefs.get("https");
     domain =
-        sharedPrefs.get("domain") == null ? false : sharedPrefs.get("domain");
+        sharedPrefs.get("domain") == null ? "" : sharedPrefs.get("domain");
     reverseProxy = sharedPrefs.get("reverseProxy") == null
         ? false
         : sharedPrefs.get("reverseProxy");
