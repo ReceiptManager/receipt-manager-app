@@ -235,6 +235,8 @@ class OnboardScreenState extends State<OnboardScreen> {
     _prefs.setBool(SharedPreferenceKeyHolder.grayscale, true);
     _prefs.setBool(SharedPreferenceKeyHolder.sendTrainingData, false);
     _prefs.setBool(SharedPreferenceKeyHolder.showItemList, false);
+    _prefs.setBool(SharedPreferenceKeyHolder.detectEdges, false);
+    _prefs.setBool(SharedPreferenceKeyHolder.showParsedResults, false);
   }
 }
 
