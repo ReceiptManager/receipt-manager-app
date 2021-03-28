@@ -49,6 +49,8 @@ class SharedPreferenceKeyHolder {
   static final domain = "domain";
   static final apiToken = "api_token";
   static final ip = "ipv4";
+  static final detectEdges = "detect_edges";
+  static final showParsedResults = "parsed_results";
 }
 
 class _SettingsWidgetState extends State<SettingsWidget> {
@@ -60,6 +62,8 @@ class _SettingsWidgetState extends State<SettingsWidget> {
   bool _sendTrainingData = false;
   bool _showItemList = false;
   bool _https = true;
+  bool _edgeDetection = false;
+  bool _showParsedResults = false;
 
   final GlobalKey<ScaffoldState> _scaffoldKey4 = GlobalKey<ScaffoldState>();
   final SharedPreferences _prefs;
@@ -75,6 +79,8 @@ class _SettingsWidgetState extends State<SettingsWidget> {
     _sendTrainingData = _prefs.getBool(SharedPreferenceKeyHolder.sendTrainingData);
     _showItemList = _prefs.getBool(SharedPreferenceKeyHolder.showItemList);
     _https = _prefs.getBool(SharedPreferenceKeyHolder.https);
+    _edgeDetection = _prefs.getBool(SharedPreferenceKeyHolder.detectEdges);
+    _showParsedResults = _prefs.getBool(SharedPreferenceKeyHolder.showParsedResults);
   }
 
   @override
@@ -250,6 +256,28 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                 setState(() {
                   _showItemList = value;
                   _prefs.setBool("showItemList", value);
+                });
+              },
+            ),
+            SettingsTile.switchTile(
+              title: S.of(context).detectEdges,
+              leading: Icon(Icons.zoom_out_map_outlined),
+              switchValue: _edgeDetection,
+              onToggle: (bool value) {
+                setState(() {
+                  _edgeDetection = value;
+                  _prefs.setBool(SharedPreferenceKeyHolder.detectEdges, value);
+                });
+              },
+            ),
+            SettingsTile.switchTile(
+              title: S.of(context).showParsedReceipt,
+              leading: Icon(Icons.receipt),
+              switchValue: _showParsedResults,
+              onToggle: (bool value) {
+                setState(() {
+                  _showParsedResults = value;
+                  _prefs.setBool(SharedPreferenceKeyHolder.showParsedResults, value);
                 });
               },
             ),
