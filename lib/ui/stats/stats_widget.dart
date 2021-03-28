@@ -17,6 +17,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
 import 'package:receipt_manager/db/bloc/moor/db_bloc.dart';
 import 'package:receipt_manager/db/bloc/moor/db_state.dart';
@@ -30,6 +31,7 @@ import 'package:receipt_manager/ui/stats/chart_data_month.dart';
 import 'package:receipt_manager/ui/stats/monthly_overview.dart';
 import 'package:receipt_manager/ui/stats/weekly_chart_data.dart';
 import 'package:receipt_manager/ui/stats/weekly_overview.dart';
+import 'package:receipt_manager/ui/theme/color/color.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 class StatsWidget extends StatefulWidget {
@@ -59,20 +61,42 @@ class StatsWidgetState extends State<StatsWidget> {
     _tooltipBehavior2 = TooltipBehavior(enable: true);
   }
 
-  SfCircularChart getCategoryChart(List<Receipt> receipts) {
+  Container getNoReceipts() {
+    return Container(
+        color: Colors.white,
+        child: Column(
+          children: [
+            PaddingFactory.create(
+              SvgPicture.asset(
+                "assets/not_empty",
+                height: 120,
+              ),
+            ),
+            PaddingFactory.create(Text(
+              S.of(context).noReceipts,
+              style: TextStyle(fontSize: 16, color: LightColor.grey),
+            ))
+          ],
+        ));
+  }
+
+  Widget getCategoryChart(List<Receipt> receipts) {
+    if (receipts == null || receipts.length == 0) {
+      return getNoReceipts();
+    }
+
     CategoryOverview overview = CategoryOverview(receipts);
     List<CategoryData> data = overview.getData();
 
     return SfCircularChart(
         legend: Legend(isVisible: true),
         series: <CircularSeries>[
-          // Initialize line series
           PieSeries<CategoryData, String>(
               enableTooltip: true,
               dataSource: data,
               xValueMapper: (CategoryData data, _) => data.label,
               yValueMapper: (CategoryData data, _) => data.total,
-              name: 'Sales')
+              name: 'Category')
         ]);
   }
 
@@ -80,7 +104,11 @@ class StatsWidgetState extends State<StatsWidget> {
     return DateFormat.E().format(date);
   }
 
-  SfCartesianChart getMonthChart(List<Receipt> receipts) {
+  Widget getMonthChart(List<Receipt> receipts) {
+    if (receipts == null || receipts.length == 0) {
+      return getNoReceipts();
+    }
+
     MonthlyOverview overview = MonthlyOverview(receipts);
     List<ReceiptMonthData> data = overview.getData();
 
@@ -98,8 +126,11 @@ class StatsWidgetState extends State<StatsWidget> {
         ]);
   }
 
-  SfCartesianChart getWeeklyChart(
-      List<Receipt> receipts, BuildContext context) {
+  Widget getWeeklyChart(List<Receipt> receipts, BuildContext context) {
+    if (receipts == null || receipts.length == 0) {
+      return getNoReceipts();
+    }
+
     WeeklyOverview overview = WeeklyOverview(receipts, context);
     List<WeeklyChartData> data = overview.getData();
 
