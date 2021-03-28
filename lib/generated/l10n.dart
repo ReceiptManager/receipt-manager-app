@@ -1364,6 +1364,26 @@ class S {
       args: [],
     );
   }
+
+  /// `Erkenne Kanten`
+  String get detectEdges {
+    return Intl.message(
+      'Erkenne Kanten',
+      name: 'detectEdges',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Tesseract Ergebnis anzeigen`
+  String get showParsedReceipt {
+    return Intl.message(
+      'Tesseract Ergebnis anzeigen',
+      name: 'showParsedReceipt',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
