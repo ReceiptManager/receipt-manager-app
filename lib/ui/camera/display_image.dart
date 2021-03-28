@@ -61,6 +61,9 @@ class DisplayPictureScreenState extends State<DisplayPictureScreen> {
     final RoundedLoadingButtonController _btnController =
         new RoundedLoadingButtonController();
 
+    if (imagePath == null)
+      Navigator.pop(context);
+
     return Scaffold(
         appBar: AppBar(title: Text(S.of(context).receipt)),
         key: key2,
@@ -69,7 +72,7 @@ class DisplayPictureScreenState extends State<DisplayPictureScreen> {
             decoration: new BoxDecoration(
                 image: new DecorationImage(
               image: new FileImage(File(imagePath)),
-              fit: BoxFit.fitHeight,
+              fit: BoxFit.fill,
             )),
             child: Stack(
               alignment: Alignment.bottomCenter,
