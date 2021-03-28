@@ -41,6 +41,14 @@ class SharedPreferenceKeyHolder {
   static final grayscale = "grayscale";
   static final gaussianBlur = "gaussian";
   static final rotate = "rotate";
+  static final sendTrainingData = "sendTrainingData";
+  static final showItemList = "showItemList";
+  static final https = "https";
+  static final reverseProxy = "reverseProxy";
+  static final showOnboardScreen = "showOnboardScreen";
+  static final domain = "domain";
+  static final apiToken = "api_token";
+  static final ip = "ipv4";
 }
 
 class _SettingsWidgetState extends State<SettingsWidget> {
@@ -52,50 +60,21 @@ class _SettingsWidgetState extends State<SettingsWidget> {
   bool _sendTrainingData = false;
   bool _showItemList = false;
   bool _https = true;
-  bool _reverseProxy = false;
 
   final GlobalKey<ScaffoldState> _scaffoldKey4 = GlobalKey<ScaffoldState>();
-
   final SharedPreferences _prefs;
 
   _SettingsWidgetState(this._prefs);
 
   readFallbackValues() {
-    _debugOutput =
-        _prefs.getBool(SharedPreferenceKeyHolder.enableDebug) == null
-            ? _debugOutput
-            : _prefs.getBool(SharedPreferenceKeyHolder.enableDebug);
-
-    _legacyParser =
-        _prefs.getBool(SharedPreferenceKeyHolder.legacyParser) == null
-            ? _legacyParser
-            : _prefs.getBool(SharedPreferenceKeyHolder.legacyParser);
-
-    _grayscale = _prefs.getBool(SharedPreferenceKeyHolder.grayscale) == null
-        ? _grayscale
-        : _prefs.getBool(SharedPreferenceKeyHolder.grayscale);
-
-    _gaussian = _prefs.getBool(SharedPreferenceKeyHolder.gaussianBlur) == null
-        ? _gaussian
-        : _prefs.getBool(SharedPreferenceKeyHolder.gaussianBlur);
-
-    _rotate = _prefs.getBool(SharedPreferenceKeyHolder.rotate) == null
-        ? _rotate
-        : _prefs.getBool(SharedPreferenceKeyHolder.rotate);
-
-    _sendTrainingData = _prefs.getBool("sendTrainingData") == null
-        ? _sendTrainingData
-        : _prefs.getBool("sendTrainingData");
-
-    _showItemList = _prefs.getBool("showItemList") == null
-        ? _showItemList
-        : _prefs.getBool("showItemList");
-
-    _https = _prefs.getBool("https") == null ? _https : _prefs.getBool("https");
-
-    _reverseProxy = _prefs.getBool("reverseProxy") == null
-        ? _reverseProxy
-        : _prefs.getBool("reverseProxy");
+    _debugOutput = _prefs.getBool(SharedPreferenceKeyHolder.enableDebug);
+    _legacyParser = _prefs.getBool(SharedPreferenceKeyHolder.legacyParser);
+    _grayscale = _prefs.getBool(SharedPreferenceKeyHolder.grayscale);
+    _gaussian = _prefs.getBool(SharedPreferenceKeyHolder.gaussianBlur);
+    _rotate = _prefs.getBool(SharedPreferenceKeyHolder.rotate);
+    _sendTrainingData = _prefs.getBool(SharedPreferenceKeyHolder.sendTrainingData);
+    _showItemList = _prefs.getBool(SharedPreferenceKeyHolder.showItemList);
+    _https = _prefs.getBool(SharedPreferenceKeyHolder.https);
   }
 
   @override
@@ -207,8 +186,6 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                   _gaussian = value;
                   _prefs.setBool("gaussian", value);
 
-                  //The gaussian blur does only work if the image
-                  //is grayscaled
                   if (value) {
                     _grayscale = true;
                     _prefs.setBool("grayscale", value);

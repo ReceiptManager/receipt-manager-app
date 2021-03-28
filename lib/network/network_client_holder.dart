@@ -17,6 +17,7 @@
 
 import 'dart:io';
 
+import 'package:receipt_manager/ui/settings/settings_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 /// The [NetworkClientHolder] is used to store and update submitted
@@ -84,35 +85,17 @@ class NetworkClientHolder {
   }
 
   void readOptions(SharedPreferences sharedPrefs) {
-    ip = sharedPrefs.get("ipv4") == null ? "" : sharedPrefs.get("ipv4");
-    token = sharedPrefs.get("api_token") == null
-        ? ""
-        : sharedPrefs.get("api_token");
-    sendDebugOutput = sharedPrefs.get("enable_debug_output") == null
-        ? false
-        : sharedPrefs.get("enable_debug_output");
-    grayscale = sharedPrefs.get("grayscale") == null
-        ? false
-        : sharedPrefs.get("grayscale");
-    gaussian = sharedPrefs.get("gaussian") == null
-        ? false
-        : sharedPrefs.get("gaussian");
-    legacyParser = sharedPrefs.get("legacyParser") == null
-        ? false
-        : sharedPrefs.get("legacyParser");
-    rotate =
-        sharedPrefs.get("rotate") == null ? false : sharedPrefs.get("rotate");
-    showItemList = sharedPrefs.get("showItemList") == null
-        ? false
-        : sharedPrefs.get("showItemList");
-    https = sharedPrefs.get("https") == null ? false : sharedPrefs.get("https");
-    domain =
-        sharedPrefs.get("domain") == null ? "" : sharedPrefs.get("domain");
-    reverseProxy = sharedPrefs.get("reverseProxy") == null
-        ? false
-        : sharedPrefs.get("reverseProxy");
-    submitTrainingData = sharedPrefs.getBool("sendTrainingData") == null
-        ? false
-        : sharedPrefs.get("sendTrainingData");
+    sendDebugOutput = sharedPrefs.get(SharedPreferenceKeyHolder.enableDebug);
+    legacyParser = sharedPrefs.getBool(SharedPreferenceKeyHolder.legacyParser);
+    grayscale = sharedPrefs.getBool(SharedPreferenceKeyHolder.grayscale);
+    gaussian = sharedPrefs.getBool(SharedPreferenceKeyHolder.gaussianBlur);
+    rotate = sharedPrefs.getBool(SharedPreferenceKeyHolder.rotate);
+    submitTrainingData = sharedPrefs.getBool(SharedPreferenceKeyHolder.sendTrainingData);
+    showItemList = sharedPrefs.getBool(SharedPreferenceKeyHolder.showItemList);
+    https = sharedPrefs.getBool(SharedPreferenceKeyHolder.https);
+    reverseProxy = sharedPrefs.getBool(SharedPreferenceKeyHolder.reverseProxy);
+    domain =  sharedPrefs.get(SharedPreferenceKeyHolder.domain);
+    ip =  sharedPrefs.get(SharedPreferenceKeyHolder.ip);
+    token =  sharedPrefs.get(SharedPreferenceKeyHolder.apiToken);
   }
 }
