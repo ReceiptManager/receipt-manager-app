@@ -63,7 +63,7 @@ class _SettingsWidgetState extends State<SettingsWidget> {
   bool _showItemList = false;
   bool _https = true;
   bool _edgeDetection = false;
-  bool _showParsedResults = false;
+  //bool _showParsedResults = false;
 
   final GlobalKey<ScaffoldState> _scaffoldKey4 = GlobalKey<ScaffoldState>();
   final SharedPreferences _prefs;
@@ -80,7 +80,7 @@ class _SettingsWidgetState extends State<SettingsWidget> {
     _showItemList = _prefs.getBool(SharedPreferenceKeyHolder.showItemList);
     _https = _prefs.getBool(SharedPreferenceKeyHolder.https);
     _edgeDetection = _prefs.getBool(SharedPreferenceKeyHolder.detectEdges);
-    _showParsedResults = _prefs.getBool(SharedPreferenceKeyHolder.showParsedResults);
+    //_showParsedResults = _prefs.getBool(SharedPreferenceKeyHolder.showParsedResults);
   }
 
   @override
