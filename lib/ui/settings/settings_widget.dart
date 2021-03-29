@@ -18,7 +18,7 @@
 import 'package:flutter/material.dart';
 import 'package:receipt_manager/generated/l10n.dart';
 import 'package:receipt_manager/ui/settings/api_settings.dart';
-import 'package:receipt_manager/ui/settings/open_source.dart';
+import 'package:receipt_manager/ui/settings/licence.dart';
 import 'package:receipt_manager/ui/settings/server_settings.dart';
 import 'package:settings_ui/settings_ui.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -291,7 +291,7 @@ class _SettingsWidgetState extends State<SettingsWidget> {
               leading: Icon(Icons.wysiwyg),
               onPressed: (context) {
                 Navigator.of(context).push(MaterialPageRoute(
-                    builder: (BuildContext context) => OpenSourceSettings()));
+                    builder: (BuildContext context) => OssLicensesPage()));
               },
             ),
           ],
