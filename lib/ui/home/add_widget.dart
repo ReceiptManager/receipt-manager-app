@@ -71,11 +71,13 @@ class HomeWidget extends StatelessWidget {
     );
   }
 
+  final GlobalKey<ScaffoldState> _key = GlobalKey();
   @override
   Widget build(BuildContext context) {
     init();
 
     return Scaffold(
+      key: _key,
       backgroundColor: Colors.white,
       body: ReceiptForm(receipt, sendImage, sharedPrefs, _bloc),
     );

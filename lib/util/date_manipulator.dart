@@ -27,13 +27,7 @@ class DateManipulator {
     int day = dateTime.day;
 
     year = year < 100 ? DateTime.now().year : year;
-    DateTime _date = DateTime.utc(year, month, day);
-
-    print(_date.year);
-    print(_date.month);
-    print(_date.day);
-
-    return DateFormat(formatString).format(_date);
+    return DateFormat(formatString).format(DateTime.utc(year, month, day));
   }
 
   static String humanDate(BuildContext context, DateTime dateTime) {

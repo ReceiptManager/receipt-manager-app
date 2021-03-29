@@ -42,7 +42,6 @@ class TakePictureScreen extends StatefulWidget {
 class TakePictureScreenState extends State<TakePictureScreen> {
   CameraController _controller;
   Future<void> _initializeControllerFuture;
-  final GlobalKey<ScaffoldState> key = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {

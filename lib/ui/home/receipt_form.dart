@@ -125,6 +125,8 @@ class ReceiptInputController extends State<ReceiptForm> {
 
   @override
   Widget build(BuildContext context) {
+    final GlobalKey<ScaffoldState> key = GlobalKey<ScaffoldState>();
+
     setState(() {
       if (_parsedReceipt != null && _parsedReceipt.date.value != null)
         _dateController.text =
@@ -135,6 +137,7 @@ class ReceiptInputController extends State<ReceiptForm> {
     bool edgeDetection =
         this._sharedPrefs.getBool(SharedPreferenceKeyHolder.detectEdges);
     return BlocBuilder(
+      key: key,
       bloc: _bloc,
       builder: (BuildContext context, state) {
         if (state is LoadingState) {
@@ -644,6 +647,8 @@ class ReceiptInputController extends State<ReceiptForm> {
     _receiptTotalController.clear();
     _storeNameController.clear();
     _dateController.clear();
+    _receiptTagController.clear();
+    _receiptDate = null;
   }
 
   Widget getItemListButton() {
