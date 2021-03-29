@@ -46,9 +46,6 @@ class MonthlyOverview {
       if (r.date.year != DateTime.now().year) continue;
 
       double total = double.parse(r.total);
-      if (total < 0) {
-        total = -total;
-      }
       chartData[r.date.month].total += total;
     }
 
