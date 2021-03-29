@@ -81,10 +81,6 @@ class HistoryWidgetState extends State<HistoryWidget> {
     init = false;
   }
 
-  onChange() {
-    setState(() {});
-  }
-
   void callback(List<Receipt> receipts) {
     setState(() {
       this.receipts = receipts;
