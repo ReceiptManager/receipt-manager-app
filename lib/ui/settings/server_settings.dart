@@ -114,6 +114,8 @@ class _ServerSettingsState extends State<ServerSettings> {
                         RegExp ipRegex = new RegExp(ipv4Regex,
                             caseSensitive: false, multiLine: false);
 
+                        url = url.trim(); // trim whitespaces
+
                         if (url.isEmpty ||
                             (!ipRegex.hasMatch(url) && !urlRegex.hasMatch(url))) {
                           showDialog(
