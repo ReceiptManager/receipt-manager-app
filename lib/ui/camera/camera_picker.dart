@@ -20,8 +20,6 @@ import 'dart:async';
 import 'package:camera/camera.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:path/path.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:receipt_manager/generated/l10n.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
