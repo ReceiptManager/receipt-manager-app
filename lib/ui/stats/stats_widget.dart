@@ -120,7 +120,7 @@ class StatsWidgetState extends State<StatsWidget> {
                   DateFormat.E().format((DateTime.utc(year, month, data.day))),
               yValueMapper: (WeeklyChartData data, _) => data.total,
               enableTooltip: true,
-              width: 1)
+              width: 0.75)
         ]);
   }
 
