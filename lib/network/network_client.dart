@@ -117,14 +117,15 @@ class NetworkClient {
         MaterialPageRoute(builder: (context) => HomeScreen(null, true)));
   }
 
-  void show_success(String msg, BuildContext context) {
+  void showSuccess(String msg, BuildContext context) {
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
       content: Text(msg),
       backgroundColor: Colors.green,
     ));
   }
 
-  void show_error(String msg, BuildContext context) {
+  // ignore: non_constant_identifier_names
+  void showError(String msg, BuildContext context) {
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
       content: Text(msg),
       backgroundColor: Colors.red,
@@ -151,9 +152,9 @@ class NetworkClient {
         await post(getTrainingUrl(holder), headers: headers, body: json);
 
     if (response.statusCode != 200) {
-      show_error(S.of(context).failedToSubmitTrainingData, context);
+      showError(S.of(context).failedToSubmitTrainingData, context);
     } else {
-      show_success("Submitted training data", context);
+      showSuccess("Submitted training data", context);
     }
   }
 
@@ -167,7 +168,7 @@ class NetworkClient {
             (holder.domain == null || holder.domain.isEmpty))) {
 
       log("IP appears invalid.");
-      show_error(S.of(context).serverIpIsNotSet, context);
+      showError(S.of(context).serverIpIsNotSet, context);
       redirect(context);
       return;
     }
@@ -190,13 +191,13 @@ class NetworkClient {
     );
     request.files.add(multipartFile);
 
-    show_success("Send to: " + uri.toString(), context);
+    showSuccess("Send to: " + uri.toString(), context);
 
     try {
       var response = await request.send().timeout(
         Duration(seconds: _timeout),
         onTimeout: () async {
-          show_error(S.of(context).serverTimeout, context);
+          showError(S.of(context).serverTimeout, context);
           toHomeScreen(context);
 
           return;
