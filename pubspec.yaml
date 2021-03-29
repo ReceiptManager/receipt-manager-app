@@ -65,6 +65,7 @@ dev_dependencies:
     sdk: flutter
   moor_generator:
   build_runner:
+  flutter_oss_licenses: ^1.0.1
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
