@@ -51,7 +51,7 @@ class WeeklyOverview {
             receipt.date.month == d.month &&
             receipt.date.day == d.day) {
           double total = double.parse(receipt.total);
-          chartData[receipt.date.month].total += total;
+          chartData[receipt.date.weekday - 1].total += total;
         }
       }
     }
