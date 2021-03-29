@@ -133,8 +133,7 @@ class NetworkClient {
   }
 
   Future<void> redirect(BuildContext context) async {
-    await Future.delayed(
-        const Duration(seconds: _transactionDuration), () {});
+    await Future.delayed(const Duration(seconds: _transactionDuration), () {});
 
     Navigator.push(context,
         MaterialPageRoute(builder: (context) => HomeScreen(null, true)));
@@ -166,7 +165,6 @@ class NetworkClient {
     if ((!holder.reverseProxy && (holder.ip == null || holder.ip.isEmpty)) ||
         (holder.reverseProxy &&
             (holder.domain == null || holder.domain.isEmpty))) {
-
       log("IP appears invalid.");
       showError(S.of(context).serverIpIsNotSet, context);
       redirect(context);
@@ -212,6 +210,13 @@ class NetworkClient {
       if (ret != null && ret == 200) {
         log("Uploaded image.");
       } else {
+        if (ret == 403) {
+          showError(S.of(context).invalidAPIToken, context);
+          toHomeScreen(context);
+        } else {
+          showError(S.of(context).generalException, context);
+          toHomeScreen(context);
+        }
         log("Could not upload image.");
       }
 
@@ -220,10 +225,16 @@ class NetworkClient {
           .transform(utf8.decoder)
           .listen((value) {
             Map<String, dynamic> r = jsonDecode(value);
+
+            if (r == null) {
+              showError(S.of(context).invalidReceipt, context);
+              redirect(context);
+            }
+
             DateTime _date;
 
             log("Receipt item list:");
-            if (holder.showItemList == false) {
+            if (holder.showItemList == true) {
               for (List<dynamic> receiptItem in r['receiptItems']) {
                 log("\t" + receiptItem[0] + " " + receiptItem[1]);
               }
@@ -288,11 +299,8 @@ class NetworkClient {
       } else {
         msg = S.of(context).socketException + _.toString();
       }
-      ScaffoldMessenger.of(context)
-        ..hideCurrentSnackBar()
-        ..showSnackBar(
-            SnackBar(content: Text(msg), backgroundColor: Colors.red));
 
+      showError(msg, context);
       toHomeScreen(context);
       return;
     } on HandshakeException catch (_) {
@@ -303,11 +311,7 @@ class NetworkClient {
         msg = S.of(context).handshakeException + _.toString();
       }
 
-      ScaffoldMessenger.of(context)
-        ..hideCurrentSnackBar()
-        ..showSnackBar(
-            SnackBar(content: Text(msg), backgroundColor: Colors.red));
-
+      showError(msg, context);
       toHomeScreen(context);
       return;
     } catch (_) {
@@ -320,11 +324,7 @@ class NetworkClient {
         msg = S.of(context).generalException + _.toString();
       }
 
-      ScaffoldMessenger.of(context)
-        ..hideCurrentSnackBar()
-        ..showSnackBar(
-            SnackBar(content: Text(msg), backgroundColor: Colors.red));
-
+      showError(msg, context);
       toHomeScreen(context);
       return;
     }

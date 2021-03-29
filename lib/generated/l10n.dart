@@ -865,6 +865,16 @@ class S {
     );
   }
 
+  /// `Kategorie`
+  String get category {
+    return Intl.message(
+      'Kategorie',
+      name: 'category',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Baumarkt`
   String get diySupermarkt {
     return Intl.message(
@@ -1400,6 +1410,26 @@ class S {
     return Intl.message(
       'Füge einen Tag für deinen Beleg hinzu',
       name: 'tagHelperText',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Ungültigen Kassenbeleg erhalten`
+  String get invalidReceipt {
+    return Intl.message(
+      'Ungültigen Kassenbeleg erhalten',
+      name: 'invalidReceipt',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Verwendeter API  Token ist ungültig`
+  String get invalidAPIToken {
+    return Intl.message(
+      'Verwendeter API  Token ist ungültig',
+      name: 'invalidAPIToken',
       desc: '',
       args: [],
     );

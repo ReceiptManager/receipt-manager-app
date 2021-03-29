@@ -83,6 +83,7 @@
   "education": "Education",
   "noData": "Data N/A",
   "expensesByCategory": "Expenses by category",
+  "category": "Category",
   "diySupermarkt": "DIY supermarkt",
   "insertYourApiToken": "Insert your api token",
   "apitoken": "API Token",
@@ -130,5 +131,7 @@
   "detectEdges" : "Detect Edges",
   "showParsedReceipt": "Show tesseract output",
   "tag": "Tag",
-  "tagHelperText": "Add a receipt tag"
+  "tagHelperText": "Add a receipt tag",
+  "invalidReceipt" : "Receive invalid receipt",
+  "invalidAPIToken": "API token is invalid"
 }
