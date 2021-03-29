@@ -28,6 +28,8 @@ import 'package:intl/intl.dart';
 import 'package:random_color/random_color.dart';
 import 'package:receipt_manager/api/expenses_api.dart';
 import 'package:receipt_manager/db/bloc/moor/bloc.dart';
+import 'package:receipt_manager/db/memento/receipt_memento.dart';
+import 'package:receipt_manager/db/model/receipt_category.dart';
 import 'package:receipt_manager/db/receipt_database.dart';
 import 'package:receipt_manager/factory/banner_factory.dart';
 import 'package:receipt_manager/factory/categories_factory.dart';
@@ -35,8 +37,6 @@ import 'package:receipt_manager/factory/logo_factory.dart';
 import 'package:receipt_manager/factory/padding_factory.dart';
 import 'package:receipt_manager/factory/text_form_history.dart';
 import 'package:receipt_manager/generated/l10n.dart';
-import 'package:receipt_manager/db/memento/receipt_memento.dart';
-import 'package:receipt_manager/db/model/receipt_category.dart';
 import 'package:receipt_manager/ui/theme/color/color.dart';
 import 'package:receipt_manager/ui/theme/theme_manager.dart';
 import 'package:receipt_manager/util/date_manipulator.dart';
@@ -88,7 +88,7 @@ class HistoryWidgetState extends State<HistoryWidget> {
   void callback(List<Receipt> receipts) {
     setState(() {
       this.receipts = receipts;
-      this.momentum.store(this.receipts);
+      this.momentum.receipts = this.receipts;
       weeklyTotal = api.weeklyTotal;
     });
   }
@@ -121,7 +121,6 @@ class HistoryWidgetState extends State<HistoryWidget> {
 
           if ((this.receipts == null || this.receipts.length == 0) &&
               this.momentum.finalReceipts.length == 0)
-
             return new Column(
               children: [
                 BannerFactory.get(BANNER_MODES.OVERVIEW_EXPENSES, context),
