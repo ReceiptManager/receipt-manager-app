@@ -37,9 +37,9 @@ class LoadingState extends DbState {
 
 // ignore: must_be_immutable
 class LoadedState extends DbState {
-  List<Receipt> receipt;
+  List<Receipt> receipts;
 
-  LoadedState({this.receipt}) : super([receipt]);
+  LoadedState({this.receipts}) : super([receipts]);
 
   @override
   String toString() => "LoadingState";
