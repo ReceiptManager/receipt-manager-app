@@ -40,6 +40,7 @@ import 'package:receipt_manager/ui/theme/theme_manager.dart';
 import 'package:receipt_manager/ui/camera/camera_picker.dart';
 import 'package:receipt_manager/util/date_manipulator.dart';
 import 'package:receipt_manager/util/dimensions.dart';
+import 'package:receipt_manager/util/validator.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ReceiptForm extends StatefulWidget {
@@ -101,7 +102,7 @@ class ReceiptInputController extends State<ReceiptForm> {
     _outcome = true;
     _showAlert = false;
 
-    if (_parsedReceipt != null) {
+    if (ReceiptCompanionValidator.valid(_parsedReceipt)) {
       initialStoreName = _parsedReceipt.shop.value ?? '';
       initialTotalName = _parsedReceipt.total.value ?? '';
       initialTagName = _parsedReceipt.tag.value ?? '';
@@ -619,7 +620,7 @@ class ReceiptInputController extends State<ReceiptForm> {
     if (!_showAlert) return;
 
     if (_sendImage) {
-      if (_parsedReceipt == null) {
+      if (!ReceiptCompanionValidator.valid(_parsedReceipt)) {
         ScaffoldMessenger.of(context)
           ..hideCurrentSnackBar()
           ..showSnackBar(SnackBar(
