@@ -45,7 +45,7 @@ class _ApiSettingsState extends State<ApiSettings> {
     return new TextFormField(
       controller: _textController,
       onChanged: (value) {
-        _token = value;
+        _token = value.trim();
       },
       keyboardType: TextInputType.url,
       decoration: new InputDecoration(
