@@ -135,5 +135,7 @@
   "connectionFailed": "Connection could not be established",
   "connectionSuccess": "Connection could be established",
   "detectEdges" : "Detect Edges",
-  "showParsedReceipt": "Show tesseract output"
+  "showParsedReceipt": "Show tesseract output",
+  "tag": "Tag",
+  "tagHelperText": "Add a receipt tag"
 }

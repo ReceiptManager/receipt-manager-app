@@ -122,8 +122,8 @@ class TextFormFactory {
         ),
         border: new OutlineInputBorder(
             borderSide: new BorderSide(color: Colors.grey[100])),
-        hintText: S.of(context).totalTitle,
-        helperText: S.of(context).totalHelperText,
+        hintText: S.of(context).tag,
+        helperText: S.of(context).tagHelperText,
         prefixIcon: const Icon(
           Icons.tag,
         ),

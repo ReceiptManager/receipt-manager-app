@@ -155,20 +155,20 @@ class S {
     );
   }
 
-  /// `Kassenbeleg hinzugefügen`
+  /// `Beleg hinzugefügen`
   String get addReceipt {
     return Intl.message(
-      'Kassenbeleg hinzugefügen',
+      'Beleg hinzugefügen',
       name: 'addReceipt',
       desc: '',
       args: [],
     );
   }
 
-  /// `Kassenbeleg hinzugefügt`
+  /// `Beleg hinzugefügt`
   String get addedReceipt {
     return Intl.message(
-      'Kassenbeleg hinzugefügt',
+      'Beleg hinzugefügt',
       name: 'addedReceipt',
       desc: '',
       args: [],
@@ -215,10 +215,10 @@ class S {
     );
   }
 
-  /// `Füge das Datum das Kassenbeleg hinzu`
+  /// `Füge das Datum das Beleg hinzu`
   String get receiptDateHelperText {
     return Intl.message(
-      'Füge das Datum das Kassenbeleg hinzu',
+      'Füge das Datum das Beleg hinzu',
       name: 'receiptDateHelperText',
       desc: '',
       args: [],
@@ -285,10 +285,10 @@ class S {
     );
   }
 
-  /// `Ein Fehler ist aufgetreten, Kassenbelege konnten nicht geladen werden`
+  /// `Ein Fehler ist aufgetreten, Belege konnten nicht geladen werden`
   String get receiptLoadFailed {
     return Intl.message(
-      'Ein Fehler ist aufgetreten, Kassenbelege konnten nicht geladen werden',
+      'Ein Fehler ist aufgetreten, Belege konnten nicht geladen werden',
       name: 'receiptLoadFailed',
       desc: '',
       args: [],
@@ -315,10 +315,10 @@ class S {
     );
   }
 
-  /// `Kassenbeleg aktualisieren`
+  /// `Beleg aktualisieren`
   String get updateReceipt {
     return Intl.message(
-      'Kassenbeleg aktualisieren',
+      'Beleg aktualisieren',
       name: 'updateReceipt',
       desc: '',
       args: [],
@@ -1025,20 +1025,20 @@ class S {
     );
   }
 
-  /// `Kassenbeleg anzeigen`
+  /// `Beleg anzeigen`
   String get receipt {
     return Intl.message(
-      'Kassenbeleg anzeigen',
+      'Beleg anzeigen',
       name: 'receipt',
       desc: '',
       args: [],
     );
   }
 
-  /// `Kassenbeleg scannen`
+  /// `Beleg scannen`
   String get takeAReceipt {
     return Intl.message(
-      'Kassenbeleg scannen',
+      'Beleg scannen',
       name: 'takeAReceipt',
       desc: '',
       args: [],
@@ -1380,6 +1380,26 @@ class S {
     return Intl.message(
       'Tesseract Ergebnis anzeigen',
       name: 'showParsedReceipt',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Tag`
+  String get tag {
+    return Intl.message(
+      'Tag',
+      name: 'tag',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Füge einen Tag für deinen Beleg hinzu`
+  String get tagHelperText {
+    return Intl.message(
+      'Füge einen Tag für deinen Beleg hinzu',
+      name: 'tagHelperText',
       desc: '',
       args: [],
     );

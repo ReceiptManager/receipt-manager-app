@@ -136,6 +136,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "storeNameHint" : MessageLookupByLibrary.simpleMessage("Store name"),
     "storeNameTitle" : MessageLookupByLibrary.simpleMessage("Store name"),
     "sunday" : MessageLookupByLibrary.simpleMessage("Sunday"),
+    "tag" : MessageLookupByLibrary.simpleMessage("Tag"),
+    "tagHelperText" : MessageLookupByLibrary.simpleMessage("Add a receipt tag"),
     "takeAReceipt" : MessageLookupByLibrary.simpleMessage("Take a receipt"),
     "thursday" : MessageLookupByLibrary.simpleMessage("Thursday"),
     "totalHelperText" : MessageLookupByLibrary.simpleMessage("Receipt total"),
