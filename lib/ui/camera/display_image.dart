@@ -36,7 +36,8 @@ class DisplayPictureScreen extends StatefulWidget {
 
 class DisplayPictureScreenState extends State<DisplayPictureScreen> {
   final String imagePath;
-  final GlobalKey<ScaffoldMessengerState> key2 = GlobalKey<ScaffoldMessengerState>();
+
+  final GlobalKey<ScaffoldState> _key = GlobalKey();
 
   NetworkClient client = NetworkClient();
   NetworkClientHolder holder = NetworkClientHolder();
@@ -66,7 +67,7 @@ class DisplayPictureScreenState extends State<DisplayPictureScreen> {
 
     return Scaffold(
         appBar: AppBar(title: Text(S.of(context).receipt)),
-        key: key2,
+        key: _key,
         body: Container(
             height: double.infinity,
             decoration: new BoxDecoration(
@@ -77,8 +78,6 @@ class DisplayPictureScreenState extends State<DisplayPictureScreen> {
             child: Stack(
               alignment: Alignment.bottomCenter,
               children: <Widget>[
-                //Center(child: Image.file(File(imagePath), fit: BoxFit.fitHeight)),
-
                 Row(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     mainAxisSize: MainAxisSize.max,
@@ -124,7 +123,8 @@ class DisplayPictureScreenState extends State<DisplayPictureScreen> {
                                   holder.readOptions(sharedPrefs);
 
                                   await client.sendImage(
-                                      File(imagePath), holder, context);
+                                      File(imagePath), holder, context
+                                  );
                                   _progress = _progress + 80.0;
                                 })),
                       ),
