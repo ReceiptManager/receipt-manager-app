@@ -81,6 +81,4 @@ void main() {
 
     expect(data.where((element) => element.total != 0).length, 1);
   });
-
-
 }
