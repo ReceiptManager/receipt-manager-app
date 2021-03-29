@@ -69,7 +69,9 @@ class HistoryWidgetState extends State<HistoryWidget> {
   FilterChipScreen screen;
   bool init = false;
 
-  ExpensesApi api = ExpensesApi();
+  ExpensesApi api;
+
+  double weeklyTotal = 0.00;
 
   @override
   void initState() {
@@ -78,14 +80,16 @@ class HistoryWidgetState extends State<HistoryWidget> {
     _storeNameController = TextEditingController();
     _receiptTotalController = TextEditingController();
     _dateController = TextEditingController();
+
+    api = ExpensesApi();
     init = false;
   }
 
   void callback(List<Receipt> receipts) {
     setState(() {
       this.receipts = receipts;
-      this.momentum.receipts = receipts;
-      api.init();
+      this.momentum.store(this.receipts);
+      weeklyTotal = api.weeklyTotal;
     });
   }
 
@@ -108,14 +112,16 @@ class HistoryWidgetState extends State<HistoryWidget> {
         }
         if (state is LoadedState) {
           if (!init) {
-            this.momentum.store(state.receipt);
-            this.receipts = state.receipt;
+            this.momentum.store(state.receipts);
+            this.receipts = state.receipts;
             init = true;
-            api.init();
           }
+          api.init();
+          weeklyTotal = api.weeklyTotal;
 
           if ((this.receipts == null || this.receipts.length == 0) &&
               this.momentum.finalReceipts.length == 0)
+
             return new Column(
               children: [
                 BannerFactory.get(BANNER_MODES.OVERVIEW_EXPENSES, context),
@@ -149,7 +155,7 @@ class HistoryWidgetState extends State<HistoryWidget> {
                     child: PaddingFactory.create(Text(
                       S.of(context).overview +
                           ": " +
-                          api.format(api.weeklyTotal, 2) +
+                          api.format(weeklyTotal, 2) +
                           S.of(context).currency,
                       style: TextStyle(
                           fontWeight: FontWeight.w200,
