@@ -401,7 +401,7 @@ class HistoryWidgetState extends State<HistoryWidget> {
                                             prefixIcon: IconButton(
                                                 icon: Icon(
                                                   Icons.calendar_today,
-                                                  color: Colors.grey,
+                                                  color: Colors.red[500],
                                                 ),
                                                 splashColor: Colors.black,
                                                 color: Colors.black,

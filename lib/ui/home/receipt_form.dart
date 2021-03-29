@@ -234,7 +234,7 @@ class ReceiptInputController extends State<ReceiptForm> {
                                     prefixIcon: IconButton(
                                         icon: Icon(
                                           Icons.calendar_today,
-                                          color: Colors.red[350],
+                                          color: Colors.red[500],
                                         ),
                                         splashColor: Colors.black,
                                         color: Colors.black,
@@ -283,15 +283,24 @@ class ReceiptInputController extends State<ReceiptForm> {
                                     var format = DateFormat(
                                         S.of(context).receiptDateFormat);
                                     _receiptDate = format.parse(value);
+
+                                    if (_receiptDate.year < 100) {
+                                      _receiptDate = null;
+                                      return S
+                                          .of(context)
+                                          .receiptDateNotFormatted +
+                                          " " +
+                                          S.of(context).receiptDateFormat;
+                                    }
                                     return null;
                                   } catch (_) {
-                                    _receiptDate = null;
-                                    return S
-                                            .of(context)
-                                            .receiptDateNotFormatted +
-                                        " " +
-                                        S.of(context).receiptDateFormat;
-                                  }
+                                   log(_.toString());
+                                   _receiptDate = null;
+                                   return S
+                                       .of(context)
+                                       .receiptDateNotFormatted +
+                                       " " +
+                                       S.of(context).receiptDateFormat;}
                                 },
                               )),
                               PaddingFactory.create(TextFormFactory.tag(
