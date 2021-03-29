@@ -270,7 +270,7 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                 });
               },
             ),
-            SettingsTile.switchTile(
+           /* SettingsTile.switchTile(
               title: S.of(context).showParsedReceipt,
               leading: Icon(Icons.receipt),
               switchValue: _showParsedResults,
@@ -280,7 +280,7 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                   _prefs.setBool(SharedPreferenceKeyHolder.showParsedResults, value);
                 });
               },
-            ),
+            ),*/
           ],
         ),
         SettingsSection(
