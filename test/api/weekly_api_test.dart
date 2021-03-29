@@ -16,9 +16,12 @@
  */
 
 import 'package:flutter_test/flutter_test.dart';
+import 'package:intl/intl.dart';
 import 'package:receipt_manager/api/weekly_api.dart';
 import 'package:receipt_manager/db/memento/receipt_memento.dart';
 import 'package:receipt_manager/db/receipt_database.dart';
+import 'package:receipt_manager/ui/stats/weekly_chart_data.dart';
+import 'package:receipt_manager/ui/stats/weekly_overview.dart';
 
 void main() {
   test("Empty memento test", () {
@@ -60,4 +63,24 @@ void main() {
     double weeklyTotal = api.weeklyTotal;
     expect(weeklyTotal, 7 * 12.00);
   });
+
+  test("Check correct date format", () {
+    DateTime date = DateTime.utc(2021,3,29);
+    expect(DateFormat.E().format(date), "Mon");
+
+    receipts = [];
+    receipts.add(new Receipt(id: 1,
+        total: "12.00",
+        shop: "DebugStore",
+        date: DateTime.utc(2021, 3, 29),
+        category: null));
+
+    _memento.store(receipts);
+    WeeklyOverview overview = WeeklyOverview(receipts, null);
+    List<WeeklyChartData> data = overview.getData();
+
+    expect(data.where((element) => element.total != 0).length, 1);
+  });
+
+
 }
