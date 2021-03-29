@@ -61,28 +61,9 @@ class StatsWidgetState extends State<StatsWidget> {
     _tooltipBehavior2 = TooltipBehavior(enable: true);
   }
 
-  Container getNoReceipts() {
-    return Container(
-        color: Colors.white,
-        child: Column(
-          children: [
-            PaddingFactory.create(
-              SvgPicture.asset(
-                "assets/not_empty",
-                height: 120,
-              ),
-            ),
-            PaddingFactory.create(Text(
-              S.of(context).noReceipts,
-              style: TextStyle(fontSize: 16, color: LightColor.grey),
-            ))
-          ],
-        ));
-  }
-
   Widget getCategoryChart(List<Receipt> receipts) {
     if (receipts == null || receipts.length == 0) {
-      return getNoReceipts();
+      return Container();
     }
 
     CategoryOverview overview = CategoryOverview(receipts);
@@ -105,10 +86,6 @@ class StatsWidgetState extends State<StatsWidget> {
   }
 
   Widget getMonthChart(List<Receipt> receipts) {
-    if (receipts == null || receipts.length == 0) {
-      return getNoReceipts();
-    }
-
     MonthlyOverview overview = MonthlyOverview(receipts);
     List<ReceiptMonthData> data = overview.getData();
 
@@ -127,10 +104,6 @@ class StatsWidgetState extends State<StatsWidget> {
   }
 
   Widget getWeeklyChart(List<Receipt> receipts, BuildContext context) {
-    if (receipts == null || receipts.length == 0) {
-      return getNoReceipts();
-    }
-
     WeeklyOverview overview = WeeklyOverview(receipts, context);
     List<WeeklyChartData> data = overview.getData();
 
