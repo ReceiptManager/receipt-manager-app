@@ -564,7 +564,7 @@ class ReceiptInputController extends State<ReceiptForm> {
                 // trim negligent whitespaces
                 _shopName = _shopName.trim();
                 _shopName.split(" ").join("");
-                _total = _outcome ? "-" + _total : _total;
+                _total = _outcome == false ? "-" + _total : _total;
                 _total.split(" ").join("");
                 _tag = _tag?.trim();
 

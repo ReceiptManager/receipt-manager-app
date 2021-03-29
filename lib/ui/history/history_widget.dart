@@ -248,8 +248,8 @@ class HistoryWidgetState extends State<HistoryWidget> {
                         receipt.total + S.of(context).currency,
                         style: TextStyle(
                             color: receipt.total[0] == "-"
-                                ? Colors.redAccent
-                                : Colors.green,
+                                ? Colors.green
+                                : Colors.red,
                             fontWeight: FontWeight.bold,
                             fontSize: 16),
                       ),
