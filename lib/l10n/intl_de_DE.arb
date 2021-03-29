@@ -83,6 +83,7 @@
   "education": "Bildung",
   "noData": "Data N/A",
   "expensesByCategory": "Kategorieübersicht",
+  "category": "Kategorie",
   "diySupermarkt": "Baumarkt",
   "insertYourApiToken": "Hinzufügen eines API token",
   "apitoken": "API Token",
@@ -138,5 +139,7 @@
   "detectEdges" : "Erkenne Kanten",
   "showParsedReceipt": "Tesseract Ergebnis anzeigen",
   "tag": "Tag",
-  "tagHelperText": "Füge einen Tag für deinen Beleg hinzu"
+  "tagHelperText": "Füge einen Tag für deinen Beleg hinzu",
+  "invalidReceipt" : "Ungültigen Kassenbeleg erhalten",
+  "invalidAPIToken": "Verwendeter API  Token ist ungültig"
 }
