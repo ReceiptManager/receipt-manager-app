@@ -61,13 +61,13 @@ class TakePictureScreenState extends State<TakePictureScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: key,
       appBar: AppBar(title: Text(S.of(context).takeAReceipt)),
       body: FutureBuilder<void>(
         future: _initializeControllerFuture,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
-            return CameraPreview(_controller);
+            return Container(
+                color: Colors.black, child: CameraPreview(_controller));
           } else {
             return Center(child: CircularProgressIndicator());
           }
@@ -85,7 +85,8 @@ class TakePictureScreenState extends State<TakePictureScreen> {
           Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => DisplayPictureScreen(imagePath: image?.path),
+                builder: (context) =>
+                    DisplayPictureScreen(imagePath: image?.path),
               ));
         },
       ),
