@@ -59,7 +59,6 @@ class StatsWidgetState extends State<StatsWidget> {
     _tooltipBehavior = TooltipBehavior(enable: true);
     _tooltipBehavior2 = TooltipBehavior(enable: true);
     _tooltipBehavior3 = TooltipBehavior(enable: true);
-
   }
 
   Widget getCategoryChart(List<Receipt> receipts) {
@@ -75,7 +74,7 @@ class StatsWidgetState extends State<StatsWidget> {
               dataSource: data,
               xValueMapper: (CategoryData data, _) => data.label,
               yValueMapper: (CategoryData data, _) => data.total,
-              name: 'Category')
+              name: S.of(context).expensesByCategory)
         ]);
   }
 
@@ -87,14 +86,13 @@ class StatsWidgetState extends State<StatsWidget> {
     MonthlyOverview overview = MonthlyOverview(receipts);
     List<ReceiptMonthData> data = overview.getData();
 
-    int year = DateTime
-        .now()
-        .year;
+    int year = DateTime.now().year;
     return SfCartesianChart(
         primaryXAxis: CategoryAxis(),
         tooltipBehavior: _tooltipBehavior,
         series: <ChartSeries>[
           LineSeries<ReceiptMonthData, String>(
+              name: S.of(context).overviewExpenses,
               color: Colors.red,
               dataSource: data,
               xValueMapper: (ReceiptMonthData data, _) =>
@@ -107,18 +105,16 @@ class StatsWidgetState extends State<StatsWidget> {
     WeeklyOverview overview = WeeklyOverview(receipts, context);
     List<WeeklyChartData> data = overview.getData();
 
-    int year = DateTime
-        .now()
-        .year;
-    int month = DateTime
-        .now()
-        .month;
+    int year = DateTime.now().year;
+    int month = DateTime.now().month;
 
     return SfCartesianChart(
         primaryXAxis: CategoryAxis(),
         tooltipBehavior: _tooltipBehavior2,
         series: <ChartSeries>[
           ColumnSeries<WeeklyChartData, String>(
+              color: Colors.red,
+              name: S.of(context).overview,
               dataSource: data,
               xValueMapper: (WeeklyChartData data, _) =>
                   DateFormat.E().format((DateTime.utc(year, month, data.day))),
@@ -140,174 +136,160 @@ class StatsWidgetState extends State<StatsWidget> {
         }
         if (state is ErrorState) {
           return Center(
-            child: Text(S
-                .of(context)
-                .receiptLoadFailed),
+            child: Text(S.of(context).receiptLoadFailed),
           );
         }
         if (state is LoadedState) {
           final receipts = state.receipt;
 
           return SingleChildScrollView(
-              child: Column(
-                  children: [
-                  BannerFactory. get (BANNER_MODES.OVERVIEW_EXPENSES, context),
-              PaddingFactory.create(AspectRatio(
-                  aspectRatio: 1.25,
-                  child: Card(
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(18)),
-                    color: Colors.white,
-                    child: Stack(
-                      children: <Widget>[
-                        Padding(
-                          padding: const EdgeInsets.all(16),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.stretch,
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            mainAxisSize: MainAxisSize.max,
-                            children: <Widget>[
-                              Text(
-                                S
-                                    .of(context)
-                                    .overviewExpenses,
-                                style: TextStyle(
-                                    color: Colors.black87,
-                                    fontSize: 24,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                              const SizedBox(
-                                height: 4,
-                              ),
-                              Text(
-                                S
-                                    .of(context)
-                                    .yearOverview,
-                                style: TextStyle(
-                                    fontSize: 18,
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.w300),
-                              ),
-                              const SizedBox(
-                                height: 20,
-                              ),
-                              Expanded(
-                                child: Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 8.0),
-                                  child: getMonthChart(receipts),
-                                ),
-                              ),
-                              const SizedBox(
-                                height: 12,
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ))),
-              PaddingFactory.create(AspectRatio(
-                  aspectRatio: 1.25,
-                  child: Card(
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(18)),
-                    color: Colors.white,
-                    child: Stack(
-                      children: <Widget>[
-                        Padding(
-                          padding: const EdgeInsets.all(16),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.stretch,
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            mainAxisSize: MainAxisSize.max,
-                            children: <Widget>[
-                              Text(
-                                S
-                                    .of(context)
-                                    .overviewExpenses,
-                                style: TextStyle(
-                                    color: Colors.black87,
-                                    fontSize: 24,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                              Text(
-                                S
-                                    .of(context)
-                                    .overview,
-                                style: TextStyle(
-                                    fontSize: 18,
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.w300),
-                              ),
-                              const SizedBox(
-                                height: 20,
-                              ),
-                              Expanded(
-                                child: getWeeklyChart(receipts, context),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ))),
-               (receipts == null || receipts.length == 0)
-              ? Container()
-              : PaddingFactory.create(AspectRatio(
-              aspectRatio: 1.25,
-              child: Card(
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(18)),
-                color: Colors.white,
-                child: Stack(
-                  children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.all(16),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        mainAxisSize: MainAxisSize.max,
+            child: Column(
+              children: [
+                BannerFactory.get(BANNER_MODES.OVERVIEW_EXPENSES, context),
+                PaddingFactory.create(AspectRatio(
+                    aspectRatio: 1.25,
+                    child: Card(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(18)),
+                      color: Colors.white,
+                      child: Stack(
                         children: <Widget>[
-                          Text(
-                            S
-                                .of(context)
-                                .expensesByCategory,
-                            style: TextStyle(
-                                color: Colors.black87,
-                                fontSize: 24,
-                                fontWeight: FontWeight.bold),
-                          ),
-                          Text(
-                            S
-                                .of(context)
-                                .yearOverview,
-                            style: TextStyle(
-                                fontSize: 18,
-                                color: Colors.black,
-                                fontWeight: FontWeight.w300),
-                          ),
-                          Expanded(
-                            child: getCategoryChart(receipts),
+                          Padding(
+                            padding: const EdgeInsets.all(16),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              mainAxisSize: MainAxisSize.max,
+                              children: <Widget>[
+                                Text(
+                                  S.of(context).overviewExpenses,
+                                  style: TextStyle(
+                                      color: Colors.black87,
+                                      fontSize: 24,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                const SizedBox(
+                                  height: 4,
+                                ),
+                                Text(
+                                  S.of(context).yearOverview,
+                                  style: TextStyle(
+                                      fontSize: 18,
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.w300),
+                                ),
+                                const SizedBox(
+                                  height: 20,
+                                ),
+                                Expanded(
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 8.0),
+                                    child: getMonthChart(receipts),
+                                  ),
+                                ),
+                                const SizedBox(
+                                  height: 12,
+                                ),
+                              ],
+                            ),
                           ),
                         ],
                       ),
-                    ),
-                  ],
-                ),
-              ))),
-        ],
-        ),
-        );
+                    ))),
+                PaddingFactory.create(AspectRatio(
+                    aspectRatio: 1.25,
+                    child: Card(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(18)),
+                      color: Colors.white,
+                      child: Stack(
+                        children: <Widget>[
+                          Padding(
+                            padding: const EdgeInsets.all(16),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              mainAxisSize: MainAxisSize.max,
+                              children: <Widget>[
+                                Text(
+                                  S.of(context).overviewExpenses,
+                                  style: TextStyle(
+                                      color: Colors.black87,
+                                      fontSize: 24,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                Text(
+                                  S.of(context).overview,
+                                  style: TextStyle(
+                                      fontSize: 18,
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.w300),
+                                ),
+                                const SizedBox(
+                                  height: 20,
+                                ),
+                                Expanded(
+                                  child: getWeeklyChart(receipts, context),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ))),
+                (receipts == null || receipts.length == 0)
+                    ? Container()
+                    : PaddingFactory.create(AspectRatio(
+                        aspectRatio: 1.25,
+                        child: Card(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(18)),
+                          color: Colors.white,
+                          child: Stack(
+                            children: <Widget>[
+                              Padding(
+                                padding: const EdgeInsets.all(16),
+                                child: Column(
+                                  crossAxisAlignment:
+                                      CrossAxisAlignment.stretch,
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  mainAxisSize: MainAxisSize.max,
+                                  children: <Widget>[
+                                    Text(
+                                      S.of(context).expensesByCategory,
+                                      style: TextStyle(
+                                          color: Colors.black87,
+                                          fontSize: 24,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    Text(
+                                      S.of(context).yearOverview,
+                                      style: TextStyle(
+                                          fontSize: 18,
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.w300),
+                                    ),
+                                    Expanded(
+                                      child: getCategoryChart(receipts),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ))),
+              ],
+            ),
+          );
         }
 
         return Container(
-        decoration: BoxDecoration(
-        borderRadius: BorderRadius.all(Radius.circular(20)),
-        boxShadow: <BoxShadow>[
-        BoxShadow(offset: Offset(0, 5), blurRadius: 10)
-        ])
-        );
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.all(Radius.circular(20)),
+                boxShadow: <BoxShadow>[
+              BoxShadow(offset: Offset(0, 5), blurRadius: 10)
+            ]));
       },
     );
   }
