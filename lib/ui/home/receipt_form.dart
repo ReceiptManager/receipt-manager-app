@@ -131,7 +131,7 @@ class ReceiptInputController extends State<ReceiptForm> {
     });
 
     WidgetsBinding.instance.addPostFrameCallback((_) => showUpdateSuccess());
-    bool edge_detection =
+    bool edgeDetection =
         this._sharedPrefs.getBool(SharedPreferenceKeyHolder.detectEdges);
     return BlocBuilder(
       bloc: _bloc,
@@ -190,7 +190,7 @@ class ReceiptInputController extends State<ReceiptForm> {
                                                 MaterialPageRoute(
                                                   builder: (context) => Theme(
                                                       data: AppTheme.lightTheme,
-                                                      child: edge_detection
+                                                      child: edgeDetection
                                                           ? EdgeDetector()
                                                           : TakePictureScreen(
                                                               camera:
