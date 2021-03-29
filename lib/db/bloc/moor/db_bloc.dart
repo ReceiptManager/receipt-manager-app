@@ -62,7 +62,7 @@ class DbBloc extends Bloc<DbEvent, DbState> {
 
     try {
       final receipts = await _repository.getReceipts();
-      yield LoadedState(receipt: receipts);
+      yield LoadedState(receipts: receipts);
     } catch (_) {
       yield ErrorState();
     }
@@ -90,7 +90,7 @@ class DbBloc extends Bloc<DbEvent, DbState> {
 
     try {
       final receipts = await _repository.getReceipts();
-      yield LoadedState(receipt: receipts);
+      yield LoadedState(receipts: receipts);
     } catch (_) {
       yield ErrorState();
     }

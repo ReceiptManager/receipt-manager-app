@@ -140,7 +140,7 @@ class StatsWidgetState extends State<StatsWidget> {
           );
         }
         if (state is LoadedState) {
-          final receipts = state.receipt;
+          final receipts = state.receipts;
 
           return SingleChildScrollView(
             child: Column(

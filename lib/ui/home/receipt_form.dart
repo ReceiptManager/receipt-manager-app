@@ -148,7 +148,7 @@ class ReceiptInputController extends State<ReceiptForm> {
           );
         }
         if (state is LoadedState) {
-          final receipt = state.receipt;
+          final receipt = state.receipts;
           return BlocProvider(
               create: (_) => _bloc,
               child: CustomScrollView(
