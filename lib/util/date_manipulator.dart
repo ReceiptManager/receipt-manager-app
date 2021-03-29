@@ -20,9 +20,24 @@ import 'package:intl/intl.dart';
 import 'package:receipt_manager/generated/l10n.dart';
 
 class DateManipulator {
-  static String humanDate(BuildContext context, DateTime dateTime) {
-    if (dateTime == null) return " ";
+  static String humanDate2(DateTime dateTime, String formatString) {
+    if (dateTime == null) return "";
+    int year = dateTime.year;
+    int month = dateTime.month;
+    int day = dateTime.day;
 
-    return DateFormat(S.of(context).receiptDateFormat).format(dateTime);
+    year = year < 100 ? DateTime.now().year : year;
+    DateTime _date = DateTime.utc(year, month, day);
+
+    print(_date.year);
+    print(_date.month);
+    print(_date.day);
+
+    return DateFormat(formatString).format(_date);
+  }
+
+  static String humanDate(BuildContext context, DateTime dateTime) {
+    if (dateTime == null) return "";
+    return humanDate2(dateTime, S.of(context).receiptDateFormat);
   }
 }

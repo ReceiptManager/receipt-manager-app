@@ -45,10 +45,12 @@ class WeeklyApi extends AbstractApi {
         getDate(_date.subtract(Duration(days: _date.weekday - 1)));
 
     for (Receipt receipt in _momentum.receipts) {
+
       for (int i = 0; i < 7; i++) {
         // create an date object in order to increase the date
         // this allows to keep the code simple and
         // remove edge cases
+
         var currentDate = new DateTime(
             firstWeekDate.year, firstWeekDate.month, firstWeekDate.day + i);
         if (receipt.date.year == currentDate.year &&
@@ -64,7 +66,7 @@ class WeeklyApi extends AbstractApi {
     }
     weeklyTotal = 0.00;
     weeklyMaximum = 0.00;
-    for (int i = 0; i < 7; ++i) {
+    for (int i = 0; i < 7; i++) {
       expenses[i] = MathUtil.roundDouble(expenses[i], 2);
       weeklyTotal += expenses[i];
     }
