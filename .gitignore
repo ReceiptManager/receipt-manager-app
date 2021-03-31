@@ -342,3 +342,5 @@ hs_err_pid*
 build/*
 /android/app/.receipt_manager_key.jks
 /android/app/receipt_manager_key
+
+_build
