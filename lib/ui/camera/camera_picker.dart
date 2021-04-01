@@ -73,13 +73,24 @@ class TakePictureScreenState extends State<TakePictureScreen> {
 
   @override
   Widget build(BuildContext context) {
+    var camera = _controller.value;
+    final size = MediaQuery.of(context).size;
+    var scale = size.aspectRatio * camera.aspectRatio;
+    if (scale < 1) scale = 1 / scale;
+
     return Scaffold(
       appBar: AppBar(title: Text(S.of(context).takeAReceipt)),
       body: FutureBuilder<void>(
         future: _initializeControllerFuture,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
-            return Center(child: cameraWidget(context));
+            return Center(
+                child: Transform.scale(
+              scale: scale,
+              child: Center(
+                child: CameraPreview(_controller),
+              ),
+            ));
           } else {
             return Center(child: CircularProgressIndicator());
           }

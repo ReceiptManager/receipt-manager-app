@@ -58,6 +58,7 @@ dependencies:
     path: modules/edge-detection
 
   currency_pickers: ^1.0.6
+  money2: ^2.0.2
 
 flutter_localizations:
   sdk: flutter

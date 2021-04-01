@@ -52,6 +52,7 @@ class SharedPreferenceKeyHolder {
   static final ip = "ipv4";
   static final detectEdges = "detect_edges";
   static final showParsedResults = "parsed_results";
+  static final lang = "lang";
 }
 
 class _SettingsWidgetState extends State<SettingsWidget> {
@@ -116,7 +117,7 @@ class _SettingsWidgetState extends State<SettingsWidget> {
               },
             ),
             SettingsTile(
-              title: S.of(context).currency,
+              title: S.of(context).concurrencyTitle,
               leading: Icon(Icons.monetization_on_outlined),
               onPressed: (context) {
                 Navigator.of(context).push(MaterialPageRoute(

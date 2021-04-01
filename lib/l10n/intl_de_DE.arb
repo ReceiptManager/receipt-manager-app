@@ -142,5 +142,5 @@
   "tagHelperText": "Füge einen Tag für deinen Beleg hinzu",
   "invalidReceipt" : "Ungültigen Kassenbeleg erhalten",
   "invalidAPIToken": "Verwendeter API  Token ist ungültig",
-  "concurrency" : "Währung"
+  "concurrencyTitle" : "Währung"
 }

@@ -29,7 +29,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "cameraSettings" : MessageLookupByLibrary.simpleMessage("Kamera Einstellungen"),
     "cancel" : MessageLookupByLibrary.simpleMessage("Abbrechen"),
     "category" : MessageLookupByLibrary.simpleMessage("Kategorie"),
-    "concurrency" : MessageLookupByLibrary.simpleMessage("Währung"),
+    "concurrencyTitle" : MessageLookupByLibrary.simpleMessage("Währung"),
     "confirm" : MessageLookupByLibrary.simpleMessage("Bestätigen"),
     "connectionFailed" : MessageLookupByLibrary.simpleMessage("Verbindung konnte nicht hergestellt werden"),
     "connectionSuccess" : MessageLookupByLibrary.simpleMessage("Verbindung konnte hergestellt werden"),
