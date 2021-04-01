@@ -16,6 +16,7 @@
  */
 
 import 'package:receipt_manager/db/receipt_database.dart';
+import 'package:receipt_manager/util/total_manipulator.dart';
 
 import 'chart_data_month.dart';
 
@@ -45,7 +46,7 @@ class MonthlyOverview {
     for (Receipt r in receipts) {
       if (r.date.year != DateTime.now().year) continue;
 
-      double total = double.parse(r.total);
+      double total = TotalManipulator.get(r.total);
       chartData[r.date.month].total += total;
     }
 

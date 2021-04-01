@@ -21,6 +21,7 @@ import 'package:receipt_manager/db/model/receipt_category.dart';
 import 'package:receipt_manager/db/receipt_database.dart';
 import 'package:receipt_manager/factory/categories_factory.dart';
 import 'package:receipt_manager/ui/stats/category.dart';
+import 'package:receipt_manager/util/total_manipulator.dart';
 
 class CategoryOverview {
   final List<Receipt> receipts;
@@ -42,7 +43,7 @@ class CategoryOverview {
         Map<String, dynamic> json = jsonDecode(receipt.category);
 
         if (json['name'] == categoryData.label) {
-          double total = double.parse(receipt.total);
+          double total = TotalManipulator.get(receipt.total);
           chartData[i].total += total;
         }
         i++;
