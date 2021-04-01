@@ -39,7 +39,6 @@ import 'package:receipt_manager/factory/text_form_history.dart';
 import 'package:receipt_manager/generated/l10n.dart';
 import 'package:receipt_manager/ui/theme/color/color.dart';
 import 'package:receipt_manager/ui/theme/theme_manager.dart';
-import 'package:receipt_manager/util/currency_dart.dart';
 import 'package:receipt_manager/util/date_manipulator.dart';
 
 class HistoryWidget extends StatefulWidget {
@@ -155,7 +154,8 @@ class HistoryWidgetState extends State<HistoryWidget> {
                     child: PaddingFactory.create(Text(
                       S.of(context).overview +
                           ": " +
-                          CurrencyUtil.format(api.format(weeklyTotal, 2)),
+                          api.format(weeklyTotal, 2) +
+                          S.of(context).currency,
                       style: TextStyle(
                           fontWeight: FontWeight.w200,
                           fontSize: 20,
@@ -250,7 +250,7 @@ class HistoryWidgetState extends State<HistoryWidget> {
                       contentPadding:
                           EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
                       trailing: Text(
-                        CurrencyUtil.format(receipt.total),
+                        receipt.total,
                         style: TextStyle(
                             color: receipt.total[0] == "-"
                                 ? Colors.green
