@@ -103,6 +103,7 @@ class TextFormFactory {
               showCurrencyCode: true,
               onSelect: (Currency currency) async {
                 print('Select currency: ${currency.name}');
+                // ignore: invalid_use_of_protected_member
                 state.setState(() {
                   _currency = currency.symbol;
                   memento.currency = currency.symbol;
