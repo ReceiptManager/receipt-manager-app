@@ -69,8 +69,10 @@ class TextFormFactory {
     );
   }
 
-  static TextFormField total(
-      TextEditingController receiptTotalController, BuildContext context) {
+  static TextFormField total(TextEditingController receiptTotalController,
+      String _currency, State state, BuildContext context) {
+    ReceiptMemento memento = ReceiptMemento();
+
     return TextFormField(
       style: TextStyle(color: Colors.black),
       decoration: new InputDecoration(
@@ -87,9 +89,10 @@ class TextFormFactory {
         hintText: S.of(context).totalTitle,
         // labelText: S.of(context).totalLabelText,
         helperText: S.of(context).totalHelperText,
+        suffixText: _currency,
         prefixIcon: IconButton(
           icon: Icon(
-            Icons.monetization_on,
+            Icons.monetization_on_outlined,
             color: Colors.red,
           ),
           onPressed: () {
@@ -100,8 +103,10 @@ class TextFormFactory {
               showCurrencyCode: true,
               onSelect: (Currency currency) async {
                 print('Select currency: ${currency.name}');
-                ReceiptMemento memento = ReceiptMemento();
-                memento.currency = currency.symbol;
+                state.setState(() {
+                  _currency = currency.symbol;
+                  memento.currency = currency.symbol;
+                });
               },
               favorite: ['EUR'],
             );

@@ -15,12 +15,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import 'dart:developer';
-
 import 'package:receipt_manager/api/abstract_api.dart';
+import 'package:receipt_manager/db/memento/receipt_memento.dart';
 import 'package:receipt_manager/db/receipt_database.dart';
 import 'package:receipt_manager/util/math_util.dart';
-import 'package:receipt_manager/db/memento/receipt_memento.dart';
+import 'package:receipt_manager/util/total_manipulator.dart';
 
 class WeeklyApi extends AbstractApi {
   /// The [ReceiptMomentum] is used to store receipts in the list.
@@ -45,7 +44,6 @@ class WeeklyApi extends AbstractApi {
         getDate(_date.subtract(Duration(days: _date.weekday - 1)));
 
     for (Receipt receipt in _momentum.receipts) {
-
       for (int i = 0; i < 7; i++) {
         // create an date object in order to increase the date
         // this allows to keep the code simple and
@@ -56,11 +54,7 @@ class WeeklyApi extends AbstractApi {
         if (receipt.date.year == currentDate.year &&
             receipt.date.month == currentDate.month &&
             receipt.date.day == currentDate.day) {
-          try {
-            expenses[i] += double.parse(receipt.total.replaceAll(" ", ""));
-          } catch (e) {
-            log("[WARNING]: can't calculated receipt.");
-          }
+          expenses[i] += TotalManipulator.get(receipt.total);
         }
       }
     }
