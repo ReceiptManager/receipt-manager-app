@@ -19,7 +19,7 @@ import 'package:currency_picker/currency_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:receipt_manager/db/memento/receipt_memento.dart';
+import 'package:receipt_manager/db/memento/memento.dart';
 import 'package:receipt_manager/db/receipt_database.dart';
 import 'package:receipt_manager/factory/button_factory.dart';
 import 'package:receipt_manager/generated/l10n.dart';
@@ -71,7 +71,7 @@ class TextFormFactory {
 
   static TextFormField total(TextEditingController receiptTotalController,
       String _currency, State state, BuildContext context) {
-    ReceiptMemento memento = ReceiptMemento();
+    Memento memento = Memento();
 
     return TextFormField(
       style: TextStyle(color: Colors.black),

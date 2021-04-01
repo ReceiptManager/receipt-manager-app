@@ -18,7 +18,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:intl/intl.dart';
 import 'package:receipt_manager/api/weekly_api.dart';
-import 'package:receipt_manager/db/memento/receipt_memento.dart';
+import 'package:receipt_manager/db/memento/memento.dart';
 import 'package:receipt_manager/db/receipt_database.dart';
 import 'package:receipt_manager/ui/stats/weekly_chart_data.dart';
 import 'package:receipt_manager/ui/stats/weekly_overview.dart';
@@ -29,15 +29,12 @@ void main() {
     api.execute();
   });
 
-  ReceiptMemento _memento = ReceiptMemento();
+  Memento _memento = Memento();
   List<Receipt> receipts = [];
   for (int i = 0; i < 7; i++) {
     DateTime d = DateTime.utc(2021, 3, 22 + i);
-    receipts.add(new Receipt(id: i,
-        total: "12.00",
-        shop: "DebugStore",
-        date: d,
-        category: null));
+    receipts.add(new Receipt(
+        id: i, total: "12.00", shop: "DebugStore", date: d, category: null));
   }
   _memento.store(receipts);
 
@@ -45,12 +42,13 @@ void main() {
   api.execute();
 
   test("Weekly API sum check", () {
-      double weeklyTotal = api.weeklyTotal;
-      expect(weeklyTotal, 7 * 12.00);
+    double weeklyTotal = api.weeklyTotal;
+    expect(weeklyTotal, 7 * 12.00);
   });
 
   test("Receipt in other week check", () {
-    receipts.add(new Receipt(id: 9,
+    receipts.add(new Receipt(
+        id: 9,
         total: "12.00",
         shop: "DebugStore",
         date: DateTime.utc(2021, 3, 29),
@@ -65,11 +63,12 @@ void main() {
   });
 
   test("Check correct date format", () {
-    DateTime date = DateTime.utc(2021,3,29);
+    DateTime date = DateTime.utc(2021, 3, 29);
     expect(DateFormat.E().format(date), "Mon");
 
     receipts = [];
-    receipts.add(new Receipt(id: 1,
+    receipts.add(new Receipt(
+        id: 1,
         total: "12.00",
         shop: "DebugStore",
         date: DateTime.utc(2021, 3, 29),

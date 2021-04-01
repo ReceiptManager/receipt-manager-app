@@ -24,7 +24,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:intl/intl.dart';
 import 'package:receipt_manager/db/bloc/moor/bloc.dart';
-import 'package:receipt_manager/db/memento/receipt_memento.dart';
+import 'package:receipt_manager/db/memento/memento.dart';
 import 'package:receipt_manager/db/model/receipt_category.dart';
 import 'package:receipt_manager/db/receipt_database.dart';
 import 'package:receipt_manager/factory/banner_factory.dart';
@@ -83,7 +83,7 @@ class ReceiptInputController extends State<ReceiptForm> {
   DateTime _receiptDate;
   ReceiptsCompanion _parsedReceipt;
   ReceiptCategory _selectedCategory;
-  ReceiptMemento memento = ReceiptMemento();
+  Memento memento = Memento();
   List<dynamic> _itemList;
 
   bool _outcome;

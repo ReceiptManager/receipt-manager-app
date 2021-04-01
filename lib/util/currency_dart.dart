@@ -15,11 +15,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import 'package:receipt_manager/db/memento/receipt_memento.dart';
+import 'package:receipt_manager/db/memento/memento.dart';
 
 class CurrencyUtil {
   static String format(String total) {
-    ReceiptMemento memento = ReceiptMemento();
+    Memento memento = Memento();
     return total + " " + memento.currency;
   }
 }

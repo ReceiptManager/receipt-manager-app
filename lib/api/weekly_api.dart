@@ -16,7 +16,7 @@
  */
 
 import 'package:receipt_manager/api/abstract_api.dart';
-import 'package:receipt_manager/db/memento/receipt_memento.dart';
+import 'package:receipt_manager/db/memento/memento.dart';
 import 'package:receipt_manager/db/receipt_database.dart';
 import 'package:receipt_manager/util/math_util.dart';
 import 'package:receipt_manager/util/total_manipulator.dart';
@@ -25,7 +25,7 @@ class WeeklyApi extends AbstractApi {
   /// The [ReceiptMomentum] is used to store receipts in the list.
   /// This increase the performance, since no additionally database
   /// call is required
-  ReceiptMemento _momentum = ReceiptMemento();
+  Memento _momentum = Memento();
 
   /// Store weekly total and weekly maximum in a double
   double weeklyTotal = 0;

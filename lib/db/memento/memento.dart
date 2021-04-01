@@ -19,18 +19,20 @@ import 'dart:core';
 
 import 'package:receipt_manager/db/receipt_database.dart';
 
-class ReceiptMemento {
-  static final ReceiptMemento _receiptShare = ReceiptMemento._internal();
+/// The [Memento] class is used to store all parameters
+class Memento {
+  static final Memento _receiptShare = Memento._internal();
 
   List<Receipt> receipts;
   List<Receipt> finalReceipts;
+
   String currency;
 
-  factory ReceiptMemento() {
+  factory Memento() {
     return _receiptShare;
   }
 
-  ReceiptMemento._internal();
+  Memento._internal();
 
   void store(List<Receipt> receipts) {
     this.finalReceipts = receipts;
@@ -45,6 +47,7 @@ class ReceiptMemento {
   void update(Receipt receipt) {
     receipts[receipts.indexWhere((element) => element.id == receipt.id)] =
         receipt;
+
     finalReceipts[finalReceipts
         .indexWhere((element) => element.id == receipt.id)] = receipt;
   }
