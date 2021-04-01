@@ -462,6 +462,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.0"
+  money2:
+    dependency: "direct main"
+    description:
+      name: money2
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.2"
   moor:
     dependency: "direct main"
     description:

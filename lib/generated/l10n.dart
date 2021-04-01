@@ -1436,10 +1436,10 @@ class S {
   }
 
   /// `Währung`
-  String get concurrency {
+  String get concurrencyTitle {
     return Intl.message(
       'Währung',
-      name: 'concurrency',
+      name: 'concurrencyTitle',
       desc: '',
       args: [],
     );
