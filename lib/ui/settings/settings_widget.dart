@@ -18,7 +18,6 @@
 import 'package:flutter/material.dart';
 import 'package:receipt_manager/generated/l10n.dart';
 import 'package:receipt_manager/ui/settings/api_settings.dart';
-import 'package:receipt_manager/ui/settings/concurrency_settings.dart';
 import 'package:receipt_manager/ui/settings/licence.dart';
 import 'package:receipt_manager/ui/settings/server_settings.dart';
 import 'package:settings_ui/settings_ui.dart';
@@ -52,7 +51,7 @@ class SharedPreferenceKeyHolder {
   static final ip = "ipv4";
   static final detectEdges = "detect_edges";
   static final showParsedResults = "parsed_results";
-  static final lang = "lang";
+  static final currency = "currency";
 }
 
 class _SettingsWidgetState extends State<SettingsWidget> {
@@ -114,15 +113,6 @@ class _SettingsWidgetState extends State<SettingsWidget> {
               onPressed: (context) {
                 Navigator.of(context).push(MaterialPageRoute(
                     builder: (BuildContext context) => ApiSettings(_prefs)));
-              },
-            ),
-            SettingsTile(
-              title: S.of(context).concurrencyTitle,
-              leading: Icon(Icons.monetization_on_outlined),
-              onPressed: (context) {
-                Navigator.of(context).push(MaterialPageRoute(
-                    builder: (BuildContext context) =>
-                        ConcurrencySetting(_prefs)));
               },
             ),
           ],

@@ -24,20 +24,21 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:intl/intl.dart';
 import 'package:receipt_manager/db/bloc/moor/bloc.dart';
+import 'package:receipt_manager/db/model/receipt_category.dart';
 import 'package:receipt_manager/db/receipt_database.dart';
 import 'package:receipt_manager/factory/banner_factory.dart';
 import 'package:receipt_manager/factory/categories_factory.dart';
 import 'package:receipt_manager/factory/padding_factory.dart';
 import 'package:receipt_manager/factory/text_form_history.dart';
 import 'package:receipt_manager/generated/l10n.dart';
-import 'package:receipt_manager/db/model/receipt_category.dart';
 import 'package:receipt_manager/network/network_client.dart';
 import 'package:receipt_manager/network/network_client_holder.dart';
+import 'package:receipt_manager/ui/camera/camera_picker.dart';
 import 'package:receipt_manager/ui/camera/edge_detector.dart';
 import 'package:receipt_manager/ui/settings/settings_widget.dart';
 import 'package:receipt_manager/ui/theme/color/color.dart';
 import 'package:receipt_manager/ui/theme/theme_manager.dart';
-import 'package:receipt_manager/ui/camera/camera_picker.dart';
+import 'package:receipt_manager/util/currency_dart.dart';
 import 'package:receipt_manager/util/date_manipulator.dart';
 import 'package:receipt_manager/util/dimensions.dart';
 import 'package:receipt_manager/util/validator.dart';
@@ -287,20 +288,21 @@ class ReceiptInputController extends State<ReceiptForm> {
                                     if (_receiptDate.year < 100) {
                                       _receiptDate = null;
                                       return S
-                                          .of(context)
-                                          .receiptDateNotFormatted +
+                                              .of(context)
+                                              .receiptDateNotFormatted +
                                           " " +
                                           S.of(context).receiptDateFormat;
                                     }
                                     return null;
                                   } catch (_) {
-                                   log(_.toString());
-                                   _receiptDate = null;
-                                   return S
-                                       .of(context)
-                                       .receiptDateNotFormatted +
-                                       " " +
-                                       S.of(context).receiptDateFormat;}
+                                    log(_.toString());
+                                    _receiptDate = null;
+                                    return S
+                                            .of(context)
+                                            .receiptDateNotFormatted +
+                                        " " +
+                                        S.of(context).receiptDateFormat;
+                                  }
                                 },
                               )),
                               PaddingFactory.create(TextFormFactory.tag(
@@ -507,7 +509,7 @@ class ReceiptInputController extends State<ReceiptForm> {
                       // contentPadding:
                       //   EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
                       trailing: Text(
-                        item[1] + S.of(context).currency,
+                        CurrencyUtil.format(item[1]),
                         style: TextStyle(
                             color: Colors.black,
                             fontWeight: FontWeight.bold,

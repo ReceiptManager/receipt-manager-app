@@ -15,9 +15,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import 'package:currency_picker/currency_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:receipt_manager/db/memento/receipt_memento.dart';
 import 'package:receipt_manager/db/receipt_database.dart';
 import 'package:receipt_manager/factory/button_factory.dart';
 import 'package:receipt_manager/generated/l10n.dart';
@@ -85,8 +87,25 @@ class TextFormFactory {
         hintText: S.of(context).totalTitle,
         // labelText: S.of(context).totalLabelText,
         helperText: S.of(context).totalHelperText,
-        prefixIcon: const Icon(
-          Icons.attach_money,
+        prefixIcon: IconButton(
+          icon: Icon(
+            Icons.monetization_on,
+            color: Colors.red,
+          ),
+          onPressed: () {
+            showCurrencyPicker(
+              context: context,
+              showFlag: true,
+              showCurrencyName: true,
+              showCurrencyCode: true,
+              onSelect: (Currency currency) async {
+                print('Select currency: ${currency.name}');
+                ReceiptMemento memento = ReceiptMemento();
+                memento.currency = currency.symbol;
+              },
+              favorite: ['EUR'],
+            );
+          },
         ),
         prefixText: ' ',
       ),

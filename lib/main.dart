@@ -21,16 +21,17 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_onboard/flutter_onboard.dart';
 import 'package:provider/provider.dart';
 import 'package:receipt_manager/db/bloc/moor/bloc.dart';
+import 'package:receipt_manager/db/memento/receipt_memento.dart';
 import 'package:receipt_manager/db/receipt_database.dart';
+import 'package:receipt_manager/db/repository/repository.dart';
 import 'package:receipt_manager/generated/l10n.dart';
 import 'package:receipt_manager/localisation/easy_language_loader.dart';
-import 'package:receipt_manager/db/repository/repository.dart';
-import 'package:receipt_manager/ui/theme/color/color.dart';
-import 'package:receipt_manager/ui/theme/theme_manager.dart';
 import 'package:receipt_manager/ui/history/history_widget.dart';
 import 'package:receipt_manager/ui/home/add_widget.dart';
 import 'package:receipt_manager/ui/settings/settings_widget.dart';
 import 'package:receipt_manager/ui/stats/stats_widget.dart';
+import 'package:receipt_manager/ui/theme/color/color.dart';
+import 'package:receipt_manager/ui/theme/theme_manager.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 final Repository _repository = Repository();
@@ -47,6 +48,14 @@ Future<void> main() async {
   if (!sharedPrefs.containsKey("skip")) {
     sharedPrefs.setBool("skip", false);
   }
+
+  if (sharedPrefs.getString(SharedPreferenceKeyHolder.currency) == null) {
+    sharedPrefs.setString(SharedPreferenceKeyHolder.currency, "\$");
+  }
+
+  ReceiptMemento receiptMemento = ReceiptMemento();
+  receiptMemento.currency =
+      sharedPrefs.getString(SharedPreferenceKeyHolder.currency);
 
   runApp(MaterialApp(
       color: LightColor.black,
@@ -101,21 +110,13 @@ class OnboardScreenState extends State<OnboardScreen> {
 
     final List<OnBoardModel> onBoardData = [
       OnBoardModel(
-        title: S
-            .of(context)
-            .ocrTitle,
-        description: S
-            .of(context)
-            .ocrDescription,
+        title: S.of(context).ocrTitle,
+        description: S.of(context).ocrDescription,
         imgUrl: "assets/data.png",
       ),
       OnBoardModel(
-        title: S
-            .of(context)
-            .statsTitle,
-        description: S
-            .of(context)
-            .startsDescription,
+        title: S.of(context).statsTitle,
+        description: S.of(context).startsDescription,
         imgUrl: "assets/charts.png",
       ),
     ];
@@ -167,9 +168,7 @@ class OnboardScreenState extends State<OnboardScreen> {
                           builder: (context) => HomeScreen(null, false)));
                 },
                 child: Text(
-                  S
-                      .of(context)
-                      .skip,
+                  S.of(context).skip,
                   style: TextStyle(color: LightColor.black),
                 ),
               ),
@@ -190,12 +189,8 @@ class OnboardScreenState extends State<OnboardScreen> {
                       ),
                       child: Text(
                         state.isLastPage
-                            ? S
-                            .of(context)
-                            .done
-                            : S
-                            .of(context)
-                            .next,
+                            ? S.of(context).done
+                            : S.of(context).next,
                         style: TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
