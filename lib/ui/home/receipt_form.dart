@@ -24,6 +24,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:intl/intl.dart';
 import 'package:receipt_manager/db/bloc/moor/bloc.dart';
+import 'package:receipt_manager/db/memento/receipt_memento.dart';
 import 'package:receipt_manager/db/model/receipt_category.dart';
 import 'package:receipt_manager/db/receipt_database.dart';
 import 'package:receipt_manager/factory/banner_factory.dart';
@@ -38,7 +39,6 @@ import 'package:receipt_manager/ui/camera/edge_detector.dart';
 import 'package:receipt_manager/ui/settings/settings_widget.dart';
 import 'package:receipt_manager/ui/theme/color/color.dart';
 import 'package:receipt_manager/ui/theme/theme_manager.dart';
-import 'package:receipt_manager/util/currency_dart.dart';
 import 'package:receipt_manager/util/date_manipulator.dart';
 import 'package:receipt_manager/util/dimensions.dart';
 import 'package:receipt_manager/util/validator.dart';
@@ -83,12 +83,15 @@ class ReceiptInputController extends State<ReceiptForm> {
   DateTime _receiptDate;
   ReceiptsCompanion _parsedReceipt;
   ReceiptCategory _selectedCategory;
+  ReceiptMemento memento = ReceiptMemento();
   List<dynamic> _itemList;
 
   bool _outcome;
   bool _showAlert;
 
   NetworkClient _client;
+
+  String currency = "";
 
   ReceiptInputController(
       this._parsedReceipt, this._sendImage, this._sharedPrefs, this._bloc);
@@ -132,6 +135,8 @@ class ReceiptInputController extends State<ReceiptForm> {
       if (_parsedReceipt != null && _parsedReceipt.date.value != null)
         _dateController.text =
             DateManipulator.humanDate(context, _parsedReceipt.date.value);
+
+      currency = memento.currency;
     });
 
     WidgetsBinding.instance.addPostFrameCallback((_) => showUpdateSuccess());
@@ -210,7 +215,10 @@ class ReceiptInputController extends State<ReceiptForm> {
                               PaddingFactory.create(TextFormFactory.storeName(
                                   _storeNameController, context, receipt)),
                               PaddingFactory.create(TextFormFactory.total(
-                                  _receiptTotalController, context)),
+                                  _receiptTotalController,
+                                  currency,
+                                  this,
+                                  context)),
                               PaddingFactory.create(TextFormField(
                                 style: TextStyle(color: Colors.black),
                                 decoration: new InputDecoration(
@@ -509,7 +517,7 @@ class ReceiptInputController extends State<ReceiptForm> {
                       // contentPadding:
                       //   EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
                       trailing: Text(
-                        CurrencyUtil.format(item[1]),
+                        item[1],
                         style: TextStyle(
                             color: Colors.black,
                             fontWeight: FontWeight.bold,
@@ -589,7 +597,7 @@ class ReceiptInputController extends State<ReceiptForm> {
                 _bloc.add(InsertEvent(
                     receipt: ReceiptsCompanion(
                         date: Value(_receiptDate),
-                        total: Value(_total),
+                        total: Value(_total + currency),
                         category: Value(jsonEncode(_selectedCategory)),
                         items: Value(jsonItemList),
                         shop: Value(_shopName),

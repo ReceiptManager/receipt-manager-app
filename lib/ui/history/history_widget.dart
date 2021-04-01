@@ -324,6 +324,8 @@ class HistoryWidgetState extends State<HistoryWidget> {
   String _currentReceiptDate;
   String category;
   Receipt currentReceipt;
+  String currency;
+  ReceiptMemento memento;
 
   _showDialog({controller, Receipt receipt}) async {
     this._storeName = receipt.shop;
@@ -331,10 +333,16 @@ class HistoryWidgetState extends State<HistoryWidget> {
     this._currentReceiptDate = DateManipulator.humanDate(context, receipt.date);
     this.category = receipt.category;
     this.currentReceipt = receipt;
+    this.memento = ReceiptMemento();
 
     this._storeNameController.text = _storeName;
-    this._receiptTotalController.text = _receiptTotal;
+    this._receiptTotalController.text =
+        _receiptTotal.substring(0, _receiptTotal.length - 1);
     this._dateController.text = _currentReceiptDate;
+
+    setState(() {
+      this.currency = memento.currency;
+    });
 
     await showDialog<String>(
       context: context,
@@ -369,7 +377,10 @@ class HistoryWidgetState extends State<HistoryWidget> {
                                   PaddingFactory.create(new Theme(
                                       data: AppTheme.lightTheme,
                                       child: TextFormFactory.total(
-                                          _receiptTotalController, context))),
+                                          _receiptTotalController,
+                                          currency,
+                                          this,
+                                          context))),
                                   PaddingFactory.create(new Theme(
                                       data: AppTheme.lightTheme,
                                       child: TextFormField(
@@ -511,7 +522,7 @@ class HistoryWidgetState extends State<HistoryWidget> {
                   Receipt refreshedReceipt = currentReceipt.copyWith(
                       category: this.category,
                       shop: this._storeName,
-                      total: this._receiptTotal,
+                      total: this._receiptTotal + currency,
                       date: this.receiptDate);
 
                   setState(() {
