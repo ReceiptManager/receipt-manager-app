@@ -28,7 +28,7 @@ import 'package:intl/intl.dart';
 import 'package:random_color/random_color.dart';
 import 'package:receipt_manager/api/expenses_api.dart';
 import 'package:receipt_manager/db/bloc/moor/bloc.dart';
-import 'package:receipt_manager/db/memento/receipt_memento.dart';
+import 'package:receipt_manager/db/memento/memento.dart';
 import 'package:receipt_manager/db/model/receipt_category.dart';
 import 'package:receipt_manager/db/receipt_database.dart';
 import 'package:receipt_manager/factory/banner_factory.dart';
@@ -52,7 +52,7 @@ class HistoryWidget extends StatefulWidget {
 }
 
 class HistoryWidgetState extends State<HistoryWidget> {
-  ReceiptMemento momentum = ReceiptMemento();
+  Memento momentum = Memento();
   List<Receipt> receipts = [];
 
   final emptyImagePath = "assets/not_empty";
@@ -326,7 +326,7 @@ class HistoryWidgetState extends State<HistoryWidget> {
   String category;
   Receipt currentReceipt;
   String currency;
-  ReceiptMemento memento;
+  Memento memento;
 
   _showDialog({controller, Receipt receipt}) async {
     this._storeName = receipt.shop;
@@ -334,7 +334,7 @@ class HistoryWidgetState extends State<HistoryWidget> {
     this._currentReceiptDate = DateManipulator.humanDate(context, receipt.date);
     this.category = receipt.category;
     this.currentReceipt = receipt;
-    this.memento = ReceiptMemento();
+    this.memento = Memento();
 
     this._storeNameController.text = _storeName;
     this._receiptTotalController.text =
@@ -583,7 +583,7 @@ class _FilterChipScreenState extends State<FilterChipScreen> {
   List<Color> colors;
   var selected = [];
 
-  ReceiptMemento momentum = ReceiptMemento();
+  Memento momentum = Memento();
 
   RandomColor _rand = RandomColor();
 

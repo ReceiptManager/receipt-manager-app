@@ -21,7 +21,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_onboard/flutter_onboard.dart';
 import 'package:provider/provider.dart';
 import 'package:receipt_manager/db/bloc/moor/bloc.dart';
-import 'package:receipt_manager/db/memento/receipt_memento.dart';
+import 'package:receipt_manager/db/memento/memento.dart';
 import 'package:receipt_manager/db/receipt_database.dart';
 import 'package:receipt_manager/db/repository/repository.dart';
 import 'package:receipt_manager/generated/l10n.dart';
@@ -53,12 +53,11 @@ Future<void> main() async {
     sharedPrefs.setString(SharedPreferenceKeyHolder.currency, "\$");
   }
 
-  ReceiptMemento receiptMemento = ReceiptMemento();
+  Memento receiptMemento = Memento();
   receiptMemento.currency =
       sharedPrefs.getString(SharedPreferenceKeyHolder.currency);
 
   runApp(MaterialApp(
-      color: LightColor.black,
       localizationsDelegates: [
         S.delegate,
         GlobalMaterialLocalizations.delegate,
@@ -97,15 +96,13 @@ class OnboardScreen extends StatefulWidget {
 
 class OnboardScreenState extends State<OnboardScreen> {
   final PageController _pageController = PageController();
-  final SharedPreferences sharedPrefs;
+  final SharedPreferences _prefs;
 
-  var skipOnboardMethod = false;
-
-  OnboardScreenState(this.sharedPrefs);
+  OnboardScreenState(this._prefs);
 
   @override
   Widget build(BuildContext context) {
-    if (sharedPrefs.get(SharedPreferenceKeyHolder.showOnboardScreen) == true)
+    if (_prefs.get(SharedPreferenceKeyHolder.showOnboardScreen) == true)
       return HomeScreen(null, false);
 
     final List<OnBoardModel> onBoardData = [
@@ -158,8 +155,8 @@ class OnboardScreenState extends State<OnboardScreen> {
               ),
               skipButton: TextButton(
                 onPressed: () {
-                  setDefaultValues(sharedPrefs);
-                  sharedPrefs.setBool(
+                  setDefaultValues(_prefs);
+                  _prefs.setBool(
                       SharedPreferenceKeyHolder.showOnboardScreen, true);
 
                   Navigator.push(
@@ -213,8 +210,8 @@ class OnboardScreenState extends State<OnboardScreen> {
         curve: Curves.easeInOutSine,
       );
     } else {
-      setDefaultValues(sharedPrefs);
-      sharedPrefs.setBool(SharedPreferenceKeyHolder.showOnboardScreen, true);
+      setDefaultValues(_prefs);
+      _prefs.setBool(SharedPreferenceKeyHolder.showOnboardScreen, true);
       Navigator.push(context,
           MaterialPageRoute(builder: (context) => HomeScreen(null, false)));
     }
