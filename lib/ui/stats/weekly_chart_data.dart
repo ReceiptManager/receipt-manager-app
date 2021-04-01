@@ -16,8 +16,8 @@
  */
 
 class WeeklyChartData {
-  final int day;
+  final DateTime date;
   double total;
 
-  WeeklyChartData(this.day, this.total);
+  WeeklyChartData(this.date, this.total);
 }

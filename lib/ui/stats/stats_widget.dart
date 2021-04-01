@@ -116,8 +116,8 @@ class StatsWidgetState extends State<StatsWidget> {
               color: Colors.red,
               name: S.of(context).overview,
               dataSource: data,
-              xValueMapper: (WeeklyChartData data, _) =>
-                  DateFormat.E().format((DateTime.utc(year, month, data.day))),
+              xValueMapper: (WeeklyChartData data, _) => DateFormat.E()
+                  .format((DateTime.utc(year, data.date.month, data.date.day))),
               yValueMapper: (WeeklyChartData data, _) => data.total,
               enableTooltip: true,
               width: 0.75)
