@@ -57,6 +57,20 @@ class TakePictureScreenState extends State<TakePictureScreen> {
     super.dispose();
   }
 
+  Widget cameraWidget(context) {
+    var camera = _controller.value;
+    final size = MediaQuery.of(context).size;
+    var scale = size.aspectRatio * camera.aspectRatio;
+
+    if (scale < 1) scale = 1 / scale;
+    return Transform.scale(
+      scale: scale,
+      child: Center(
+        child: CameraPreview(_controller),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -65,8 +79,7 @@ class TakePictureScreenState extends State<TakePictureScreen> {
         future: _initializeControllerFuture,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
-            return Container(
-                color: Colors.black, child: CameraPreview(_controller));
+            return Center(child: cameraWidget(context));
           } else {
             return Center(child: CircularProgressIndicator());
           }
