@@ -24,6 +24,7 @@ class ReceiptMemento {
 
   List<Receipt> receipts;
   List<Receipt> finalReceipts;
+  String currency;
 
   factory ReceiptMemento() {
     return _receiptShare;
@@ -42,7 +43,9 @@ class ReceiptMemento {
   }
 
   void update(Receipt receipt) {
-    receipts[receipts.indexWhere((element) => element.id == receipt.id)] = receipt;
-    finalReceipts[finalReceipts.indexWhere((element) => element.id == receipt.id)] = receipt;
+    receipts[receipts.indexWhere((element) => element.id == receipt.id)] =
+        receipt;
+    finalReceipts[finalReceipts
+        .indexWhere((element) => element.id == receipt.id)] = receipt;
   }
 }
