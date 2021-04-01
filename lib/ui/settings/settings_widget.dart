@@ -18,6 +18,7 @@
 import 'package:flutter/material.dart';
 import 'package:receipt_manager/generated/l10n.dart';
 import 'package:receipt_manager/ui/settings/api_settings.dart';
+import 'package:receipt_manager/ui/settings/concurrency_settings.dart';
 import 'package:receipt_manager/ui/settings/licence.dart';
 import 'package:receipt_manager/ui/settings/server_settings.dart';
 import 'package:settings_ui/settings_ui.dart';
@@ -76,7 +77,8 @@ class _SettingsWidgetState extends State<SettingsWidget> {
     _grayscale = _prefs.getBool(SharedPreferenceKeyHolder.grayscale);
     _gaussian = _prefs.getBool(SharedPreferenceKeyHolder.gaussianBlur);
     _rotate = _prefs.getBool(SharedPreferenceKeyHolder.rotate);
-    _sendTrainingData = _prefs.getBool(SharedPreferenceKeyHolder.sendTrainingData);
+    _sendTrainingData =
+        _prefs.getBool(SharedPreferenceKeyHolder.sendTrainingData);
     _showItemList = _prefs.getBool(SharedPreferenceKeyHolder.showItemList);
     _https = _prefs.getBool(SharedPreferenceKeyHolder.https);
     _edgeDetection = _prefs.getBool(SharedPreferenceKeyHolder.detectEdges);
@@ -113,6 +115,15 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                     builder: (BuildContext context) => ApiSettings(_prefs)));
               },
             ),
+            SettingsTile(
+              title: S.of(context).currency,
+              leading: Icon(Icons.monetization_on_outlined),
+              onPressed: (context) {
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (BuildContext context) =>
+                        ConcurrencySetting(_prefs)));
+              },
+            ),
           ],
         ),
         SettingsSection(title: S.of(context).networkSettings, tiles: [
@@ -127,7 +138,7 @@ class _SettingsWidgetState extends State<SettingsWidget> {
           SettingsTile(
             title: S.of(context).settingsServerTitle,
             leading: Icon(Icons.wifi),
-          onPressed: (context) {
+            onPressed: (context) {
               Navigator.of(context).push(MaterialPageRoute(
                   builder: (BuildContext context) => ServerSettings(_prefs)));
             },
@@ -270,7 +281,7 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                 });
               },
             ),
-           /* SettingsTile.switchTile(
+            /* SettingsTile.switchTile(
               title: S.of(context).showParsedReceipt,
               leading: Icon(Icons.receipt),
               switchValue: _showParsedResults,

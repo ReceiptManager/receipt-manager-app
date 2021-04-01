@@ -133,5 +133,6 @@
   "tag": "Tag",
   "tagHelperText": "Add a receipt tag",
   "invalidReceipt" : "Receive invalid receipt",
-  "invalidAPIToken": "API token is invalid"
+  "invalidAPIToken": "API token is invalid",
+  "concurrency" : "Concurrency"
 }

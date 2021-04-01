@@ -29,6 +29,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "cameraSettings" : MessageLookupByLibrary.simpleMessage("Camera settings"),
     "cancel" : MessageLookupByLibrary.simpleMessage("Cancel"),
     "category" : MessageLookupByLibrary.simpleMessage("Category"),
+    "concurrency" : MessageLookupByLibrary.simpleMessage("Concurrency"),
     "confirm" : MessageLookupByLibrary.simpleMessage("Confirm"),
     "connectionFailed" : MessageLookupByLibrary.simpleMessage("Connection could not be established"),
     "connectionSuccess" : MessageLookupByLibrary.simpleMessage("Connection could be established"),
