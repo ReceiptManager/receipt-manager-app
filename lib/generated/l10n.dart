@@ -1434,6 +1434,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Währung`
+  String get concurrency {
+    return Intl.message(
+      'Währung',
+      name: 'concurrency',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
