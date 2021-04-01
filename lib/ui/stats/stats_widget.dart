@@ -106,7 +106,6 @@ class StatsWidgetState extends State<StatsWidget> {
     List<WeeklyChartData> data = overview.getData();
 
     int year = DateTime.now().year;
-    int month = DateTime.now().month;
 
     return SfCartesianChart(
         primaryXAxis: CategoryAxis(),
