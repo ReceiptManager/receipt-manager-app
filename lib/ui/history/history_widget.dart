@@ -40,6 +40,7 @@ import 'package:receipt_manager/generated/l10n.dart';
 import 'package:receipt_manager/ui/theme/color/color.dart';
 import 'package:receipt_manager/ui/theme/theme_manager.dart';
 import 'package:receipt_manager/util/date_manipulator.dart';
+import 'package:receipt_manager/util/total_manipulator.dart';
 
 class HistoryWidget extends StatefulWidget {
   final DbBloc _bloc;
@@ -337,7 +338,7 @@ class HistoryWidgetState extends State<HistoryWidget> {
 
     this._storeNameController.text = _storeName;
     this._receiptTotalController.text =
-        _receiptTotal.substring(0, _receiptTotal.length - 1);
+        TotalManipulator.getTotalString(_receiptTotal);
     this._dateController.text = _currentReceiptDate;
 
     setState(() {

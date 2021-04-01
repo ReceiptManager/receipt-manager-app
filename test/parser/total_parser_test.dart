@@ -15,28 +15,19 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import 'dart:developer';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:receipt_manager/util/total_manipulator.dart';
 
-class TotalManipulator {
-  static String getTotalString(String total) {
-    int pos = 0;
-    for (int i = total.length - 1; i > 0; i--) {
-      if (double.tryParse(total[i]) != null) break;
+void main() {
+  test("Test untouched", () {
+    expect(TotalManipulator.getTotalString("30.00"), "30.00");
+  });
 
-      pos++;
-    }
-    return total.substring(0, total.length - pos);
-  }
+  test("Trim currency dollar", () {
+    expect(TotalManipulator.getTotalString("30.00\$"), "30.00");
+  });
 
-  static double get(String total) {
-    String formatString = total.trim();
-    formatString = getTotalString(formatString);
-    double _total = 0.00;
-    try {
-      _total = double.parse(formatString);
-    } catch (_) {
-      log(_.toString());
-    }
-    return _total;
-  }
+  test("Trim currency cfd", () {
+    expect(TotalManipulator.getTotalString("30.00CFD"), "30.00");
+  });
 }
