@@ -1,4 +1,4 @@
-name: receipt_manager2
+name: receipt_manager
 description: Receipt Manager 2
 
 version: 1.1.4+360
@@ -10,14 +10,37 @@ dependencies:
   flutter:
     sdk: flutter
 
+  flutter_localizations:
+    sdk: flutter
+
   flutter_clean_architecture: ^5.0.0
   injectable: ^1.2.2
-  http: ^0.12.0+2
-  cupertino_icons: ^0.1.2
-
-
-flutter_localizations:
-  sdk: flutter
+  http: ^0.13.1
+  camera: ^0.8.1
+  path_provider: ^2.0.1
+  path: ^1.8.0
+  curved_navigation_bar: ^0.4.0-nullsafety.0
+  shared_preferences: ^2.0.0-nullsafety.1
+  giffy_dialog: ^1.8.0
+  flutter_bloc: ^7.0.0
+  equatable: ^2.0.0
+  moor_flutter: ^4.0.0
+  flutter_slidable: ^0.5.7
+  moor: ^4.2.1
+  cupertino_icons: ^1.0.0
+  intl:
+  settings_ui: ^1.0.0-nullsafety.2
+  flutter_staggered_grid_view:  ^0.4.0-nullsafety.3
+  permission_handler: ^6.1.1
+  progress_dialog: ^1.2.4
+  simple_autocomplete_formfield: ^0.3.0
+  flutter_onboard: ^1.0.0
+  random_color: ^1.0.5
+  flutter_svg: ^0.21.0-nullsafety.0
+  flutter_staggered_animations: ^1.0.0
+  bonsoir: ^1.0.0
+  syncfusion_flutter_charts: ^18.4.49
+  currency_picker: ^2.0.3
 
 dev_dependencies:
   flutter_test:
@@ -25,6 +48,7 @@ dev_dependencies:
 
 
 flutter:
+  generate: true
   uses-material-design: true
   assets:
     - assets/

@@ -15,13 +15,38 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
+import 'package:receipt_manager/app/pages/history/history_controller.dart';
+import 'package:receipt_manager/app/widgets/banner_widget.dart';
 
 class HistoryPage extends View {
   @override
-  State<StatefulWidget> createState() {
-    // TODO: implement createState
-    throw UnimplementedError();
-  }
+  State<StatefulWidget> createState() => HistoryState();
+}
+
+class HistoryState extends ViewState<HistoryPage, HistoryController> {
+  HistoryState() : super(HistoryController());
+
+  @override
+  Widget get view => Scaffold(
+        key: globalKey,
+        body: Column(
+          children: <Widget>[
+            Center(
+              child: ControlledWidgetBuilder<HistoryController>(
+                  builder: (context, controller) {
+                return BannerWidget(
+                  text: "Receipt overview",
+                );
+              }),
+            ),
+            ControlledWidgetBuilder<HistoryController>(
+                builder: (context, controller) {
+              return Container(width: 0.0, height: 0.0);
+            }),
+          ],
+        ),
+      );
 }

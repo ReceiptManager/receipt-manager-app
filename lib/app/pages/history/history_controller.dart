@@ -16,11 +16,35 @@
  */
 
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
+import 'package:receipt_manager/app/pages/history/history_presenter.dart';
 
 // TODO: implement settings controller
 class HistoryController extends Controller {
+  final HistoryPresenter _historyPresenter;
+
+  HistoryController()
+      : _historyPresenter = HistoryPresenter(),
+        super();
+
   @override
   void initListeners() {
     // TODO: implement initListeners
+  }
+
+  void buttonPressed() {}
+
+  @override
+  void onResumed() => print('On resumed');
+
+  @override
+  void onReassembled() => print('View is about to be reassembled');
+
+  @override
+  void onDeactivated() => print('View is about to be deactivated');
+
+  @override
+  void onDisposed() {
+    _historyPresenter.dispose();
+    super.onDisposed();
   }
 }

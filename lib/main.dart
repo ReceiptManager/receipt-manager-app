@@ -15,22 +15,36 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
+import 'package:receipt_manager/app/pages/navigator/navigator_view.dart';
+import 'package:receipt_manager/app/theme/light_theme.dart';
+import 'package:receipt_manager/data/repository/settings_repository.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-import 'app/pages/home/home_view.dart';
+SharedPreferences sharedPrefs;
 
-void main() => runApp(MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  sharedPrefs = await SharedPreferences.getInstance();
 
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    FlutterCleanArchitecture.debugModeOn();
+  SettingsRepository repository = SettingsRepository();
+  repository.sharedPreferences = sharedPrefs;
 
-    // TODO: replace language strings
-    // TODO: replace color strings
-    return MaterialApp(
-      home: HomePage(),
-    );
-  }
+  FlutterCleanArchitecture.debugModeOn();
+  return runZonedGuarded(() async {
+    runApp(MaterialApp(
+        home: NavigatorPage(),
+        theme: AppTheme.lightTheme.copyWith(
+            pageTransitionsTheme: const PageTransitionsTheme(
+          builders: <TargetPlatform, PageTransitionsBuilder>{
+            TargetPlatform.android: ZoomPageTransitionsBuilder(),
+          },
+        ))));
+  }, (error, stack) {
+    print(stack);
+    print(error);
+  });
 }

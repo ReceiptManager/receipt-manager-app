@@ -15,11 +15,7 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-import 'dart:convert';
-
-import 'package:http/http.dart' as http;
 import 'package:injectable/injectable.dart';
-import 'package:receipt_manager/domain/exceptions/app_exceptions.dart';
 
 import 'http_manager.dart';
 
@@ -59,26 +55,5 @@ class AppHttpManager implements HttpManager {
       Map<String, String> headers}) {
     // TODO: implement put
     throw UnimplementedError();
-  }
-
-  dynamic _returnResponse(http.Response response) {
-    final responseJson = json.decode(response.body.toString());
-    if (response.statusCode >= 200 && response.statusCode <= 299) {
-      print('Api response success with $responseJson');
-      return responseJson;
-    }
-    print('Api response error with ${response.statusCode} + ${response.body}');
-    switch (response.statusCode) {
-      case 400:
-        throw BadRequestException();
-      case 401:
-      case 403:
-        throw UnauthorisedException();
-      case 415:
-        throw BadRequestException();
-      case 500:
-      default:
-        throw ServerException();
-    }
   }
 }

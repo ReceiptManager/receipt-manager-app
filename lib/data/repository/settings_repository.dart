@@ -15,20 +15,21 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-import 'dart:async';
+import 'package:shared_preferences/shared_preferences.dart';
 
-import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
+class SettingsRepository {
+  SharedPreferences _sharedPreferences;
 
-class ReceiptUseCase
-    extends UseCase<GetReceiptUseCaseParams, ReceiptUseCaseResponse> {
-  @override
-  Future<Stream<GetReceiptUseCaseParams>> buildUseCaseStream(
-      ReceiptUseCaseResponse params) {
-    // TODO: implement buildUseCaseStream
-    throw UnimplementedError();
+  SharedPreferences get sharedPreferences => _sharedPreferences;
+  set sharedPreferences(SharedPreferences value) => _sharedPreferences = value;
+
+  static final SettingsRepository _instance = SettingsRepository._internal();
+
+  SettingsRepository._internal();
+
+  factory SettingsRepository() => _instance;
+
+  void setSharedPreferences(SharedPreferences sharedPreferences) {
+    this._sharedPreferences = sharedPreferences;
   }
 }
-
-class GetReceiptUseCaseParams {}
-
-class ReceiptUseCaseResponse {}
