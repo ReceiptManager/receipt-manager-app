@@ -15,41 +15,93 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
-
-import 'home_controller.dart';
+import 'package:receipt_manager/app/pages/home/home_controller.dart';
+import 'package:receipt_manager/app/widgets/autocomplete_textfield.dart';
+import 'package:receipt_manager/app/widgets/banner_widget.dart';
+import 'package:receipt_manager/app/widgets/simple_textfield.dart';
 
 class HomePage extends View {
   @override
-  // Dependencies can be injected here
   State<StatefulWidget> createState() => HomeState();
 }
 
 class HomeState extends ViewState<HomePage, HomeController> {
   HomeState() : super(HomeController());
 
+  Widget textFieldPadding(Widget widget) =>
+      Padding(padding: EdgeInsets.all(8.0), child: widget);
+
+  Widget storeNameTextField(BuildContext context) =>
+      textFieldPadding(ControlledWidgetBuilder<HomeController>(
+          builder: (context, controller) {
+        return AutocompleteWidget(
+            storeNameList: [],
+            controller: null,
+            hintText: "HintText",
+            labelText: "StoreName",
+            helperText: "HelperText",
+            icon: Icon(Icons.store_mall_directory_outlined));
+      }));
+
+  Widget tagTextField(BuildContext context) =>
+      textFieldPadding(ControlledWidgetBuilder<HomeController>(
+          builder: (context, controller) {
+        return AutocompleteWidget(
+            storeNameList: ["Test"],
+            controller: null,
+            hintText: "HintText",
+            labelText: "Tag",
+            helperText: "HelperText",
+            icon: Icon(Icons.tag));
+      }));
+
+  Widget totalTextField(BuildContext context) =>
+      textFieldPadding(ControlledWidgetBuilder<HomeController>(
+          builder: (context, controller) {
+        return SimpleTextfieldWidget(
+          controller: null,
+          hintText: "HintText",
+          labelText: "Tag",
+          helperText: "HelperText",
+          icon: Icon(Icons.monetization_on_outlined),
+          validator: null,
+        );
+      }));
+
+  Widget dateTextField(BuildContext context) =>
+      textFieldPadding(ControlledWidgetBuilder<HomeController>(
+          builder: (context, controller) {
+        return SimpleTextfieldWidget(
+          controller: null,
+          hintText: "HintText",
+          labelText: "Date",
+          helperText: "HelperText",
+          icon: Icon(Icons.date_range),
+          validator: null,
+        );
+      }));
+
   @override
-  Widget get view => MaterialApp(
-        title: 'Flutter Demo',
-        home: Scaffold(
-          key: globalKey,
-          body: Column(
-            children: <Widget>[
-              Center(
-                // show the number of times the button has been clicked
-                child: ControlledWidgetBuilder<HomeController>(
-                    builder: (context, controller) {
-                  return Container();
-                }),
-              ),
-              ControlledWidgetBuilder<HomeController>(
+  Widget get view => Scaffold(
+        key: globalKey,
+        body: Column(
+          children: <Widget>[
+            Center(
+              child: ControlledWidgetBuilder<HomeController>(
                   builder: (context, controller) {
-                return Container();
+                return BannerWidget(
+                  text: "Add receipts",
+                );
               }),
-            ],
-          ),
+            ),
+            storeNameTextField(context),
+            totalTextField(context),
+            dateTextField(context),
+            tagTextField(context)
+          ],
         ),
       );
 }
