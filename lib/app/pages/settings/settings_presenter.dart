@@ -15,22 +15,11 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 
-import 'app/pages/home/home_view.dart';
-
-void main() => runApp(MyApp());
-
-class MyApp extends StatelessWidget {
+class SettingsPresenter extends Presenter {
   @override
-  Widget build(BuildContext context) {
-    FlutterCleanArchitecture.debugModeOn();
-
-    // TODO: replace language strings
-    // TODO: replace color strings
-    return MaterialApp(
-      home: HomePage(),
-    );
+  void dispose() {
+    // TODO: implement dispose
   }
 }

@@ -15,22 +15,27 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-import 'package:flutter/material.dart';
-import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
+import 'package:receipt_manager/domain/entities/receipt.dart';
+import 'package:receipt_manager/domain/repository/abstract_receipt_repository.dart';
 
-import 'app/pages/home/home_view.dart';
+class ReceiptRepository extends AbstractReceiptRepository {
+  List<Receipt> receipts;
 
-void main() => runApp(MyApp());
+  static final ReceiptRepository _instance = ReceiptRepository._internal();
 
-class MyApp extends StatelessWidget {
+  ReceiptRepository._internal();
+
+  factory ReceiptRepository() => _instance;
+
   @override
-  Widget build(BuildContext context) {
-    FlutterCleanArchitecture.debugModeOn();
+  Future<Receipt> getReceipt(int id) {
+    // TODO: implement getReceipt
+    throw UnimplementedError();
+  }
 
-    // TODO: replace language strings
-    // TODO: replace color strings
-    return MaterialApp(
-      home: HomePage(),
-    );
+  @override
+  Future<List<Receipt>> getReceipts() {
+    // TODO: implement getReceipts
+    throw UnimplementedError();
   }
 }

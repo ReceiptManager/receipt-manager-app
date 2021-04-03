@@ -15,22 +15,13 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-import 'package:flutter/material.dart';
+import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 
-import 'app/pages/home/home_view.dart';
-
-void main() => runApp(MyApp());
-
-class MyApp extends StatelessWidget {
+class HistoryPage extends View {
   @override
-  Widget build(BuildContext context) {
-    FlutterCleanArchitecture.debugModeOn();
-
-    // TODO: replace language strings
-    // TODO: replace color strings
-    return MaterialApp(
-      home: HomePage(),
-    );
+  State<StatefulWidget> createState() {
+    // TODO: implement createState
+    throw UnimplementedError();
   }
 }

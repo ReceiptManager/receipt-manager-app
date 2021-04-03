@@ -15,22 +15,30 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-import 'package:flutter/material.dart';
-import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
+abstract class HttpManager {
+  Future<dynamic> get({
+    String url,
+    Map<String, dynamic> query,
+    Map<String, String> headers,
+  });
 
-import 'app/pages/home/home_view.dart';
+  Future<dynamic> post({
+    String url,
+    Map body,
+    Map<String, dynamic> query,
+    Map<String, String> headers,
+  });
 
-void main() => runApp(MyApp());
+  Future<dynamic> put({
+    String url,
+    Map body,
+    Map<String, dynamic> query,
+    Map<String, String> headers,
+  });
 
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    FlutterCleanArchitecture.debugModeOn();
-
-    // TODO: replace language strings
-    // TODO: replace color strings
-    return MaterialApp(
-      home: HomePage(),
-    );
-  }
+  Future<dynamic> delete({
+    String url,
+    Map<String, dynamic> query,
+    Map<String, String> headers,
+  });
 }
