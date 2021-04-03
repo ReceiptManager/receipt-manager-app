@@ -205,7 +205,6 @@ class ReceiptInputController extends State<ReceiptForm> {
                                                           : TakePictureScreen(
                                                               camera:
                                                                   firstCamera,
-                                                              key: _formKey,
                                                               sharedPrefs: this
                                                                   ._sharedPrefs)),
                                                 ));
