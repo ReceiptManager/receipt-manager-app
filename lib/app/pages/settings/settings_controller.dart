@@ -16,11 +16,38 @@
  */
 
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
+import 'package:receipt_manager/app/pages/settings/settings_presenter.dart';
 
 // TODO: implement settings controller
 class SettingsController extends Controller {
+  final SettingsPresenter _settingsPresenter;
+
+  String _currency;
+  String get currency => _currency;
+
+  SettingsController()
+      : _settingsPresenter = SettingsPresenter(),
+        super();
+
   @override
   void initListeners() {
     // TODO: implement initListeners
+  }
+
+  void buttonPressed() {}
+
+  @override
+  void onResumed() => print('On resumed');
+
+  @override
+  void onReassembled() => print('View is about to be reassembled');
+
+  @override
+  void onDeactivated() => print('View is about to be deactivated');
+
+  @override
+  void onDisposed() {
+    _settingsPresenter.dispose();
+    super.onDisposed();
   }
 }

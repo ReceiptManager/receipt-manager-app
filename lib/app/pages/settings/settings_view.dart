@@ -15,13 +15,34 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
+import 'package:receipt_manager/app/pages/stats/stat_controller.dart';
 
 class SettingsPage extends View {
   @override
-  State<StatefulWidget> createState() {
-    // TODO: implement createState
-    throw UnimplementedError();
-  }
+  State<StatefulWidget> createState() => SettingsState();
+}
+
+class SettingsState extends ViewState<SettingsPage, StatsController> {
+  SettingsState() : super(StatsController());
+
+  @override
+  Widget get view => Scaffold(
+        key: globalKey,
+        body: Column(
+          children: <Widget>[
+            Center(
+              child: ControlledWidgetBuilder<StatsController>(
+                  builder: (context, controller) {
+                return Container();
+              }),
+            ),
+            ControlledWidgetBuilder<StatsController>(
+                builder: (context, controller) {
+              return Container(width: 0.0, height: 0.0);
+            }),
+          ],
+        ),
+      );
 }
