@@ -15,6 +15,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-export 'package:receipt_manager/db/bloc/moor/db_bloc.dart';
-export 'package:receipt_manager/db/bloc/moor/db_event.dart';
-export 'package:receipt_manager/db/bloc/moor/db_state.dart';
+export 'package:receipt_manager/data/storage/bloc/moor/db_bloc.dart';
+export 'package:receipt_manager/data/storage/bloc/moor/db_event.dart';
+export 'package:receipt_manager/data/storage/bloc/moor/db_state.dart';

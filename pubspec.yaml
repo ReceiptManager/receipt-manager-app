@@ -41,6 +41,7 @@ dependencies:
   bonsoir: ^1.0.0
   syncfusion_flutter_charts: ^18.4.49
   currency_picker: ^2.0.3
+  moor_generator: ^4.2.1
 
 dev_dependencies:
   flutter_test:

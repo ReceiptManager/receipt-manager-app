@@ -14,50 +14,26 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-
 import 'package:moor/moor.dart';
-
-class Receipts extends Table {
-  IntColumn get id => integer().autoIncrement()();
-
-  // TODO: add contraints
-  IntColumn get storeName => integer().nullable();
-
-  RealColumn get total => real()();
-
-  IntColumn get currency => integer();
-
-  DateTimeColumn get date => dateTime()();
-
-  // TODO: add constraints
-  IntColumn get tag => integer().nullable();
-
-  // TODO: add constraints
-  IntColumn get items => integer().nullable();
-}
-
-class Tag extends Table {
-  IntColumn get id => integer().autoIncrement()();
-
-  TextColumn get tag => text()();
-}
-
-class Currency extends Table {
-  IntColumn get id => integer().autoIncrement()();
-
-  TextColumn get currency => text()();
-}
 
 class Items extends Table {
   IntColumn get id => integer().autoIncrement()();
-
-  TextColumn get name => text()();
-
-  RealColumn get total => real()();
+  IntColumn get price => integer()();
 }
 
-class Store extends Table {
+class Receipts extends Table {
   IntColumn get id => integer().autoIncrement()();
+}
 
-  TextColumn get name => text()();
+@DataClassName('ReceiptEntry')
+class ShoppingCartEntries extends Table {
+  IntColumn get receipt => integer()();
+  IntColumn get item => integer()();
+}
+
+class ReceiptWithItems {
+  final Receipts receipt;
+  final List<Items> items;
+
+  ReceiptWithItems(this.receipt, this.items);
 }

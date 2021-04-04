@@ -17,7 +17,7 @@
 
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
-import 'package:receipt_manager/db/receipt_database.dart';
+import 'package:receipt_manager/data/storage/receipt_database.dart';
 
 @immutable
 abstract class DbEvent extends Equatable {

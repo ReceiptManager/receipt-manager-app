@@ -41,7 +41,7 @@ class ReceiptDao extends DatabaseAccessor<AppDatabase> with _$ReceiptDaoMixin {
     return (select(receipts)
           ..orderBy(([
             (t) => OrderingTerm(expression: t.date, mode: OrderingMode.desc),
-            (t) => OrderingTerm(expression: t.shop),
+            (t) => OrderingTerm(expression: t.storeName),
           ])))
         .get();
   }
