@@ -15,14 +15,49 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-import 'item.dart';
+import 'package:moor/moor.dart';
 
-class Receipt {
-  final String storeName;
-  final String date;
-  final String total;
-  final String tag;
-  final List<Item> items;
+class Receipts extends Table {
+  IntColumn get id => integer().autoIncrement()();
 
-  Receipt(this.storeName, this.date, this.total, this.tag, this.items);
+  // TODO: add contraints
+  IntColumn get storeName => integer().nullable();
+
+  RealColumn get total => real()();
+
+  IntColumn get currency => integer();
+
+  DateTimeColumn get date => dateTime()();
+
+  // TODO: add constraints
+  IntColumn get tag => integer().nullable();
+
+  // TODO: add constraints
+  IntColumn get items => integer().nullable();
+}
+
+class Tag extends Table {
+  IntColumn get id => integer().autoIncrement()();
+
+  TextColumn get tag => text()();
+}
+
+class Currency extends Table {
+  IntColumn get id => integer().autoIncrement()();
+
+  TextColumn get currency => text()();
+}
+
+class Items extends Table {
+  IntColumn get id => integer().autoIncrement()();
+
+  TextColumn get name => text()();
+
+  RealColumn get total => real()();
+}
+
+class Store extends Table {
+  IntColumn get id => integer().autoIncrement()();
+
+  TextColumn get name => text()();
 }
