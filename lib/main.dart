@@ -19,19 +19,11 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
-import 'package:receipt_manager/app/pages/navigator/navigator_view.dart';
+import 'package:receipt_manager/app/pages/navigator.dart';
 import 'package:receipt_manager/app/theme/light_theme.dart';
-import 'package:receipt_manager/data/repository/settings_repository.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-
-SharedPreferences sharedPrefs;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  sharedPrefs = await SharedPreferences.getInstance();
-
-  SettingsRepository repository = SettingsRepository();
-  repository.sharedPreferences = sharedPrefs;
 
   FlutterCleanArchitecture.debugModeOn();
   return runZonedGuarded(() async {
