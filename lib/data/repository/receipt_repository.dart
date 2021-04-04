@@ -15,7 +15,7 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-import 'package:receipt_manager/domain/entities/receipt.dart';
+import 'package:receipt_manager/data/storage/receipt_database.dart';
 import 'package:receipt_manager/domain/repository/abstract_receipt_repository.dart';
 
 class ReceiptRepository extends AbstractReceiptRepository {
