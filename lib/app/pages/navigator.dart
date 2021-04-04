@@ -18,12 +18,10 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
-import 'package:receipt_manager/app/helper/language_loader.dart';
 import 'package:receipt_manager/app/pages/history/history_view.dart';
 import 'package:receipt_manager/app/pages/home/home_view.dart';
 import 'package:receipt_manager/app/pages/settings/settings_view.dart';
 import 'package:receipt_manager/app/pages/stats/stat_view.dart';
-import 'package:receipt_manager/data/repository/settings_repository.dart';
 
 class NavigatorPage extends View {
   NavigatorPage({Key key}) : super(key: key);
@@ -45,10 +43,6 @@ class NavigatorState extends State {
 
   @override
   Widget build(BuildContext context) {
-    EasyLanguageLoader _loader =
-        EasyLanguageLoader(SettingsRepository().sharedPreferences);
-    _loader.loadCurrentLanguage();
-
     return WillPopScope(
         onWillPop: () async => false,
         child: Scaffold(
