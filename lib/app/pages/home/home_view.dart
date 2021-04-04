@@ -19,17 +19,18 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 import 'package:receipt_manager/app/pages/home/home_controller.dart';
-import 'package:receipt_manager/app/widgets/autocomplete_textfield.dart';
 import 'package:receipt_manager/app/widgets/banner_widget.dart';
+import 'package:receipt_manager/app/widgets/floating_button.dart';
 import 'package:receipt_manager/app/widgets/simple_textfield.dart';
+import 'package:receipt_manager/data/repository/receipt_repository.dart';
 
 class HomePage extends View {
   @override
-  State<StatefulWidget> createState() => HomeState();
+  _HomePageState createState() => _HomePageState();
 }
 
-class HomeState extends ViewState<HomePage, HomeController> {
-  HomeState() : super(HomeController());
+class _HomePageState extends ViewState<HomePage, HomeController> {
+  _HomePageState() : super(HomeController(ReceiptRepository()));
 
   Widget textFieldPadding(Widget widget) =>
       Padding(padding: EdgeInsets.all(8.0), child: widget);
@@ -37,24 +38,24 @@ class HomeState extends ViewState<HomePage, HomeController> {
   Widget storeNameTextField(BuildContext context) =>
       textFieldPadding(ControlledWidgetBuilder<HomeController>(
           builder: (context, controller) {
-        return AutocompleteWidget(
-            storeNameList: [],
-            controller: null,
-            hintText: "HintText",
-            labelText: "StoreName",
-            helperText: "HelperText",
+        return SimpleTextfieldWidget(
+            controller: controller.storeNameController,
+            hintText: "Store Name",
+            labelText: "Store Name",
+            helperText: "The receipt store name",
+            validator: controller.validateStoreName,
             icon: Icon(Icons.store_mall_directory_outlined));
       }));
 
   Widget tagTextField(BuildContext context) =>
       textFieldPadding(ControlledWidgetBuilder<HomeController>(
           builder: (context, controller) {
-        return AutocompleteWidget(
-            storeNameList: ["Test"],
-            controller: null,
-            hintText: "HintText",
-            labelText: "Tag",
-            helperText: "HelperText",
+        return SimpleTextfieldWidget(
+            controller: controller.receiptTagController,
+            hintText: "Receipt Tag",
+            labelText: "Receipt Tag",
+            helperText: "The receipt tag",
+            validator: (value) => null,
             icon: Icon(Icons.tag));
       }));
 
@@ -62,12 +63,12 @@ class HomeState extends ViewState<HomePage, HomeController> {
       textFieldPadding(ControlledWidgetBuilder<HomeController>(
           builder: (context, controller) {
         return SimpleTextfieldWidget(
-          controller: null,
-          hintText: "HintText",
-          labelText: "Tag",
-          helperText: "HelperText",
+          controller: controller.receiptTotalController,
+          hintText: "Receipt Total",
+          labelText: "Receipt Total",
+          helperText: "The receipt total",
           icon: Icon(Icons.monetization_on_outlined),
-          validator: null,
+          validator: controller.validateTotal,
         );
       }));
 
@@ -75,33 +76,55 @@ class HomeState extends ViewState<HomePage, HomeController> {
       textFieldPadding(ControlledWidgetBuilder<HomeController>(
           builder: (context, controller) {
         return SimpleTextfieldWidget(
-          controller: null,
-          hintText: "HintText",
-          labelText: "Date",
-          helperText: "HelperText",
+          controller: controller.receiptDateController,
+          hintText: "Receipt Date",
+          labelText: "Receipt Date",
+          helperText: "The receipt date",
           icon: Icon(Icons.date_range),
-          validator: null,
+          validator: controller.validateDate,
         );
       }));
 
+  Widget banner() => BannerWidget(
+        text: "Add receipts",
+      );
+
+  Widget submitButton(BuildContext context) =>
+      ControlledWidgetBuilder<HomeController>(builder: (context, controller) {
+        return Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            Center(
+              child: new Align(
+                  alignment: Alignment.center,
+                  child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: FloatingButton(
+                        text: "Submit",
+                        controller: controller,
+                      ))),
+            )
+          ],
+        );
+      });
+
   @override
   Widget get view => Scaffold(
-        key: globalKey,
-        body: Column(
-          children: <Widget>[
-            Center(
-              child: ControlledWidgetBuilder<HomeController>(
-                  builder: (context, controller) {
-                return BannerWidget(
-                  text: "Add receipts",
-                );
-              }),
-            ),
-            storeNameTextField(context),
-            totalTextField(context),
-            dateTextField(context),
-            tagTextField(context)
-          ],
-        ),
-      );
+      key: globalKey,
+      body: SingleChildScrollView(
+          child: ControlledWidgetBuilder<HomeController>(
+              builder: (context, controller) => Form(
+                    key: controller.formKey,
+                    child: Column(
+                      children: <Widget>[
+                        banner(),
+                        storeNameTextField(context),
+                        totalTextField(context),
+                        dateTextField(context),
+                        tagTextField(context),
+                        submitButton(context)
+                      ],
+                    ),
+                  ))));
 }
