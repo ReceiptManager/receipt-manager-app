@@ -12,24 +12,24 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter/material.dart';
+import 'package:json_annotation/json_annotation.dart';
 
-class SettingsRepository {
-  SharedPreferences _sharedPreferences;
+@JsonSerializable()
+class ReceiptCategory {
+  const ReceiptCategory(this.name, this.icon, this.path);
 
-  SharedPreferences get sharedPreferences => _sharedPreferences;
-  set sharedPreferences(SharedPreferences value) => _sharedPreferences = value;
+  final String name;
+  final String path;
+  final Icon icon;
 
-  static final SettingsRepository _instance = SettingsRepository._internal();
+  ReceiptCategory.fromJson(Map<String, dynamic> json)
+      : name = json == null ? "util" : json['name'],
+        path = json == null ? "util" : json['path'],
+        icon = null;
 
-  SettingsRepository._internal();
-
-  factory SettingsRepository() => _instance;
-
-  void setSharedPreferences(SharedPreferences sharedPreferences) {
-    this._sharedPreferences = sharedPreferences;
-  }
+  Map<String, dynamic> toJson() => {'name': name, 'path': path};
 }
