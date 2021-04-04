@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
 class SimpleTextfieldWidget extends StatelessWidget {
-  final TextEditingController controller;
-  final Function validator;
+  final Icon icon;
   final String hintText;
   final String helperText;
   final String labelText;
-  final Icon icon;
+  final Function validator;
+  final TextEditingController controller;
 
   SimpleTextfieldWidget(
       {@required this.controller,
@@ -32,12 +32,12 @@ class SimpleTextfieldWidget extends StatelessWidget {
           border: new OutlineInputBorder(
               borderSide: new BorderSide(color: Colors.grey[100])),
           hintText: hintText,
-          //labelText: S.of(context).itemTotalLabelText,
+          labelText: labelText,
           helperText: helperText,
           prefixIcon: icon,
           prefixText: ' ',
         ),
         controller: controller,
-        validator: validator);
+        validator: (value) => validator(value));
   }
 }
