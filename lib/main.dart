@@ -16,16 +16,28 @@
  */
 
 import 'dart:async';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
+import 'package:hive/hive.dart';
+import 'package:path_provider/path_provider.dart' as pathProvider;
 import 'package:receipt_manager/app/pages/navigator.dart';
 import 'package:receipt_manager/app/theme/light_theme.dart';
+import 'package:receipt_manager/data/repository/app_repository.dart';
+import 'package:receipt_manager/domain/entities/receipt_adapter.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
   FlutterCleanArchitecture.debugModeOn();
+  Directory directory = await pathProvider.getApplicationDocumentsDirectory();
+  Hive.init(directory.path);
+  Hive.registerAdapter(ReceiptAdapter());
+
+  AppRepository appRepository = AppRepository();
+  appRepository.setPreferences(await SharedPreferences.getInstance());
+
   return runZonedGuarded(() async {
     runApp(MaterialApp(
         home: NavigatorPage(),
