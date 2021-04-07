@@ -15,6 +15,7 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 import 'package:receipt_manager/app/pages/settings/settings_presenter.dart';
 
@@ -23,18 +24,48 @@ class SettingsController extends Controller {
   final SettingsPresenter _settingsPresenter;
 
   String _currency;
+
   String get currency => _currency;
+
+  bool _rotateImage;
+  bool _gaussianBlur;
+  bool _grayscaleImage;
+  bool _neuronalNetworkParser;
+  bool _https;
+  bool _legacyParser;
+  bool _trainingData;
+  bool _debugOutput;
+  bool _showAricles;
+  bool _showOpenSourceLicences;
 
   SettingsController()
       : _settingsPresenter = SettingsPresenter(),
         super();
 
+  get rotateImage => _rotateImage;
+
+  get grayscaleImage => _grayscaleImage;
+
+  get gaussianBlur => _gaussianBlur;
+
+  get neuronalNetworkParser => _neuronalNetworkParser;
+
+  get https => _https;
+
+  get legacyParser => _legacyParser;
+
+  get sendTrainingData => _trainingData;
+
+  get debugOutput => _debugOutput;
+
+  get showArticles => _showAricles;
+
+  get showOpenSourceLicences => _showOpenSourceLicences;
+
   @override
   void initListeners() {
     // TODO: implement initListeners
   }
-
-  void buttonPressed() {}
 
   @override
   void onResumed() => print('On resumed');
@@ -49,5 +80,61 @@ class SettingsController extends Controller {
   void onDisposed() {
     _settingsPresenter.dispose();
     super.onDisposed();
+  }
+
+  apiTokenButtonPress(BuildContext context) {
+    throw UnimplementedError();
+  }
+
+  languageButtonPress(BuildContext context) {
+    throw UnimplementedError();
+  }
+
+  detectReceiptServerButtonPress(BuildContext context) {
+    throw UnimplementedError();
+  }
+
+  toggleRotateImage(bool value) {
+    throw UnimplementedError();
+  }
+
+  toggleGrayscaleImage(bool value) {
+    throw UnimplementedError();
+  }
+
+  toggleGaussianBlur(bool value) {
+    throw UnimplementedError();
+  }
+
+  toggleNeuronalNetworkParser(bool value) {
+    throw UnimplementedError();
+  }
+
+  serverButtonPress(BuildContext context) {
+    throw UnimplementedError();
+  }
+
+  toggleLegacyParser(bool value) {
+    throw UnimplementedError();
+  }
+
+  toggleTrainingData(bool value) {
+    throw UnimplementedError();
+  }
+
+  toggleDebugOutput(bool val) {
+    throw UnimplementedError();
+  }
+
+  toggleHttps(bool value) {
+    throw UnimplementedError();
+  }
+
+  toggleShowArticles(bool value) {
+    throw UnimplementedError();
+  }
+
+  toggleOpenSourceLicences(BuildContext context) {
+    throw UnimplementedError();
   }
 }

@@ -35,6 +35,7 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+
   hive_generator: ^1.0.1
   build_runner: ^1.12.2
 
@@ -43,7 +44,3 @@ flutter:
   uses-material-design: true
   assets:
     - assets/
-
-flutter_intl:
-  main_locale: de_DE
-  enabled: false
