@@ -20,8 +20,9 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 import 'package:intl/intl.dart';
+import 'package:receipt_manager/app/helper/receipt_logger.dart';
 import 'package:receipt_manager/app/pages/home/home_presenter.dart';
-import 'package:receipt_manager/data/repository/receipt_repository.dart';
+import 'package:receipt_manager/data/repository/app_repository.dart';
 
 // TODO: implement settings controller
 class HomeController extends Controller {
@@ -34,8 +35,8 @@ class HomeController extends Controller {
 
   final _formKey = GlobalKey<FormState>();
 
-  HomeController(ReceiptRepository receiptRepository)
-      : _homePresenter = HomePresenter(receiptRepository),
+  HomeController(AppRepository appRepository)
+      : _homePresenter = HomePresenter(appRepository),
         super();
 
   @override
@@ -72,12 +73,15 @@ class HomeController extends Controller {
   }
 
   void submit() {
-    if (!_formKey.currentState.validate()) fail();
+    //if (!_formKey.currentState.validate()) fail();
 
-    String storeName = _storeNameController.text;
-    String total = _receiptTotalController.text;
-    String date = _receiptDateController.text;
-    String tag = _receiptTagController.text;
+    String _storeNameString = _storeNameController.text;
+    String _totalString = _receiptTotalController.text;
+    String _dateString = _receiptDateController.text;
+    String _tagString = _receiptTagController.text;
+
+    ReceiptLogger.logger(
+        _storeNameString, _totalString, _dateString, _tagString);
 
     success();
   }

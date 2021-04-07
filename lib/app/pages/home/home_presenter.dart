@@ -16,10 +16,10 @@
  */
 
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
-import 'package:receipt_manager/data/repository/receipt_repository.dart';
+import 'package:receipt_manager/data/repository/app_repository.dart';
 
 class HomePresenter extends Presenter {
-  HomePresenter(ReceiptRepository receiptRepository);
+  HomePresenter(AppRepository receiptRepository);
 
   @override
   void dispose() {

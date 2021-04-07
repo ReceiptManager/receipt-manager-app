@@ -22,15 +22,15 @@ import 'package:receipt_manager/app/pages/home/home_controller.dart';
 import 'package:receipt_manager/app/widgets/banner_widget.dart';
 import 'package:receipt_manager/app/widgets/floating_button.dart';
 import 'package:receipt_manager/app/widgets/simple_textfield.dart';
-import 'package:receipt_manager/data/repository/receipt_repository.dart';
+import 'package:receipt_manager/data/repository/app_repository.dart';
 
 class HomePage extends View {
   @override
-  _HomePageState createState() => _HomePageState();
+  State<StatefulWidget> createState() => _HomePageState();
 }
 
 class _HomePageState extends ViewState<HomePage, HomeController> {
-  _HomePageState() : super(HomeController(ReceiptRepository()));
+  _HomePageState() : super(HomeController(AppRepository()));
 
   Widget textFieldPadding(Widget widget) =>
       Padding(padding: EdgeInsets.all(8.0), child: widget);
@@ -86,7 +86,7 @@ class _HomePageState extends ViewState<HomePage, HomeController> {
       }));
 
   Widget banner() => BannerWidget(
-        text: "Add receipts",
+        text: "Add Receipt",
       );
 
   Widget submitButton(BuildContext context) =>
