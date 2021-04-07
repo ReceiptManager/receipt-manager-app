@@ -12,29 +12,21 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-import 'dart:developer';
+import 'package:receipt_manager/domain/entities/receipt_adapter.dart';
 
-import 'package:bloc/bloc.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+abstract class AbstractReceiptRepository {
+  Future<List<Receipt>> getReceipts();
 
-class DatabaseObserver extends BlocObserver {
-  @override
-  void onEvent(Bloc bloc, Object event) {
-    super.onEvent(bloc, event);
-    print(event.toString());
-  }
+  Stream<List<Receipt>> watchReceipts();
 
-  @override
-  void onTransition(Bloc bloc, Transition transition) {
-    if (transition.currentState == null) {
-      log("[TRANSITION] can't follow transaction. State is empty.");
-      return;
-    }
+  Future insertReceipt(Receipt receipt);
 
-    super.onTransition(bloc, transition);
-    print(transition.toString());
-  }
+  Future updateReceipt(Receipt receipt);
+
+  Future deleteReceipt(Receipt receipt);
+
+  Future deleteDatabase();
 }
