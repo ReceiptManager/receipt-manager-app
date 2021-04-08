@@ -24,7 +24,6 @@ import 'package:intl/intl.dart';
 import 'package:receipt_manager/app/helper/receipt_logger.dart';
 import 'package:receipt_manager/app/pages/home/home_presenter.dart';
 import 'package:receipt_manager/data/repository/app_repository.dart';
-import 'package:receipt_manager/domain/entities/receipt_adapter.dart';
 
 // TODO: implement settings controller
 class HomeController extends Controller {

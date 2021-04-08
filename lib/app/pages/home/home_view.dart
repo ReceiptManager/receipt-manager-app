@@ -21,6 +21,7 @@ import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 import 'package:receipt_manager/app/pages/home/home_controller.dart';
 import 'package:receipt_manager/app/widgets/banner_widget.dart';
 import 'package:receipt_manager/app/widgets/floating_button.dart';
+import 'package:receipt_manager/app/widgets/padding_widget.dart';
 import 'package:receipt_manager/app/widgets/simple_textfield.dart';
 import 'package:receipt_manager/data/repository/app_repository.dart';
 
@@ -32,12 +33,8 @@ class HomePage extends View {
 class _HomePageState extends ViewState<HomePage, HomeController> {
   _HomePageState() : super(HomeController(AppRepository()));
 
-  Widget textFieldPadding(Widget widget) =>
-      Padding(padding: EdgeInsets.all(8.0), child: widget);
-
   Widget storeNameTextField(BuildContext context) =>
-      textFieldPadding(ControlledWidgetBuilder<HomeController>(
-          builder: (context, controller) {
+      ControlledWidgetBuilder<HomeController>(builder: (context, controller) {
         return SimpleTextfieldWidget(
             controller: controller.storeNameController,
             hintText: "Store Name",
@@ -45,10 +42,10 @@ class _HomePageState extends ViewState<HomePage, HomeController> {
             helperText: "The receipt store name",
             validator: controller.validateStoreName,
             icon: Icon(Icons.store_mall_directory_outlined));
-      }));
+      });
 
   Widget tagTextField(BuildContext context) =>
-      textFieldPadding(ControlledWidgetBuilder<HomeController>(
+      PaddingWidget(widget: ControlledWidgetBuilder<HomeController>(
           builder: (context, controller) {
         return SimpleTextfieldWidget(
             controller: controller.receiptTagController,
@@ -60,7 +57,7 @@ class _HomePageState extends ViewState<HomePage, HomeController> {
       }));
 
   Widget totalTextField(BuildContext context) =>
-      textFieldPadding(ControlledWidgetBuilder<HomeController>(
+      PaddingWidget(widget: ControlledWidgetBuilder<HomeController>(
           builder: (context, controller) {
         return SimpleTextfieldWidget(
           controller: controller.receiptTotalController,
@@ -73,7 +70,7 @@ class _HomePageState extends ViewState<HomePage, HomeController> {
       }));
 
   Widget dateTextField(BuildContext context) =>
-      textFieldPadding(ControlledWidgetBuilder<HomeController>(
+      PaddingWidget(widget: ControlledWidgetBuilder<HomeController>(
           builder: (context, controller) {
         return SimpleTextfieldWidget(
           controller: controller.receiptDateController,
