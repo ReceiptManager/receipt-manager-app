@@ -15,18 +15,4 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-import 'package:receipt_manager/domain/entities/receipt_adapter.dart';
-
-abstract class AbstractReceiptRepository {
-  Future<List<Receipt>> getReceipts();
-
-  Stream<List<Receipt>> watchReceipts();
-
-  Future insertReceipt(Receipt receipt);
-
-  Future updateReceipt(Receipt receipt);
-
-  Future deleteReceipt(Receipt receipt);
-
-  Future deleteDatabase();
-}
+abstract class AbstractReceiptRepository {}

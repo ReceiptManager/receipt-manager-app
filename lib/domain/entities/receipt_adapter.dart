@@ -6,7 +6,7 @@ part 'receipt_adapter.g.dart';
 @HiveType(typeId: 0)
 class Receipt {
   @HiveField(0)
-  final Store store;
+  final String storeName;
 
   @HiveField(1)
   final DateTime date;
@@ -23,8 +23,8 @@ class Receipt {
   @HiveField(5)
   final List<ReceiptItem> items;
 
-  Receipt(
-      this.store, this.date, this.total, this.tag, this.category, this.items);
+  Receipt(this.storeName, this.date, this.total, this.tag, this.category,
+      this.items);
 }
 
 class ReceiptItem {
@@ -33,12 +33,6 @@ class ReceiptItem {
   final Price price;
 
   ReceiptItem(this.itemName, this.price);
-}
-
-class Store {
-  final String storeName;
-
-  Store(this.storeName);
 }
 
 class Price {
