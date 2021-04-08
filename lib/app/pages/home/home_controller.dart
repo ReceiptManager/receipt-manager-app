@@ -19,10 +19,12 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
+import 'package:hive/hive.dart';
 import 'package:intl/intl.dart';
 import 'package:receipt_manager/app/helper/receipt_logger.dart';
 import 'package:receipt_manager/app/pages/home/home_presenter.dart';
 import 'package:receipt_manager/data/repository/app_repository.dart';
+import 'package:receipt_manager/domain/entities/receipt_adapter.dart';
 
 // TODO: implement settings controller
 class HomeController extends Controller {
@@ -34,9 +36,11 @@ class HomeController extends Controller {
   TextEditingController _receiptTagController = TextEditingController();
 
   final _formKey = GlobalKey<FormState>();
+  var receiptsBox;
 
   HomeController(AppRepository appRepository)
       : _homePresenter = HomePresenter(appRepository),
+        receiptsBox = Hive.box('receipts'),
         super();
 
   @override
@@ -72,8 +76,11 @@ class HomeController extends Controller {
     refreshUI();
   }
 
-  void submit() {
-    //if (!_formKey.currentState.validate()) fail();
+  Future<void> submit() async {
+    //if (!_formKey.currentState.validate()) {
+    // fail();
+    // return;
+    //}
 
     String _storeNameString = _storeNameController.text;
     String _totalString = _receiptTotalController.text;
@@ -83,7 +90,7 @@ class HomeController extends Controller {
     ReceiptLogger.logger(
         _storeNameString, _totalString, _dateString, _tagString);
 
-    success();
+    //success();
   }
 
   String validateStoreName(String value) {

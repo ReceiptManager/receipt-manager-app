@@ -18,6 +18,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 import 'package:receipt_manager/app/pages/settings/settings_controller.dart';
+import 'package:settings_ui/settings_ui.dart';
 
 class SettingsPage extends View {
   @override
@@ -27,119 +28,103 @@ class SettingsPage extends View {
 class _SettingsState extends ViewState<SettingsPage, SettingsController> {
   _SettingsState() : super(SettingsController());
 
-  /*
-   ControlledWidgetBuilder<SettingsController>(
-          builder: (context, controller) => SettingsList(
-                key: globalKey,
-                shrinkWrap: true,
-                backgroundColor: Colors.white,
-                sections: [
-                  SettingsSection(
-                    title: "Language Settings",
-                    tiles: [
-                      SettingsTile(
-                          title: "Languages",
-                          subtitle: "English",
-                          leading: Icon(Icons.language),
-                          onPressed: (context) =>
-                              controller.languageButtonPress(context)),
-                      SettingsTile(
-                          title: "API token",
-                          leading: Icon(Icons.vpn_key),
-                          onPressed: controller.apiTokenButtonPress),
-                    ],
-                  ),
-                  SettingsSection(title: "Network settings", tiles: [
-                    SettingsTile(
-                        title: "Detect receipt parser",
-                        leading: Icon(Icons.adb),
-                        onPressed: (context) =>
-                            controller.detectReceiptServerButtonPress(context)),
-                    SettingsTile(
-                        title: "Server settings",
-                        leading: Icon(Icons.wifi),
-                        onPressed: (context) =>
-                            controller.serverButtonPress(context)),
-                    SettingsTile.switchTile(
-                        title: "HTTPS",
-                        leading: Icon(Icons.lock),
-                        switchValue: controller.https,
-                        onToggle: (bool value) => controller.toggleHttps(value))
-                  ]),
-                  SettingsSection(
-                    title: "Camera settings",
-                    tiles: [
-                      SettingsTile.switchTile(
-                          title: "Rotate image",
-                          leading: Icon(Icons.rotate_right_sharp),
-                          switchValue: controller.rotateImage,
-                          onToggle: (bool value) =>
-                              controller.toggleRotateImage(value)),
-                      SettingsTile.switchTile(
-                          title: "Grayscale image",
-                          leading: Icon(Icons.wb_incandescent_outlined),
-                          switchValue: controller.grayscaleImage,
-                          onToggle: (bool value) =>
-                              controller.toggleGrayscaleImage(value)),
-                      SettingsTile.switchTile(
-                          title: "Gaussian Blur",
-                          leading: Icon(Icons.blur_on_outlined),
-                          switchValue: controller.gaussianBlur,
-                          onToggle: (bool value) =>
-                              controller.toggleGaussianBlur(value)),
-                      SettingsTile.switchTile(
-                          title: "Neuronal network parser",
-                          leading: Icon(Icons.camera_enhance_outlined),
-                          switchValue: controller.neuronalNetworkParser,
-                          onToggle: (bool value) =>
-                              controller.toggleNeuronalNetworkParser(value)),
-                      SettingsTile.switchTile(
-                          title: "Fuzzy parser",
-                          leading: Icon(Icons.camera_enhance_rounded),
-                          switchValue: controller.legacyParser,
-                          onToggle: (bool value) =>
-                              controller.toggleLegacyParser(value)),
-                      SettingsTile.switchTile(
-                          title: "Send training data",
-                          leading: Icon(Icons.model_training),
-                          switchValue: controller.sendTrainingData,
-                          onToggle: (bool value) =>
-                              controller.toggleTrainingData(value))
-                    ],
-                  ),
-                  SettingsSection(
-                    title: "Developer settings",
-                    tiles: [
-                      SettingsTile.switchTile(
-                          title: "Enable debug output",
-                          leading: Icon(Icons.bug_report),
-                          switchValue: controller.debugOutput,
-                          onToggle: (bool value) =>
-                              controller.toggleDebugOutput(value)),
-                      SettingsTile.switchTile(
-                          title: "Show articles",
-                          leading: Icon(Icons.category),
-                          switchValue: controller.showArticles,
-                          onToggle: (bool value) =>
-                              controller.toggleShowArticles(value)),
-                    ],
-                  ),
-                  SettingsSection(
-                    title: "Open-Source Licenses",
-                    tiles: [
-                      SettingsTile(
-                          title: "Show Open-Source Licenses",
-                          leading: Icon(Icons.wysiwyg),
-                          onPressed:
-                              controller.toggleOpenSourceLicences(context)),
-                    ],
-                  )
-                ],
-              )));
-   */
   @override
-  Widget get view => Scaffold(
-      key: globalKey,
-      body: ControlledWidgetBuilder<SettingsController>(
-          builder: (context, controller) => Container()));
+  Widget get view => ControlledWidgetBuilder<SettingsController>(
+      builder: (context, controller) => SettingsList(
+            key: globalKey,
+            shrinkWrap: true,
+            backgroundColor: Colors.white,
+            sections: [
+              SettingsSection(
+                title: "Language Settings",
+                tiles: [
+                  SettingsTile(
+                      title: "Languages",
+                      subtitle: "English",
+                      leading: Icon(Icons.language),
+                      onPressed: (context) =>
+                          controller.languageButtonPress(context)),
+                  SettingsTile(
+                      title: "API token",
+                      leading: Icon(Icons.vpn_key),
+                      onPressed: controller.apiTokenButtonPress),
+                ],
+              ),
+              SettingsSection(title: "Network settings", tiles: [
+                SettingsTile(
+                    title: "Detect receipt parser",
+                    leading: Icon(Icons.adb),
+                    onPressed: (context) =>
+                        controller.detectReceiptServerButtonPress(context)),
+                SettingsTile(
+                    title: "Server settings",
+                    leading: Icon(Icons.wifi),
+                    onPressed: (context) =>
+                        controller.serverButtonPress(context)),
+                SettingsTile.switchTile(
+                    title: "HTTPS",
+                    leading: Icon(Icons.lock),
+                    switchValue: controller.https,
+                    onToggle: (bool value) => controller.toggleHttps(value))
+              ]),
+              SettingsSection(
+                title: "Camera settings",
+                tiles: [
+                  SettingsTile.switchTile(
+                      title: "Rotate Image",
+                      leading: Icon(Icons.rotate_right_sharp),
+                      switchValue: controller.rotateImage,
+                      onToggle: (bool value) =>
+                          controller.toggleRotateImage(value)),
+                  SettingsTile.switchTile(
+                      title: "Grayscale Image",
+                      leading: Icon(Icons.wb_incandescent_outlined),
+                      switchValue: controller.grayscaleImage,
+                      onToggle: (bool value) =>
+                          controller.toggleGrayscaleImage(value)),
+                  SettingsTile.switchTile(
+                      title: "Gaussian Blur",
+                      leading: Icon(Icons.blur_on_outlined),
+                      switchValue: controller.gaussianBlur,
+                      onToggle: (bool value) =>
+                          controller.toggleGaussianBlur(value)),
+                  SettingsTile.switchTile(
+                      title: "Neuronal Network Parser",
+                      leading: Icon(Icons.camera_enhance_outlined),
+                      switchValue: controller.neuronalNetworkParser,
+                      onToggle: (bool value) =>
+                          controller.toggleNeuronalNetworkParser(value)),
+                  SettingsTile.switchTile(
+                      title: "Fuzzy Parser",
+                      leading: Icon(Icons.camera_enhance_rounded),
+                      switchValue: controller.legacyParser,
+                      onToggle: (bool value) =>
+                          controller.toggleLegacyParser(value)),
+                  SettingsTile.switchTile(
+                      title: "Send Training Data",
+                      leading: Icon(Icons.model_training),
+                      switchValue: controller.sendTrainingData,
+                      onToggle: (bool value) =>
+                          controller.toggleTrainingData(value))
+                ],
+              ),
+              SettingsSection(
+                title: "Developer settings",
+                tiles: [
+                  SettingsTile.switchTile(
+                      title: "Enable Debug Output",
+                      leading: Icon(Icons.bug_report),
+                      switchValue: controller.debugOutput,
+                      onToggle: (bool value) =>
+                          controller.toggleDebugOutput(value)),
+                  SettingsTile.switchTile(
+                      title: "Show Articles",
+                      leading: Icon(Icons.category),
+                      switchValue: controller.showArticles,
+                      onToggle: (bool value) =>
+                          controller.toggleShowArticles(value)),
+                ],
+              ),
+            ],
+          ));
 }

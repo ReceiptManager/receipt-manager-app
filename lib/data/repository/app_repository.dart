@@ -15,20 +15,10 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-import 'package:shared_preferences/shared_preferences.dart';
-
 class AppRepository {
   static final AppRepository _instance = AppRepository._internal();
 
   AppRepository._internal();
 
   factory AppRepository() => _instance;
-
-  SharedPreferences _preferences;
-
-  void setPreferences(SharedPreferences sharedPreferences) {
-    _preferences = sharedPreferences;
-  }
-
-  get preferences => _preferences;
 }

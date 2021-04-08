@@ -17,20 +17,21 @@ class ReceiptAdapter extends TypeAdapter<Receipt> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return Receipt(
-      fields[0] as String,
+      fields[0] as Store,
       fields[1] as DateTime,
-      fields[2] as double,
+      fields[2] as Price,
       fields[3] as String,
       fields[4] as ReceiptCategory,
+      (fields[5] as List)?.cast<ReceiptItem>(),
     );
   }
 
   @override
   void write(BinaryWriter writer, Receipt obj) {
     writer
-      ..writeByte(5)
+      ..writeByte(6)
       ..writeByte(0)
-      ..write(obj.storeName)
+      ..write(obj.store)
       ..writeByte(1)
       ..write(obj.date)
       ..writeByte(2)
@@ -38,7 +39,9 @@ class ReceiptAdapter extends TypeAdapter<Receipt> {
       ..writeByte(3)
       ..write(obj.tag)
       ..writeByte(4)
-      ..write(obj.category);
+      ..write(obj.category)
+      ..writeByte(5)
+      ..write(obj.items);
   }
 
   @override

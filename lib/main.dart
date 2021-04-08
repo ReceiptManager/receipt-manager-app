@@ -24,9 +24,7 @@ import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart' as pathProvider;
 import 'package:receipt_manager/app/pages/navigator.dart';
 import 'package:receipt_manager/app/theme/light_theme.dart';
-import 'package:receipt_manager/data/repository/app_repository.dart';
 import 'package:receipt_manager/domain/entities/receipt_adapter.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -35,8 +33,8 @@ void main() async {
   Hive.init(directory.path);
   Hive.registerAdapter(ReceiptAdapter());
 
-  AppRepository appRepository = AppRepository();
-  appRepository.setPreferences(await SharedPreferences.getInstance());
+  var settingsBox = await Hive.openBox('settings');
+  var receiptsBox = await Hive.openBox('receipts');
 
   return runZonedGuarded(() async {
     runApp(MaterialApp(
@@ -50,5 +48,8 @@ void main() async {
   }, (error, stack) {
     print(stack);
     print(error);
+
+    receiptsBox.close();
+    settingsBox.close();
   });
 }

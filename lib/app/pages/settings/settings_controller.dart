@@ -17,29 +17,28 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
+import 'package:hive/hive.dart';
+import 'package:receipt_manager/app/constants.dart';
 import 'package:receipt_manager/app/pages/settings/settings_presenter.dart';
 
-// TODO: implement settings controller
 class SettingsController extends Controller {
   final SettingsPresenter _settingsPresenter;
 
-  String _currency;
+  bool _rotateImage = false;
+  bool _gaussianBlur = false;
+  bool _grayscaleImage = false;
+  bool _neuronalNetworkParser = false;
+  bool _https = false;
+  bool _legacyParser = false;
+  bool _trainingData = false;
+  bool _debugOutput = false;
+  bool _showArticles = false;
 
-  String get currency => _currency;
-
-  bool _rotateImage;
-  bool _gaussianBlur;
-  bool _grayscaleImage;
-  bool _neuronalNetworkParser;
-  bool _https;
-  bool _legacyParser;
-  bool _trainingData;
-  bool _debugOutput;
-  bool _showAricles;
-  bool _showOpenSourceLicences;
+  var settingsBox;
 
   SettingsController()
       : _settingsPresenter = SettingsPresenter(),
+        settingsBox = Hive.box('settings'),
         super();
 
   get rotateImage => _rotateImage;
@@ -58,13 +57,23 @@ class SettingsController extends Controller {
 
   get debugOutput => _debugOutput;
 
-  get showArticles => _showAricles;
-
-  get showOpenSourceLicences => _showOpenSourceLicences;
+  get showArticles => _showArticles;
 
   @override
   void initListeners() {
-    // TODO: implement initListeners
+    readValues();
+  }
+
+  readValues() {
+    _rotateImage = settingsBox.get(verticalImage, defaultValue: false);
+    _debugOutput = settingsBox.get(enableDebugOutput, defaultValue: false);
+    _https = settingsBox.get(enableHttps, defaultValue: true);
+    _gaussianBlur = settingsBox.get(enableGaussianBlur, defaultValue: false);
+    _grayscaleImage = settingsBox.get(enableGrayscale, defaultValue: true);
+    _legacyParser = settingsBox.get(enableGrayscale, defaultValue: true);
+    _neuronalNetworkParser =
+        settingsBox.get(useNeuronalNetworkParser, defaultValue: true);
+    _showArticles = settingsBox.get(enableShowArticles, defaultValue: true);
   }
 
   @override
@@ -95,15 +104,31 @@ class SettingsController extends Controller {
   }
 
   toggleRotateImage(bool value) {
-    throw UnimplementedError();
+    settingsBox.put(verticalImage, value);
+    _rotateImage = value;
+    refreshUI();
   }
 
   toggleGrayscaleImage(bool value) {
-    throw UnimplementedError();
+    if (_gaussianBlur && value == false) {
+      settingsBox.put(enableGaussianBlur, false);
+      _gaussianBlur = false;
+    }
+
+    settingsBox.put(enableGrayscale, value);
+    _grayscaleImage = value;
+    refreshUI();
   }
 
   toggleGaussianBlur(bool value) {
-    throw UnimplementedError();
+    if (!_grayscaleImage) {
+      settingsBox.put(enableGrayscale, true);
+      _grayscaleImage = true;
+    }
+
+    settingsBox.put(enableGaussianBlur, value);
+    _gaussianBlur = value;
+    refreshUI();
   }
 
   toggleNeuronalNetworkParser(bool value) {
@@ -115,26 +140,32 @@ class SettingsController extends Controller {
   }
 
   toggleLegacyParser(bool value) {
-    throw UnimplementedError();
+    settingsBox.put(useLegacyParser, value);
+    _legacyParser = value;
+    refreshUI();
   }
 
   toggleTrainingData(bool value) {
-    throw UnimplementedError();
+    settingsBox.put(enableTrainingData, value);
+    _trainingData = value;
+    refreshUI();
   }
 
-  toggleDebugOutput(bool val) {
-    throw UnimplementedError();
+  toggleDebugOutput(bool value) {
+    settingsBox.put(enableDebugOutput, value);
+    _debugOutput = value;
+    refreshUI();
   }
 
   toggleHttps(bool value) {
-    throw UnimplementedError();
+    settingsBox.put(enableHttps, value);
+    _https = value;
+    refreshUI();
   }
 
   toggleShowArticles(bool value) {
-    throw UnimplementedError();
-  }
-
-  toggleOpenSourceLicences(BuildContext context) {
-    throw UnimplementedError();
+    settingsBox.put(enableShowArticles, value);
+    _showArticles = value;
+    refreshUI();
   }
 }
