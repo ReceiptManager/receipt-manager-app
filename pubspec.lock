@@ -256,6 +256,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.5.7"
+  flutter_staggered_animations:
+    dependency: "direct main"
+    description:
+      name: flutter_staggered_animations
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.0"
   flutter_test:
     dependency: "direct dev"
     description: flutter

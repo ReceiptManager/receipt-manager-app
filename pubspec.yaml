@@ -29,7 +29,7 @@ dependencies:
 
   hive: ^2.0.2
   hive_flutter: ^1.0.0
-
+  flutter_staggered_animations: ^1.0.0
 
 dev_dependencies:
   flutter_test:
@@ -42,4 +42,4 @@ flutter:
   generate: true
   uses-material-design: true
   assets:
-    - assets/
+    - assets
