@@ -17,7 +17,7 @@ class ReceiptAdapter extends TypeAdapter<Receipt> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return Receipt(
-      fields[0] as Store,
+      fields[0] as String,
       fields[1] as DateTime,
       fields[2] as Price,
       fields[3] as String,
@@ -31,7 +31,7 @@ class ReceiptAdapter extends TypeAdapter<Receipt> {
     writer
       ..writeByte(6)
       ..writeByte(0)
-      ..write(obj.store)
+      ..write(obj.storeName)
       ..writeByte(1)
       ..write(obj.date)
       ..writeByte(2)
