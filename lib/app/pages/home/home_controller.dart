@@ -17,6 +17,7 @@
 
 import 'dart:developer';
 
+import 'package:currency_picker/currency_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 import 'package:hive/hive.dart';
@@ -24,6 +25,7 @@ import 'package:intl/intl.dart';
 import 'package:receipt_manager/app/helper/receipt_logger.dart';
 import 'package:receipt_manager/app/pages/home/home_presenter.dart';
 import 'package:receipt_manager/data/repository/app_repository.dart';
+import 'package:receipt_manager/domain/entities/receipt_adapter.dart';
 
 // TODO: implement settings controller
 class HomeController extends Controller {
@@ -76,20 +78,28 @@ class HomeController extends Controller {
   }
 
   Future<void> submit() async {
-    //if (!_formKey.currentState.validate()) {
-    // fail();
-    // return;
-    //}
+    if (!_formKey.currentState.validate()) {
+      fail();
+      return;
+    }
 
-    String _storeNameString = _storeNameController.text;
-    String _totalString = _receiptTotalController.text;
-    String _dateString = _receiptDateController.text;
-    String _tagString = _receiptTagController.text;
+    String _storeNameString = _storeNameController.text?.trim();
+    String _totalString = _receiptTotalController.text?.trim();
+    String _dateString = _receiptDateController.text?.trim();
+    String _tagString = _receiptTagController.text?.trim();
 
     ReceiptLogger.logger(
         _storeNameString, _totalString, _dateString, _tagString);
 
-    //success();
+    DateTime date = DateTime.parse(_dateString);
+    double total = double.parse(_totalString);
+    Price price = Price(total, "\$");
+
+    Receipt receipt =
+        Receipt(_storeNameString, date, price, _tagString, null, null);
+
+    receiptsBox.add(receipt);
+    success();
   }
 
   String validateStoreName(String value) {
@@ -144,6 +154,18 @@ class HomeController extends Controller {
     }
 
     return "Invalid receipt format";
+  }
+
+  void currencyPicker(BuildContext context) {
+    showCurrencyPicker(
+      context: context,
+      showFlag: true,
+      showCurrencyName: true,
+      showCurrencyCode: true,
+      onSelect: (Currency currency) {
+        print('Select currency: ${currency.name}');
+      },
+    );
   }
 
   @override

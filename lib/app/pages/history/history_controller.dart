@@ -17,7 +17,6 @@
 
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 import 'package:receipt_manager/app/pages/history/history_presenter.dart';
-import 'package:receipt_manager/domain/entities/category.dart';
 import 'package:receipt_manager/domain/entities/receipt_adapter.dart';
 
 // TODO: implement settings controller
@@ -31,22 +30,7 @@ class HistoryController extends Controller {
   String get getWeeklyOverview => "Weekly overview 19.00\$";
 
   get getReceipts {
-    Price price = Price(19.00, "\$");
-    ReceiptCategory category = ReceiptCategory("Test", null);
-    ReceiptItem item = ReceiptItem("Item", price);
-    List<ReceiptItem> items = [];
-    items.add(item);
-
     List<Receipt> receipts = [];
-    Receipt receipt =
-        Receipt("TestStore", DateTime.now(), price, "tag", category, items);
-
-    receipts.add(receipt);
-    receipts.add(receipt);
-    receipts.add(receipt);
-    receipts.add(receipt);
-    receipts.add(receipt);
-
     return receipts;
   }
 
