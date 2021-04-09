@@ -35,6 +35,8 @@ class HistoryState extends ViewState<HistoryPage, HistoryController> {
   Widget weeklyOverview(BuildContext context) =>
       ControlledWidgetBuilder<HistoryController>(
           builder: (context, controller) {
+        if (controller.getReceipts.length == 0) return Container();
+
         return Container(
             color: Colors.white,
             child: Align(
@@ -50,45 +52,46 @@ class HistoryState extends ViewState<HistoryPage, HistoryController> {
   Widget receiptVisualisation(BuildContext context) =>
       ControlledWidgetBuilder<HistoryController>(
           builder: (context, controller) {
-        return Expanded(
-          child: Container(
-              color: Colors.white,
-              child: AnimationLimiter(
-                  child: ListView.builder(
-                      padding: const EdgeInsets.all(8.0),
-                      itemCount: controller.getReceipts.length,
-                      itemBuilder: (_, index) {
-                        return AnimationConfiguration.staggeredList(
-                            position: index,
-                            duration: const Duration(milliseconds: 375),
-                            child: SlideAnimation(
-                                verticalOffset: 50.0,
-                                child: FadeInAnimation(
-                                    child: SlidableHistoryWidget(
-                                        deleteText: "Delete",
-                                        deleteMethod: controller.deleteMethod,
-                                        editText: "Edit",
-                                        editMethod: controller.editMethod,
-                                        imagePath: "assets/lidl.png",
-                                        receipt:
-                                            controller.getReceipts[index]))));
-                      }))),
-        );
+        return AnimationLimiter(child: Expanded(
+          child: DraggableScrollableSheet(builder:
+              (BuildContext context, ScrollController scrollController) {
+            return ListView.builder(
+                padding: const EdgeInsets.all(8.0),
+                itemCount: controller.getReceipts.length,
+                itemBuilder: (_, index) {
+                  return AnimationConfiguration.staggeredList(
+                      position: index,
+                      duration: const Duration(milliseconds: 375),
+                      child: SlideAnimation(
+                          verticalOffset: 50.0,
+                          child: FadeInAnimation(
+                              child: SlidableHistoryWidget(
+                                  deleteText: "Delete",
+                                  deleteMethod: controller.deleteMethod,
+                                  editText: "Edit",
+                                  editMethod: controller.editMethod,
+                                  imagePath: "assets/lidl.png",
+                                  receipt: controller.getReceipts[index]))));
+                });
+          }),
+        ));
       });
+
+  Widget titlePage() =>
+      Center(child: ControlledWidgetBuilder<HistoryController>(
+          builder: (context, controller) {
+        return BannerWidget(
+          text: "Receipt overview",
+        );
+      }));
 
   @override
   Widget get view => Scaffold(
+        backgroundColor: Colors.white,
         key: globalKey,
         body: Column(
           children: <Widget>[
-            Center(
-              child: ControlledWidgetBuilder<HistoryController>(
-                  builder: (context, controller) {
-                return BannerWidget(
-                  text: "Receipt overview",
-                );
-              }),
-            ),
+            titlePage(),
             weeklyOverview(context),
             receiptVisualisation(context)
           ],

@@ -64,7 +64,9 @@ class _HomePageState extends ViewState<HomePage, HomeController> {
           hintText: "Receipt Total",
           labelText: "Receipt Total",
           helperText: "The receipt total",
-          icon: Icon(Icons.monetization_on_outlined),
+          icon: IconButton(
+              icon: Icon(Icons.monetization_on_outlined),
+              onPressed: () => controller.currencyPicker(context)),
           validator: controller.validateTotal,
         );
       }));
@@ -109,6 +111,7 @@ class _HomePageState extends ViewState<HomePage, HomeController> {
   @override
   Widget get view => Scaffold(
       key: globalKey,
+      backgroundColor: Colors.white,
       body: SingleChildScrollView(
           child: ControlledWidgetBuilder<HomeController>(
               builder: (context, controller) => Form(
