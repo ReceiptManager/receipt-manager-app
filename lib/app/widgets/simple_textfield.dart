@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class SimpleTextfieldWidget extends StatelessWidget {
-  final Icon icon;
+  final Widget icon;
   final String hintText;
   final String helperText;
   final String labelText;
