@@ -16,16 +16,14 @@
  */
 
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
+import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:receipt_manager/app/pages/history/history_view.dart';
 import 'package:receipt_manager/app/pages/home/home_view.dart';
 import 'package:receipt_manager/app/pages/settings/settings_view.dart';
 import 'package:receipt_manager/app/pages/stats/stat_view.dart';
 
 class NavigatorPage extends View {
-  NavigatorPage({Key key}) : super(key: key);
-
   @override
   NavigatorState createState() => NavigatorState();
 }
@@ -41,23 +39,23 @@ class NavigatorState extends State {
     SettingsPage()
   ];
 
+  Widget navigatorWidget(icon) => Icon(icon, color: Colors.black, size: 30);
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
         onWillPop: () async => false,
         child: Scaffold(
-            backgroundColor: Colors.white,
             bottomNavigationBar: CurvedNavigationBar(
+              backgroundColor: Color(0xFFEFEFF4),
               key: _bottomNavigationKey,
               index: 0,
               items: <Widget>[
-                Icon(Icons.add, color: Colors.white, size: 30),
-                Icon(Icons.history, color: Colors.white, size: 30),
-                Icon(Icons.analytics_outlined, color: Colors.white, size: 30),
-                Icon(Icons.settings, color: Colors.white, size: 30),
+                navigatorWidget(Icons.add),
+                navigatorWidget(Icons.history),
+                navigatorWidget(Icons.analytics_outlined),
+                navigatorWidget(Icons.settings)
               ],
-              color: Colors.black,
-              backgroundColor: Colors.white,
               animationCurve: Curves.easeInOut,
               animationDuration: Duration(milliseconds: 300),
               onTap: (index) {
