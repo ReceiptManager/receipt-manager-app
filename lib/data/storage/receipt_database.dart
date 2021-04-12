@@ -29,6 +29,13 @@ class AppDatabase extends _$AppDatabase {
             path: "db.sql", logStatements: true));
 
   int get schemaVersion => 10;
+
+  @override
+  MigrationStrategy get migration {
+    return MigrationStrategy(beforeOpen: (details) async {
+      await customStatement('PRAGMA foreign_keys = ON;');
+    });
+  }
 }
 
 @UseDao(tables: [Receipts, Stores])
