@@ -18,17 +18,34 @@
 import 'dart:async';
 
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
+import 'package:receipt_manager/domain/entities/receipt_adapter.dart';
+import 'package:receipt_manager/domain/repository/abstract_repository.dart';
 
-class ReceiptUseCase
-    extends UseCase<GetReceiptUseCaseParams, ReceiptUseCaseResponse> {
+class GetReceiptUseCase
+    extends UseCase<GetReceiptUseCaseResponse, GetReceiptUseCaseParams> {
+  final ReceiptRepository receiptRepository;
+  GetReceiptUseCase(this.receiptRepository);
+
   @override
-  Future<Stream<GetReceiptUseCaseParams>> buildUseCaseStream(
-      ReceiptUseCaseResponse params) {
-    // TODO: implement buildUseCaseStream
-    throw UnimplementedError();
+  Future<Stream<GetReceiptUseCaseResponse?>> buildUseCaseStream(
+      GetReceiptUseCaseParams? params) async {
+    final controller = StreamController<GetReceiptUseCaseResponse>();
+    try {
+      final receipts = await receiptRepository.getReceipts();
+      controller.add(GetReceiptUseCaseResponse(receipts));
+      logger.finest('GetUserUseCase successful.');
+      controller.close();
+    } catch (e) {
+      logger.severe('GetUserUseCase unsuccessful.');
+      controller.addError(e);
+    }
+    return controller.stream;
   }
 }
 
 class GetReceiptUseCaseParams {}
 
-class ReceiptUseCaseResponse {}
+class GetReceiptUseCaseResponse {
+  final List<Receipt> receipts;
+  GetReceiptUseCaseResponse(this.receipts);
+}
