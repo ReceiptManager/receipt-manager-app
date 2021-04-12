@@ -33,6 +33,7 @@ class SettingsController extends Controller {
   bool _trainingData = false;
   bool _debugOutput = false;
   bool _showArticles = false;
+  bool _lightTheme = false;
 
   var settingsBox;
 
@@ -59,6 +60,8 @@ class SettingsController extends Controller {
 
   get showArticles => _showArticles;
 
+  get lightTheme => _lightTheme;
+
   @override
   void initListeners() {
     readValues();
@@ -74,6 +77,7 @@ class SettingsController extends Controller {
     _neuronalNetworkParser =
         settingsBox.get(useNeuronalNetworkParser, defaultValue: true);
     _showArticles = settingsBox.get(enableShowArticles, defaultValue: true);
+    _lightTheme = settingsBox.get(enableLightTheme, defaultValue: true);
   }
 
   @override
@@ -132,7 +136,9 @@ class SettingsController extends Controller {
   }
 
   toggleNeuronalNetworkParser(bool value) {
-    throw UnimplementedError();
+    settingsBox.put(useNeuronalNetworkParser, value);
+    _neuronalNetworkParser = value;
+    refreshUI();
   }
 
   serverButtonPress(BuildContext context) {
@@ -167,5 +173,10 @@ class SettingsController extends Controller {
     settingsBox.put(enableShowArticles, value);
     _showArticles = value;
     refreshUI();
+  }
+
+  toggleLightTheme(bool value) {
+    settingsBox.put(enableLightTheme, value);
+    _lightTheme = value;
   }
 }

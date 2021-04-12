@@ -17,6 +17,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
+import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:receipt_manager/app/pages/settings/settings_controller.dart';
 import 'package:settings_ui/settings_ui.dart';
 
@@ -33,7 +34,6 @@ class _SettingsState extends ViewState<SettingsPage, SettingsController> {
       builder: (context, controller) => SettingsList(
             key: globalKey,
             shrinkWrap: true,
-            backgroundColor: Colors.white,
             sections: [
               SettingsSection(
                 title: "Language Settings",
