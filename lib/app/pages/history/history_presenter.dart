@@ -16,10 +16,43 @@
  */
 
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
+import 'package:receipt_manager/domain/usecase/receipt_usecase.dart';
 
 class HistoryPresenter extends Presenter {
+  Function? getReceiptsOnNext;
+  Function? getReceiptsOnComplete;
+  Function? getReceiptsOnError;
+
+  final GetReceiptUseCase getReceiptUseCase;
+  HistoryPresenter(usersRepo)
+      : getReceiptUseCase = GetReceiptUseCase(usersRepo);
+
+  void getReceipts() {
+    getReceiptUseCase.execute(
+        GetReceiptUseCaseObserver(this), GetReceiptUseCaseParams());
+  }
+
   @override
   void dispose() {
-    // TODO: implement dispose
+    getReceiptUseCase.dispose();
+  }
+}
+
+class GetReceiptUseCaseObserver extends Observer<GetReceiptUseCaseResponse> {
+  final HistoryPresenter presenter;
+  GetReceiptUseCaseObserver(this.presenter);
+  @override
+  void onComplete() {
+    presenter.getReceiptsOnComplete!();
+  }
+
+  @override
+  void onError(e) {
+    presenter.getReceiptsOnError!(e);
+  }
+
+  @override
+  void onNext(response) {
+    presenter.getReceiptsOnNext!(response?.receipts);
   }
 }
