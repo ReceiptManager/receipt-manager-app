@@ -18,8 +18,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
+import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:receipt_manager/app/pages/stats/stat_controller.dart';
-import 'package:receipt_manager/app/widgets/banner_widget.dart';
 
 class StatsPage extends View {
   @override
@@ -29,19 +29,15 @@ class StatsPage extends View {
 class StatsState extends ViewState<StatsPage, StatsController> {
   StatsState() : super(StatsController());
 
-  Widget titlePage() => Center(child: ControlledWidgetBuilder<StatsController>(
-          builder: (context, controller) {
-        return BannerWidget(
-          text: "Stats",
-        );
-      }));
-
   @override
   Widget get view => Scaffold(
         key: globalKey,
-        backgroundColor: Colors.white,
+        backgroundColor: Color(0xFFEFEFF4),
+        appBar: NeumorphicAppBar(
+          title: Text("Stats"),
+        ),
         body: Column(
-          children: <Widget>[titlePage()],
+          children: <Widget>[],
         ),
       );
 }
