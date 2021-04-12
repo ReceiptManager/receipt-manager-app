@@ -25,7 +25,6 @@ import 'package:intl/intl.dart';
 import 'package:receipt_manager/app/helper/receipt_logger.dart';
 import 'package:receipt_manager/app/pages/home/home_presenter.dart';
 import 'package:receipt_manager/data/repository/app_repository.dart';
-import 'package:receipt_manager/domain/entities/receipt_adapter.dart';
 
 // TODO: implement settings controller
 class HomeController extends Controller {
@@ -35,14 +34,36 @@ class HomeController extends Controller {
   TextEditingController _receiptDateController = TextEditingController();
   TextEditingController _receiptTotalController = TextEditingController();
   TextEditingController _receiptTagController = TextEditingController();
+  TextEditingController _receiptCategoryController = TextEditingController();
 
   final _formKey = GlobalKey<FormState>();
   var receiptsBox;
 
   HomeController(AppRepository appRepository)
-      : _homePresenter = HomePresenter(appRepository),
+      : _homePresenter = HomePresenter(),
         receiptsBox = Hive.box('receipts'),
         super();
+
+  String? validateCategory(value) {
+    value = value.trim();
+    if (value.isEmpty) {
+      return "Receipt category is empty";
+    }
+
+    return null;
+  }
+
+  void setDate(BuildContext context) async {
+    DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2025),
+      initialEntryMode: DatePickerEntryMode.calendar,
+    );
+
+    _receiptDateController.text = DateFormat.yMMMd().format(picked!);
+  }
 
   @override
   void initListeners() {}
@@ -54,6 +75,9 @@ class HomeController extends Controller {
   TextEditingController get receiptTotalController => _receiptTotalController;
 
   TextEditingController get receiptTagController => _receiptTagController;
+
+  TextEditingController get receiptCategoryController =>
+      _receiptCategoryController;
 
   get formKey => _formKey;
 
@@ -78,31 +102,23 @@ class HomeController extends Controller {
   }
 
   Future<void> submit() async {
-    if (!_formKey.currentState.validate()) {
+    if (!_formKey.currentState!.validate()) {
       fail();
       return;
     }
 
-    String _storeNameString = _storeNameController.text?.trim();
-    String _totalString = _receiptTotalController.text?.trim();
-    String _dateString = _receiptDateController.text?.trim();
-    String _tagString = _receiptTagController.text?.trim();
+    String _storeNameString = _storeNameController.text.trim();
+    String _totalString = _receiptTotalController.text.trim();
+    String _dateString = _receiptDateController.text.trim();
+    String _tagString = _receiptTagController.text.trim();
 
     ReceiptLogger.logger(
         _storeNameString, _totalString, _dateString, _tagString);
 
-    DateTime date = DateTime.parse(_dateString);
-    double total = double.parse(_totalString);
-    Price price = Price(total, "\$");
-
-    Receipt receipt =
-        Receipt(_storeNameString, date, price, _tagString, null, null);
-
-    receiptsBox.add(receipt);
     success();
   }
 
-  String validateStoreName(String value) {
+  String? validateStoreName(String value) {
     value = value.trim();
     if (value.isEmpty) {
       return "Receipt store name is empty";
@@ -111,7 +127,7 @@ class HomeController extends Controller {
     return null;
   }
 
-  String validateTotal(String value) {
+  String? validateTotal(String value) {
     value = value.trim();
     if (value.isEmpty) {
       return "Receipt total is empty";
@@ -126,24 +142,15 @@ class HomeController extends Controller {
     return null;
   }
 
-  String validateDate(String value) {
+  String? validateDate(String value) {
     value = value.trim();
     if (value.isEmpty) {
       return "Receipt date is empty";
     }
 
-    RegExp totalRegex = new RegExp(
-        "^(0?[1-9]|[12][0-9]|3[01])[.\\/ ]?(0?[1-9]|1[0-2])[./ ]?(?:19|20)[0-9]{2}\$",
-        caseSensitive: false,
-        multiLine: false);
-
-    if (!totalRegex.hasMatch(value)) {
-      return "Invalid receipt format";
-    }
-
     DateTime _receiptDate;
     try {
-      var format = DateFormat("dd.MM.y");
+      var format = DateFormat("dd-MM-y");
       _receiptDate = format.parse(value);
 
       if (!(_receiptDate.year < 100)) {
