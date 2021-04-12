@@ -7,3 +7,4 @@ final String enableShowArticles = "showArticles";
 final String enableGaussianBlur = "gaussianBlur";
 final String enableGrayscale = "grayscaleImage";
 final String verticalImage = "rotateImage";
+final String enableLightTheme = "lightTheme";

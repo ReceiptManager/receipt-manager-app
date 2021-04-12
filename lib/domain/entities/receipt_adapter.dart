@@ -30,9 +30,11 @@ class Receipt {
 class ReceiptItem {
   final String itemName;
 
-  final Price price;
+  final double total;
 
-  ReceiptItem(this.itemName, this.price);
+  final String currency;
+
+  ReceiptItem(this.itemName, this.total, this.currency);
 }
 
 class Price {

@@ -15,4 +15,8 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-abstract class AbstractReceiptRepository {}
+import 'package:receipt_manager/domain/entities/receipt_adapter.dart';
+
+abstract class ReceiptRepository {
+  Future<List<Receipt>> getReceipts();
+}

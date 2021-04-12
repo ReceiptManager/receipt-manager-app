@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class PaddingWidget extends StatelessWidget {
   final Widget widget;
 
-  PaddingWidget({@required this.widget});
+  PaddingWidget({required this.widget});
 
   @override
   Widget build(BuildContext context) {

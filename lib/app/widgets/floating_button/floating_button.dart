@@ -5,7 +5,7 @@ class FloatingButton extends StatelessWidget {
   final String text;
   final HomeController controller;
 
-  FloatingButton({@required this.text, @required this.controller});
+  FloatingButton({required this.text, required this.controller});
 
   @override
   Widget build(BuildContext context) {

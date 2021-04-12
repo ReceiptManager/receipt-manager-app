@@ -22,7 +22,7 @@ class ReceiptAdapter extends TypeAdapter<Receipt> {
       fields[2] as Price,
       fields[3] as String,
       fields[4] as ReceiptCategory,
-      (fields[5] as List)?.cast<ReceiptItem>(),
+      (fields[5] as List).cast<ReceiptItem>(),
     );
   }
 

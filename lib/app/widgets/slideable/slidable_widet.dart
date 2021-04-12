@@ -1,24 +1,25 @@
 import 'package:flutter/material.dart';
+// ignore: import_of_legacy_library_into_null_safe
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:receipt_manager/domain/entities/receipt_adapter.dart';
 
 class SlidableHistoryWidget extends StatelessWidget {
   final String deleteText;
-  final Function deleteMethod;
+  final Function() deleteMethod;
 
   final String editText;
-  final Function editMethod;
+  final Function() editMethod;
   final String imagePath;
 
   final Receipt receipt;
 
   SlidableHistoryWidget(
-      {@required this.deleteText,
-      @required this.deleteMethod,
-      @required this.editText,
-      @required this.editMethod,
-      @required this.imagePath,
-      @required this.receipt});
+      {required this.deleteText,
+      required this.deleteMethod,
+      required this.editText,
+      required this.editMethod,
+      required this.imagePath,
+      required this.receipt});
 
   @override
   Widget build(BuildContext context) {

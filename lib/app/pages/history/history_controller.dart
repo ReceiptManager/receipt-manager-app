@@ -22,25 +22,32 @@ import 'package:receipt_manager/domain/entities/receipt_adapter.dart';
 // TODO: implement settings controller
 class HistoryController extends Controller {
   final HistoryPresenter _historyPresenter;
+  List<Receipt> _receipts;
 
-  HistoryController()
-      : _historyPresenter = HistoryPresenter(),
+  HistoryController(repository)
+      : _historyPresenter = HistoryPresenter(repository),
+        _receipts = [],
         super();
 
   String get getWeeklyOverview => "Weekly overview 19.00\$";
 
-  get getReceipts {
-    List<Receipt> receipts = [];
-    return receipts;
-  }
+  get receipts => _receipts;
 
-  get deleteMethod => null;
+  get deleteMethod => UnimplementedError();
 
-  get editMethod => null;
+  get editMethod => UnimplementedError();
 
   @override
   void initListeners() {
-    // TODO: implement initListeners
+    _historyPresenter.getReceiptsOnNext = (List<Receipt> receipts) {
+      print(receipts.toString());
+      _receipts = receipts;
+      refreshUI();
+    };
+
+    _historyPresenter.getReceiptsOnComplete = () {
+      print('Received receipts list');
+    };
   }
 
   void buttonPressed() {}
