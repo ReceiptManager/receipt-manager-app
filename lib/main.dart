@@ -20,10 +20,11 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
+import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:hive/hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:path_provider/path_provider.dart' as pathProvider;
 import 'package:receipt_manager/app/pages/navigator.dart';
-import 'package:receipt_manager/app/theme/light_theme.dart';
 import 'package:receipt_manager/domain/entities/receipt_adapter.dart';
 
 void main() async {
@@ -37,14 +38,7 @@ void main() async {
   var receiptsBox = await Hive.openBox('receipts');
 
   return runZonedGuarded(() async {
-    runApp(MaterialApp(
-        home: NavigatorPage(),
-        theme: AppTheme.lightTheme.copyWith(
-            pageTransitionsTheme: const PageTransitionsTheme(
-          builders: <TargetPlatform, PageTransitionsBuilder>{
-            TargetPlatform.android: ZoomPageTransitionsBuilder(),
-          },
-        ))));
+    runApp(ReceiptManagerApp());
   }, (error, stack) {
     print(stack);
     print(error);
@@ -52,4 +46,26 @@ void main() async {
     receiptsBox.close();
     settingsBox.close();
   });
+}
+
+class ReceiptManagerApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return ValueListenableBuilder(
+      valueListenable: Hive.box("settings").listenable(),
+      builder: (context, box, widget) {
+        return NeumorphicApp(
+            debugShowCheckedModeBanner: false,
+            themeMode: ThemeMode.light,
+            theme: NeumorphicThemeData(
+                defaultTextColor: Color(0xFF303E57),
+                accentColor: Colors.redAccent,
+                variantColor: Colors.redAccent,
+                baseColor: Color(0xFFF8F9FC),
+                depth: 10,
+                lightSource: LightSource.topRight),
+            home: NavigatorPage());
+      },
+    );
+  }
 }
