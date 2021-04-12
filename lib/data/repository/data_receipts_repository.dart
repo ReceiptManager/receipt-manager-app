@@ -1,5 +1,5 @@
 import 'package:hive/hive.dart';
-import 'package:receipt_manager/domain/entities/receipt_adapter.dart';
+import 'package:receipt_manager/data/storage/receipt_database.dart';
 import 'package:receipt_manager/domain/repository/abstract_repository.dart';
 
 class DataReceiptRepository extends ReceiptRepository {
@@ -8,6 +8,7 @@ class DataReceiptRepository extends ReceiptRepository {
 
   static final DataReceiptRepository _instance =
       DataReceiptRepository._internal();
+
   DataReceiptRepository._internal() {
     receipts = <Receipt>[];
     receiptBox = Hive.box('receipts');

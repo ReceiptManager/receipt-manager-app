@@ -12,11 +12,24 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 import 'package:receipt_manager/data/storage/receipt_database.dart';
 
-abstract class ReceiptRepository {
-  Future<List<Receipt>> getReceipts();
+class Repository {
+  ReceiptDao _dao = ReceiptDao(AppDatabase());
+
+  Future<List<Receipt>> getReceipts() => _dao.getReceipts();
+
+  Stream<List<Receipt>> watchReceipts() => _dao.watchReceipts();
+
+  Future insertReceipt(ReceiptsCompanion receipt) =>
+      _dao.insertReceipt(receipt);
+
+  Future updateReceipt(Receipt receipt) => _dao.updateReceipt(receipt);
+
+  Future deleteReceipt(Receipt receipt) => _dao.deleteReceipt(receipt);
+
+  Future deleteDatabase() => _dao.deleteDatabase();
 }

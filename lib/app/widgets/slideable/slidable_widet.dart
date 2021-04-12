@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 // ignore: import_of_legacy_library_into_null_safe
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:receipt_manager/domain/entities/receipt_adapter.dart';
+import 'package:receipt_manager/data/storage/receipt_database.dart';
 
 class SlidableHistoryWidget extends StatelessWidget {
   final String deleteText;
@@ -23,8 +23,8 @@ class SlidableHistoryWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String totalString = receipt.total.total.toStringAsFixed(2) +
-        receipt.total.currency.toString();
+    String totalString =
+        receipt.total.toStringAsFixed(2) + receipt.total.toString();
 
     return Slidable(
         actionPane: SlidableDrawerActionPane(),
@@ -64,19 +64,18 @@ class SlidableHistoryWidget extends StatelessWidget {
                       trailing: Text(
                         totalString,
                         style: TextStyle(
-                            color: receipt.total.total < 0
-                                ? Colors.green
-                                : Colors.red,
+                            color:
+                                receipt.total < 0 ? Colors.green : Colors.red,
                             fontWeight: FontWeight.bold,
                             fontSize: 16),
                       ),
                       subtitle: Row(
                         children: <Widget>[
                           Text(
-                              receipt.category.categoryName.toString() +
+                              receipt.category.toString() +
                                   ", " +
                                   receipt.date.toString() +
-                                  (receipt.tag.isEmpty
+                                  (receipt.tag!.isEmpty
                                       ? ''
                                       : ', ' + receipt.tag.toString()),
                               style:
@@ -84,7 +83,7 @@ class SlidableHistoryWidget extends StatelessWidget {
                         ],
                       ),
                       title: Text(
-                        receipt.storeName,
+                        receipt.store.toString(),
                         style: TextStyle(
                             color: Colors.black,
                             fontWeight: FontWeight.bold,

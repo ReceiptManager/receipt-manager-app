@@ -31,14 +31,17 @@ dependencies:
   intl: ^0.17.0
   flutter_neumorphic: ^3.0.3
   flutter_native_splash: ^1.1.7+1
+  flutter_multi_formatter: ^2.0.2
+
+  flutter_bloc: ^7.0.0
+  moor_flutter: ^4.0.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
-  hive_generator: ^1.0.1
-  build_runner: ^1.12.2
-
+  build_runner: any
+  moor_generator: any
 
 flutter:
   generate: true

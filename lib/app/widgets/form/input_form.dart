@@ -1,4 +1,6 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
+import 'package:flutter_multi_formatter/flutter_multi_formatter.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:receipt_manager/app/pages/home/home_controller.dart';
 import 'package:receipt_manager/app/widgets/padding/padding_widget.dart';
@@ -16,6 +18,7 @@ class InputForm extends StatelessWidget {
                 labelText: "Store Name",
                 helperText: "The receipt store name",
                 validator: controller.validateStoreName,
+                readOnly: false,
                 icon: Icon(Icons.store_mall_directory_outlined)));
       });
 
@@ -29,6 +32,7 @@ class InputForm extends StatelessWidget {
           helperText: "The receipt tag",
           validator: (value) => null,
           icon: Icon(Icons.tag),
+          readOnly: false,
         );
       }));
 
@@ -36,7 +40,7 @@ class InputForm extends StatelessWidget {
       PaddingWidget(widget: ControlledWidgetBuilder<HomeController>(
           builder: (context, controller) {
         return Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Expanded(
@@ -47,6 +51,9 @@ class InputForm extends StatelessWidget {
               helperText: "The receipt total",
               icon: Icon(Icons.monetization_on_outlined),
               validator: controller.validateTotal,
+              inputFormatters: [MoneyInputFormatter()],
+              keyboardType: TextInputType.number,
+              readOnly: false,
             )),
             PaddingWidget(
               widget: NeumorphicButton(
@@ -59,7 +66,7 @@ class InputForm extends StatelessWidget {
                 child: Padding(
                     padding: const EdgeInsets.all(4.0),
                     child: Text(
-                      "EUR",
+                      controller.currency?.code ?? "EUR",
                       style: TextStyle(fontWeight: FontWeight.bold),
                     )),
               ),
@@ -81,6 +88,7 @@ class InputForm extends StatelessWidget {
               onTap: () => controller.setDate(context),
               icon: Icon(Icons.date_range),
               validator: controller.validateDate,
+              readOnly: true,
             ));
       }));
 
@@ -110,6 +118,7 @@ class InputForm extends StatelessWidget {
           helperText: "The receipt category",
           icon: Icon(Icons.category),
           validator: controller.validateCategory,
+          readOnly: false,
         );
       }));
 

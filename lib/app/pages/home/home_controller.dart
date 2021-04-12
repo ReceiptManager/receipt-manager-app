@@ -37,11 +37,16 @@ class HomeController extends Controller {
   TextEditingController _receiptCategoryController = TextEditingController();
 
   final _formKey = GlobalKey<FormState>();
+  Currency? currency;
+  DateTime? _receiptDate;
   var receiptsBox;
+
+  AppRepository appRepository;
 
   HomeController(AppRepository appRepository)
       : _homePresenter = HomePresenter(),
         receiptsBox = Hive.box('receipts'),
+        this.appRepository = appRepository,
         super();
 
   String? validateCategory(value) {
@@ -62,7 +67,10 @@ class HomeController extends Controller {
       initialEntryMode: DatePickerEntryMode.calendar,
     );
 
-    _receiptDateController.text = DateFormat.yMMMd().format(picked!);
+    if (picked != null) {
+      _receiptDate = picked;
+      _receiptDateController.text = DateFormat.yMMMd().format(picked);
+    }
   }
 
   @override
@@ -132,35 +140,22 @@ class HomeController extends Controller {
     if (value.isEmpty) {
       return "Receipt total is empty";
     }
-    RegExp totalRegex = new RegExp("^(?=.*[1-9])[0-9]*[.|,]?[0-9]{2}\$",
-        caseSensitive: false, multiLine: false);
 
-    if (!totalRegex.hasMatch(value)) {
-      return "Receipt total is invalid";
+    try {
+      double.parse(value);
+    } catch (_) {
+      log(_.toString());
     }
-
     return null;
   }
 
   String? validateDate(String value) {
     value = value.trim();
-    if (value.isEmpty) {
+    if (value.isEmpty || this._receiptDate == null) {
       return "Receipt date is empty";
     }
 
-    DateTime _receiptDate;
-    try {
-      var format = DateFormat("dd-MM-y");
-      _receiptDate = format.parse(value);
-
-      if (!(_receiptDate.year < 100)) {
-        return null;
-      }
-    } catch (_) {
-      log(_.toString());
-    }
-
-    return "Invalid receipt format";
+    return null;
   }
 
   void currencyPicker(BuildContext context) {
@@ -170,7 +165,8 @@ class HomeController extends Controller {
       showCurrencyName: true,
       showCurrencyCode: true,
       onSelect: (Currency currency) {
-        print('Select currency: ${currency.name}');
+        this.currency = currency;
+        refreshUI();
       },
     );
   }

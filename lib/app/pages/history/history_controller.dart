@@ -17,9 +17,8 @@
 
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 import 'package:receipt_manager/app/pages/history/history_presenter.dart';
-import 'package:receipt_manager/domain/entities/receipt_adapter.dart';
+import 'package:receipt_manager/data/storage/receipt_database.dart';
 
-// TODO: implement settings controller
 class HistoryController extends Controller {
   final HistoryPresenter _historyPresenter;
   List<Receipt> _receipts;

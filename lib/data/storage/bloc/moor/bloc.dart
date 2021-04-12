@@ -12,11 +12,9 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import 'package:receipt_manager/data/storage/receipt_database.dart';
-
-abstract class ReceiptRepository {
-  Future<List<Receipt>> getReceipts();
-}
+export 'package:receipt_manager/data/storage/bloc/moor/db_bloc.dart';
+export 'package:receipt_manager/data/storage/bloc/moor/db_event.dart';
+export 'package:receipt_manager/data/storage/bloc/moor/db_state.dart';

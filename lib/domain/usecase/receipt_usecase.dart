@@ -18,7 +18,7 @@
 import 'dart:async';
 
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
-import 'package:receipt_manager/domain/entities/receipt_adapter.dart';
+import 'package:receipt_manager/data/storage/receipt_database.dart';
 import 'package:receipt_manager/domain/repository/abstract_repository.dart';
 
 class GetReceiptUseCase

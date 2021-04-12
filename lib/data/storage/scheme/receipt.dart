@@ -12,11 +12,30 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import 'package:receipt_manager/data/storage/receipt_database.dart';
+import 'package:moor/moor.dart';
 
-abstract class ReceiptRepository {
-  Future<List<Receipt>> getReceipts();
+class Receipts extends Table {
+  IntColumn get id => integer().autoIncrement()();
+
+  RealColumn get total => real()();
+
+  IntColumn get store =>
+      integer().customConstraint('NOT NULL REFERENCES store(id)')();
+
+  TextColumn get category => text()();
+
+  TextColumn get tag => text().nullable()();
+
+  TextColumn get items => text().nullable()();
+
+  DateTimeColumn get date => dateTime()();
+}
+
+class Stores extends Table {
+  IntColumn get id => integer().autoIncrement()();
+
+  TextColumn get storeName => text()();
 }

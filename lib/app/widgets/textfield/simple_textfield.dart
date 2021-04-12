@@ -1,3 +1,4 @@
+import 'package:flutter/services.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 
 class SimpleTextfieldWidget extends StatelessWidget {
@@ -7,6 +8,10 @@ class SimpleTextfieldWidget extends StatelessWidget {
   final String labelText;
   final Function validator;
   final Function()? onTap;
+  final TextInputType? keyboardType;
+  final List<TextInputFormatter>? inputFormatters;
+  final bool readOnly;
+
   final TextEditingController controller;
 
   SimpleTextfieldWidget(
@@ -16,6 +21,9 @@ class SimpleTextfieldWidget extends StatelessWidget {
       required this.labelText,
       required this.icon,
       this.onTap,
+      this.keyboardType,
+      this.inputFormatters,
+      required this.readOnly,
       required this.validator});
 
   @override
@@ -36,7 +44,10 @@ class SimpleTextfieldWidget extends StatelessWidget {
           TextFormField(
               enableSuggestions: true,
               onTap: this.onTap,
+              readOnly: this.readOnly,
               controller: controller,
+              keyboardType: this.keyboardType,
+              inputFormatters: this.inputFormatters,
               style: TextStyle(color: Colors.black),
               decoration: new InputDecoration(
                 border: new OutlineInputBorder(

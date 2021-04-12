@@ -12,11 +12,21 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import 'package:receipt_manager/data/storage/receipt_database.dart';
+import 'package:json_annotation/json_annotation.dart';
 
-abstract class ReceiptRepository {
-  Future<List<Receipt>> getReceipts();
+@JsonSerializable()
+class ReceiptCategory {
+  const ReceiptCategory(this.name, this.path);
+
+  final String name;
+  final String path;
+
+  ReceiptCategory.fromJson(Map<String, dynamic> json)
+      : name = json == null ? "util" : json['name'],
+        path = json == null ? "util" : json['path'];
+
+  Map<String, dynamic> toJson() => {'name': name, 'path': path};
 }

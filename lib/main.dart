@@ -25,14 +25,12 @@ import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:path_provider/path_provider.dart' as pathProvider;
 import 'package:receipt_manager/app/pages/navigator.dart';
-import 'package:receipt_manager/domain/entities/receipt_adapter.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   FlutterCleanArchitecture.debugModeOn();
   Directory directory = await pathProvider.getApplicationDocumentsDirectory();
   Hive.init(directory.path);
-  Hive.registerAdapter(ReceiptAdapter());
 
   var settingsBox = await Hive.openBox('settings');
   var receiptsBox = await Hive.openBox('receipts');
@@ -59,8 +57,7 @@ class ReceiptManagerApp extends StatelessWidget {
             themeMode: ThemeMode.light,
             theme: NeumorphicThemeData(
                 defaultTextColor: Color(0xFF303E57),
-                accentColor: Colors.redAccent,
-                variantColor: Colors.redAccent,
+                accentColor: Colors.red,
                 baseColor: Color(0xFFF8F9FC),
                 depth: 10,
                 lightSource: LightSource.topRight),
