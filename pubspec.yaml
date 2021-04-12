@@ -1,16 +1,13 @@
 name: receipt_manager
-description: Receipt Manager 2
+description: Receipt Manager
 
 version: 1.1.4+360
 
 environment:
-  sdk: ">=2.7.0 <3.0.0"
+  sdk: ">=2.12.0 <3.0.0"
 
 dependencies:
   flutter:
-    sdk: flutter
-
-  flutter_localizations:
     sdk: flutter
 
   flutter_clean_architecture: ^5.0.0
@@ -31,6 +28,9 @@ dependencies:
   hive_flutter: ^1.0.0
   flutter_staggered_animations: ^1.0.0
   currency_picker: ^2.0.3
+  intl: ^0.17.0
+  flutter_neumorphic: ^3.0.3
+  flutter_native_splash: ^1.1.7+1
 
 dev_dependencies:
   flutter_test:
