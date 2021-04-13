@@ -33,7 +33,6 @@ void main() async {
   Hive.init(directory.path);
 
   var settingsBox = await Hive.openBox('settings');
-  var receiptsBox = await Hive.openBox('receipts');
 
   return runZonedGuarded(() async {
     runApp(ReceiptManagerApp());
@@ -41,7 +40,6 @@ void main() async {
     print(stack);
     print(error);
 
-    receiptsBox.close();
     settingsBox.close();
   });
 }
