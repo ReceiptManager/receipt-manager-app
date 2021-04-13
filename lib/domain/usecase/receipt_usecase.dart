@@ -18,7 +18,7 @@
 import 'dart:async';
 
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
-import 'package:receipt_manager/data/storage/receipt_database.dart';
+import 'package:receipt_manager/data/storage/scheme/holder_table.dart';
 import 'package:receipt_manager/domain/repository/abstract_repository.dart';
 
 class GetReceiptUseCase
@@ -46,6 +46,6 @@ class GetReceiptUseCase
 class GetReceiptUseCaseParams {}
 
 class GetReceiptUseCaseResponse {
-  final List<Receipt> receipts;
+  final Stream<List<ReceiptHolder>> receipts;
   GetReceiptUseCaseResponse(this.receipts);
 }
