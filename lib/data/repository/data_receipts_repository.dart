@@ -1,23 +1,28 @@
-import 'package:hive/hive.dart';
 import 'package:receipt_manager/data/storage/receipt_database.dart';
+import 'package:receipt_manager/data/storage/scheme/holder_table.dart';
 import 'package:receipt_manager/domain/repository/abstract_repository.dart';
 
 class DataReceiptRepository extends ReceiptRepository {
-  var receiptBox;
-  List<Receipt> receipts = [];
-
   static final DataReceiptRepository _instance =
       DataReceiptRepository._internal();
 
-  DataReceiptRepository._internal() {
-    receipts = <Receipt>[];
-    receiptBox = Hive.box('receipts');
-  }
+  DataReceiptRepository._internal();
 
   factory DataReceiptRepository() => _instance;
 
+  ReceiptDao _dao = ReceiptDao(AppDatabase());
+
+  Stream<List<Receipt>> watchReceipts() => _dao.watchReceipts();
+
+  Future insertReceipt(ReceiptsCompanion receipt) =>
+      _dao.insertReceipt(receipt);
+
+  Future updateReceipt(Receipt receipt) => _dao.updateReceipt(receipt);
+
+  Future deleteReceipt(Receipt receipt) => _dao.deleteReceipt(receipt);
+
+  Future deleteDatabase() => _dao.deleteDatabase();
+
   @override
-  Future<List<Receipt>> getReceipts() async {
-    return receiptBox.get();
-  }
+  Stream<List<ReceiptHolder>> getReceipts() => _dao.getReceipts();
 }
