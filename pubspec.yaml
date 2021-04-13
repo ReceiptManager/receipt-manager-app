@@ -33,8 +33,9 @@ dependencies:
   flutter_native_splash: ^1.1.7+1
   flutter_multi_formatter: ^2.0.2
 
-  flutter_bloc: ^7.0.0
+  flutter_bloc: ^7.0.0-nullsafety.2
   moor_flutter: ^4.0.0
+  moor_db_viewer: ^3.0.0
 
 dev_dependencies:
   flutter_test:

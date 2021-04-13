@@ -452,6 +452,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "4.2.1"
+  moor_db_viewer:
+    dependency: "direct main"
+    description:
+      name: moor_db_viewer
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "3.0.0"
   moor_flutter:
     dependency: "direct main"
     description:
