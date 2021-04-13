@@ -19,7 +19,7 @@ import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:receipt_manager/app/pages/home/home_controller.dart';
 import 'package:receipt_manager/app/widgets/form/input_form.dart';
-import 'package:receipt_manager/data/repository/app_repository.dart';
+import 'package:receipt_manager/data/repository/data_receipts_repository.dart';
 
 class HomePage extends View {
   @override
@@ -27,7 +27,7 @@ class HomePage extends View {
 }
 
 class _HomePageState extends ViewState<HomePage, HomeController> {
-  _HomePageState() : super(HomeController(AppRepository()));
+  _HomePageState() : super(HomeController(DataReceiptRepository()));
 
   @override
   Widget get view => Material(
@@ -37,6 +37,27 @@ class _HomePageState extends ViewState<HomePage, HomeController> {
           appBar: NeumorphicAppBar(
             title: Text("Add receipt"),
             actions: <Widget>[
+              ControlledWidgetBuilder<HomeController>(
+                  builder: (context, controller) {
+                return Center(
+                    child: NeumorphicButton(
+                  style: NeumorphicStyle(
+                    color: Color(0xFFEFEFF4),
+                    shape: NeumorphicShape.flat,
+                    boxShape: NeumorphicBoxShape.circle(),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(12.0),
+                    child: IconButton(
+                      icon: Icon(
+                        Icons.developer_board,
+                        color: Colors.black,
+                      ),
+                      onPressed: controller.debugInsert,
+                    ),
+                  ),
+                ));
+              }),
               Center(
                 child: NeumorphicButton(
                   style: NeumorphicStyle(
@@ -46,8 +67,11 @@ class _HomePageState extends ViewState<HomePage, HomeController> {
                   ),
                   child: Padding(
                     padding: const EdgeInsets.all(12.0),
-                    child: Icon(
-                      Icons.camera_alt_outlined,
+                    child: IconButton(
+                      icon: Icon(
+                        Icons.camera_alt_outlined,
+                      ),
+                      onPressed: () {},
                     ),
                   ),
                 ),

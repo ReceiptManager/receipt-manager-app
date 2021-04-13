@@ -1,17 +1,18 @@
-import 'package:flutter/material.dart';
 // ignore: import_of_legacy_library_into_null_safe
+import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:receipt_manager/data/storage/receipt_database.dart';
+import 'package:intl/intl.dart';
+import 'package:receipt_manager/data/storage/scheme/holder_table.dart';
 
 class SlidableHistoryWidget extends StatelessWidget {
   final String deleteText;
-  final Function() deleteMethod;
+  var deleteMethod;
 
   final String editText;
-  final Function() editMethod;
+  var editMethod;
   final String imagePath;
 
-  final Receipt receipt;
+  final ReceiptHolder receiptHolder;
 
   SlidableHistoryWidget(
       {required this.deleteText,
@@ -19,35 +20,34 @@ class SlidableHistoryWidget extends StatelessWidget {
       required this.editText,
       required this.editMethod,
       required this.imagePath,
-      required this.receipt});
+      required this.receiptHolder});
 
   @override
   Widget build(BuildContext context) {
-    String totalString =
-        receipt.total.toStringAsFixed(2) + receipt.total.toString();
+    String totalString = receiptHolder.receipt.total.toStringAsFixed(2);
+    String dateString = DateFormat.yMMMd().format(receiptHolder.receipt.date);
 
     return Slidable(
         actionPane: SlidableDrawerActionPane(),
         closeOnScroll: true,
         secondaryActions: <Widget>[
           IconSlideAction(
-              caption: deleteText,
-              color: Colors.red,
-              icon: Icons.delete,
-              onTap: deleteMethod),
+            caption: deleteText,
+            color: Colors.red,
+            icon: Icons.delete,
+          ),
           IconSlideAction(
-              caption: editText,
-              icon: Icons.update,
-              color: Colors.black,
-              onTap: editMethod),
+              caption: editText, icon: Icons.update, color: Colors.black),
         ],
         child: Card(
+            shadowColor: Colors.black,
+            elevation: 4,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(8.0),
             ),
             child: ClipPath(
               child: Container(
-                  color: Colors.white,
+                  color: Color(0xFFEFEFF7),
                   child: ListTile(
                       leading: Container(
                           width: 50,
@@ -64,26 +64,21 @@ class SlidableHistoryWidget extends StatelessWidget {
                       trailing: Text(
                         totalString,
                         style: TextStyle(
-                            color:
-                                receipt.total < 0 ? Colors.green : Colors.red,
+                            color: receiptHolder.receipt.total < 0
+                                ? Colors.green
+                                : Colors.red,
                             fontWeight: FontWeight.bold,
                             fontSize: 16),
                       ),
                       subtitle: Row(
                         children: <Widget>[
-                          Text(
-                              receipt.category.toString() +
-                                  ", " +
-                                  receipt.date.toString() +
-                                  (receipt.tag!.isEmpty
-                                      ? ''
-                                      : ', ' + receipt.tag.toString()),
+                          Text(dateString,
                               style:
                                   TextStyle(color: Colors.black, fontSize: 12))
                         ],
                       ),
                       title: Text(
-                        receipt.store.toString(),
+                        receiptHolder.receipt.storeName,
                         style: TextStyle(
                             color: Colors.black,
                             fontWeight: FontWeight.bold,

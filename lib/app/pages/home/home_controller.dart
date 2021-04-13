@@ -20,11 +20,11 @@ import 'dart:developer';
 import 'package:currency_picker/currency_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
-import 'package:hive/hive.dart';
 import 'package:intl/intl.dart';
 import 'package:receipt_manager/app/helper/receipt_logger.dart';
 import 'package:receipt_manager/app/pages/home/home_presenter.dart';
-import 'package:receipt_manager/data/repository/app_repository.dart';
+import 'package:receipt_manager/data/repository/data_receipts_repository.dart';
+import 'package:receipt_manager/data/storage/receipt_database.dart';
 
 // TODO: implement settings controller
 class HomeController extends Controller {
@@ -41,12 +41,11 @@ class HomeController extends Controller {
   DateTime? _receiptDate;
   var receiptsBox;
 
-  AppRepository appRepository;
+  DataReceiptRepository appRepository;
 
-  HomeController(AppRepository appRepository)
+  HomeController(DataReceiptRepository appRepository)
       : _homePresenter = HomePresenter(),
-        receiptsBox = Hive.box('receipts'),
-        this.appRepository = appRepository,
+        this.appRepository = DataReceiptRepository(),
         super();
 
   String? validateCategory(value) {
@@ -109,6 +108,13 @@ class HomeController extends Controller {
     refreshUI();
   }
 
+  void debugInsert() {
+    appRepository.insertReceipt(ReceiptsCompanion(
+        storeName: Value("Test"),
+        date: Value(DateTime.now()),
+        total: Value(19.00)));
+  }
+
   Future<void> submit() async {
     if (!_formKey.currentState!.validate()) {
       fail();
@@ -119,10 +125,21 @@ class HomeController extends Controller {
     String _totalString = _receiptTotalController.text.trim();
     String _dateString = _receiptDateController.text.trim();
     String _tagString = _receiptTagController.text.trim();
+    String _categoryString = _receiptCategoryController.text.trim();
 
     ReceiptLogger.logger(
         _storeNameString, _totalString, _dateString, _tagString);
 
+    appRepository.insertReceipt(ReceiptsCompanion(
+        storeName: Value(_storeNameString),
+        date: Value(_receiptDate!),
+        total: Value(double.parse(_totalString))));
+
+    _storeNameController.clear();
+    _receiptTotalController.clear();
+    _receiptDateController.clear();
+    _receiptTagController.clear();
+    _receiptCategoryController.clear();
     success();
   }
 
