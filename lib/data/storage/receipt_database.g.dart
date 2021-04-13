@@ -10,18 +10,12 @@ part of 'receipt_database.dart';
 class Receipt extends DataClass implements Insertable<Receipt> {
   final int id;
   final double total;
-  final int store;
-  final String category;
-  final String? tag;
-  final String? items;
+  final String storeName;
   final DateTime date;
   Receipt(
       {required this.id,
       required this.total,
-      required this.store,
-      required this.category,
-      this.tag,
-      this.items,
+      required this.storeName,
       required this.date});
   factory Receipt.fromData(Map<String, dynamic> data, GeneratedDatabase db,
       {String? prefix}) {
@@ -34,12 +28,8 @@ class Receipt extends DataClass implements Insertable<Receipt> {
       id: intType.mapFromDatabaseResponse(data['${effectivePrefix}id'])!,
       total:
           doubleType.mapFromDatabaseResponse(data['${effectivePrefix}total'])!,
-      store: intType.mapFromDatabaseResponse(data['${effectivePrefix}store'])!,
-      category: stringType
-          .mapFromDatabaseResponse(data['${effectivePrefix}category'])!,
-      tag: stringType.mapFromDatabaseResponse(data['${effectivePrefix}tag']),
-      items:
-          stringType.mapFromDatabaseResponse(data['${effectivePrefix}items']),
+      storeName: stringType
+          .mapFromDatabaseResponse(data['${effectivePrefix}store_name'])!,
       date:
           dateTimeType.mapFromDatabaseResponse(data['${effectivePrefix}date'])!,
     );
@@ -49,14 +39,7 @@ class Receipt extends DataClass implements Insertable<Receipt> {
     final map = <String, Expression>{};
     map['id'] = Variable<int>(id);
     map['total'] = Variable<double>(total);
-    map['store'] = Variable<int>(store);
-    map['category'] = Variable<String>(category);
-    if (!nullToAbsent || tag != null) {
-      map['tag'] = Variable<String?>(tag);
-    }
-    if (!nullToAbsent || items != null) {
-      map['items'] = Variable<String?>(items);
-    }
+    map['store_name'] = Variable<String>(storeName);
     map['date'] = Variable<DateTime>(date);
     return map;
   }
@@ -65,11 +48,7 @@ class Receipt extends DataClass implements Insertable<Receipt> {
     return ReceiptsCompanion(
       id: Value(id),
       total: Value(total),
-      store: Value(store),
-      category: Value(category),
-      tag: tag == null && nullToAbsent ? const Value.absent() : Value(tag),
-      items:
-          items == null && nullToAbsent ? const Value.absent() : Value(items),
+      storeName: Value(storeName),
       date: Value(date),
     );
   }
@@ -80,10 +59,7 @@ class Receipt extends DataClass implements Insertable<Receipt> {
     return Receipt(
       id: serializer.fromJson<int>(json['id']),
       total: serializer.fromJson<double>(json['total']),
-      store: serializer.fromJson<int>(json['store']),
-      category: serializer.fromJson<String>(json['category']),
-      tag: serializer.fromJson<String?>(json['tag']),
-      items: serializer.fromJson<String?>(json['items']),
+      storeName: serializer.fromJson<String>(json['storeName']),
       date: serializer.fromJson<DateTime>(json['date']),
     );
   }
@@ -93,29 +69,17 @@ class Receipt extends DataClass implements Insertable<Receipt> {
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
       'total': serializer.toJson<double>(total),
-      'store': serializer.toJson<int>(store),
-      'category': serializer.toJson<String>(category),
-      'tag': serializer.toJson<String?>(tag),
-      'items': serializer.toJson<String?>(items),
+      'storeName': serializer.toJson<String>(storeName),
       'date': serializer.toJson<DateTime>(date),
     };
   }
 
   Receipt copyWith(
-          {int? id,
-          double? total,
-          int? store,
-          String? category,
-          String? tag,
-          String? items,
-          DateTime? date}) =>
+          {int? id, double? total, String? storeName, DateTime? date}) =>
       Receipt(
         id: id ?? this.id,
         total: total ?? this.total,
-        store: store ?? this.store,
-        category: category ?? this.category,
-        tag: tag ?? this.tag,
-        items: items ?? this.items,
+        storeName: storeName ?? this.storeName,
         date: date ?? this.date,
       );
   @override
@@ -123,84 +87,54 @@ class Receipt extends DataClass implements Insertable<Receipt> {
     return (StringBuffer('Receipt(')
           ..write('id: $id, ')
           ..write('total: $total, ')
-          ..write('store: $store, ')
-          ..write('category: $category, ')
-          ..write('tag: $tag, ')
-          ..write('items: $items, ')
+          ..write('storeName: $storeName, ')
           ..write('date: $date')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => $mrjf($mrjc(
-      id.hashCode,
-      $mrjc(
-          total.hashCode,
-          $mrjc(
-              store.hashCode,
-              $mrjc(
-                  category.hashCode,
-                  $mrjc(
-                      tag.hashCode, $mrjc(items.hashCode, date.hashCode)))))));
+  int get hashCode => $mrjf($mrjc(id.hashCode,
+      $mrjc(total.hashCode, $mrjc(storeName.hashCode, date.hashCode))));
   @override
   bool operator ==(dynamic other) =>
       identical(this, other) ||
       (other is Receipt &&
           other.id == this.id &&
           other.total == this.total &&
-          other.store == this.store &&
-          other.category == this.category &&
-          other.tag == this.tag &&
-          other.items == this.items &&
+          other.storeName == this.storeName &&
           other.date == this.date);
 }
 
 class ReceiptsCompanion extends UpdateCompanion<Receipt> {
   final Value<int> id;
   final Value<double> total;
-  final Value<int> store;
-  final Value<String> category;
-  final Value<String?> tag;
-  final Value<String?> items;
+  final Value<String> storeName;
   final Value<DateTime> date;
   const ReceiptsCompanion({
     this.id = const Value.absent(),
     this.total = const Value.absent(),
-    this.store = const Value.absent(),
-    this.category = const Value.absent(),
-    this.tag = const Value.absent(),
-    this.items = const Value.absent(),
+    this.storeName = const Value.absent(),
     this.date = const Value.absent(),
   });
   ReceiptsCompanion.insert({
     this.id = const Value.absent(),
     required double total,
-    required int store,
-    required String category,
-    this.tag = const Value.absent(),
-    this.items = const Value.absent(),
+    required String storeName,
     required DateTime date,
   })   : total = Value(total),
-        store = Value(store),
-        category = Value(category),
+        storeName = Value(storeName),
         date = Value(date);
   static Insertable<Receipt> custom({
     Expression<int>? id,
     Expression<double>? total,
-    Expression<int>? store,
-    Expression<String>? category,
-    Expression<String?>? tag,
-    Expression<String?>? items,
+    Expression<String>? storeName,
     Expression<DateTime>? date,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
       if (total != null) 'total': total,
-      if (store != null) 'store': store,
-      if (category != null) 'category': category,
-      if (tag != null) 'tag': tag,
-      if (items != null) 'items': items,
+      if (storeName != null) 'store_name': storeName,
       if (date != null) 'date': date,
     });
   }
@@ -208,18 +142,12 @@ class ReceiptsCompanion extends UpdateCompanion<Receipt> {
   ReceiptsCompanion copyWith(
       {Value<int>? id,
       Value<double>? total,
-      Value<int>? store,
-      Value<String>? category,
-      Value<String?>? tag,
-      Value<String?>? items,
+      Value<String>? storeName,
       Value<DateTime>? date}) {
     return ReceiptsCompanion(
       id: id ?? this.id,
       total: total ?? this.total,
-      store: store ?? this.store,
-      category: category ?? this.category,
-      tag: tag ?? this.tag,
-      items: items ?? this.items,
+      storeName: storeName ?? this.storeName,
       date: date ?? this.date,
     );
   }
@@ -233,17 +161,8 @@ class ReceiptsCompanion extends UpdateCompanion<Receipt> {
     if (total.present) {
       map['total'] = Variable<double>(total.value);
     }
-    if (store.present) {
-      map['store'] = Variable<int>(store.value);
-    }
-    if (category.present) {
-      map['category'] = Variable<String>(category.value);
-    }
-    if (tag.present) {
-      map['tag'] = Variable<String?>(tag.value);
-    }
-    if (items.present) {
-      map['items'] = Variable<String?>(items.value);
+    if (storeName.present) {
+      map['store_name'] = Variable<String>(storeName.value);
     }
     if (date.present) {
       map['date'] = Variable<DateTime>(date.value);
@@ -256,10 +175,7 @@ class ReceiptsCompanion extends UpdateCompanion<Receipt> {
     return (StringBuffer('ReceiptsCompanion(')
           ..write('id: $id, ')
           ..write('total: $total, ')
-          ..write('store: $store, ')
-          ..write('category: $category, ')
-          ..write('tag: $tag, ')
-          ..write('items: $items, ')
+          ..write('storeName: $storeName, ')
           ..write('date: $date')
           ..write(')'))
         .toString();
@@ -289,45 +205,12 @@ class $ReceiptsTable extends Receipts with TableInfo<$ReceiptsTable, Receipt> {
     );
   }
 
-  final VerificationMeta _storeMeta = const VerificationMeta('store');
+  final VerificationMeta _storeNameMeta = const VerificationMeta('storeName');
   @override
-  late final GeneratedIntColumn store = _constructStore();
-  GeneratedIntColumn _constructStore() {
-    return GeneratedIntColumn('store', $tableName, false,
-        $customConstraints: 'NOT NULL REFERENCES store(id)');
-  }
-
-  final VerificationMeta _categoryMeta = const VerificationMeta('category');
-  @override
-  late final GeneratedTextColumn category = _constructCategory();
-  GeneratedTextColumn _constructCategory() {
-    return GeneratedTextColumn(
-      'category',
-      $tableName,
-      false,
-    );
-  }
-
-  final VerificationMeta _tagMeta = const VerificationMeta('tag');
-  @override
-  late final GeneratedTextColumn tag = _constructTag();
-  GeneratedTextColumn _constructTag() {
-    return GeneratedTextColumn(
-      'tag',
-      $tableName,
-      true,
-    );
-  }
-
-  final VerificationMeta _itemsMeta = const VerificationMeta('items');
-  @override
-  late final GeneratedTextColumn items = _constructItems();
-  GeneratedTextColumn _constructItems() {
-    return GeneratedTextColumn(
-      'items',
-      $tableName,
-      true,
-    );
+  late final GeneratedTextColumn storeName = _constructStoreName();
+  GeneratedTextColumn _constructStoreName() {
+    return GeneratedTextColumn('store_name', $tableName, false,
+        $customConstraints: 'NOT NULL REFERENCES stores(storeName)');
   }
 
   final VerificationMeta _dateMeta = const VerificationMeta('date');
@@ -342,8 +225,7 @@ class $ReceiptsTable extends Receipts with TableInfo<$ReceiptsTable, Receipt> {
   }
 
   @override
-  List<GeneratedColumn> get $columns =>
-      [id, total, store, category, tag, items, date];
+  List<GeneratedColumn> get $columns => [id, total, storeName, date];
   @override
   $ReceiptsTable get asDslTable => this;
   @override
@@ -364,25 +246,11 @@ class $ReceiptsTable extends Receipts with TableInfo<$ReceiptsTable, Receipt> {
     } else if (isInserting) {
       context.missing(_totalMeta);
     }
-    if (data.containsKey('store')) {
-      context.handle(
-          _storeMeta, store.isAcceptableOrUnknown(data['store']!, _storeMeta));
+    if (data.containsKey('store_name')) {
+      context.handle(_storeNameMeta,
+          storeName.isAcceptableOrUnknown(data['store_name']!, _storeNameMeta));
     } else if (isInserting) {
-      context.missing(_storeMeta);
-    }
-    if (data.containsKey('category')) {
-      context.handle(_categoryMeta,
-          category.isAcceptableOrUnknown(data['category']!, _categoryMeta));
-    } else if (isInserting) {
-      context.missing(_categoryMeta);
-    }
-    if (data.containsKey('tag')) {
-      context.handle(
-          _tagMeta, tag.isAcceptableOrUnknown(data['tag']!, _tagMeta));
-    }
-    if (data.containsKey('items')) {
-      context.handle(
-          _itemsMeta, items.isAcceptableOrUnknown(data['items']!, _itemsMeta));
+      context.missing(_storeNameMeta);
     }
     if (data.containsKey('date')) {
       context.handle(
