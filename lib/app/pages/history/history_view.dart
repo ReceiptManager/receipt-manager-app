@@ -15,6 +15,8 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+import 'dart:core';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
@@ -24,6 +26,7 @@ import 'package:receipt_manager/app/pages/history/history_controller.dart';
 import 'package:receipt_manager/app/widgets/padding/padding_widget.dart';
 import 'package:receipt_manager/app/widgets/slideable/slidable_widet.dart';
 import 'package:receipt_manager/data/repository/data_receipts_repository.dart';
+import 'package:receipt_manager/data/storage/scheme/holder_table.dart';
 
 class HistoryPage extends View {
   @override
@@ -52,43 +55,46 @@ class HistoryState extends ViewState<HistoryPage, HistoryController> {
   Widget receiptVisualisation(BuildContext context) =>
       ControlledWidgetBuilder<HistoryController>(
           builder: (context, controller) {
-        return AnimationLimiter(child: Expanded(
-          child: DraggableScrollableSheet(builder:
-              (BuildContext context, ScrollController scrollController) {
-            return ListView.builder(
-                padding: const EdgeInsets.all(8.0),
-                itemCount: controller.receipts.length,
-                itemBuilder: (_, index) {
-                  return AnimationConfiguration.staggeredList(
-                      position: index,
-                      duration: const Duration(milliseconds: 375),
-                      child: SlideAnimation(
-                          verticalOffset: 50.0,
-                          child: FadeInAnimation(
-                              child: SlidableHistoryWidget(
-                                  deleteText: "Delete",
-                                  deleteMethod: controller.deleteMethod,
-                                  editText: "Edit",
-                                  editMethod: controller.editMethod,
-                                  imagePath: "assets/lidl.png",
-                                  receipt: controller.receipts[index]))));
-                });
-          }),
-        ));
+        return StreamBuilder<List<ReceiptHolder>>(
+            stream: controller.getReceipts(),
+            builder: (context, snapshot) {
+              if (!snapshot.hasData ||
+                  snapshot.connectionState == ConnectionState.waiting) {
+                return CircularProgressIndicator();
+              }
+
+              final receipts = snapshot.data ?? [];
+              return Expanded(
+                  child: ListView.builder(
+                      padding: const EdgeInsets.all(8.0),
+                      itemCount: receipts.length,
+                      itemBuilder: (_, index) {
+                        final receipt = receipts[index].receipt;
+                        return AnimationConfiguration.staggeredList(
+                            position: index,
+                            duration: const Duration(milliseconds: 375),
+                            child: SlideAnimation(
+                                verticalOffset: 50.0,
+                                child: FadeInAnimation(
+                                    child: SlidableHistoryWidget(
+                                        deleteText: "Delete",
+                                        deleteMethod:
+                                            controller.deleteMethod(receipt),
+                                        editText: "Edit",
+                                        editMethod:
+                                            controller.editMethod(receipt),
+                                        imagePath: "assets/lidl.png",
+                                        receiptHolder: receipts[index]))));
+                      }));
+            });
       });
 
   @override
   Widget get view => Scaffold(
-        key: globalKey,
-        backgroundColor: Color(0xFFEFEFF4),
-        appBar: NeumorphicAppBar(
-          title: Text("Receipt overview"),
-        ),
-        body: Column(
-          children: <Widget>[
-            weeklyOverview(context),
-            receiptVisualisation(context)
-          ],
-        ),
-      );
+      key: globalKey,
+      backgroundColor: Color(0xFFEFEFF4),
+      appBar: NeumorphicAppBar(
+        title: Text("Receipt overview"),
+      ),
+      body: Column(children: [receiptVisualisation(context)]));
 }

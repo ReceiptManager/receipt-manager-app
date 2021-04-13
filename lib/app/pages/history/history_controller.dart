@@ -17,37 +17,37 @@
 
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 import 'package:receipt_manager/app/pages/history/history_presenter.dart';
+import 'package:receipt_manager/data/repository/data_receipts_repository.dart';
 import 'package:receipt_manager/data/storage/receipt_database.dart';
+import 'package:receipt_manager/data/storage/scheme/holder_table.dart';
 
 class HistoryController extends Controller {
   final HistoryPresenter _historyPresenter;
-  List<Receipt> _receipts;
 
-  HistoryController(repository)
+  DataReceiptRepository repository;
+
+  HistoryController(DataReceiptRepository repository)
       : _historyPresenter = HistoryPresenter(repository),
-        _receipts = [],
+        this.repository = repository,
         super();
 
   String get getWeeklyOverview => "Weekly overview 19.00\$";
 
-  get receipts => _receipts;
+  get receipts {
+    var receipts = repository.getReceipts();
+    return receipts;
+  }
 
-  get deleteMethod => UnimplementedError();
+  Future<dynamic> deleteMethod(Receipt receipt) {
+    return repository.deleteReceipt(receipt);
+  }
 
-  get editMethod => UnimplementedError();
+  Future<dynamic> editMethod(Receipt receipt) {
+    return repository.updateReceipt(receipt);
+  }
 
   @override
-  void initListeners() {
-    _historyPresenter.getReceiptsOnNext = (List<Receipt> receipts) {
-      print(receipts.toString());
-      _receipts = receipts;
-      refreshUI();
-    };
-
-    _historyPresenter.getReceiptsOnComplete = () {
-      print('Received receipts list');
-    };
-  }
+  void initListeners() {}
 
   void buttonPressed() {}
 
@@ -64,5 +64,9 @@ class HistoryController extends Controller {
   void onDisposed() {
     _historyPresenter.dispose();
     super.onDisposed();
+  }
+
+  Stream<List<ReceiptHolder>> getReceipts() {
+    return repository.getReceipts();
   }
 }
