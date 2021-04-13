@@ -16,7 +16,9 @@
  */
 
 import 'package:moor_flutter/moor_flutter.dart';
-import 'package:receipt_manager/data/storage/scheme/receipt.dart';
+import 'package:receipt_manager/data/storage/scheme/holder_table.dart';
+import 'package:receipt_manager/data/storage/scheme/receipt_table.dart';
+import 'package:receipt_manager/data/storage/scheme/store_table.dart';
 
 export 'package:moor_flutter/moor_flutter.dart' show Value;
 
@@ -44,17 +46,31 @@ class ReceiptDao extends DatabaseAccessor<AppDatabase> with _$ReceiptDaoMixin {
 
   ReceiptDao(this.db) : super(db);
 
-  Future<List<Receipt>> getReceipts() {
+  Stream<List<ReceiptHolder>> getReceipts() {
     return (select(receipts)
           ..orderBy(([
             (t) => OrderingTerm(expression: t.date, mode: OrderingMode.desc),
           ])))
-        .get();
+        .join([
+          innerJoin(stores, stores.storeName.equalsExp(receipts.storeName)),
+        ])
+        .watch()
+        .map(
+          (rows) => rows.map(
+            (row) {
+              return ReceiptHolder(
+                receipt: row.readTable(receipts),
+                store: row.readTable(stores),
+              );
+            },
+          ).toList(),
+        );
   }
 
   Stream<List<Receipt>> watchReceipts() => select(receipts).watch();
 
   Future<void> insertReceipt(ReceiptsCompanion receipt) {
+    into(stores).insert(StoresCompanion(storeName: receipt.storeName));
     return into(receipts).insert(receipt);
   }
 

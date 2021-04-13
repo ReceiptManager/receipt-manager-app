@@ -15,27 +15,16 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import 'package:moor/moor.dart';
+import 'package:moor_flutter/moor_flutter.dart';
 
 class Receipts extends Table {
   IntColumn get id => integer().autoIncrement()();
 
   RealColumn get total => real()();
 
-  IntColumn get store =>
-      integer().customConstraint('NOT NULL REFERENCES store(id)')();
-
-  TextColumn get category => text()();
-
-  TextColumn get tag => text().nullable()();
-
-  TextColumn get items => text().nullable()();
+  @DataClassName("storeName")
+  TextColumn get storeName =>
+      text().customConstraint('NOT NULL REFERENCES stores(storeName)')();
 
   DateTimeColumn get date => dateTime()();
-}
-
-class Stores extends Table {
-  IntColumn get id => integer().autoIncrement()();
-
-  TextColumn get storeName => text()();
 }
