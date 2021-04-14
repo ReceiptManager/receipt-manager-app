@@ -15,7 +15,6 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:receipt_manager/app/pages/history/history_view.dart';
@@ -46,8 +45,32 @@ class NavigatorState extends State {
     return WillPopScope(
         onWillPop: () async => false,
         child: Scaffold(
-            bottomNavigationBar: CurvedNavigationBar(
-              backgroundColor: Color(0xFFEFEFF4),
+            bottomNavigationBar: BottomNavigationBar(
+              backgroundColor: Colors.white,
+              showSelectedLabels: false,
+              items: [
+                BottomNavigationBarItem(
+                    label: "Add receipt", icon: navigatorWidget(Icons.add)),
+                BottomNavigationBarItem(
+                    label: "", icon: navigatorWidget(Icons.history)),
+                BottomNavigationBarItem(
+                    label: "", icon: navigatorWidget(Icons.analytics_outlined)),
+                BottomNavigationBarItem(
+                    label: "", icon: navigatorWidget(Icons.settings)),
+              ],
+              selectedItemColor: Colors.black,
+              onTap: (int i) {
+                setState(() {
+                  currentIndex = i;
+                });
+              },
+            ),
+            body: _children[currentIndex]));
+
+    /*CurvedNavigationBar(
+              backgroundColor: Colors.black,
+              buttonBackgroundColor: Colors.black,
+              color: Colors.white,
               key: _bottomNavigationKey,
               index: 0,
               items: <Widget>[
@@ -64,6 +87,6 @@ class NavigatorState extends State {
                 });
               },
             ),
-            body: _children[currentIndex]));
+            body: _children[currentIndex]));*/
   }
 }
