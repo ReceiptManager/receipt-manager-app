@@ -15,15 +15,26 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+import 'package:animated_stack/animated_stack.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:receipt_manager/app/pages/home/home_controller.dart';
 import 'package:receipt_manager/app/widgets/form/input_form.dart';
+import 'package:receipt_manager/app/widgets/icon/icon_tile.dart';
 import 'package:receipt_manager/data/repository/data_receipts_repository.dart';
+import 'package:simple_edge_detection/edge_detection.dart';
 
 class HomePage extends View {
   @override
   State<StatefulWidget> createState() => _HomePageState();
+}
+
+Future<void> processEdges(final pickedFile) async {
+  if (pickedFile != null) {
+    final filePath = pickedFile.path;
+    await EdgeDetection.detectEdges(filePath);
+  }
 }
 
 class _HomePageState extends ViewState<HomePage, HomeController> {
@@ -31,52 +42,55 @@ class _HomePageState extends ViewState<HomePage, HomeController> {
 
   @override
   Widget get view => Material(
-      child: Scaffold(
-          key: globalKey,
-          backgroundColor: Color(0xFFEFEFF4),
-          appBar: NeumorphicAppBar(
-            title: Text("Add receipt"),
-            actions: <Widget>[
-              ControlledWidgetBuilder<HomeController>(
-                  builder: (context, controller) {
-                return Center(
-                    child: NeumorphicButton(
-                  style: NeumorphicStyle(
-                    color: Color(0xFFEFEFF4),
-                    shape: NeumorphicShape.flat,
-                    boxShape: NeumorphicBoxShape.circle(),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(12.0),
-                    child: IconButton(
-                      icon: Icon(
-                        Icons.developer_board,
-                        color: Colors.black,
-                      ),
-                      onPressed: controller.debugInsert,
-                    ),
-                  ),
-                ));
-              }),
-              Center(
-                child: NeumorphicButton(
-                  style: NeumorphicStyle(
-                    color: Color(0xFFEFEFF4),
-                    shape: NeumorphicShape.flat,
-                    boxShape: NeumorphicBoxShape.circle(),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(12.0),
-                    child: IconButton(
-                      icon: Icon(
-                        Icons.camera_alt_outlined,
-                      ),
-                      onPressed: () {},
-                    ),
-                  ),
-                ),
+      child: AnimatedStack(
+          backgroundColor: Colors.transparent,
+          fabBackgroundColor: Colors.red,
+          buttonIcon: Icons.workspaces_filled,
+          fabIconColor: Colors.white,
+          animateButton: true,
+          foregroundWidget: Scaffold(
+              key: globalKey,
+              backgroundColor: Color(0xFFEFEFF4),
+              appBar: NeumorphicAppBar(title: Text("Add receipt")),
+              body: InputForm()),
+          columnWidget: Column(
+            children: <Widget>[
+              SizedBox(height: 20),
+              IconTile(
+                width: 60,
+                height: 60,
+                iconData: Icons.insert_drive_file_outlined,
+                fun: () {},
+              ),
+              SizedBox(height: 20),
+              IconTile(
+                width: 60,
+                height: 60,
+                iconData: Icons.filter,
+                fun: () async {
+                  final picker = ImagePicker();
+                  final pickedFile =
+                      await picker.getImage(source: ImageSource.camera);
+                  processEdges(pickedFile);
+                },
+              ),
+              SizedBox(height: 20),
+              IconTile(
+                width: 60,
+                height: 60,
+                iconData: Icons.camera_alt,
+                fun: () async {},
               ),
             ],
           ),
-          body: InputForm()));
+          bottomWidget: Container(
+            decoration: BoxDecoration(
+              color: Color(0xFFEFEFF4),
+              borderRadius: BorderRadius.all(
+                Radius.circular(50),
+              ),
+            ),
+            width: 260,
+            height: 50,
+          )));
 }
