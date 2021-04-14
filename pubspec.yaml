@@ -19,7 +19,7 @@ dependencies:
   curved_navigation_bar: ^0.4.0-nullsafety.0
 
   equatable: ^2.0.0
-  flutter_slidable: ^0.5.7
+  flutter_slidable: ^0.6.0
   cupertino_icons: ^1.0.0
   settings_ui: ^1.0.0-nullsafety.2
   permission_handler: ^6.1.1
@@ -36,6 +36,13 @@ dependencies:
   flutter_bloc: ^7.0.0-nullsafety.2
   moor_flutter: ^4.0.0
   moor_db_viewer: ^3.0.0
+  animated_stack: ^0.2.0
+  syncfusion_flutter_charts: ^18.4.49
+
+  simple_edge_detection:
+    path: ./flutter-simple-edge-detection
+
+  image_picker: ^0.7.4
 
 dev_dependencies:
   flutter_test:
