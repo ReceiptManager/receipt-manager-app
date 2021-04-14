@@ -16,7 +16,6 @@ dependencies:
   camera: ^0.8.1
   path_provider: ^2.0.1
   path: ^1.8.0
-  curved_navigation_bar: ^0.4.0-nullsafety.0
 
   equatable: ^2.0.0
   flutter_slidable: ^0.6.0
