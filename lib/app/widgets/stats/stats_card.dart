@@ -12,11 +12,11 @@ class StatsCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return PaddingWidget(
         widget: AspectRatio(
-            aspectRatio: 1.25,
+            aspectRatio: 0.75,
             child: Card(
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(18)),
-              color: Color(0xFFEFEFF4),
+              color: Colors.white,
               child: Stack(
                 children: <Widget>[
                   Padding(
