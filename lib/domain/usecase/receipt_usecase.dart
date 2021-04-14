@@ -31,7 +31,7 @@ class GetReceiptUseCase
       GetReceiptUseCaseParams? params) async {
     final controller = StreamController<GetReceiptUseCaseResponse>();
     try {
-      final receipts = await receiptRepository.getReceipts();
+      final receipts = receiptRepository.getReceipts();
       controller.add(GetReceiptUseCaseResponse(receipts));
       logger.finest('GetUserUseCase successful.');
       controller.close();
