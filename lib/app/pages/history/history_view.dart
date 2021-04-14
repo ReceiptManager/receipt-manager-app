@@ -194,7 +194,7 @@ class HistoryState extends ViewState<HistoryPage, HistoryController> {
       animateButton: true,
       foregroundWidget: Scaffold(
           key: globalKey,
-          backgroundColor: Color(0xFFEFEFF4),
+          backgroundColor: Colors.white,
           appBar: NeumorphicAppBar(title: Text("Receipt overview")),
           body: Column(children: [historyWidget()])),
       columnWidget: Column(

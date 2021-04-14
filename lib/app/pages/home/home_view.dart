@@ -22,6 +22,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:receipt_manager/app/pages/home/home_controller.dart';
 import 'package:receipt_manager/app/widgets/form/input_form.dart';
 import 'package:receipt_manager/app/widgets/icon/icon_tile.dart';
+import 'package:receipt_manager/app/widgets/scan/scan.dart';
 import 'package:receipt_manager/data/repository/data_receipts_repository.dart';
 import 'package:simple_edge_detection/edge_detection.dart';
 
@@ -50,7 +51,7 @@ class _HomePageState extends ViewState<HomePage, HomeController> {
           animateButton: true,
           foregroundWidget: Scaffold(
               key: globalKey,
-              backgroundColor: Color(0xFFEFEFF4),
+              backgroundColor: Colors.white,
               appBar: NeumorphicAppBar(title: Text("Add receipt")),
               body: InputForm()),
           columnWidget: Column(
@@ -70,7 +71,7 @@ class _HomePageState extends ViewState<HomePage, HomeController> {
                 fun: () async {
                   final picker = ImagePicker();
                   final pickedFile =
-                      await picker.getImage(source: ImageSource.camera);
+                      await picker.getImage(source: ImageSource.gallery);
                   processEdges(pickedFile);
                 },
               ),
@@ -79,7 +80,10 @@ class _HomePageState extends ViewState<HomePage, HomeController> {
                 width: 60,
                 height: 60,
                 iconData: Icons.camera_alt,
-                fun: () async {},
+                fun: () async {
+                  Navigator.push(
+                      context, MaterialPageRoute(builder: (context) => Scan()));
+                },
               ),
             ],
           ),

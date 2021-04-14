@@ -19,7 +19,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
+import 'package:intl/intl.dart';
 import 'package:receipt_manager/app/pages/stats/stat_controller.dart';
+import 'package:receipt_manager/app/widgets/stats/stats_card.dart';
+import 'package:syncfusion_flutter_charts/charts.dart';
 
 class StatsPage extends View {
   @override
@@ -29,15 +32,61 @@ class StatsPage extends View {
 class StatsState extends ViewState<StatsPage, StatsController> {
   StatsState() : super(StatsController());
 
+  Widget getMonthChart() {
+    List<ReceiptMonthData> data = [];
+
+    int year = DateTime.now().year;
+    return SfCartesianChart(primaryXAxis: CategoryAxis(),
+        //tooltipBehavior: _tooltipBehavior,
+        series: <ChartSeries>[
+          LineSeries<ReceiptMonthData, String>(
+              name: "Receipt overview",
+              color: Colors.red,
+              dataSource: data,
+              xValueMapper: (ReceiptMonthData data, _) =>
+                  DateFormat.MMM().format((DateTime.utc(year, data.month, 0))),
+              yValueMapper: (ReceiptMonthData data, _) => data.total)
+        ]);
+  }
+
+  Widget getWeeklyChart() {
+    List<WeeklyChartData> data = [];
+    int year = DateTime.now().year;
+
+    return SfCartesianChart(primaryXAxis: CategoryAxis(),
+        //tooltipBehavior: _tooltipBehavior2,
+        series: <ChartSeries>[
+          ColumnSeries<WeeklyChartData, String>(
+              color: Colors.red,
+              name: "Receipt overview",
+              dataSource: data,
+              xValueMapper: (WeeklyChartData data, _) => DateFormat.E()
+                  .format((DateTime.utc(year, data.date.month, data.date.day))),
+              yValueMapper: (WeeklyChartData data, _) => data.total,
+              enableTooltip: true,
+              width: 0.75)
+        ]);
+  }
+
+  Widget getYearOverview() {
+    return StatsCard("Annual overview", "Expense overview", getMonthChart());
+  }
+
+  Widget getWeeklyOverview() {
+    return StatsCard("Weekly overview", "Expenses overview", getWeeklyChart());
+  }
+
   @override
-  Widget get view => Scaffold(
+  Widget get view => Material(
+          child: Scaffold(
         key: globalKey,
-        backgroundColor: Color(0xFFEFEFF4),
+        backgroundColor: Colors.white,
         appBar: NeumorphicAppBar(
-          title: Text("Stats"),
+          title: Text("Analytics"),
         ),
-        body: Column(
-          children: <Widget>[],
-        ),
-      );
+        body: SingleChildScrollView(
+            child: Column(
+          children: <Widget>[getYearOverview(), getWeeklyOverview()],
+        )),
+      ));
 }

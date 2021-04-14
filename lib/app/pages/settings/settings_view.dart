@@ -35,6 +35,7 @@ class _SettingsState extends ViewState<SettingsPage, SettingsController> {
   Widget get view => ControlledWidgetBuilder<SettingsController>(
       builder: (context, controller) => SettingsList(
             key: globalKey,
+            backgroundColor: Colors.white,
             shrinkWrap: true,
             sections: [
               SettingsSection(
