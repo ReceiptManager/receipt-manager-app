@@ -64,6 +64,17 @@ class HistoryState extends ViewState<HistoryPage, HistoryController> {
                 return Center(child: CircularProgressIndicator());
               }
 
+              if (!snapshot.hasData) {
+                return Column(children: [
+                  Center(
+                      child: Image.asset(
+                    "assets/empty.png",
+                    fit: BoxFit.fill,
+                  )),
+                  Center(child: Text("No receipts inserted."))
+                ]);
+              }
+
               final receipts = snapshot.data ?? [];
 
               return Expanded(
