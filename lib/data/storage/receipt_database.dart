@@ -29,7 +29,7 @@ export 'package:moor_flutter/moor_flutter.dart' show Value;
 
 part 'receipt_database.g.dart';
 
-@UseMoor(tables: [Receipts, Stores, Tags, RCategories], daos: [ReceiptDao])
+@UseMoor(tables: [Receipts, Stores, Tags, Categories], daos: [ReceiptDao])
 class AppDatabase extends _$AppDatabase {
   AppDatabase()
       : super(FlutterQueryExecutor.inDatabaseFolder(
@@ -45,7 +45,7 @@ class AppDatabase extends _$AppDatabase {
   }
 }
 
-@UseDao(tables: [Receipts, Stores, Tags, RCategories])
+@UseDao(tables: [Receipts, Stores, Tags, Categories])
 class ReceiptDao extends DatabaseAccessor<AppDatabase> with _$ReceiptDaoMixin {
   final AppDatabase db;
 
