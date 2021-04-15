@@ -25,6 +25,7 @@ import 'package:receipt_manager/app/helper/receipt_logger.dart';
 import 'package:receipt_manager/app/pages/home/home_presenter.dart';
 import 'package:receipt_manager/data/repository/data_receipts_repository.dart';
 import 'package:receipt_manager/data/storage/receipt_database.dart';
+import 'package:receipt_manager/data/storage/scheme/insert_holder_table.dart';
 
 // TODO: implement settings controller
 class HomeController extends Controller {
@@ -108,11 +109,19 @@ class HomeController extends Controller {
     refreshUI();
   }
 
-  void debugInsert() {
-    appRepository.insertReceipt(ReceiptsCompanion(
-        storeName: Value("Test"),
-        date: Value(DateTime.now()),
-        total: Value(19.00)));
+  Future<void> debugInsert() async {
+    StoresCompanion store = StoresCompanion(storeName: Value("StoreTest"));
+    TagsCompanion tag = TagsCompanion(tagName: Value("TagTest"));
+    ReceiptsCompanion receipt = ReceiptsCompanion(
+      date: Value(DateTime.now()),
+      total: Value(19.00),
+      currency: Value("\$"),
+    );
+
+    InsertReceiptHolder receiptHolder =
+        InsertReceiptHolder(store: store, tag: tag, receipt: receipt);
+
+    await appRepository.insertReceipt(receiptHolder);
   }
 
   Future<void> submit() async {
@@ -129,11 +138,6 @@ class HomeController extends Controller {
 
     ReceiptLogger.logger(
         _storeNameString, _totalString, _dateString, _tagString);
-
-    appRepository.insertReceipt(ReceiptsCompanion(
-        storeName: Value(_storeNameString),
-        date: Value(_receiptDate!),
-        total: Value(double.parse(_totalString))));
 
     _storeNameController.clear();
     _receiptTotalController.clear();
