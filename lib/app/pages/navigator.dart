@@ -17,6 +17,7 @@
 
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
+import 'package:hive/hive.dart';
 import 'package:receipt_manager/app/pages/history/history_view.dart';
 import 'package:receipt_manager/app/pages/home/home_view.dart';
 import 'package:receipt_manager/app/pages/settings/settings_view.dart';
@@ -42,6 +43,8 @@ class NavigatorState extends State {
 
   @override
   Widget build(BuildContext context) {
+    read_settings();
+
     return WillPopScope(
         onWillPop: () async => false,
         child: Scaffold(
@@ -50,7 +53,7 @@ class NavigatorState extends State {
               showSelectedLabels: false,
               items: [
                 BottomNavigationBarItem(
-                    label: "Add receipt", icon: navigatorWidget(Icons.add)),
+                    label: "", icon: navigatorWidget(Icons.add)),
                 BottomNavigationBarItem(
                     label: "", icon: navigatorWidget(Icons.history)),
                 BottomNavigationBarItem(
@@ -88,5 +91,9 @@ class NavigatorState extends State {
               },
             ),
             body: _children[currentIndex]));*/
+  }
+
+  Future<void> read_settings() async {
+    var settingsBox = await Hive.openBox('settings');
   }
 }
