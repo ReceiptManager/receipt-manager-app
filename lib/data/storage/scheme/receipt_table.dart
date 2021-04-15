@@ -20,11 +20,18 @@ import 'package:moor_flutter/moor_flutter.dart';
 class Receipts extends Table {
   IntColumn get id => integer().autoIncrement()();
 
-  RealColumn get total => real()();
-
-  @DataClassName("storeName")
-  TextColumn get storeName =>
-      text().customConstraint('NOT NULL REFERENCES stores(storeName)')();
+  IntColumn get storeId =>
+      integer().customConstraint('NOT NULL REFERENCES stores(id)')();
 
   DateTimeColumn get date => dateTime()();
+
+  RealColumn get total => real()();
+
+  TextColumn get currency => text()();
+
+  IntColumn get tagId =>
+      integer().customConstraint('NOT NULL REFERENCES tags(id)')();
+
+  IntColumn get categoryId =>
+      integer().customConstraint('NOT NULL REFERENCES rCategories(id)')();
 }

@@ -19,7 +19,7 @@
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:intl/intl.dart';
-import 'package:receipt_manager/data/storage/receipt_database.dart';
+import 'package:receipt_manager/data/storage/scheme/holder_table.dart';
 
 class SlidableHistoryWidget extends StatelessWidget {
   final String deleteText;
@@ -29,7 +29,7 @@ class SlidableHistoryWidget extends StatelessWidget {
   var editMethod;
   final Image image;
 
-  final Receipt receipt;
+  final ReceiptHolder holder;
 
   SlidableHistoryWidget(
       {required this.deleteText,
@@ -37,12 +37,13 @@ class SlidableHistoryWidget extends StatelessWidget {
       required this.editText,
       required this.editMethod,
       required this.image,
-      required this.receipt});
+      required this.holder});
 
   @override
   Widget build(BuildContext context) {
-    String totalString = receipt.total.toStringAsFixed(2);
-    String dateString = DateFormat.yMMMd().format(receipt.date);
+    String totalString =
+        holder.receipt.total.toStringAsFixed(2) + holder.receipt.currency;
+    String dateString = DateFormat.yMMMd().format(holder.receipt.date);
 
     return Slidable(
         actionPane: SlidableDrawerActionPane(),
@@ -77,8 +78,9 @@ class SlidableHistoryWidget extends StatelessWidget {
                       trailing: Text(
                         totalString,
                         style: TextStyle(
-                            color:
-                                receipt.total < 0 ? Colors.green : Colors.black,
+                            color: holder.receipt.total < 0
+                                ? Colors.green
+                                : Colors.black,
                             fontWeight: FontWeight.w700,
                             fontSize: 16),
                       ),
@@ -90,7 +92,7 @@ class SlidableHistoryWidget extends StatelessWidget {
                         ],
                       ),
                       title: Text(
-                        receipt.storeName,
+                        holder.store.storeName,
                         style: TextStyle(
                             color: Colors.black,
                             fontWeight: FontWeight.bold,

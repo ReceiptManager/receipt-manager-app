@@ -17,6 +17,7 @@
 
 import 'package:receipt_manager/data/storage/receipt_database.dart';
 import 'package:receipt_manager/data/storage/scheme/holder_table.dart';
+import 'package:receipt_manager/data/storage/scheme/insert_holder_table.dart';
 import 'package:receipt_manager/domain/repository/abstract_repository.dart';
 
 class DataReceiptRepository extends ReceiptRepository {
@@ -29,14 +30,12 @@ class DataReceiptRepository extends ReceiptRepository {
 
   ReceiptDao _dao = ReceiptDao(AppDatabase());
 
-  Stream<List<Receipt>> watchReceipts() => _dao.watchReceipts();
-
-  Future insertReceipt(ReceiptsCompanion receipt) =>
+  Future insertReceipt(InsertReceiptHolder receipt) =>
       _dao.insertReceipt(receipt);
 
-  Future updateReceipt(Receipt receipt) => _dao.updateReceipt(receipt);
+  Future updateReceipt(ReceiptHolder receipt) => _dao.updateReceipt(receipt);
 
-  Future deleteReceipt(Receipt receipt) => _dao.deleteReceipt(receipt);
+  Future deleteReceipt(ReceiptHolder receipt) => _dao.deleteReceipt(receipt);
 
   Future deleteDatabase() => _dao.deleteDatabase();
 

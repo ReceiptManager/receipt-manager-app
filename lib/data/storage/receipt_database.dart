@@ -15,16 +15,21 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+import 'dart:developer';
+
 import 'package:moor_flutter/moor_flutter.dart';
+import 'package:receipt_manager/data/storage/scheme/category_table.dart';
 import 'package:receipt_manager/data/storage/scheme/holder_table.dart';
+import 'package:receipt_manager/data/storage/scheme/insert_holder_table.dart';
 import 'package:receipt_manager/data/storage/scheme/receipt_table.dart';
 import 'package:receipt_manager/data/storage/scheme/store_table.dart';
+import 'package:receipt_manager/data/storage/scheme/tag_table.dart';
 
 export 'package:moor_flutter/moor_flutter.dart' show Value;
 
 part 'receipt_database.g.dart';
 
-@UseMoor(tables: [Receipts, Stores], daos: [ReceiptDao])
+@UseMoor(tables: [Receipts, Stores, Tags, RCategories], daos: [ReceiptDao])
 class AppDatabase extends _$AppDatabase {
   AppDatabase()
       : super(FlutterQueryExecutor.inDatabaseFolder(
@@ -40,7 +45,7 @@ class AppDatabase extends _$AppDatabase {
   }
 }
 
-@UseDao(tables: [Receipts, Stores])
+@UseDao(tables: [Receipts, Stores, Tags, RCategories])
 class ReceiptDao extends DatabaseAccessor<AppDatabase> with _$ReceiptDaoMixin {
   final AppDatabase db;
 
@@ -52,33 +57,48 @@ class ReceiptDao extends DatabaseAccessor<AppDatabase> with _$ReceiptDaoMixin {
             (t) => OrderingTerm(expression: t.date, mode: OrderingMode.desc),
           ])))
         .join([
-          innerJoin(stores, stores.storeName.equalsExp(receipts.storeName)),
+          innerJoin(stores, stores.id.equalsExp(receipts.storeId)),
+          innerJoin(tags, tags.id.equalsExp(receipts.tagId)),
+          innerJoin(rCategories, rCategories.id.equalsExp(receipts.categoryId)),
         ])
         .watch()
         .map(
           (rows) => rows.map(
             (row) {
               return ReceiptHolder(
-                receipt: row.readTable(receipts),
-                store: row.readTable(stores),
-              );
+                  store: row.readTable(stores),
+                  tag: row.readTable(tags),
+                  receipt: row.readTable(receipts));
             },
           ).toList(),
         );
   }
 
-  Stream<List<Receipt>> watchReceipts() => select(receipts).watch();
+  Future<void> insertReceipt(InsertReceiptHolder holder) async {
+    int storeId = await into(stores).insert(holder.store);
+    int tagId = await into(tags).insert(holder.tag);
 
-  Future<void> insertReceipt(ReceiptsCompanion receipt) {
-    into(stores).insert(StoresCompanion(storeName: receipt.storeName));
-    return into(receipts).insert(receipt);
+    log("Insert store id: " + storeId.toString());
+    log("Insert tag id: " + tagId.toString());
+
+    into(receipts).insert(holder.receipt.copyWith(
+      storeId: Value(storeId),
+      tagId: Value(tagId),
+    ));
   }
 
   Future deleteDatabase() async {
     delete(receipts).go();
+    delete(stores).go();
+    delete(tags).go();
+    delete(rCategories).go();
   }
 
-  Future updateReceipt(Receipt receipt) => update(receipts).replace(receipt);
+  Future updateReceipt(ReceiptHolder holder) {
+    throw UnimplementedError();
+  }
 
-  Future deleteReceipt(Receipt receipt) => delete(receipts).delete(receipt);
+  Future deleteReceipt(ReceiptHolder holder) {
+    throw UnimplementedError();
+  }
 }

@@ -17,9 +17,7 @@
 
 import 'package:moor_flutter/moor_flutter.dart';
 
-class Categories extends Table {
+class RCategories extends Table {
+  IntColumn get id => integer().autoIncrement()();
   TextColumn get categoryName => text()();
-
-  @override
-  Set<Column> get primaryKey => {categoryName};
 }

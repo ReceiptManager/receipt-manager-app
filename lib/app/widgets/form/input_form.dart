@@ -115,7 +115,7 @@ class InputForm extends StatelessWidget {
             widget: Align(
           alignment: Alignment.centerLeft,
           child: NeumorphicButton(
-              onPressed: () => controller.submit(),
+              onPressed: () => controller.debugInsert(),
               style: NeumorphicStyle(
                 shape: NeumorphicShape.flat,
                 boxShape: NeumorphicBoxShape.stadium(),

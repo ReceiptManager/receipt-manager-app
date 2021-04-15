@@ -18,8 +18,6 @@
 import 'package:moor_flutter/moor_flutter.dart';
 
 class Tags extends Table {
+  IntColumn get id => integer().autoIncrement()();
   TextColumn get tagName => text()();
-
-  @override
-  Set<Column> get primaryKey => {tagName};
 }
