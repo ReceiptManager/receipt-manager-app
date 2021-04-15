@@ -26,9 +26,8 @@ import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:receipt_manager/app/pages/history/history_controller.dart';
 import 'package:receipt_manager/app/widgets/icon/icon_tile.dart';
 import 'package:receipt_manager/app/widgets/padding/padding_widget.dart';
-import 'package:receipt_manager/app/widgets/slideable/slidable_widet.dart';
+import 'package:receipt_manager/app/widgets/slideable/slidable_widget.dart';
 import 'package:receipt_manager/data/repository/data_receipts_repository.dart';
-import 'package:receipt_manager/data/storage/receipt_database.dart';
 import 'package:receipt_manager/data/storage/scheme/holder_table.dart';
 
 class HistoryPage extends View {
@@ -61,9 +60,8 @@ class HistoryState extends ViewState<HistoryPage, HistoryController> {
         return StreamBuilder<List<ReceiptHolder>>(
             stream: controller.getReceipts(),
             builder: (context, snapshot) {
-              if (!snapshot.hasData ||
-                  snapshot.connectionState == ConnectionState.waiting) {
-                return CircularProgressIndicator();
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return Center(child: CircularProgressIndicator());
               }
 
               final receipts = snapshot.data ?? [];
@@ -73,7 +71,7 @@ class HistoryState extends ViewState<HistoryPage, HistoryController> {
                       padding: const EdgeInsets.all(8.0),
                       itemCount: receipts.length,
                       itemBuilder: (_, index) {
-                        final receipt = receipts[index].receipt;
+                        final receipt = receipts[index];
                         return AnimationConfiguration.staggeredList(
                             position: index,
                             duration: const Duration(milliseconds: 375),
@@ -91,7 +89,7 @@ class HistoryState extends ViewState<HistoryPage, HistoryController> {
                                           "assets/lidl.png",
                                           fit: BoxFit.fill,
                                         ),
-                                        receipt: receipt))));
+                                        holder: receipt))));
                       }));
             });
       });
@@ -133,58 +131,6 @@ class HistoryState extends ViewState<HistoryPage, HistoryController> {
     return imageExists("assets/fallback.png")!;
   }
 
-  Widget historyWidget() {
-    List<Receipt> receipts = [];
-
-    receipts.add(Receipt(
-        total: 39.90, date: DateTime.now(), storeName: "Kaufland", id: 1));
-
-    receipts.add(Receipt(
-        total: 195.44, date: DateTime.now(), storeName: "Apotheke", id: 1));
-
-    receipts.add(
-        Receipt(total: 5.44, date: DateTime.now(), storeName: "Lidl", id: 1));
-
-    receipts.add(
-        Receipt(total: 65.44, date: DateTime.now(), storeName: "Netto", id: 1));
-
-    receipts.add(
-        Receipt(total: 15.44, date: DateTime.now(), storeName: "Edeka", id: 1));
-
-    receipts.add(
-        Receipt(total: 15.44, date: DateTime.now(), storeName: "Edeka", id: 1));
-
-    receipts.add(
-        Receipt(total: 15.44, date: DateTime.now(), storeName: "df", id: 1));
-
-    receipts.add(
-        Receipt(total: 15.44, date: DateTime.now(), storeName: "Edeka", id: 1));
-
-    return ControlledWidgetBuilder<HistoryController>(
-        builder: (context, controller) {
-      return Expanded(
-          child: ListView.builder(
-              padding: const EdgeInsets.all(8.0),
-              itemCount: receipts.length,
-              itemBuilder: (_, index) {
-                final receipt = receipts[index];
-                return AnimationConfiguration.staggeredList(
-                    position: index,
-                    duration: const Duration(milliseconds: 375),
-                    child: SlideAnimation(
-                        verticalOffset: 50.0,
-                        child: FadeInAnimation(
-                            child: SlidableHistoryWidget(
-                                deleteText: "Delete",
-                                deleteMethod: controller.deleteMethod(receipt),
-                                editText: "Edit",
-                                editMethod: controller.editMethod(receipt),
-                                image: getAssetImage(receipt.storeName, ""),
-                                receipt: receipts[index]))));
-              }));
-    });
-  }
-
   @override
   Widget get view => stacked.AnimatedStack(
       backgroundColor: Colors.transparent,
@@ -196,7 +142,7 @@ class HistoryState extends ViewState<HistoryPage, HistoryController> {
           key: globalKey,
           backgroundColor: Colors.white,
           appBar: NeumorphicAppBar(title: Text("Receipt overview")),
-          body: Column(children: [historyWidget()])),
+          body: Column(children: [receiptVisualisation(context)])),
       columnWidget: Column(
         children: <Widget>[
           SizedBox(height: 20),

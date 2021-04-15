@@ -18,7 +18,6 @@
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 import 'package:receipt_manager/app/pages/history/history_presenter.dart';
 import 'package:receipt_manager/data/repository/data_receipts_repository.dart';
-import 'package:receipt_manager/data/storage/receipt_database.dart';
 import 'package:receipt_manager/data/storage/scheme/holder_table.dart';
 
 class HistoryController extends Controller {
@@ -38,11 +37,11 @@ class HistoryController extends Controller {
     return receipts;
   }
 
-  Future<dynamic> deleteMethod(Receipt receipt) {
+  Future<dynamic> deleteMethod(ReceiptHolder receipt) {
     return repository.deleteReceipt(receipt);
   }
 
-  Future<dynamic> editMethod(Receipt receipt) {
+  Future<dynamic> editMethod(ReceiptHolder receipt) {
     return repository.updateReceipt(receipt);
   }
 
