@@ -15,23 +15,15 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-import 'package:flutter/material.dart';
+import 'package:receipt_manager/data/storage/receipt_database.dart';
 
-import 'scan.dart';
+class InsertReceiptHolder {
+  final ReceiptsCompanion receipt;
 
-void main() {
-  runApp(EdgeDetectionApp());
-}
+  final StoresCompanion store;
 
-class EdgeDetectionApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-      ),
-      home: Scan(),
-    );
-  }
+  final TagsCompanion tag;
+
+  InsertReceiptHolder(
+      {required this.store, required this.tag, required this.receipt});
 }
