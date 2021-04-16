@@ -72,6 +72,7 @@ class _MagnifierState extends State<Magnifier> {
   }
 
   void _calculateMatrix() {
+    // ignore: unnecessary_null_comparison
     if (widget.position == null) {
       return;
     }

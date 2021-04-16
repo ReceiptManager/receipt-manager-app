@@ -17,6 +17,7 @@
 
 import 'package:flutter/services.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
+import 'package:flutter_typeahead/flutter_typeahead.dart';
 
 class SimpleTextfieldWidget extends StatelessWidget {
   final Widget icon;
@@ -31,6 +32,8 @@ class SimpleTextfieldWidget extends StatelessWidget {
 
   final TextEditingController controller;
 
+  final Future<List<String>>? suggestionList;
+
   SimpleTextfieldWidget(
       {required this.controller,
       required this.hintText,
@@ -38,10 +41,82 @@ class SimpleTextfieldWidget extends StatelessWidget {
       required this.labelText,
       required this.icon,
       this.onTap,
+      this.suggestionList,
       this.keyboardType,
       this.inputFormatters,
       required this.readOnly,
       required this.validator});
+
+  Widget getTextField() {
+    if (readOnly || suggestionList == null)
+      return TextFormField(
+          enableSuggestions: true,
+          onTap: this.onTap,
+          readOnly: this.readOnly,
+          controller: controller,
+          keyboardType: this.keyboardType,
+          inputFormatters: this.inputFormatters,
+          style: TextStyle(color: Colors.black),
+          decoration: new InputDecoration(
+            border: new OutlineInputBorder(
+                borderSide: new BorderSide(color: Colors.grey[100]!)),
+            hintText: hintText,
+            //   labelText: labelText,
+            helperText: helperText,
+            prefixIcon: icon,
+            prefixText: ' ',
+          ),
+          validator: (value) => validator(value));
+    else {
+      return FutureBuilder(
+          // Initialize FlutterFire:
+          future: suggestionList!,
+          builder:
+              (BuildContext context, AsyncSnapshot<List<String>> snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Container();
+            }
+
+            return TypeAheadFormField(
+              textFieldConfiguration: TextFieldConfiguration(
+                enableSuggestions: true,
+                maxLines: 1,
+                onTap: this.onTap,
+                controller: controller,
+                inputFormatters: this.inputFormatters,
+                style: TextStyle(color: Colors.black),
+                decoration: new InputDecoration(
+                  border: new OutlineInputBorder(
+                      borderSide: new BorderSide(color: Colors.grey[100]!)),
+                  hintText: hintText,
+                  //   labelText: labelText,
+                  helperText: helperText,
+                  prefixIcon: icon,
+                  prefixText: ' ',
+                ),
+              ),
+              hideOnEmpty: true,
+              suggestionsCallback: (pattern) {
+                return suggestionList!;
+              },
+              itemBuilder: (context, suggestion) {
+                return Ink(
+                    color: Colors.white,
+                    child: ListTile(
+                      title: Text(suggestion as String),
+                    ));
+              },
+              transitionBuilder: (context, suggestionsBox, controller) {
+                return suggestionsBox;
+              },
+              onSuggestionSelected: (suggestion) {
+                this.controller.text = suggestion as String;
+              },
+              validator: (value) => validator(value),
+            );
+          });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -58,24 +133,7 @@ class SimpleTextfieldWidget extends StatelessWidget {
               ),
             ),
           ),
-          TextFormField(
-              enableSuggestions: true,
-              onTap: this.onTap,
-              readOnly: this.readOnly,
-              controller: controller,
-              keyboardType: this.keyboardType,
-              inputFormatters: this.inputFormatters,
-              style: TextStyle(color: Colors.black),
-              decoration: new InputDecoration(
-                border: new OutlineInputBorder(
-                    borderSide: new BorderSide(color: Colors.grey[100]!)),
-                hintText: hintText,
-                //   labelText: labelText,
-                helperText: helperText,
-                prefixIcon: icon,
-                prefixText: ' ',
-              ),
-              validator: (value) => validator(value)),
+          getTextField()
         ]);
   }
 }

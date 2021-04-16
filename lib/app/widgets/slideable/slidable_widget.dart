@@ -16,17 +16,19 @@
  */
 
 // ignore: import_of_legacy_library_into_null_safe
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:intl/intl.dart';
 import 'package:receipt_manager/data/storage/scheme/holder_table.dart';
 
+// ignore: must_be_immutable
 class SlidableHistoryWidget extends StatelessWidget {
   final String deleteText;
   var deleteMethod;
 
   final String editText;
-  var editMethod;
+  final editMethod;
   final Image image;
 
   final ReceiptHolder holder;
@@ -41,9 +43,16 @@ class SlidableHistoryWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String totalString =
-        holder.receipt.total.toStringAsFixed(2) + holder.receipt.currency;
     String dateString = DateFormat.yMMMd().format(holder.receipt.date);
+    String categoryString = dateString + ", " + holder.categorie.categoryName;
+    String tagString = holder.tag.tagName;
+    String subTitle = categoryString;
+
+    String _title = holder.store.storeName +
+        (tagString.isNotEmpty ? ", #" + tagString + "" : "");
+
+    String _totalString =
+        holder.receipt.total.toStringAsFixed(2) + holder.receipt.currency;
 
     return Slidable(
         actionPane: SlidableDrawerActionPane(),
@@ -53,9 +62,13 @@ class SlidableHistoryWidget extends StatelessWidget {
             caption: deleteText,
             color: Colors.red,
             icon: Icons.delete,
+            onTap: deleteMethod,
           ),
           IconSlideAction(
-              caption: editText, icon: Icons.update, color: Colors.black),
+              onTap: () {},
+              caption: editText,
+              icon: Icons.update,
+              color: Colors.black),
         ],
         child: Card(
             shadowColor: Colors.black,
@@ -76,7 +89,7 @@ class SlidableHistoryWidget extends StatelessWidget {
                       contentPadding:
                           EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
                       trailing: Text(
-                        totalString,
+                        _totalString,
                         style: TextStyle(
                             color: holder.receipt.total < 0
                                 ? Colors.green
@@ -86,13 +99,13 @@ class SlidableHistoryWidget extends StatelessWidget {
                       ),
                       subtitle: Row(
                         children: <Widget>[
-                          Text(dateString,
+                          Text(subTitle,
                               style:
                                   TextStyle(color: Colors.black, fontSize: 12))
                         ],
                       ),
                       title: Text(
-                        holder.store.storeName,
+                        _title,
                         style: TextStyle(
                             color: Colors.black,
                             fontWeight: FontWeight.bold,
