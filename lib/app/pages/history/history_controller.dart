@@ -37,12 +37,12 @@ class HistoryController extends Controller {
     return receipts;
   }
 
-  Future<dynamic> deleteMethod(ReceiptHolder receipt) {
-    return repository.deleteReceipt(receipt);
+  void deleteMethod(ReceiptHolder receipt) async {
+    await repository.deleteReceipt(receipt);
   }
 
-  Future<dynamic> editMethod(ReceiptHolder receipt) {
-    return repository.updateReceipt(receipt);
+  void editMethod(ReceiptHolder receipt) async {
+    await repository.updateReceipt(receipt);
   }
 
   @override

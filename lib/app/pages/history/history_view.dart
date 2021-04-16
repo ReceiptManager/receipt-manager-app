@@ -64,7 +64,9 @@ class HistoryState extends ViewState<HistoryPage, HistoryController> {
                 return Center(child: CircularProgressIndicator());
               }
 
-              if (!snapshot.hasData) {
+              if (!snapshot.hasData ||
+                  snapshot.data == null ||
+                  snapshot.data!.isEmpty) {
                 return Column(children: [
                   Center(
                       child: Image.asset(
@@ -76,50 +78,57 @@ class HistoryState extends ViewState<HistoryPage, HistoryController> {
               }
 
               final receipts = snapshot.data ?? [];
-
               return Expanded(
                   child: ListView.builder(
                       padding: const EdgeInsets.all(8.0),
                       itemCount: receipts.length,
                       itemBuilder: (_, index) {
                         final receipt = receipts[index];
-                        return AnimationConfiguration.staggeredList(
-                            position: index,
-                            duration: const Duration(milliseconds: 375),
-                            child: SlideAnimation(
-                                verticalOffset: 50.0,
-                                child: FadeInAnimation(
-                                    child: SlidableHistoryWidget(
-                                        deleteText: "Delete",
-                                        deleteMethod:
-                                            controller.deleteMethod(receipt),
-                                        editText: "Edit",
-                                        editMethod:
-                                            controller.editMethod(receipt),
-                                        image: Image.asset(
-                                          "assets/lidl.png",
-                                          fit: BoxFit.fill,
-                                        ),
-                                        holder: receipt))));
+                        return FutureBuilder(
+                            // Initialize FlutterFire:
+                            future: getAssetImage(receipt.store.storeName,
+                                receipt.categorie.categoryName),
+                            builder: (context, snap) {
+                              if (snap.connectionState ==
+                                  ConnectionState.done) {
+                                return AnimationConfiguration.staggeredList(
+                                    position: index,
+                                    duration: const Duration(milliseconds: 375),
+                                    child: SlideAnimation(
+                                        verticalOffset: 50.0,
+                                        child: FadeInAnimation(
+                                            child: SlidableHistoryWidget(
+                                                deleteText: "Delete",
+                                                deleteMethod: () => controller
+                                                    .deleteMethod(receipt),
+                                                editText: "Edit",
+                                                editMethod: () => controller
+                                                    .editMethod(receipt),
+                                                image: snap.data as Image,
+                                                holder: receipt))));
+                              }
+                              // Otherwise, show something whilst waiting for initialization to complete
+                              return Container();
+                            });
                       }));
             });
       });
 
-  Image? imageExists(String path) {
-    Image image;
+  Future<Image?> imageExists(String path) async {
     try {
-      image = Image.asset(
-        path,
-        fit: BoxFit.fill,
-      );
-    } catch (_) {
+      final bundle = DefaultAssetBundle.of(context);
+      await bundle.load(path);
+    } catch (e) {
       return null;
     }
 
-    return image;
+    return Image.asset(
+      path,
+      fit: BoxFit.fill,
+    );
   }
 
-  Image getAssetImage(String storeName, String categoryName) {
+  Future<Image?> getAssetImage(String storeName, String categoryName) async {
     String storeNamePath =
         "assets/" + storeName.split(" ")[0].trim().toLowerCase();
 
@@ -127,19 +136,11 @@ class HistoryState extends ViewState<HistoryPage, HistoryController> {
 
     for (var ext in extentions) {
       final String path = storeNamePath + ext;
-      Image? image = imageExists(path);
+      Image? image = await imageExists(path);
       if (image != null) return image;
     }
 
-    String categoryPath =
-        "assets/" + categoryName.split(" ")[0].trim().toLowerCase();
-    for (var ext in extentions) {
-      final String path = categoryPath + ext;
-      Image? image = imageExists(path);
-      if (image != null) return image;
-    }
-
-    return imageExists("assets/fallback.png")!;
+    return await imageExists("assets/fallback.png");
   }
 
   @override
@@ -160,14 +161,7 @@ class HistoryState extends ViewState<HistoryPage, HistoryController> {
           IconTile(
             width: 60,
             height: 60,
-            iconData: Icons.insert_drive_file_outlined,
-            fun: () {},
-          ),
-          SizedBox(height: 20),
-          IconTile(
-            width: 60,
-            height: 60,
-            iconData: Icons.camera_alt,
+            iconData: Icons.category,
             fun: () {},
           ),
         ],
