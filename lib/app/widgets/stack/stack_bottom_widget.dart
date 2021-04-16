@@ -15,27 +15,18 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-import 'package:camera/camera.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 
-class CameraView extends StatelessWidget {
-  CameraView({required this.controller});
-
-  final CameraController controller;
-
+class BottomColumnWidget extends StatelessWidget {
   @override
-  Widget build(BuildContext context) {
-    return _getCameraPreview();
-  }
-
-  Widget _getCameraPreview() {
-    if (!controller.value.isInitialized) {
-      return Container();
-    }
-
-    return Center(
-        child: AspectRatio(
-            aspectRatio: controller.value.aspectRatio,
-            child: CameraPreview(controller)));
-  }
+  Widget build(BuildContext context) => Container(
+        decoration: BoxDecoration(
+          color: Color(0xFFEFEFF4),
+          borderRadius: BorderRadius.all(
+            Radius.circular(50),
+          ),
+        ),
+        width: 260,
+        height: 50,
+      );
 }

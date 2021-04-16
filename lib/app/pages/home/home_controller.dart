@@ -16,10 +16,12 @@
  */
 
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:currency_picker/currency_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:receipt_manager/app/helper/receipt_logger.dart';
 import 'package:receipt_manager/app/pages/home/home_presenter.dart';
@@ -42,12 +44,45 @@ class HomeController extends Controller {
   DateTime? _receiptDate;
   var receiptsBox;
 
+  final picker = ImagePicker();
   DataReceiptRepository appRepository;
 
   HomeController(DataReceiptRepository appRepository)
       : _homePresenter = HomePresenter(),
         this.appRepository = DataReceiptRepository(),
         super();
+
+  void noImageSelected() {
+    print('No image is selected.');
+    ScaffoldMessenger.of(getContext()).showSnackBar(SnackBar(
+      content: Text("No image is selected."),
+      backgroundColor: Colors.red,
+    ));
+
+    refreshUI();
+  }
+
+  Future<void> galleryPicker() async {
+    final pickedFile = await picker.getImage(source: ImageSource.gallery);
+
+    if (pickedFile != null) {
+      File _image = File(pickedFile.path);
+    } else {
+      noImageSelected();
+    }
+  }
+
+  Future<void> cameraPicker() async {
+    final pickedFile = await picker.getImage(source: ImageSource.camera);
+
+    if (pickedFile != null) {
+      File _image = File(pickedFile.path);
+    } else {
+      noImageSelected();
+    }
+  }
+
+  void filePicker() {}
 
   Future<List<String>> getStoreNames() async {
     List<Store> list = await this.appRepository.getStoreNames();

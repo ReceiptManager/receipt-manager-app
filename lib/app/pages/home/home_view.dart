@@ -18,24 +18,15 @@
 import 'package:animated_stack/animated_stack.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:receipt_manager/app/pages/home/home_controller.dart';
 import 'package:receipt_manager/app/widgets/form/input_form.dart';
-import 'package:receipt_manager/app/widgets/icon/icon_tile.dart';
-import 'package:receipt_manager/app/widgets/scan/scan.dart';
+import 'package:receipt_manager/app/widgets/stack/stack_bottom_widget.dart';
+import 'package:receipt_manager/app/widgets/stack/stack_column_widget.dart';
 import 'package:receipt_manager/data/repository/data_receipts_repository.dart';
-import 'package:simple_edge_detection/edge_detection.dart';
 
 class HomePage extends View {
   @override
   State<StatefulWidget> createState() => _HomePageState();
-}
-
-Future<void> processEdges(final pickedFile) async {
-  if (pickedFile != null) {
-    final filePath = pickedFile.path;
-    await EdgeDetection.detectEdges(filePath);
-  }
 }
 
 class _HomePageState extends ViewState<HomePage, HomeController> {
@@ -54,47 +45,6 @@ class _HomePageState extends ViewState<HomePage, HomeController> {
               backgroundColor: Colors.white,
               appBar: NeumorphicAppBar(title: Text("Add receipt")),
               body: InputForm()),
-          columnWidget: Column(
-            children: <Widget>[
-              SizedBox(height: 20),
-              IconTile(
-                width: 60,
-                height: 60,
-                iconData: Icons.insert_drive_file_outlined,
-                fun: () {},
-              ),
-              SizedBox(height: 20),
-              IconTile(
-                width: 60,
-                height: 60,
-                iconData: Icons.filter,
-                fun: () async {
-                  final picker = ImagePicker();
-                  final pickedFile =
-                      await picker.getImage(source: ImageSource.gallery);
-                  processEdges(pickedFile);
-                },
-              ),
-              SizedBox(height: 20),
-              IconTile(
-                width: 60,
-                height: 60,
-                iconData: Icons.camera_alt,
-                fun: () async {
-                  Navigator.push(
-                      context, MaterialPageRoute(builder: (context) => Scan()));
-                },
-              ),
-            ],
-          ),
-          bottomWidget: Container(
-            decoration: BoxDecoration(
-              color: Color(0xFFEFEFF4),
-              borderRadius: BorderRadius.all(
-                Radius.circular(50),
-              ),
-            ),
-            width: 260,
-            height: 50,
-          )));
+          columnWidget: StackColumnWidget(),
+          bottomWidget: BottomColumnWidget()));
 }

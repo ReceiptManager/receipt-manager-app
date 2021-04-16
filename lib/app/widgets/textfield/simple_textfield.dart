@@ -47,26 +47,30 @@ class SimpleTextfieldWidget extends StatelessWidget {
       required this.readOnly,
       required this.validator});
 
+  Widget defaultTextField() {
+    return TextFormField(
+        enableSuggestions: true,
+        onTap: this.onTap,
+        readOnly: this.readOnly,
+        controller: controller,
+        keyboardType: this.keyboardType,
+        inputFormatters: this.inputFormatters,
+        style: TextStyle(color: Colors.black),
+        decoration: new InputDecoration(
+          border: new OutlineInputBorder(
+              borderSide: new BorderSide(color: Colors.grey[100]!)),
+          hintText: hintText,
+          //   labelText: labelText,
+          helperText: helperText,
+          prefixIcon: icon,
+          prefixText: ' ',
+        ),
+        validator: (value) => validator(value));
+  }
+
   Widget getTextField() {
     if (readOnly || suggestionList == null)
-      return TextFormField(
-          enableSuggestions: true,
-          onTap: this.onTap,
-          readOnly: this.readOnly,
-          controller: controller,
-          keyboardType: this.keyboardType,
-          inputFormatters: this.inputFormatters,
-          style: TextStyle(color: Colors.black),
-          decoration: new InputDecoration(
-            border: new OutlineInputBorder(
-                borderSide: new BorderSide(color: Colors.grey[100]!)),
-            hintText: hintText,
-            //   labelText: labelText,
-            helperText: helperText,
-            prefixIcon: icon,
-            prefixText: ' ',
-          ),
-          validator: (value) => validator(value));
+      return defaultTextField();
     else {
       return FutureBuilder(
           // Initialize FlutterFire:
@@ -74,7 +78,11 @@ class SimpleTextfieldWidget extends StatelessWidget {
           builder:
               (BuildContext context, AsyncSnapshot<List<String>> snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return Container();
+              return defaultTextField();
+            }
+
+            if (snapshot.data!.isEmpty) {
+              return defaultTextField();
             }
 
             return TypeAheadFormField(
