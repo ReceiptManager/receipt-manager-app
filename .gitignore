@@ -344,4 +344,4 @@ build/*
 /android/app/receipt_manager_key
 
 _build
-/flutter-simple-edge-detection/
+flutter-simple-edge-detection/
