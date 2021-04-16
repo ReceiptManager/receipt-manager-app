@@ -24,6 +24,11 @@ class InsertReceiptHolder {
 
   final TagsCompanion tag;
 
+  final CategoriesCompanion category;
+
   InsertReceiptHolder(
-      {required this.store, required this.tag, required this.receipt});
+      {required this.category,
+      required this.store,
+      required this.tag,
+      required this.receipt});
 }

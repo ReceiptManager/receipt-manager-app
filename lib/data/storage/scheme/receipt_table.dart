@@ -30,8 +30,8 @@ class Receipts extends Table {
   TextColumn get currency => text()();
 
   IntColumn get tagId =>
-      integer().customConstraint('NOT NULL REFERENCES tags(id)')();
+      integer().nullable().customConstraint('REFERENCES tags(id)')();
 
   IntColumn get categoryId =>
-      integer().customConstraint('NOT NULL REFERENCES rCategories(id)')();
+      integer().customConstraint('NOT NULL REFERENCES categories(id)')();
 }

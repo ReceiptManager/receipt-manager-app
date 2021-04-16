@@ -57,18 +57,20 @@ class ReceiptDao extends DatabaseAccessor<AppDatabase> with _$ReceiptDaoMixin {
             (t) => OrderingTerm(expression: t.date, mode: OrderingMode.desc),
           ])))
         .join([
+          innerJoin(categories, categories.id.equalsExp(receipts.categoryId)),
           innerJoin(stores, stores.id.equalsExp(receipts.storeId)),
           innerJoin(tags, tags.id.equalsExp(receipts.tagId)),
-          innerJoin(rCategories, rCategories.id.equalsExp(receipts.categoryId)),
         ])
         .watch()
         .map(
           (rows) => rows.map(
             (row) {
               return ReceiptHolder(
-                  store: row.readTable(stores),
-                  tag: row.readTable(tags),
-                  receipt: row.readTable(receipts));
+                store: row.readTable(stores),
+                tag: row.readTable(tags),
+                receipt: row.readTable(receipts),
+                categorie: row.readTable(categories),
+              );
             },
           ).toList(),
         );
@@ -77,28 +79,43 @@ class ReceiptDao extends DatabaseAccessor<AppDatabase> with _$ReceiptDaoMixin {
   Future<void> insertReceipt(InsertReceiptHolder holder) async {
     int storeId = await into(stores).insert(holder.store);
     int tagId = await into(tags).insert(holder.tag);
+    int categoryId = await into(categories).insert(holder.category);
 
     log("Insert store id: " + storeId.toString());
     log("Insert tag id: " + tagId.toString());
 
     into(receipts).insert(holder.receipt.copyWith(
-      storeId: Value(storeId),
-      tagId: Value(tagId),
-    ));
+        storeId: Value(storeId),
+        tagId: Value(tagId),
+        categoryId: Value(categoryId)));
   }
 
   Future deleteDatabase() async {
     delete(receipts).go();
     delete(stores).go();
     delete(tags).go();
-    delete(rCategories).go();
+    delete(categories).go();
   }
 
-  Future updateReceipt(ReceiptHolder holder) {
-    throw UnimplementedError();
+  Future updateReceipt(ReceiptHolder holder) async {}
+
+  Future deleteReceipt(ReceiptHolder holder) async {
+    delete(stores).delete(holder.store);
+    delete(tags).delete(holder.tag);
+    delete(categories).delete(holder.categorie);
+
+    return delete(receipts).delete(holder.receipt);
   }
 
-  Future deleteReceipt(ReceiptHolder holder) {
-    throw UnimplementedError();
+  Future<List<Store>> getStoreNames() {
+    return select(stores).get();
+  }
+
+  Future<List<Tag>> getTagNames() {
+    return select(tags).get();
+  }
+
+  Future<List<Categorie>> getCategoryNames() {
+    return select(categories).get();
   }
 }

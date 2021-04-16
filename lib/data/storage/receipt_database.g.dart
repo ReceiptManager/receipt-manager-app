@@ -13,7 +13,7 @@ class Receipt extends DataClass implements Insertable<Receipt> {
   final DateTime date;
   final double total;
   final String currency;
-  final int tagId;
+  final int? tagId;
   final int categoryId;
   Receipt(
       {required this.id,
@@ -21,7 +21,7 @@ class Receipt extends DataClass implements Insertable<Receipt> {
       required this.date,
       required this.total,
       required this.currency,
-      required this.tagId,
+      this.tagId,
       required this.categoryId});
   factory Receipt.fromData(Map<String, dynamic> data, GeneratedDatabase db,
       {String? prefix}) {
@@ -40,7 +40,7 @@ class Receipt extends DataClass implements Insertable<Receipt> {
           doubleType.mapFromDatabaseResponse(data['${effectivePrefix}total'])!,
       currency: stringType
           .mapFromDatabaseResponse(data['${effectivePrefix}currency'])!,
-      tagId: intType.mapFromDatabaseResponse(data['${effectivePrefix}tag_id'])!,
+      tagId: intType.mapFromDatabaseResponse(data['${effectivePrefix}tag_id']),
       categoryId: intType
           .mapFromDatabaseResponse(data['${effectivePrefix}category_id'])!,
     );
@@ -53,7 +53,9 @@ class Receipt extends DataClass implements Insertable<Receipt> {
     map['date'] = Variable<DateTime>(date);
     map['total'] = Variable<double>(total);
     map['currency'] = Variable<String>(currency);
-    map['tag_id'] = Variable<int>(tagId);
+    if (!nullToAbsent || tagId != null) {
+      map['tag_id'] = Variable<int?>(tagId);
+    }
     map['category_id'] = Variable<int>(categoryId);
     return map;
   }
@@ -65,7 +67,8 @@ class Receipt extends DataClass implements Insertable<Receipt> {
       date: Value(date),
       total: Value(total),
       currency: Value(currency),
-      tagId: Value(tagId),
+      tagId:
+          tagId == null && nullToAbsent ? const Value.absent() : Value(tagId),
       categoryId: Value(categoryId),
     );
   }
@@ -79,7 +82,7 @@ class Receipt extends DataClass implements Insertable<Receipt> {
       date: serializer.fromJson<DateTime>(json['date']),
       total: serializer.fromJson<double>(json['total']),
       currency: serializer.fromJson<String>(json['currency']),
-      tagId: serializer.fromJson<int>(json['tagId']),
+      tagId: serializer.fromJson<int?>(json['tagId']),
       categoryId: serializer.fromJson<int>(json['categoryId']),
     );
   }
@@ -92,7 +95,7 @@ class Receipt extends DataClass implements Insertable<Receipt> {
       'date': serializer.toJson<DateTime>(date),
       'total': serializer.toJson<double>(total),
       'currency': serializer.toJson<String>(currency),
-      'tagId': serializer.toJson<int>(tagId),
+      'tagId': serializer.toJson<int?>(tagId),
       'categoryId': serializer.toJson<int>(categoryId),
     };
   }
@@ -158,7 +161,7 @@ class ReceiptsCompanion extends UpdateCompanion<Receipt> {
   final Value<DateTime> date;
   final Value<double> total;
   final Value<String> currency;
-  final Value<int> tagId;
+  final Value<int?> tagId;
   final Value<int> categoryId;
   const ReceiptsCompanion({
     this.id = const Value.absent(),
@@ -175,13 +178,12 @@ class ReceiptsCompanion extends UpdateCompanion<Receipt> {
     required DateTime date,
     required double total,
     required String currency,
-    required int tagId,
+    this.tagId = const Value.absent(),
     required int categoryId,
   })   : storeId = Value(storeId),
         date = Value(date),
         total = Value(total),
         currency = Value(currency),
-        tagId = Value(tagId),
         categoryId = Value(categoryId);
   static Insertable<Receipt> custom({
     Expression<int>? id,
@@ -189,7 +191,7 @@ class ReceiptsCompanion extends UpdateCompanion<Receipt> {
     Expression<DateTime>? date,
     Expression<double>? total,
     Expression<String>? currency,
-    Expression<int>? tagId,
+    Expression<int?>? tagId,
     Expression<int>? categoryId,
   }) {
     return RawValuesInsertable({
@@ -209,7 +211,7 @@ class ReceiptsCompanion extends UpdateCompanion<Receipt> {
       Value<DateTime>? date,
       Value<double>? total,
       Value<String>? currency,
-      Value<int>? tagId,
+      Value<int?>? tagId,
       Value<int>? categoryId}) {
     return ReceiptsCompanion(
       id: id ?? this.id,
@@ -241,7 +243,7 @@ class ReceiptsCompanion extends UpdateCompanion<Receipt> {
       map['currency'] = Variable<String>(currency.value);
     }
     if (tagId.present) {
-      map['tag_id'] = Variable<int>(tagId.value);
+      map['tag_id'] = Variable<int?>(tagId.value);
     }
     if (categoryId.present) {
       map['category_id'] = Variable<int>(categoryId.value);
@@ -321,8 +323,8 @@ class $ReceiptsTable extends Receipts with TableInfo<$ReceiptsTable, Receipt> {
   @override
   late final GeneratedIntColumn tagId = _constructTagId();
   GeneratedIntColumn _constructTagId() {
-    return GeneratedIntColumn('tag_id', $tableName, false,
-        $customConstraints: 'NOT NULL REFERENCES tags(id)');
+    return GeneratedIntColumn('tag_id', $tableName, true,
+        $customConstraints: 'REFERENCES tags(id)');
   }
 
   final VerificationMeta _categoryIdMeta = const VerificationMeta('categoryId');
@@ -330,7 +332,7 @@ class $ReceiptsTable extends Receipts with TableInfo<$ReceiptsTable, Receipt> {
   late final GeneratedIntColumn categoryId = _constructCategoryId();
   GeneratedIntColumn _constructCategoryId() {
     return GeneratedIntColumn('category_id', $tableName, false,
-        $customConstraints: 'NOT NULL REFERENCES rCategories(id)');
+        $customConstraints: 'NOT NULL REFERENCES categories(id)');
   }
 
   @override
@@ -377,8 +379,6 @@ class $ReceiptsTable extends Receipts with TableInfo<$ReceiptsTable, Receipt> {
     if (data.containsKey('tag_id')) {
       context.handle(
           _tagIdMeta, tagId.isAcceptableOrUnknown(data['tag_id']!, _tagIdMeta));
-    } else if (isInserting) {
-      context.missing(_tagIdMeta);
     }
     if (data.containsKey('category_id')) {
       context.handle(
@@ -767,16 +767,16 @@ class $TagsTable extends Tags with TableInfo<$TagsTable, Tag> {
   }
 }
 
-class RCategorie extends DataClass implements Insertable<RCategorie> {
+class Categorie extends DataClass implements Insertable<Categorie> {
   final int id;
   final String categoryName;
-  RCategorie({required this.id, required this.categoryName});
-  factory RCategorie.fromData(Map<String, dynamic> data, GeneratedDatabase db,
+  Categorie({required this.id, required this.categoryName});
+  factory Categorie.fromData(Map<String, dynamic> data, GeneratedDatabase db,
       {String? prefix}) {
     final effectivePrefix = prefix ?? '';
     final intType = db.typeSystem.forDartType<int>();
     final stringType = db.typeSystem.forDartType<String>();
-    return RCategorie(
+    return Categorie(
       id: intType.mapFromDatabaseResponse(data['${effectivePrefix}id'])!,
       categoryName: stringType
           .mapFromDatabaseResponse(data['${effectivePrefix}category_name'])!,
@@ -790,17 +790,17 @@ class RCategorie extends DataClass implements Insertable<RCategorie> {
     return map;
   }
 
-  RCategoriesCompanion toCompanion(bool nullToAbsent) {
-    return RCategoriesCompanion(
+  CategoriesCompanion toCompanion(bool nullToAbsent) {
+    return CategoriesCompanion(
       id: Value(id),
       categoryName: Value(categoryName),
     );
   }
 
-  factory RCategorie.fromJson(Map<String, dynamic> json,
+  factory Categorie.fromJson(Map<String, dynamic> json,
       {ValueSerializer? serializer}) {
     serializer ??= moorRuntimeOptions.defaultSerializer;
-    return RCategorie(
+    return Categorie(
       id: serializer.fromJson<int>(json['id']),
       categoryName: serializer.fromJson<String>(json['categoryName']),
     );
@@ -814,13 +814,13 @@ class RCategorie extends DataClass implements Insertable<RCategorie> {
     };
   }
 
-  RCategorie copyWith({int? id, String? categoryName}) => RCategorie(
+  Categorie copyWith({int? id, String? categoryName}) => Categorie(
         id: id ?? this.id,
         categoryName: categoryName ?? this.categoryName,
       );
   @override
   String toString() {
-    return (StringBuffer('RCategorie(')
+    return (StringBuffer('Categorie(')
           ..write('id: $id, ')
           ..write('categoryName: $categoryName')
           ..write(')'))
@@ -832,23 +832,23 @@ class RCategorie extends DataClass implements Insertable<RCategorie> {
   @override
   bool operator ==(dynamic other) =>
       identical(this, other) ||
-      (other is RCategorie &&
+      (other is Categorie &&
           other.id == this.id &&
           other.categoryName == this.categoryName);
 }
 
-class RCategoriesCompanion extends UpdateCompanion<RCategorie> {
+class CategoriesCompanion extends UpdateCompanion<Categorie> {
   final Value<int> id;
   final Value<String> categoryName;
-  const RCategoriesCompanion({
+  const CategoriesCompanion({
     this.id = const Value.absent(),
     this.categoryName = const Value.absent(),
   });
-  RCategoriesCompanion.insert({
+  CategoriesCompanion.insert({
     this.id = const Value.absent(),
     required String categoryName,
   }) : categoryName = Value(categoryName);
-  static Insertable<RCategorie> custom({
+  static Insertable<Categorie> custom({
     Expression<int>? id,
     Expression<String>? categoryName,
   }) {
@@ -858,8 +858,8 @@ class RCategoriesCompanion extends UpdateCompanion<RCategorie> {
     });
   }
 
-  RCategoriesCompanion copyWith({Value<int>? id, Value<String>? categoryName}) {
-    return RCategoriesCompanion(
+  CategoriesCompanion copyWith({Value<int>? id, Value<String>? categoryName}) {
+    return CategoriesCompanion(
       id: id ?? this.id,
       categoryName: categoryName ?? this.categoryName,
     );
@@ -879,7 +879,7 @@ class RCategoriesCompanion extends UpdateCompanion<RCategorie> {
 
   @override
   String toString() {
-    return (StringBuffer('RCategoriesCompanion(')
+    return (StringBuffer('CategoriesCompanion(')
           ..write('id: $id, ')
           ..write('categoryName: $categoryName')
           ..write(')'))
@@ -887,11 +887,11 @@ class RCategoriesCompanion extends UpdateCompanion<RCategorie> {
   }
 }
 
-class $RCategoriesTable extends RCategories
-    with TableInfo<$RCategoriesTable, RCategorie> {
+class $CategoriesTable extends Categories
+    with TableInfo<$CategoriesTable, Categorie> {
   final GeneratedDatabase _db;
   final String? _alias;
-  $RCategoriesTable(this._db, [this._alias]);
+  $CategoriesTable(this._db, [this._alias]);
   final VerificationMeta _idMeta = const VerificationMeta('id');
   @override
   late final GeneratedIntColumn id = _constructId();
@@ -915,13 +915,13 @@ class $RCategoriesTable extends RCategories
   @override
   List<GeneratedColumn> get $columns => [id, categoryName];
   @override
-  $RCategoriesTable get asDslTable => this;
+  $CategoriesTable get asDslTable => this;
   @override
-  String get $tableName => _alias ?? 'r_categories';
+  String get $tableName => _alias ?? 'categories';
   @override
-  final String actualTableName = 'r_categories';
+  final String actualTableName = 'categories';
   @override
-  VerificationContext validateIntegrity(Insertable<RCategorie> instance,
+  VerificationContext validateIntegrity(Insertable<Categorie> instance,
       {bool isInserting = false}) {
     final context = VerificationContext();
     final data = instance.toColumns(true);
@@ -942,14 +942,14 @@ class $RCategoriesTable extends RCategories
   @override
   Set<GeneratedColumn> get $primaryKey => {id};
   @override
-  RCategorie map(Map<String, dynamic> data, {String? tablePrefix}) {
+  Categorie map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : null;
-    return RCategorie.fromData(data, _db, prefix: effectivePrefix);
+    return Categorie.fromData(data, _db, prefix: effectivePrefix);
   }
 
   @override
-  $RCategoriesTable createAlias(String alias) {
-    return $RCategoriesTable(_db, alias);
+  $CategoriesTable createAlias(String alias) {
+    return $CategoriesTable(_db, alias);
   }
 }
 
@@ -958,13 +958,13 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   late final $ReceiptsTable receipts = $ReceiptsTable(this);
   late final $StoresTable stores = $StoresTable(this);
   late final $TagsTable tags = $TagsTable(this);
-  late final $RCategoriesTable rCategories = $RCategoriesTable(this);
+  late final $CategoriesTable categories = $CategoriesTable(this);
   late final ReceiptDao receiptDao = ReceiptDao(this as AppDatabase);
   @override
   Iterable<TableInfo> get allTables => allSchemaEntities.whereType<TableInfo>();
   @override
   List<DatabaseSchemaEntity> get allSchemaEntities =>
-      [receipts, stores, tags, rCategories];
+      [receipts, stores, tags, categories];
 }
 
 // **************************************************************************
@@ -975,5 +975,5 @@ mixin _$ReceiptDaoMixin on DatabaseAccessor<AppDatabase> {
   $ReceiptsTable get receipts => attachedDatabase.receipts;
   $StoresTable get stores => attachedDatabase.stores;
   $TagsTable get tags => attachedDatabase.tags;
-  $RCategoriesTable get rCategories => attachedDatabase.rCategories;
+  $CategoriesTable get categories => attachedDatabase.categories;
 }

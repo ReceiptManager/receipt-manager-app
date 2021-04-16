@@ -24,6 +24,11 @@ class ReceiptHolder {
 
   final Tag tag;
 
+  final Categorie categorie;
+
   ReceiptHolder(
-      {required this.store, required this.tag, required this.receipt});
+      {required this.store,
+      required this.tag,
+      required this.receipt,
+      required this.categorie});
 }

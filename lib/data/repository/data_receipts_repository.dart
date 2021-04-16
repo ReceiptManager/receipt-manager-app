@@ -41,4 +41,10 @@ class DataReceiptRepository extends ReceiptRepository {
 
   @override
   Stream<List<ReceiptHolder>> getReceipts() => _dao.getReceipts();
+
+  Future<List<Store>> getStoreNames() => _dao.getStoreNames();
+
+  Future<List<Tag>> getTagNames() => _dao.getTagNames();
+
+  Future<List<Categorie>> getCategoryNames() => _dao.getCategoryNames();
 }
