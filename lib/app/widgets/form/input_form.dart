@@ -24,8 +24,6 @@ import 'package:receipt_manager/app/widgets/padding/padding_widget.dart';
 import 'package:receipt_manager/app/widgets/textfield/simple_textfield.dart';
 
 class InputForm extends StatelessWidget {
-  InputForm();
-
   Widget storeNameTextField(BuildContext context) =>
       ControlledWidgetBuilder<HomeController>(builder: (context, controller) {
         return PaddingWidget(
@@ -35,23 +33,25 @@ class InputForm extends StatelessWidget {
                 labelText: "Store Name",
                 helperText: "The receipt store name",
                 validator: controller.validateStoreName,
+                suggestionList: controller.getStoreNames(),
                 readOnly: false,
                 icon: Icon(Icons.store_mall_directory_outlined)));
       });
 
   Widget tagTextField(BuildContext context) =>
-      PaddingWidget(widget: ControlledWidgetBuilder<HomeController>(
-          builder: (context, controller) {
-        return SimpleTextfieldWidget(
+      ControlledWidgetBuilder<HomeController>(builder: (context, controller) {
+        return PaddingWidget(
+            widget: SimpleTextfieldWidget(
           controller: controller.receiptTagController,
           hintText: "Receipt Tag",
           labelText: "Receipt Tag",
           helperText: "The receipt tag",
           validator: (value) => null,
+          suggestionList: controller.getTagNames(),
           icon: Icon(Icons.tag),
           readOnly: false,
-        );
-      }));
+        ));
+      });
 
   Widget totalTextField(BuildContext context) =>
       PaddingWidget(widget: ControlledWidgetBuilder<HomeController>(
@@ -115,7 +115,7 @@ class InputForm extends StatelessWidget {
             widget: Align(
           alignment: Alignment.centerLeft,
           child: NeumorphicButton(
-              onPressed: () => controller.debugInsert(),
+              onPressed: () => controller.submit(),
               style: NeumorphicStyle(
                 shape: NeumorphicShape.flat,
                 boxShape: NeumorphicBoxShape.stadium(),
@@ -135,12 +135,13 @@ class InputForm extends StatelessWidget {
           helperText: "The receipt category",
           icon: Icon(Icons.category),
           validator: controller.validateCategory,
+          suggestionList: controller.getCategoryNames(),
           readOnly: false,
         );
       }));
 
   spacer() => SizedBox(
-        height: 20,
+        height: 50,
       );
 
   @override

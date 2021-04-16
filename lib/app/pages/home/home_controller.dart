@@ -49,6 +49,36 @@ class HomeController extends Controller {
         this.appRepository = DataReceiptRepository(),
         super();
 
+  Future<List<String>> getStoreNames() async {
+    List<Store> list = await this.appRepository.getStoreNames();
+    List<String> storeNames = [];
+    for (var store in list) {
+      if (!storeNames.contains(store.storeName))
+        storeNames.add(store.storeName);
+    }
+    return storeNames;
+  }
+
+  Future<List<String>> getTagNames() async {
+    List<Tag> list = await this.appRepository.getTagNames();
+    List<String> tagNames = [];
+    for (var tag in list) {
+      if (!tagNames.contains(tag.tagName) && tag.tagName.isNotEmpty)
+        tagNames.add(tag.tagName);
+    }
+    return tagNames;
+  }
+
+  Future<List<String>> getCategoryNames() async {
+    List<Categorie> list = await this.appRepository.getCategoryNames();
+    List<String> categoryNames = [];
+    for (var category in list) {
+      if (!categoryNames.contains(category.categoryName))
+        categoryNames.add(category.categoryName);
+    }
+    return categoryNames;
+  }
+
   String? validateCategory(value) {
     value = value.trim();
     if (value.isEmpty) {
@@ -112,14 +142,19 @@ class HomeController extends Controller {
   Future<void> debugInsert() async {
     StoresCompanion store = StoresCompanion(storeName: Value("StoreTest"));
     TagsCompanion tag = TagsCompanion(tagName: Value("TagTest"));
+    CategoriesCompanion categoriesCompanion =
+        CategoriesCompanion(categoryName: Value("Category"));
     ReceiptsCompanion receipt = ReceiptsCompanion(
       date: Value(DateTime.now()),
       total: Value(19.00),
       currency: Value("\$"),
     );
 
-    InsertReceiptHolder receiptHolder =
-        InsertReceiptHolder(store: store, tag: tag, receipt: receipt);
+    InsertReceiptHolder receiptHolder = InsertReceiptHolder(
+        tag: tag,
+        store: store,
+        category: categoriesCompanion,
+        receipt: receipt);
 
     await appRepository.insertReceipt(receiptHolder);
   }
@@ -138,6 +173,27 @@ class HomeController extends Controller {
 
     ReceiptLogger.logger(
         _storeNameString, _totalString, _dateString, _tagString);
+
+    StoresCompanion store = StoresCompanion(storeName: Value(_storeNameString));
+
+    TagsCompanion tag = TagsCompanion(tagName: Value(_tagString));
+
+    CategoriesCompanion categoriesCompanion =
+        CategoriesCompanion(categoryName: Value(_categoryString));
+
+    ReceiptsCompanion receipt = ReceiptsCompanion(
+      date: Value(DateTime.now()),
+      total: Value(double.parse(_totalString)),
+      currency: Value(currency?.symbol ?? "€"),
+    );
+
+    InsertReceiptHolder receiptHolder = InsertReceiptHolder(
+        tag: tag,
+        store: store,
+        category: categoriesCompanion,
+        receipt: receipt);
+
+    await appRepository.insertReceipt(receiptHolder);
 
     _storeNameController.clear();
     _receiptTotalController.clear();
