@@ -132,7 +132,7 @@ class HistoryState extends ViewState<HistoryPage, HistoryController> {
     String storeNamePath =
         "assets/" + storeName.split(" ")[0].trim().toLowerCase();
 
-    List<String> extentions = [".png", "jpeg", "jpg"];
+    List<String> extentions = [".png", ".jpeg", ".jpg"];
 
     for (var ext in extentions) {
       final String path = storeNamePath + ext;
