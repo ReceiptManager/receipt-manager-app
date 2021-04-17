@@ -29,8 +29,6 @@ class NavigatorPage extends View {
 }
 
 class NavigatorState extends State {
-  final GlobalKey _bottomNavigationKey = GlobalKey();
-
   int currentIndex = 0;
   final List<Widget> _children = [
     HomePage(),
@@ -43,7 +41,7 @@ class NavigatorState extends State {
 
   @override
   Widget build(BuildContext context) {
-    read_settings();
+    readSettings();
 
     return WillPopScope(
         onWillPop: () async => false,
@@ -93,7 +91,7 @@ class NavigatorState extends State {
             body: _children[currentIndex]));*/
   }
 
-  Future<void> read_settings() async {
-    var settingsBox = await Hive.openBox('settings');
+  Future<void> readSettings() async {
+    await Hive.openBox('settings');
   }
 }

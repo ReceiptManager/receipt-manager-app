@@ -29,7 +29,6 @@ dependencies:
   currency_picker: ^2.0.3
   intl: ^0.17.0
   flutter_neumorphic: ^3.0.3
-  flutter_native_splash: ^1.1.7+1
   flutter_multi_formatter: ^2.0.2
 
   flutter_bloc: ^7.0.0-nullsafety.2
@@ -37,9 +36,6 @@ dependencies:
   moor_db_viewer: ^3.0.0
   animated_stack: ^0.2.0
   syncfusion_flutter_charts: ^18.4.49
-
-  simple_edge_detection:
-    path: ./flutter-simple-edge-detection
 
   image_picker: ^0.7.4
   flutter_typeahead: ^3.1.1
@@ -51,8 +47,16 @@ dev_dependencies:
   build_runner: any
   moor_generator: any
 
+  flutter_native_splash: ^1.1.7+1
+
 flutter:
   generate: true
   uses-material-design: true
   assets:
     - assets/
+
+flutter_native_splash:
+  color: "#ffffff"
+  image: assets/splash.png
+  color_dark: "#000000"
+  fullscreen: false

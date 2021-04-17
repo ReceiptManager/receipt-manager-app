@@ -22,6 +22,7 @@ import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:intl/intl.dart';
 import 'package:receipt_manager/app/pages/stats/stat_controller.dart';
 import 'package:receipt_manager/app/widgets/stats/stats_card.dart';
+// ignore: import_of_legacy_library_into_null_safe
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 class StatsPage extends View {

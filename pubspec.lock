@@ -308,7 +308,7 @@ packages:
     source: hosted
     version: "2.0.2"
   flutter_native_splash:
-    dependency: "direct main"
+    dependency: "direct dev"
     description:
       name: flutter_native_splash
       url: "https://pub.dartlang.org"
@@ -716,13 +716,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.1"
-  simple_edge_detection:
-    dependency: "direct main"
-    description:
-      path: flutter-simple-edge-detection
-      relative: true
-    source: path
-    version: "0.0.1"
   sky_engine:
     dependency: transitive
     description: flutter
