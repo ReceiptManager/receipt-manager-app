@@ -136,8 +136,8 @@ class SimpleTextfieldWidget extends StatelessWidget {
             child: Text(
               labelText,
               style: TextStyle(
-                fontWeight: FontWeight.w700,
-                color: NeumorphicTheme.defaultTextColor(context),
+                fontWeight: FontWeight.bold,
+                color: Colors.redAccent,
               ),
             ),
           ),
