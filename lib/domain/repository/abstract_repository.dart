@@ -15,8 +15,24 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+import 'package:receipt_manager/data/storage/receipt_database.dart';
 import 'package:receipt_manager/data/storage/scheme/holder_table.dart';
+import 'package:receipt_manager/data/storage/scheme/insert_holder_table.dart';
 
 abstract class ReceiptRepository {
   Stream<List<ReceiptHolder>> getReceipts();
+
+  Future insertReceipt(InsertReceiptHolder receipt);
+
+  Future updateReceipt(ReceiptHolder receipt);
+
+  Future deleteReceipt(ReceiptHolder receipt);
+
+  Future deleteDatabase();
+
+  Future<List<Store>> getStoreNames();
+
+  Future<List<Tag>> getTagNames();
+
+  Future<List<Categorie>> getCategoryNames();
 }
