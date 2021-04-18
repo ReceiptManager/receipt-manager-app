@@ -30,21 +30,28 @@ class DataReceiptRepository extends ReceiptRepository {
 
   ReceiptDao _dao = ReceiptDao(AppDatabase());
 
+  @override
   Future insertReceipt(InsertReceiptHolder receipt) =>
       _dao.insertReceipt(receipt);
 
+  @override
   Future updateReceipt(ReceiptHolder receipt) => _dao.updateReceipt(receipt);
 
+  @override
   Future deleteReceipt(ReceiptHolder receipt) => _dao.deleteReceipt(receipt);
 
+  @override
   Future deleteDatabase() => _dao.deleteDatabase();
 
   @override
   Stream<List<ReceiptHolder>> getReceipts() => _dao.getReceipts();
 
+  @override
   Future<List<Store>> getStoreNames() => _dao.getStoreNames();
 
+  @override
   Future<List<Tag>> getTagNames() => _dao.getTagNames();
 
+  @override
   Future<List<Categorie>> getCategoryNames() => _dao.getCategoryNames();
 }
