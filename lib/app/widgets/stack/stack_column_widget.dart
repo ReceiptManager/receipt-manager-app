@@ -31,7 +31,7 @@ class StackColumnWidget extends StatelessWidget {
               width: 60,
               height: 60,
               iconData: Icons.insert_drive_file_outlined,
-              fun: controller.galleryPicker,
+              fun: controller.filePicker,
             ),
             SizedBox(height: 20),
             IconTile(
