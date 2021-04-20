@@ -61,7 +61,7 @@ class HistoryState extends ViewState<HistoryPage, HistoryController> {
             stream: controller.getReceipts(),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
-                return Center(child: CircularProgressIndicator());
+                return Container();
               }
 
               if (!snapshot.hasData ||
@@ -102,8 +102,9 @@ class HistoryState extends ViewState<HistoryPage, HistoryController> {
                                                 deleteMethod: () => controller
                                                     .deleteMethod(receipt),
                                                 editText: "Edit",
-                                                editMethod: () => controller
-                                                    .editMethod(receipt),
+                                                editMethod: () =>
+                                                    controller.editMethod(
+                                                        receipt, context),
                                                 image: snap.data as Image,
                                                 holder: receipt))));
                               }
@@ -132,9 +133,8 @@ class HistoryState extends ViewState<HistoryPage, HistoryController> {
     String storeNamePath =
         "assets/" + storeName.split(" ")[0].trim().toLowerCase();
 
-    List<String> extentions = [".png", ".jpeg", ".jpg"];
-
-    for (var ext in extentions) {
+    List<String> extensions = [".png", ".jpeg", ".jpg"];
+    for (var ext in extensions) {
       final String path = storeNamePath + ext;
       Image? image = await imageExists(path);
       if (image != null) return image;
@@ -153,7 +153,7 @@ class HistoryState extends ViewState<HistoryPage, HistoryController> {
       foregroundWidget: Scaffold(
           key: globalKey,
           backgroundColor: Colors.white,
-          appBar: NeumorphicAppBar(title: Text("Receipt overview")),
+          appBar: NeumorphicAppBar(title: Text("Receipt Overview")),
           body: Column(children: [receiptVisualisation(context)])),
       columnWidget: Column(
         children: <Widget>[
