@@ -19,12 +19,15 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:currency_picker/currency_picker.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:receipt_manager/app/helper/receipt_logger.dart';
 import 'package:receipt_manager/app/pages/home/home_presenter.dart';
+import 'package:receipt_manager/app/pages/upload/file_upload_view.dart';
+import 'package:receipt_manager/app/pages/upload/image_upload_view.dart';
 import 'package:receipt_manager/data/repository/data_receipts_repository.dart';
 import 'package:receipt_manager/data/storage/receipt_database.dart';
 import 'package:receipt_manager/data/storage/scheme/insert_holder_table.dart';
@@ -62,11 +65,33 @@ class HomeController extends Controller {
     refreshUI();
   }
 
+  Future<void> getImageResult(File image) async {
+    Map results = await Navigator.of(this.getContext())
+        .push(new MaterialPageRoute<dynamic>(
+      builder: (BuildContext context) {
+        return new ImageUploadPage(image);
+      },
+    ));
+
+    if (results.containsKey('receipt')) {
+      InsertReceiptHolder holder = results['receipt'];
+
+      _storeNameController.text = holder.store.storeName.value;
+      _receiptTotalController.text =
+          holder.receipt.total.value.toStringAsFixed(2);
+      _receiptDateController.text =
+          DateFormat.yMMMd().format(holder.receipt.date.value);
+
+      print(results['receipt']);
+    }
+  }
+
   Future<void> galleryPicker() async {
     final pickedFile = await picker.getImage(source: ImageSource.gallery);
 
     if (pickedFile != null) {
-      File _image = File(pickedFile.path);
+      File image = File(pickedFile.path);
+      getImageResult(image);
     } else {
       noImageSelected();
     }
@@ -76,13 +101,24 @@ class HomeController extends Controller {
     final pickedFile = await picker.getImage(source: ImageSource.camera);
 
     if (pickedFile != null) {
-      File _image = File(pickedFile.path);
+      File image = File(pickedFile.path);
+      getImageResult(image);
     } else {
       noImageSelected();
     }
   }
 
-  void filePicker() {}
+  Future<void> filePicker() async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles(
+      type: FileType.custom,
+      allowedExtensions: ['pdf'],
+    );
+
+    if (result != null) {
+      PlatformFile file = result.files.single;
+      getFileResult(file);
+    } else {}
+  }
 
   Future<List<String>> getStoreNames() async {
     List<Store> list = await this.appRepository.getStoreNames();
@@ -217,7 +253,7 @@ class HomeController extends Controller {
         CategoriesCompanion(categoryName: Value(_categoryString));
 
     ReceiptsCompanion receipt = ReceiptsCompanion(
-      date: Value(DateTime.now()),
+      date: Value(_receiptDate!),
       total: Value(double.parse(_totalString)),
       currency: Value(currency?.symbol ?? "€"),
     );
@@ -296,5 +332,26 @@ class HomeController extends Controller {
   void onDisposed() {
     _homePresenter.dispose();
     super.onDisposed();
+  }
+
+  Future<void> getFileResult(PlatformFile file) async {
+    Map results = await Navigator.of(this.getContext())
+        .push(new MaterialPageRoute<dynamic>(
+      builder: (BuildContext context) {
+        return new FileUploadPage(file);
+      },
+    ));
+
+    if (results.containsKey('receipt')) {
+      InsertReceiptHolder holder = results['receipt'];
+
+      _storeNameController.text = holder.store.storeName.value;
+      _receiptTotalController.text =
+          holder.receipt.total.value.toStringAsFixed(2);
+      _receiptDateController.text =
+          DateFormat.yMMMd().format(holder.receipt.date.value);
+
+      print(results['receipt']);
+    }
   }
 }

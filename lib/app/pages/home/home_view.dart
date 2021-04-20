@@ -43,7 +43,7 @@ class _HomePageState extends ViewState<HomePage, HomeController> {
           foregroundWidget: Scaffold(
               key: globalKey,
               backgroundColor: Colors.white,
-              appBar: NeumorphicAppBar(title: Text("Add receipt")),
+              appBar: NeumorphicAppBar(title: Text("Add Receipt")),
               body: InputForm()),
           columnWidget: StackColumnWidget(),
           bottomWidget: BottomColumnWidget()));
