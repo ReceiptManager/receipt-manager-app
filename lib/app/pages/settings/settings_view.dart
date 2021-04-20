@@ -45,32 +45,16 @@ class _SettingsState extends ViewState<SettingsPage, SettingsController> {
                 backgroundColor: Colors.white,
                 shrinkWrap: true,
                 sections: [
-                  SettingsSection(
-                    title: "Language Settings",
-                    tiles: [
-                      SettingsTile(
-                          title: "Languages",
-                          subtitle: "English",
-                          leading: Icon(Icons.language),
-                          onPressed: (context) =>
-                              controller.languageButtonPress(context)),
-                      SettingsTile(
-                          title: "API token",
-                          leading: Icon(Icons.vpn_key),
-                          onPressed: controller.apiTokenButtonPress),
-                    ],
-                  ),
                   SettingsSection(title: "Network settings", tiles: [
-                    SettingsTile(
-                        title: "Detect receipt parser",
-                        leading: Icon(Icons.adb),
-                        onPressed: (context) =>
-                            controller.detectReceiptServerButtonPress(context)),
                     SettingsTile(
                         title: "Server settings",
                         leading: Icon(Icons.wifi),
                         onPressed: (context) =>
                             controller.serverButtonPress(context)),
+                    SettingsTile(
+                        title: "API Token",
+                        leading: Icon(Icons.vpn_key),
+                        onPressed: controller.apiTokenButtonPress),
                     SettingsTile.switchTile(
                         title: "HTTPS",
                         leading: Icon(Icons.lock),
@@ -116,7 +100,7 @@ class _SettingsState extends ViewState<SettingsPage, SettingsController> {
                           onToggle: (bool value) =>
                               controller.toggleShowArticles(value)),
                       SettingsTile(
-                          title: "Database utils",
+                          title: "Database Utils",
                           leading: Icon(Icons.developer_board),
                           onPressed: (context) {
                             final db = AppDatabase();

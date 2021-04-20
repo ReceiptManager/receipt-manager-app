@@ -19,6 +19,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 import 'package:hive/hive.dart';
 import 'package:receipt_manager/app/constants.dart';
+import 'package:receipt_manager/app/pages/settings/api_token/api_token_view.dart';
+import 'package:receipt_manager/app/pages/settings/server/server_view.dart';
 import 'package:receipt_manager/app/pages/settings/settings_presenter.dart';
 
 class SettingsController extends Controller {
@@ -96,14 +98,11 @@ class SettingsController extends Controller {
   }
 
   apiTokenButtonPress(BuildContext context) {
-    throw UnimplementedError();
+    Navigator.of(context).push(
+        MaterialPageRoute(builder: (BuildContext context) => ApiTokenPage()));
   }
 
   languageButtonPress(BuildContext context) {
-    throw UnimplementedError();
-  }
-
-  detectReceiptServerButtonPress(BuildContext context) {
     throw UnimplementedError();
   }
 
@@ -142,7 +141,8 @@ class SettingsController extends Controller {
   }
 
   serverButtonPress(BuildContext context) {
-    throw UnimplementedError();
+    Navigator.of(context).push(MaterialPageRoute(
+        builder: (BuildContext context) => ServerSettingsPage()));
   }
 
   toggleLegacyParser(bool value) {
