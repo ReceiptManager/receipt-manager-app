@@ -17,18 +17,26 @@
 
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 import 'package:receipt_manager/app/pages/stats/stat_presenter.dart';
+import 'package:receipt_manager/data/repository/data_receipts_repository.dart';
 
 // TODO: implement settings controller
 class StatsController extends Controller {
   final StatsPresenter _statsPresenter;
+  DataReceiptRepository repository;
 
-  StatsController()
+  StatsController(DataReceiptRepository repository)
       : _statsPresenter = StatsPresenter(),
+        this.repository = repository,
         super();
 
   @override
   void initListeners() {
     // TODO: implement initListeners
+  }
+
+  get receipts {
+    var receipts = repository.getReceipts();
+    return receipts;
   }
 
   void buttonPressed() {}
