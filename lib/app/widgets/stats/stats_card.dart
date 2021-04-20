@@ -29,7 +29,7 @@ class StatsCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return PaddingWidget(
         widget: AspectRatio(
-            aspectRatio: 0.75,
+            aspectRatio: 0.70,
             child: Card(
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(18)),
@@ -85,7 +85,7 @@ class StatsCard extends StatelessWidget {
 class WeeklyChartData {
   final date;
 
-  final double total;
+  double total;
 
   WeeklyChartData(this.date, this.total);
 }
@@ -93,7 +93,7 @@ class WeeklyChartData {
 class ReceiptMonthData {
   final int month;
 
-  final double total;
+  double total;
 
   ReceiptMonthData(this.month, this.total);
 }
