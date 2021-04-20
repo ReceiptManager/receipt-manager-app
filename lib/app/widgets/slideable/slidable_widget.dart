@@ -65,7 +65,7 @@ class SlidableHistoryWidget extends StatelessWidget {
             onTap: deleteMethod,
           ),
           IconSlideAction(
-              onTap: () {},
+              onTap: editMethod,
               caption: editText,
               icon: Icons.update,
               color: Colors.black),

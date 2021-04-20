@@ -19,11 +19,12 @@ import 'package:flutter/material.dart';
 
 class PaddingWidget extends StatelessWidget {
   final Widget widget;
+  final double padding;
 
-  PaddingWidget({required this.widget});
+  PaddingWidget({required this.widget, this.padding = 8.0});
 
   @override
   Widget build(BuildContext context) {
-    return Padding(padding: EdgeInsets.all(8.0), child: widget);
+    return Padding(padding: EdgeInsets.all(padding), child: widget);
   }
 }

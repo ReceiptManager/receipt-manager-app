@@ -134,22 +134,24 @@ class InputForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    HomeController controller =
+        FlutterCleanArchitecture.getController<HomeController>(context);
+
     return SingleChildScrollView(
-        child: ControlledWidgetBuilder<HomeController>(
-            builder: (context, controller) => Form(
-                  key: controller.formKey,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      storeNameTextField(context, controller),
-                      totalTextField(context, controller),
-                      dateTextField(context, controller),
-                      tagTextField(context, controller),
-                      categoryTextFormat(context, controller),
-                      submitButton(context, controller),
-                      spacer()
-                    ],
-                  ),
-                )));
+        child: Form(
+      key: controller.formKey,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          storeNameTextField(context, controller),
+          totalTextField(context, controller),
+          dateTextField(context, controller),
+          tagTextField(context, controller),
+          categoryTextFormat(context, controller),
+          submitButton(context, controller),
+          spacer()
+        ],
+      ),
+    ));
   }
 }
