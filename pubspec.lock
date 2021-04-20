@@ -258,6 +258,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "7.0.0"
+  flutter_card_swipper:
+    dependency: "direct main"
+    description:
+      name: flutter_card_swipper
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.4.0"
   flutter_clean_architecture:
     dependency: "direct main"
     description:

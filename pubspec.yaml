@@ -10,6 +10,7 @@ dependencies:
   flutter:
     sdk: flutter
 
+  flutter_card_swipper: ^0.4.0
   flutter_clean_architecture: ^5.0.0
   injectable: ^1.2.2
   http: ^0.13.1
