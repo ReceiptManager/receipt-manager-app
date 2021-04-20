@@ -100,7 +100,11 @@ class ReceiptDao extends DatabaseAccessor<AppDatabase> with _$ReceiptDaoMixin {
   Future updateReceipt(ReceiptHolder holder) async {}
 
   Future deleteReceipt(ReceiptHolder holder) async {
-    return delete(receipts).delete(holder.receipt);
+    delete(receipts).delete(holder.receipt);
+
+    delete(tags).delete(holder.tag);
+    delete(stores).delete(holder.store);
+    delete(categories).delete(holder.categorie);
   }
 
   Future<List<Store>> getStoreNames() {
