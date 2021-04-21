@@ -17,22 +17,40 @@
 
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
+import 'package:hive/hive.dart';
+import 'package:receipt_manager/app/constants.dart';
+import 'package:receipt_manager/app/helper/notfifier.dart';
 import 'package:receipt_manager/data/repository/data_receipts_repository.dart';
 
 import 'server_presenter.dart';
 
 class ServerSettingsController extends Controller {
   final ServerSettingsPresenter _historyPresenter;
+  final DataReceiptRepository repository;
+  final Box<dynamic> settingsBox;
+  final _formKey = GlobalKey<FormState>();
 
-  DataReceiptRepository repository;
+  final RegExp urlRegex = new RegExp(
+      "^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\$",
+      caseSensitive: false,
+      multiLine: false);
+
+  final RegExp ipRegex = new RegExp(
+      "^((?!-))(xn--)?[a-z0-9][a-z0-9-_]{0,61}[a-z0-9]{0,1}.(xn--)?([a-z0-9-]{1,61}|[a-z0-9-]{1,30}.[a-z]{2,})\$",
+      caseSensitive: false,
+      multiLine: false);
 
   ServerSettingsController(DataReceiptRepository repository)
       : _historyPresenter = ServerSettingsPresenter(repository),
         this.repository = repository,
+        settingsBox = Hive.box('settings'),
         super();
 
   TextEditingController _serverSettingController = TextEditingController();
+
   TextEditingController get serverSettingController => _serverSettingController;
+
+  get formKey => _formKey;
 
   @override
   void initListeners() {}
@@ -50,5 +68,35 @@ class ServerSettingsController extends Controller {
   void onDisposed() {
     _historyPresenter.dispose();
     super.onDisposed();
+  }
+
+  void submitServerController() {
+    if (!_formKey.currentState!.validate()) {
+      UserNotifier.fail("API token is invalid", getContext());
+      refreshUI();
+      return;
+    }
+
+    String serverAddress = serverSettingController.text.trim();
+
+    if (ipRegex.hasMatch(serverAddress)) {
+      settingsBox.put(serverDomain, serverAddress);
+      settingsBox.put(reverseProxyField, false);
+    } else {
+      settingsBox.put(serverIP, serverAddress);
+      settingsBox.put(reverseProxyField, true);
+    }
+
+    UserNotifier.success("API token is valid", getContext());
+    refreshUI();
+  }
+
+  validateServerAddress(value) {
+    value = value.trim();
+    if (value.isEmpty() &&
+        ((!ipRegex.hasMatch(value) && !urlRegex.hasMatch(value)))) {
+      return "Api token is invalid";
+    }
+    return null;
   }
 }

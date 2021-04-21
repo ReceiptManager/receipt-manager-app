@@ -40,12 +40,12 @@ class ApiTokenState extends ViewState<ApiTokenPage, ApiTokenController> {
         hintText: "API Token",
         labelText: "API Token",
         helperText: "The API Token",
-        validator: (value) => null,
+        validator: (value) => controller.validateApiToken(value),
         icon: Icon(Icons.vpn_key_sharp),
         readOnly: false,
       ));
 
-  Widget submitButton() => PaddingWidget(
+  Widget submitButton(ApiTokenController controller) => PaddingWidget(
           widget: Align(
         alignment: Alignment.centerRight,
         child: NeumorphicButton(
@@ -53,6 +53,7 @@ class ApiTokenState extends ViewState<ApiTokenPage, ApiTokenController> {
               shape: NeumorphicShape.flat,
               boxShape: NeumorphicBoxShape.stadium(),
             ),
+            onPressed: controller.submitApiToken,
             child:
                 Text("Submit", style: TextStyle(fontWeight: FontWeight.bold))),
       ));
@@ -64,6 +65,11 @@ class ApiTokenState extends ViewState<ApiTokenPage, ApiTokenController> {
       appBar: NeumorphicAppBar(title: Text("Api Token Settings")),
       body: ControlledWidgetBuilder<ApiTokenController>(
           builder: (context, controller) {
-        return Column(children: [apiTextField(controller), submitButton()]);
+        return Form(
+            key: controller.formKey,
+            child: Column(children: [
+              apiTextField(controller),
+              submitButton(controller)
+            ]));
       }));
 }

@@ -42,12 +42,12 @@ class ServerSettingsState
         hintText: "Server Address",
         labelText: "Server Address",
         helperText: "The Server Address",
-        validator: (value) => null,
+        validator: (value) => controller.validateServerAddress(value),
         icon: Icon(Icons.wifi),
         readOnly: false,
       ));
 
-  Widget submitButton() => PaddingWidget(
+  Widget submitButton(ServerSettingsController controller) => PaddingWidget(
           widget: Align(
         alignment: Alignment.centerRight,
         child: NeumorphicButton(
@@ -55,6 +55,7 @@ class ServerSettingsState
               shape: NeumorphicShape.flat,
               boxShape: NeumorphicBoxShape.stadium(),
             ),
+            onPressed: controller.submitServerController,
             child:
                 Text("Submit", style: TextStyle(fontWeight: FontWeight.bold))),
       ));
@@ -66,6 +67,8 @@ class ServerSettingsState
       appBar: NeumorphicAppBar(title: Text("Server Settings")),
       body: ControlledWidgetBuilder<ServerSettingsController>(
           builder: (context, controller) {
-        return Column(children: [apiTextField(controller), submitButton()]);
+        return Form(
+            key: controller.formKey,child:Column(
+            children: [apiTextField(controller), submitButton(controller)]));
       }));
 }
