@@ -24,6 +24,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:receipt_manager/app/helper/notfifier.dart';
 import 'package:receipt_manager/app/helper/receipt_logger.dart';
 import 'package:receipt_manager/app/pages/home/home_presenter.dart';
 import 'package:receipt_manager/app/pages/upload/file_upload_view.dart';
@@ -45,7 +46,6 @@ class HomeController extends Controller {
   final _formKey = GlobalKey<FormState>();
   Currency? currency;
   DateTime? _receiptDate;
-  var receiptsBox;
 
   final picker = ImagePicker();
   DataReceiptRepository appRepository;
@@ -54,16 +54,6 @@ class HomeController extends Controller {
       : _homePresenter = HomePresenter(),
         this.appRepository = DataReceiptRepository(),
         super();
-
-  void noImageSelected() {
-    print('No image is selected.');
-    ScaffoldMessenger.of(getContext()).showSnackBar(SnackBar(
-      content: Text("No image is selected."),
-      backgroundColor: Colors.red,
-    ));
-
-    refreshUI();
-  }
 
   Future<void> getImageResult(File image) async {
     Map results = await Navigator.of(this.getContext())
@@ -92,8 +82,6 @@ class HomeController extends Controller {
     if (pickedFile != null) {
       File image = File(pickedFile.path);
       getImageResult(image);
-    } else {
-      noImageSelected();
     }
   }
 
@@ -103,8 +91,6 @@ class HomeController extends Controller {
     if (pickedFile != null) {
       File image = File(pickedFile.path);
       getImageResult(image);
-    } else {
-      noImageSelected();
     }
   }
 
@@ -190,26 +176,6 @@ class HomeController extends Controller {
 
   get formKey => _formKey;
 
-  void fail() {
-    print('Receipt is invalid.');
-    ScaffoldMessenger.of(getContext()).showSnackBar(SnackBar(
-      content: Text("Receipt is invalid"),
-      backgroundColor: Colors.red,
-    ));
-
-    refreshUI();
-  }
-
-  void success() {
-    print('Receipt is valid.');
-    ScaffoldMessenger.of(getContext()).showSnackBar(SnackBar(
-      content: Text("Receipt is valid"),
-      backgroundColor: Colors.green,
-    ));
-
-    refreshUI();
-  }
-
   Future<void> debugInsert() async {
     StoresCompanion store = StoresCompanion(storeName: Value("StoreTest"));
     TagsCompanion tag = TagsCompanion(tagName: Value("TagTest"));
@@ -232,7 +198,8 @@ class HomeController extends Controller {
 
   Future<void> submit() async {
     if (!_formKey.currentState!.validate()) {
-      fail();
+      UserNotifier.fail("Input is invalid", getContext());
+      refreshUI();
       return;
     }
 
@@ -271,7 +238,8 @@ class HomeController extends Controller {
     _receiptDateController.clear();
     _receiptTagController.clear();
     _receiptCategoryController.clear();
-    success();
+    UserNotifier.success("Input is invalid", getContext());
+    refreshUI();
   }
 
   String? validateStoreName(String value) {
