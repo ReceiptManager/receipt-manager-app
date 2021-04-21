@@ -25,3 +25,7 @@ final String enableGaussianBlur = "gaussianBlur";
 final String enableGrayscale = "grayscaleImage";
 final String verticalImage = "rotateImage";
 final String enableLightTheme = "lightTheme";
+final String apiTokenField = "apiToken";
+final String serverDomain = "serverAddress";
+final String serverIP = "serverAddress";
+final String reverseProxyField = "reverseProxy";
