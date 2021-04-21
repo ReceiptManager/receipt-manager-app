@@ -18,10 +18,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
-import 'package:moor_db_viewer/moor_db_viewer.dart';
 import 'package:receipt_manager/app/pages/settings/settings_controller.dart';
 import 'package:receipt_manager/app/widgets/padding/padding_widget.dart';
-import 'package:receipt_manager/data/storage/receipt_database.dart';
 import 'package:settings_ui/settings_ui.dart';
 
 class SettingsPage extends View {
@@ -99,14 +97,6 @@ class _SettingsState extends ViewState<SettingsPage, SettingsController> {
                           switchValue: controller.showArticles,
                           onToggle: (bool value) =>
                               controller.toggleShowArticles(value)),
-                      SettingsTile(
-                          title: "Database Utils",
-                          leading: Icon(Icons.developer_board),
-                          onPressed: (context) {
-                            final db = AppDatabase();
-                            Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) => MoorDbViewer(db)));
-                          })
                     ],
                   ),
                 ],
