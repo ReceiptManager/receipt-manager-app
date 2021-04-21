@@ -1,9 +1,9 @@
 <p align="center">
-  <img width=200 src="https://i.imgur.com/UJZ3OxY.png">
+  <img width=200 src="https://i.imgur.com/ngNs0zR.png">
 
-  <img width=200 src="https://i.imgur.com/ROC4FM4.png">
+  <img width=200 src="https://i.imgur.com/AIx35Ah.png">
 
-  <img width=200 src="https://i.imgur.com/7tkfz75.png">
+  <img width=200 src="https://i.imgur.com/pJZZFt5.png">
 
 </p>
 
@@ -24,37 +24,29 @@ All the needed info about how to  use the `receipt-manager-app` is present at yo
   
 
 - *II. Getting started*
-  - [Install guide](https://github.com/ReceiptManager/receipt-parser-app/wiki/Install-guide)
-  - [How it works](https://github.com/ReceiptManager/receipt-parser-app/wiki/How-it-works)
+  - [Install guide](https://receipt-manager-app.readthedocs.io/en/latest/get_started.html)
   - [Releases](https://github.com/ReceiptManager/receipt-parser-app/wiki/Releases)
-  
-- *III. Wiki*
-  - [Architecture](https://github.com/ReceiptManager/receipt-parser-app/wiki/Architecture)
-  - [Questions](https://github.com/ReceiptManager/receipt-parser-app/wiki/Questions)
-  - [Privacy](https://github.com/ReceiptManager/receipt-parser-app/wiki/Privacy)
-  - [Screenshot](https://github.com/ReceiptManager/receipt-parser-app/wiki/Screenshots)
-  - [Credits](https://github.com/ReceiptManager/receipt-parser-app/wiki/Credits)
 
 - *III. Settings*
   - [Common Settings](https://receipt-manager-app.readthedocs.io/en/latest/settings.html)
     - [Language Settings](https://receipt-manager-app.readthedocs.io/en/latest/settings.html#language)
     - [API Token](https://receipt-manager-app.readthedocs.io/en/latest/settings.html#api-token)
-  - [Network Settings](https://receipt-manager-app.readthedocs.io/en/latest/settings.html#network-settings)
+    - [Network Settings](https://receipt-manager-app.readthedocs.io/en/latest/settings.html#network-settings)
     - [Detect Receipt Parser](https://receipt-manager-app.readthedocs.io/en/latest/settings.html#detect-receipt-server)
     - [Server Settings](https://receipt-manager-app.readthedocs.io/en/latest/settings.html#specify-server-ip)
-    - [Protocol Settings](https://receipt-manager-app.readthedocs.io/en/latest/settings.html#enable-https)
-  - [Camera Settings](https://receipt-manager-app.readthedocs.io/en/latest/settings.html#camera-settings)
+  - [Protocol Settings](https://receipt-manager-app.readthedocs.io/en/latest/settings.html#enable-https)
+    - [Camera Settings](https://receipt-manager-app.readthedocs.io/en/latest/settings.html#camera-settings)
     - [Rotate Image](https://receipt-manager-app.readthedocs.io/en/latest/settings.html#rotate-image)
     - [Grayscale Image](https://receipt-manager-app.readthedocs.io/en/latest/settings.html#grayscale-image)
     - [Gaussian Blur](https://receipt-manager-app.readthedocs.io/en/latest/settings.html#gaussian-blur)
     - [Neuronal Network Parser](https://receipt-manager-app.readthedocs.io/en/latest/settings.html#neuronal-network-parser)
     - [Legacy Parser](https://receipt-manager-app.readthedocs.io/en/latest/settings.html#legacy-receipt-parser)
     - [Send training data](https://receipt-manager-app.readthedocs.io/en/latest/settings.html#send-training-data)
-  - [Developer Settings](https://receipt-manager-app.readthedocs.io/en/latest/settings.html#development)
+    - [Developer Settings](https://receipt-manager-app.readthedocs.io/en/latest/settings.html#development)
     - [Enable Debug Output](https://receipt-manager-app.readthedocs.io/en/latest/settings.html#enable-debug-output)
     - [Show articles](https://receipt-manager-app.readthedocs.io/en/latest/settings.html#show-articles-wip)
     - [Detect edges](https://receipt-manager-app.readthedocs.io/en/latest/settings.html#detect-edges-wip)
-  - [Licenses](https://receipt-manager-app.readthedocs.io/en/latest/settings.html#open-source-libraries)
+    - [Licenses](https://receipt-manager-app.readthedocs.io/en/latest/settings.html#open-source-libraries)
   
 ---
 
