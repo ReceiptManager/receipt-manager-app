@@ -18,7 +18,6 @@
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:receipt_manager/app/pages/history/history_presenter.dart';
-import 'package:receipt_manager/app/widgets/form/input_form.dart';
 import 'package:receipt_manager/data/repository/data_receipts_repository.dart';
 import 'package:receipt_manager/data/storage/scheme/holder_table.dart';
 
@@ -32,36 +31,42 @@ class HistoryController extends Controller {
         this.repository = repository,
         super();
 
-  String get getWeeklyOverview => "Weekly overview 19.00\$";
-
-  get receipts {
-    var receipts = repository.getReceipts();
-    return receipts;
+  Stream<List<ReceiptHolder>> getReceipts() {
+    return repository.getReceipts();
   }
 
   void deleteMethod(ReceiptHolder receipt) async {
     await repository.deleteReceipt(receipt);
   }
 
-  void editMethod(ReceiptHolder receipt, BuildContext context) async {
-    await showDialog<String>(
-        context: context,
-        // false = user must tap button, true = tap outside dialog
-        builder: (BuildContext dialogContext) {
-          return AlertDialog(
-              titleTextStyle: TextStyle(
-                  color: Colors.black,
-                  fontWeight: FontWeight.w400,
-                  fontSize: 22),
-              backgroundColor: Colors.white,
-              title: Text("Edit receipt"),
-              content: Container(
-                  height: 300,
-                  width: 250,
-                  color: Colors.white,
-                  child: InputForm()));
-        });
-    await repository.updateReceipt(receipt);
+  void editMethod(ReceiptHolder receipt, BuildContext context) async {}
+
+  Future<Image?> imageExists(String path) async {
+    try {
+      final bundle = DefaultAssetBundle.of(getContext());
+      await bundle.load(path);
+    } catch (e) {
+      return null;
+    }
+
+    return Image.asset(
+      path,
+      fit: BoxFit.fill,
+    );
+  }
+
+  Future<Image?> getAssetImage(String storeName, String categoryName) async {
+    String storeNamePath =
+        "assets/" + storeName.split(" ")[0].trim().toLowerCase();
+
+    List<String> extensions = [".png", ".jpeg", ".jpg"];
+    for (var ext in extensions) {
+      final String path = storeNamePath + ext;
+      Image? image = await imageExists(path);
+      if (image != null) return image;
+    }
+
+    return await imageExists("assets/fallback.png");
   }
 
   @override
@@ -82,9 +87,5 @@ class HistoryController extends Controller {
   void onDisposed() {
     _historyPresenter.dispose();
     super.onDisposed();
-  }
-
-  Stream<List<ReceiptHolder>> getReceipts() {
-    return repository.getReceipts();
   }
 }

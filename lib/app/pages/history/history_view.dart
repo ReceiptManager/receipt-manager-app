@@ -25,7 +25,6 @@ import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:receipt_manager/app/pages/history/history_controller.dart';
 import 'package:receipt_manager/app/widgets/icon/icon_tile.dart';
-import 'package:receipt_manager/app/widgets/padding/padding_widget.dart';
 import 'package:receipt_manager/app/widgets/slideable/slidable_widget.dart';
 import 'package:receipt_manager/data/repository/data_receipts_repository.dart';
 import 'package:receipt_manager/data/storage/scheme/holder_table.dart';
@@ -37,22 +36,6 @@ class HistoryPage extends View {
 
 class HistoryState extends ViewState<HistoryPage, HistoryController> {
   HistoryState() : super(HistoryController(DataReceiptRepository()));
-
-  Widget weeklyOverview(BuildContext context) =>
-      ControlledWidgetBuilder<HistoryController>(
-          builder: (context, controller) {
-        if (controller.receipts.length == 0) return Container();
-
-        return Container(
-            child: Align(
-                alignment: Alignment.centerRight,
-                child: PaddingWidget(
-                    widget: Text(controller.getWeeklyOverview,
-                        style: TextStyle(
-                            fontWeight: FontWeight.w200,
-                            fontSize: 20,
-                            color: Colors.black)))));
-      });
 
   Widget receiptVisualisation(BuildContext context) =>
       ControlledWidgetBuilder<HistoryController>(
@@ -85,8 +68,8 @@ class HistoryState extends ViewState<HistoryPage, HistoryController> {
                       itemBuilder: (_, index) {
                         final receipt = receipts[index];
                         return FutureBuilder(
-                            // Initialize FlutterFire:
-                            future: getAssetImage(receipt.store.storeName,
+                            future: controller.getAssetImage(
+                                receipt.store.storeName,
                                 receipt.categorie.categoryName),
                             builder: (context, snap) {
                               if (snap.connectionState ==
@@ -108,40 +91,11 @@ class HistoryState extends ViewState<HistoryPage, HistoryController> {
                                                 image: snap.data as Image,
                                                 holder: receipt))));
                               }
-                              // Otherwise, show something whilst waiting for initialization to complete
                               return Container();
                             });
                       }));
             });
       });
-
-  Future<Image?> imageExists(String path) async {
-    try {
-      final bundle = DefaultAssetBundle.of(context);
-      await bundle.load(path);
-    } catch (e) {
-      return null;
-    }
-
-    return Image.asset(
-      path,
-      fit: BoxFit.fill,
-    );
-  }
-
-  Future<Image?> getAssetImage(String storeName, String categoryName) async {
-    String storeNamePath =
-        "assets/" + storeName.split(" ")[0].trim().toLowerCase();
-
-    List<String> extensions = [".png", ".jpeg", ".jpg"];
-    for (var ext in extensions) {
-      final String path = storeNamePath + ext;
-      Image? image = await imageExists(path);
-      if (image != null) return image;
-    }
-
-    return await imageExists("assets/fallback.png");
-  }
 
   @override
   Widget get view => stacked.AnimatedStack(
