@@ -19,24 +19,43 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
+import 'package:flutter_uploader/flutter_uploader.dart';
+import 'package:hive/hive.dart';
+import 'package:receipt_manager/app/constants.dart';
 import 'package:receipt_manager/data/repository/data_receipts_repository.dart';
-import 'package:receipt_manager/data/storage/receipt_database.dart';
 import 'package:receipt_manager/data/storage/scheme/insert_holder_table.dart';
 
 import 'upload.dart';
 
 class UploadController extends Controller {
   final UploadPresenter _historyPresenter;
+  final Box<dynamic> settingsBox;
+
+  bool _rotateImage = false;
+  bool _https = true;
+  bool _gaussianBlur = false;
+  bool _grayscaleImage = true;
+  bool? _reverseProxy;
+  String? _address;
+  String? _token;
 
   DataReceiptRepository repository;
 
   UploadController(DataReceiptRepository repository)
       : _historyPresenter = UploadPresenter(repository),
         this.repository = repository,
+        settingsBox = Hive.box('settings'),
         super();
 
   @override
-  void initListeners() {}
+  void initListeners() {
+    _rotateImage = settingsBox.get(verticalImage, defaultValue: false);
+    _https = settingsBox.get(enableHttps, defaultValue: true);
+    _gaussianBlur = settingsBox.get(enableGaussianBlur, defaultValue: false);
+    _grayscaleImage = settingsBox.get(enableGrayscale, defaultValue: true);
+    _reverseProxy = settingsBox.get(reverseProxyField);
+    _token = settingsBox.get(apiTokenField);
+  }
 
   @override
   void onResumed() => print('On resumed');
@@ -53,23 +72,36 @@ class UploadController extends Controller {
     super.onDisposed();
   }
 
-  Future<void> sendReceipt(File image) async {
-    StoresCompanion store = StoresCompanion(storeName: Value("StoreTest"));
-    TagsCompanion tag = TagsCompanion(tagName: Value("TagTest"));
-    CategoriesCompanion categoriesCompanion =
-        CategoriesCompanion(categoryName: Value("Category"));
-    ReceiptsCompanion receipt = ReceiptsCompanion(
-      date: Value(DateTime.now()),
-      total: Value(19.00),
-      currency: Value("\$"),
+  Future<InsertReceiptHolder?> send(File image) async {
+    await FlutterUploader().enqueue(
+      MultipartFormDataUpload(
+        url:
+            "${_https ? "https" : "http"}://${_reverseProxy! ? "www." : ""}$_address${_reverseProxy! ? "" : ":8721"}/api/upload?access_token=$_token&grayscale_image=$_grayscaleImage&gaussian_blur=$_gaussianBlur&rotate=$_rotateImage",
+        files: [FileItem(path: image.path, field: "file")],
+        method: UploadMethod.POST,
+      ),
     );
 
-    InsertReceiptHolder receiptHolder = InsertReceiptHolder(
-        tag: tag,
-        store: store,
-        category: categoriesCompanion,
-        receipt: receipt);
+    FlutterUploader().progress.listen((progress) {
+      print(progress);
+    });
+  }
 
-    Navigator.of(getContext()).pop({'receipt': receiptHolder});
+  bool validArguments() {
+    if (_reverseProxy == null) return false;
+    if (_token == null) return false;
+
+    _address = settingsBox.get(_reverseProxy! ? serverDomain : serverIP);
+    if (_address == null) return false;
+
+    return true;
+  }
+
+  void sendReceipt(File image) async {
+    await FlutterUploader().cancelAll();
+    await FlutterUploader().clearUploads();
+    if (!validArguments()) return;
+    await send(image);
+    Navigator.pop(getContext());
   }
 }

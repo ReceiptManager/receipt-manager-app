@@ -77,7 +77,7 @@ class ImageUploadState extends ViewState<ImageUploadPage, UploadController> {
                   crossAxisAlignment: CrossAxisAlignment.end,
                   mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment: MainAxisAlignment.end,
-                  children: <Widget>[submitButton(controller)])
+                  children: <Widget>[submitButton(controller)]),
             ]));
       }));
 }
