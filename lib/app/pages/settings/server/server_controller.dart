@@ -31,12 +31,12 @@ class ServerSettingsController extends Controller {
   final _formKey = GlobalKey<FormState>();
 
   final RegExp urlRegex = new RegExp(
-      "^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\$",
+      "^((?!-))(xn--)?[a-z0-9][a-z0-9-_]{0,61}[a-z0-9]{0,1}.(xn--)?([a-z0-9-]{1,61}|[a-z0-9-]{1,30}.[a-z]{2,})\$",
       caseSensitive: false,
       multiLine: false);
 
   final RegExp ipRegex = new RegExp(
-      "^((?!-))(xn--)?[a-z0-9][a-z0-9-_]{0,61}[a-z0-9]{0,1}.(xn--)?([a-z0-9-]{1,61}|[a-z0-9-]{1,30}.[a-z]{2,})\$",
+      "^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\$",
       caseSensitive: false,
       multiLine: false);
 
@@ -53,7 +53,13 @@ class ServerSettingsController extends Controller {
   get formKey => _formKey;
 
   @override
-  void initListeners() {}
+  void initListeners() {
+    bool? reverseProxy = settingsBox.get(reverseProxyField);
+    if (reverseProxy == null) return null;
+
+    _serverSettingController.text =
+        settingsBox.get(reverseProxy ? serverDomain : serverIP);
+  }
 
   @override
   void onResumed() => print('On resumed');
@@ -78,25 +84,31 @@ class ServerSettingsController extends Controller {
     }
 
     String serverAddress = serverSettingController.text.trim();
+    print(serverAddress);
 
     if (ipRegex.hasMatch(serverAddress)) {
       settingsBox.put(serverDomain, serverAddress);
       settingsBox.put(reverseProxyField, false);
+      print("Use domain");
     } else {
       settingsBox.put(serverIP, serverAddress);
       settingsBox.put(reverseProxyField, true);
+      print("Use IP");
     }
 
-    UserNotifier.success("API token is valid", getContext());
+    UserNotifier.success("Server IP is valid", getContext());
     refreshUI();
   }
 
-  validateServerAddress(value) {
+  validateServerAddress(String value) {
     value = value.trim();
-    if (value.isEmpty() &&
-        ((!ipRegex.hasMatch(value) && !urlRegex.hasMatch(value)))) {
-      return "Api token is invalid";
+    if (value.isEmpty) {
+      return "Api token is empty";
     }
+
+    if (!ipRegex.hasMatch(value) && !urlRegex.hasMatch(value))
+      return "Api token is invalid";
+
     return null;
   }
 }

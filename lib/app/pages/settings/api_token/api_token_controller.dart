@@ -44,7 +44,9 @@ class ApiTokenController extends Controller {
   get formKey => _formKey;
 
   @override
-  void initListeners() {}
+  void initListeners() {
+    apiTokenController.text = settingsBox.get(apiTokenField) ?? "";
+  }
 
   @override
   void onResumed() => print('On resumed');
@@ -75,10 +77,8 @@ class ApiTokenController extends Controller {
     refreshUI();
   }
 
-  validateApiToken(value) {
-    value = value.trim();
-
-    if (value.isEmpty()) {
+  validateApiToken(String value) {
+    if (value.trim().isEmpty) {
       return "Api token is invalid";
     }
 

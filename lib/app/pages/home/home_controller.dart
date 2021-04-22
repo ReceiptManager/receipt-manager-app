@@ -15,13 +15,15 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-import 'dart:developer';
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:currency_picker/currency_picker.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
+import 'package:flutter_uploader/flutter_uploader.dart';
+import 'package:gallery_saver/gallery_saver.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:receipt_manager/app/helper/notfifier.dart';
@@ -33,7 +35,6 @@ import 'package:receipt_manager/data/repository/data_receipts_repository.dart';
 import 'package:receipt_manager/data/storage/receipt_database.dart';
 import 'package:receipt_manager/data/storage/scheme/insert_holder_table.dart';
 
-// TODO: implement settings controller
 class HomeController extends Controller {
   final HomePresenter _homePresenter;
 
@@ -44,10 +45,10 @@ class HomeController extends Controller {
   TextEditingController _receiptCategoryController = TextEditingController();
 
   final _formKey = GlobalKey<FormState>();
+  final picker = ImagePicker();
+
   Currency? currency;
   DateTime? _receiptDate;
-
-  final picker = ImagePicker();
   DataReceiptRepository appRepository;
 
   HomeController(DataReceiptRepository appRepository)
@@ -56,23 +57,32 @@ class HomeController extends Controller {
         super();
 
   Future<void> getImageResult(File image) async {
-    Map results = await Navigator.of(this.getContext())
-        .push(new MaterialPageRoute<dynamic>(
-      builder: (BuildContext context) {
-        return new ImageUploadPage(image);
-      },
-    ));
+    await FlutterUploader().cancelAll();
+    await FlutterUploader().clearUploads();
 
-    if (results.containsKey('receipt')) {
-      InsertReceiptHolder holder = results['receipt'];
+    Navigator.of(getContext()).push(MaterialPageRoute(
+        builder: (BuildContext context) => ImageUploadPage(image)));
 
-      _storeNameController.text = holder.store.storeName.value;
-      _receiptTotalController.text =
-          holder.receipt.total.value.toStringAsFixed(2);
-      _receiptDateController.text =
-          DateFormat.yMMMd().format(holder.receipt.date.value);
+    bool updated = false;
+    await FlutterUploader().result.listen((result) {
+      if (result.statusCode == 200 && result.response != null && !updated) {
+        Map<String, dynamic> r = jsonDecode(result.response!);
 
-      print(results['receipt']);
+        _storeNameController.text = r['storeName'] ?? "";
+        _receiptTotalController.text = r['receiptTotal'] ?? "";
+        if (r['receiptTotal'] != null) {}
+
+        updated = true;
+        UserNotifier.success(result.response.toString(), this.getContext());
+      }
+    }, onError: (ex, stacktrace) {
+      UserNotifier.fail("Failed to upload image", this.getContext());
+    });
+
+    InsertReceiptHolder? holder;
+
+    if (holder == null) {
+      return;
     }
   }
 
@@ -90,6 +100,8 @@ class HomeController extends Controller {
 
     if (pickedFile != null) {
       File image = File(pickedFile.path);
+      await GallerySaver.saveImage(image.path, albumName: "ReceiptManager");
+
       getImageResult(image);
     }
   }
@@ -176,26 +188,6 @@ class HomeController extends Controller {
 
   get formKey => _formKey;
 
-  Future<void> debugInsert() async {
-    StoresCompanion store = StoresCompanion(storeName: Value("StoreTest"));
-    TagsCompanion tag = TagsCompanion(tagName: Value("TagTest"));
-    CategoriesCompanion categoriesCompanion =
-        CategoriesCompanion(categoryName: Value("Category"));
-    ReceiptsCompanion receipt = ReceiptsCompanion(
-      date: Value(DateTime.now()),
-      total: Value(19.00),
-      currency: Value("\$"),
-    );
-
-    InsertReceiptHolder receiptHolder = InsertReceiptHolder(
-        tag: tag,
-        store: store,
-        category: categoriesCompanion,
-        receipt: receipt);
-
-    await appRepository.insertReceipt(receiptHolder);
-  }
-
   Future<void> submit() async {
     if (!_formKey.currentState!.validate()) {
       UserNotifier.fail("Input is invalid", getContext());
@@ -259,9 +251,7 @@ class HomeController extends Controller {
 
     try {
       double.parse(value);
-    } catch (_) {
-      log(_.toString());
-    }
+    } catch (_) {}
     return null;
   }
 
