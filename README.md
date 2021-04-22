@@ -9,8 +9,6 @@
 
 # Receipt manager [![Gitter](https://badges.gitter.im/receipt-parser-manager/community.svg)](https://gitter.im/receipt-parser-manager/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
-
-<a href="https://android.izzysoft.de/repo/apk/org.receipt_manager"><img width=150 src="https://raw.githubusercontent.com/ReceiptManager/receipt-manager-app/master/assets/fdroid.svg"></a>
 <a href="https://android.izzysoft.de/repo/apk/org.receipt_manager"><img width=150 src="https://gitlab.com/IzzyOnDroid/repo/-/raw/master/assets/IzzyOnDroid.png"></a>
 
 You can find pre-compiled releases on the Github release page or in the FDROID repository.
