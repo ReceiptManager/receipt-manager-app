@@ -35,7 +35,7 @@ class ApiTokenState extends ViewState<ApiTokenPage, ApiTokenController> {
   ApiTokenState() : super(ApiTokenController(DataReceiptRepository()));
 
   Widget apiTextField(ApiTokenController controller) => PaddingWidget(
-          widget: SimpleTextfieldWidget(
+          widget: SimpleTextFieldWidget(
         controller: controller.apiTokenController,
         hintText: "API Token",
         labelText: "API Token",
