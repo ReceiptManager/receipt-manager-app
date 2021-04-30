@@ -141,8 +141,6 @@ class StatsState extends ViewState<StatsPage, StatsController> {
 
                   return Swiper(
                     index: 0,
-                    autoplay: true,
-                    duration: 10,
                     itemBuilder: (BuildContext context, int index) {
                       return widgets[index];
                     },
