@@ -37,7 +37,7 @@ class ServerSettingsState
       : super(ServerSettingsController(DataReceiptRepository()));
 
   Widget apiTextField(ServerSettingsController controller) => PaddingWidget(
-          widget: SimpleTextfieldWidget(
+          widget: SimpleTextFieldWidget(
         controller: controller.serverSettingController,
         hintText: "Server Address",
         labelText: "Server Address",

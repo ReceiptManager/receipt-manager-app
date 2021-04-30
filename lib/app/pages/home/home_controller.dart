@@ -118,34 +118,34 @@ class HomeController extends Controller {
     } else {}
   }
 
-  Future<List<String>> getStoreNames() async {
+  Future<List<String>> getStoreNames(String pattern) async {
     List<Store> list = await this.appRepository.getStoreNames();
     List<String> storeNames = [];
     for (var store in list) {
       if (!storeNames.contains(store.storeName))
         storeNames.add(store.storeName);
     }
-    return storeNames;
+    return storeNames.where((element) => element.startsWith(pattern)).toList();
   }
 
-  Future<List<String>> getTagNames() async {
+  Future<List<String>> getTagNames(String pattern) async {
     List<Tag> list = await this.appRepository.getTagNames();
     List<String> tagNames = [];
     for (var tag in list) {
       if (!tagNames.contains(tag.tagName) && tag.tagName.isNotEmpty)
         tagNames.add(tag.tagName);
     }
-    return tagNames;
+    return tagNames.where((element) => element.startsWith(pattern)).toList();
   }
 
-  Future<List<String>> getCategoryNames() async {
+  Future<List<String>> getCategoryNames(String pattern) async {
     List<Categorie> list = await this.appRepository.getCategoryNames();
     List<String> categoryNames = [];
     for (var category in list) {
       if (!categoryNames.contains(category.categoryName))
         categoryNames.add(category.categoryName);
     }
-    return categoryNames;
+    return categoryNames.where((element) => element.toUpperCase().startsWith(pattern.toUpperCase())).toList();
   }
 
   String? validateCategory(value) {

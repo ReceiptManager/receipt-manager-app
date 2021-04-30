@@ -21,33 +21,40 @@ import 'package:flutter_multi_formatter/flutter_multi_formatter.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:receipt_manager/app/pages/home/home_controller.dart';
 import 'package:receipt_manager/app/widgets/padding/padding_widget.dart';
+import 'package:receipt_manager/app/widgets/scroll/scroll_widget.dart';
 import 'package:receipt_manager/app/widgets/textfield/simple_textfield.dart';
 
 class InputForm extends StatelessWidget {
+  final ScrollController _scrollController = ScrollController();
+
   Widget storeNameTextField(BuildContext context, HomeController controller) =>
-      PaddingWidget(
-          widget: SimpleTextfieldWidget(
-              controller: controller.storeNameController,
-              hintText: "Store Name",
-              labelText: "Store Name",
-              helperText: "The receipt store name",
-              validator: controller.validateStoreName,
-              suggestionList: controller.getStoreNames(),
-              readOnly: false,
-              icon: Icon(Icons.store_mall_directory_outlined)));
+      ScrollWidget(
+          widget: PaddingWidget(
+              widget: SimpleTextFieldWidget(
+                  controller: controller.storeNameController,
+                  hintText: "Store Name",
+                  labelText: "Store Name",
+                  helperText: "The receipt store name",
+                  validator: controller.validateStoreName,
+                  getSuggestionList: controller.getStoreNames,
+                  readOnly: false,
+                  icon: Icon(Icons.store_mall_directory_outlined))),
+          controller: _scrollController);
 
   Widget tagTextField(BuildContext context, HomeController controller) =>
-      PaddingWidget(
-          widget: SimpleTextfieldWidget(
-        controller: controller.receiptTagController,
-        hintText: "Receipt Tag",
-        labelText: "Receipt Tag",
-        helperText: "The receipt tag",
-        validator: (value) => null,
-        suggestionList: controller.getTagNames(),
-        icon: Icon(Icons.tag),
-        readOnly: false,
-      ));
+      ScrollWidget(
+          widget: PaddingWidget(
+              widget: SimpleTextFieldWidget(
+            controller: controller.receiptTagController,
+            hintText: "Receipt Tag",
+            labelText: "Receipt Tag",
+            helperText: "The receipt tag",
+            validator: (value) => null,
+            getSuggestionList: controller.getTagNames,
+            icon: Icon(Icons.tag),
+            readOnly: false,
+          )),
+          controller: _scrollController);
 
   Widget totalTextField(BuildContext context, HomeController controller) =>
       PaddingWidget(
@@ -56,17 +63,19 @@ class InputForm extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Expanded(
-              child: SimpleTextfieldWidget(
-            controller: controller.receiptTotalController,
-            hintText: "Receipt Total",
-            labelText: "Receipt Total",
-            helperText: "The receipt total",
-            icon: Icon(Icons.monetization_on_outlined),
-            validator: controller.validateTotal,
-            inputFormatters: [MoneyInputFormatter()],
-            keyboardType: TextInputType.number,
-            readOnly: false,
-          )),
+              child: ScrollWidget(
+                  widget: SimpleTextFieldWidget(
+                    controller: controller.receiptTotalController,
+                    hintText: "Receipt Total",
+                    labelText: "Receipt Total",
+                    helperText: "The receipt total",
+                    icon: Icon(Icons.monetization_on_outlined),
+                    validator: controller.validateTotal,
+                    inputFormatters: [MoneyInputFormatter()],
+                    keyboardType: TextInputType.number,
+                    readOnly: false,
+                  ),
+                  controller: _scrollController)),
           PaddingWidget(
             widget: NeumorphicButton(
               onPressed: () => controller.currencyPicker(context),
@@ -90,7 +99,7 @@ class InputForm extends StatelessWidget {
       PaddingWidget(
           widget: GestureDetector(
               onTap: () => controller.setDate,
-              child: SimpleTextfieldWidget(
+              child: SimpleTextFieldWidget(
                 controller: controller.receiptDateController,
                 hintText: "Receipt Date",
                 labelText: "Receipt Date",
@@ -116,17 +125,19 @@ class InputForm extends StatelessWidget {
       ));
 
   Widget categoryTextFormat(BuildContext context, HomeController controller) =>
-      PaddingWidget(
-          widget: SimpleTextfieldWidget(
-        controller: controller.receiptCategoryController,
-        hintText: "Receipt Category",
-        labelText: "Receipt Category",
-        helperText: "The receipt category",
-        icon: Icon(Icons.category),
-        validator: controller.validateCategory,
-        suggestionList: controller.getCategoryNames(),
-        readOnly: false,
-      ));
+      ScrollWidget(
+          widget: PaddingWidget(
+              widget: SimpleTextFieldWidget(
+            controller: controller.receiptCategoryController,
+            hintText: "Receipt Category",
+            labelText: "Receipt Category",
+            helperText: "The receipt category",
+            icon: Icon(Icons.category),
+            validator: controller.validateCategory,
+            getSuggestionList: controller.getCategoryNames,
+            readOnly: false,
+          )),
+          controller: _scrollController);
 
   spacer() => SizedBox(
         height: 50,
@@ -138,20 +149,22 @@ class InputForm extends StatelessWidget {
         FlutterCleanArchitecture.getController<HomeController>(context);
 
     return SingleChildScrollView(
+        controller: _scrollController,
+        reverse: true,
         child: Form(
-      key: controller.formKey,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          storeNameTextField(context, controller),
-          totalTextField(context, controller),
-          dateTextField(context, controller),
-          tagTextField(context, controller),
-          categoryTextFormat(context, controller),
-          submitButton(context, controller),
-          spacer()
-        ],
-      ),
-    ));
+          key: controller.formKey,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              storeNameTextField(context, controller),
+              totalTextField(context, controller),
+              dateTextField(context, controller),
+              tagTextField(context, controller),
+              categoryTextFormat(context, controller),
+              submitButton(context, controller),
+              spacer()
+            ],
+          ),
+        ));
   }
 }
