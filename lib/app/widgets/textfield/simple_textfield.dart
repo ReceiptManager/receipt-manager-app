@@ -16,10 +16,12 @@
  */
 
 import 'package:flutter/services.dart';
+import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
+import 'package:receipt_manager/app/pages/home/home_controller.dart';
 
-class SimpleTextfieldWidget extends StatelessWidget {
+class SimpleTextFieldWidget extends StatelessWidget {
   final Widget icon;
   final String hintText;
   final String helperText;
@@ -32,16 +34,16 @@ class SimpleTextfieldWidget extends StatelessWidget {
 
   final TextEditingController controller;
 
-  final Future<List<String>>? suggestionList;
+  final Function? getSuggestionList;
 
-  SimpleTextfieldWidget(
+  SimpleTextFieldWidget(
       {required this.controller,
       required this.hintText,
       required this.helperText,
       required this.labelText,
       required this.icon,
       this.onTap,
-      this.suggestionList,
+      this.getSuggestionList,
       this.keyboardType,
       this.inputFormatters,
       required this.readOnly,
@@ -49,6 +51,7 @@ class SimpleTextfieldWidget extends StatelessWidget {
 
   Widget defaultTextField() {
     return TextFormField(
+        autofocus: true,
         enableSuggestions: true,
         onTap: this.onTap,
         readOnly: this.readOnly,
@@ -69,65 +72,53 @@ class SimpleTextfieldWidget extends StatelessWidget {
   }
 
   Widget getTextField() {
-    if (readOnly || suggestionList == null)
+    if (readOnly || getSuggestionList == null)
       return defaultTextField();
     else {
-      return FutureBuilder(
-          // Initialize FlutterFire:
-          future: suggestionList!,
-          builder:
-              (BuildContext context, AsyncSnapshot<List<String>> snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return defaultTextField();
-            }
+      return TypeAheadFormField(
 
-            if (snapshot.data!.isEmpty) {
-              return defaultTextField();
-            }
-
-            return TypeAheadFormField(
-              textFieldConfiguration: TextFieldConfiguration(
-                enableSuggestions: true,
-                maxLines: 1,
-                onTap: this.onTap,
-                controller: controller,
-                inputFormatters: this.inputFormatters,
-                style: TextStyle(color: Colors.black),
-                decoration: new InputDecoration(
-                  border: new OutlineInputBorder(
-                      borderSide: new BorderSide(color: Colors.grey[100]!)),
-                  hintText: hintText,
-                  //   labelText: labelText,
-                  helperText: helperText,
-                  prefixIcon: icon,
-                  prefixText: ' ',
-                ),
-              ),
-              hideOnEmpty: true,
-              suggestionsCallback: (pattern) {
-                return suggestionList!;
-              },
-              itemBuilder: (context, suggestion) {
-                return Ink(
-                    color: Colors.white,
-                    child: ListTile(
-                      title: Text(suggestion as String),
-                    ));
-              },
-              transitionBuilder: (context, suggestionsBox, controller) {
-                return suggestionsBox;
-              },
-              onSuggestionSelected: (suggestion) {
-                this.controller.text = suggestion as String;
-              },
-              validator: (value) => validator(value),
-            );
-          });
+        textFieldConfiguration: TextFieldConfiguration(
+          autofocus: true,
+          maxLines: 1,
+          onTap: this.onTap,
+          controller: controller,
+          inputFormatters: this.inputFormatters,
+          style: TextStyle(color: Colors.black),
+          decoration: new InputDecoration(
+            border: new OutlineInputBorder(
+                borderSide: new BorderSide(color: Colors.grey[100]!)),
+            hintText: hintText,
+            //   labelText: labelText,
+            helperText: helperText,
+            prefixIcon: icon,
+            prefixText: ' ',
+          ),
+        ),
+        hideOnEmpty: true,
+        suggestionsCallback: (pattern) async {
+          return await getSuggestionList!(pattern);
+        },
+        itemBuilder: (context, suggestion) {
+          return Ink(
+              color: Colors.white,
+              child: ListTile(
+                title: Text(suggestion as String),
+              ));
+        },
+        transitionBuilder: (context, suggestionsBox, controller) {
+          return suggestionsBox;
+        },
+        onSuggestionSelected: (suggestion) {
+          this.controller.text = suggestion as String;
+        },
+        validator: (value) => validator(value),
+      );
     }
   }
 
   @override
   Widget build(BuildContext context) {
+
     return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
