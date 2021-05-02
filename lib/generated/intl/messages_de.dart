@@ -62,7 +62,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "theReceiptTag" : MessageLookupByLibrary.simpleMessage("Der TAG des Kassenbeleges"),
     "theReceiptTotal" : MessageLookupByLibrary.simpleMessage("Der Gesamtbetrag des Kassenbeleges"),
     "upload" : MessageLookupByLibrary.simpleMessage("Hochladen"),
-    "weeklyOverview" : MessageLookupByLibrary.simpleMessage("Wöchtenlichte Übersicht"),
+    "weeklyOverview" : MessageLookupByLibrary.simpleMessage("Wöchentliche Übersicht"),
     "weeklyTotal" : MessageLookupByLibrary.simpleMessage("Wöchentliche Ausgaben")
   };
 }

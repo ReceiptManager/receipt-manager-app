@@ -23,18 +23,20 @@ import 'package:receipt_manager/app/pages/home/home_controller.dart';
 import 'package:receipt_manager/app/widgets/padding/padding_widget.dart';
 import 'package:receipt_manager/app/widgets/scroll/scroll_widget.dart';
 import 'package:receipt_manager/app/widgets/textfield/simple_textfield.dart';
+import 'package:receipt_manager/generated/l10n.dart';
 
 class InputForm extends StatelessWidget {
   final ScrollController _scrollController = ScrollController();
 
   Widget storeNameTextField(BuildContext context, HomeController controller) =>
       ScrollWidget(
+          enableScroll: false,
           widget: PaddingWidget(
               widget: SimpleTextFieldWidget(
                   controller: controller.storeNameController,
-                  hintText: "Store Name",
-                  labelText: "Store Name",
-                  helperText: "The receipt store name",
+                  hintText: S.of(context).storeName,
+                  labelText: S.of(context).storeName,
+                  helperText: S.of(context).theReceiptStoreName,
                   validator: controller.validateStoreName,
                   getSuggestionList: controller.getStoreNames,
                   readOnly: false,
@@ -46,9 +48,9 @@ class InputForm extends StatelessWidget {
           widget: PaddingWidget(
               widget: SimpleTextFieldWidget(
             controller: controller.receiptTagController,
-            hintText: "Receipt Tag",
-            labelText: "Receipt Tag",
-            helperText: "The receipt tag",
+            hintText: S.of(context).receiptTag,
+            labelText: S.of(context).receiptTag,
+            helperText: S.of(context).theReceiptTag,
             validator: (value) => null,
             getSuggestionList: controller.getTagNames,
             icon: Icon(Icons.tag),
@@ -66,9 +68,9 @@ class InputForm extends StatelessWidget {
               child: ScrollWidget(
                   widget: SimpleTextFieldWidget(
                     controller: controller.receiptTotalController,
-                    hintText: "Receipt Total",
-                    labelText: "Receipt Total",
-                    helperText: "The receipt total",
+                    hintText: S.of(context).receiptTotal,
+                    labelText: S.of(context).receiptTotal,
+                    helperText: S.of(context).theReceiptTotal,
                     icon: Icon(Icons.monetization_on_outlined),
                     validator: controller.validateTotal,
                     inputFormatters: [MoneyInputFormatter()],
@@ -101,9 +103,9 @@ class InputForm extends StatelessWidget {
               onTap: () => controller.setDate,
               child: SimpleTextFieldWidget(
                 controller: controller.receiptDateController,
-                hintText: "Receipt Date",
-                labelText: "Receipt Date",
-                helperText: "The receipt date",
+                hintText: S.of(context).receiptDate,
+                labelText: S.of(context).receiptDate,
+                helperText: S.of(context).theReceiptDate,
                 onTap: () => controller.setDate(context),
                 icon: Icon(Icons.date_range),
                 validator: controller.validateDate,
@@ -120,8 +122,8 @@ class InputForm extends StatelessWidget {
               shape: NeumorphicShape.flat,
               boxShape: NeumorphicBoxShape.stadium(),
             ),
-            child:
-                Text("Submit", style: TextStyle(fontWeight: FontWeight.bold))),
+            child: Text(S.of(context).submit,
+                style: TextStyle(fontWeight: FontWeight.bold))),
       ));
 
   Widget categoryTextFormat(BuildContext context, HomeController controller) =>
@@ -129,9 +131,9 @@ class InputForm extends StatelessWidget {
           widget: PaddingWidget(
               widget: SimpleTextFieldWidget(
             controller: controller.receiptCategoryController,
-            hintText: "Receipt Category",
-            labelText: "Receipt Category",
-            helperText: "The receipt category",
+            hintText: S.of(context).receiptCategory,
+            labelText: S.of(context).receiptCategory,
+            helperText: S.of(context).theReceiptCategory,
             icon: Icon(Icons.category),
             validator: controller.validateCategory,
             getSuggestionList: controller.getCategoryNames,
@@ -161,8 +163,7 @@ class InputForm extends StatelessWidget {
               dateTextField(context, controller),
               tagTextField(context, controller),
               categoryTextFormat(context, controller),
-              submitButton(context, controller),
-              spacer()
+              submitButton(context, controller)
             ],
           ),
         ));
