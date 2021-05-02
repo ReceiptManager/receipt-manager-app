@@ -36,7 +36,6 @@ class MessageLookup extends MessageLookupByLibrary {
     "emptyStoreName" : MessageLookupByLibrary.simpleMessage("Receipt store name is empty"),
     "emptyTotal" : MessageLookupByLibrary.simpleMessage("Receipt total is empty"),
     "enableDebugOutput" : MessageLookupByLibrary.simpleMessage("Enable Debug Output"),
-    "expenseOverview" : MessageLookupByLibrary.simpleMessage("Expense overview"),
     "expensesOverview" : MessageLookupByLibrary.simpleMessage("Expenses overview"),
     "failedUploadImage" : MessageLookupByLibrary.simpleMessage("Failed to upload image"),
     "gaussianBlur" : MessageLookupByLibrary.simpleMessage("Gaussian Blur"),

@@ -28,6 +28,7 @@ import 'package:receipt_manager/data/helpers/month_chart.dart';
 import 'package:receipt_manager/data/helpers/weekly_chart.dart';
 import 'package:receipt_manager/data/repository/data_receipts_repository.dart';
 import 'package:receipt_manager/data/storage/scheme/holder_table.dart';
+import 'package:receipt_manager/generated/l10n.dart';
 // ignore: import_of_legacy_library_into_null_safe
 import 'package:syncfusion_flutter_charts/charts.dart';
 
@@ -52,7 +53,7 @@ class StatsState extends ViewState<StatsPage, StatsController> {
         tooltipBehavior: monthToolTip,
         series: <ChartSeries>[
           LineSeries<ReceiptMonthData, String>(
-              name: "Monthly Total",
+              name: S.of(context).monthlyTotal,
               color: Colors.red,
               dataSource: data,
               xValueMapper: (ReceiptMonthData data, _) =>
@@ -72,7 +73,7 @@ class StatsState extends ViewState<StatsPage, StatsController> {
         series: <ChartSeries>[
           ColumnSeries<WeeklyChartData, String>(
               color: Colors.red,
-              name: "Weekly total",
+              name: S.of(context).weeklyTotal,
               dataSource: data,
               xValueMapper: (WeeklyChartData data, _) => DateFormat.E()
                   .format((DateTime.utc(year, data.date.month, data.date.day))),
@@ -96,23 +97,23 @@ class StatsState extends ViewState<StatsPage, StatsController> {
               dataSource: data,
               xValueMapper: (CategoryData data, _) => data.label,
               yValueMapper: (CategoryData data, _) => data.total,
-              name: "Category")
+              name: S.of(context).category)
         ]);
   }
 
   Widget getYearOverview(List<ReceiptHolder> receipts) {
-    return StatsCard(
-        "Annual overview", "Expense overview", getMonthChart(receipts));
+    return StatsCard(S.of(context).annualOverview,
+        S.of(context).expensesOverview, getMonthChart(receipts));
   }
 
   Widget getWeeklyOverview(List<ReceiptHolder> receipts) {
-    return StatsCard(
-        "Weekly overview", "Expenses overview", getWeeklyChart(receipts));
+    return StatsCard(S.of(context).weeklyOverview,
+        S.of(context).expensesOverview, getWeeklyChart(receipts));
   }
 
   Widget getCategoryOverview(List<ReceiptHolder> receipts) {
-    return StatsCard(
-        "Category overview", "Expenses overview", getCategoryChart(receipts));
+    return StatsCard(S.of(context).categoryOverview,
+        S.of(context).expensesOverview, getCategoryChart(receipts));
   }
 
   @override
@@ -121,7 +122,7 @@ class StatsState extends ViewState<StatsPage, StatsController> {
           key: globalKey,
           backgroundColor: Colors.white,
           appBar: NeumorphicAppBar(
-            title: Text("Analytics"),
+            title: Text(S.of(context).analytics),
           ),
           body: ControlledWidgetBuilder<StatsController>(
               builder: (context, controller) {

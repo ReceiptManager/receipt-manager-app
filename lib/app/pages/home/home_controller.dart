@@ -34,6 +34,7 @@ import 'package:receipt_manager/app/pages/upload/image_upload_view.dart';
 import 'package:receipt_manager/data/repository/data_receipts_repository.dart';
 import 'package:receipt_manager/data/storage/receipt_database.dart';
 import 'package:receipt_manager/data/storage/scheme/insert_holder_table.dart';
+import 'package:receipt_manager/generated/l10n.dart';
 
 class HomeController extends Controller {
   final HomePresenter _homePresenter;
@@ -64,7 +65,7 @@ class HomeController extends Controller {
         builder: (BuildContext context) => ImageUploadPage(image)));
 
     bool updated = false;
-    await FlutterUploader().result.listen((result) {
+    FlutterUploader().result.listen((result) {
       if (result.statusCode == 200 && result.response != null && !updated) {
         Map<String, dynamic> r = jsonDecode(result.response!);
 
@@ -76,7 +77,8 @@ class HomeController extends Controller {
         UserNotifier.success(result.response.toString(), this.getContext());
       }
     }, onError: (ex, stacktrace) {
-      UserNotifier.fail("Failed to upload image", this.getContext());
+      UserNotifier.fail(
+          S.of(getContext()).failedUploadImage, this.getContext());
     });
 
     InsertReceiptHolder? holder;
@@ -145,13 +147,16 @@ class HomeController extends Controller {
       if (!categoryNames.contains(category.categoryName))
         categoryNames.add(category.categoryName);
     }
-    return categoryNames.where((element) => element.toUpperCase().startsWith(pattern.toUpperCase())).toList();
+    return categoryNames
+        .where((element) =>
+            element.toUpperCase().startsWith(pattern.toUpperCase()))
+        .toList();
   }
 
   String? validateCategory(value) {
     value = value.trim();
     if (value.isEmpty) {
-      return "Receipt category is empty";
+      return S.of(getContext()).emptyCategory;
     }
 
     return null;
@@ -190,7 +195,7 @@ class HomeController extends Controller {
 
   Future<void> submit() async {
     if (!_formKey.currentState!.validate()) {
-      UserNotifier.fail("Input is invalid", getContext());
+      UserNotifier.fail(S.of(getContext()).invalidInput, getContext());
       refreshUI();
       return;
     }
@@ -230,14 +235,14 @@ class HomeController extends Controller {
     _receiptDateController.clear();
     _receiptTagController.clear();
     _receiptCategoryController.clear();
-    UserNotifier.success("Input is invalid", getContext());
+    UserNotifier.success(S.of(getContext()).invalidInput, getContext());
     refreshUI();
   }
 
   String? validateStoreName(String value) {
     value = value.trim();
     if (value.isEmpty) {
-      return "Receipt store name is empty";
+      return S.of(getContext()).emptyStoreName;
     }
 
     return null;
@@ -246,7 +251,7 @@ class HomeController extends Controller {
   String? validateTotal(String value) {
     value = value.trim();
     if (value.isEmpty) {
-      return "Receipt total is empty";
+      return S.of(getContext()).emptyTotal;
     }
 
     try {
@@ -258,7 +263,7 @@ class HomeController extends Controller {
   String? validateDate(String value) {
     value = value.trim();
     if (value.isEmpty || this._receiptDate == null) {
-      return "Receipt date is empty";
+      return S.of(getContext()).emptyReceiptDate;
     }
 
     return null;

@@ -25,6 +25,7 @@ import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:receipt_manager/app/pages/upload/upload_controller.dart';
 import 'package:receipt_manager/app/widgets/padding/padding_widget.dart';
 import 'package:receipt_manager/data/repository/data_receipts_repository.dart';
+import 'package:receipt_manager/generated/l10n.dart';
 
 // ignore: must_be_immutable
 class FileUploadPage extends View {
@@ -49,15 +50,15 @@ class FileUploadState extends ViewState<FileUploadPage, UploadController> {
               shape: NeumorphicShape.flat,
               boxShape: NeumorphicBoxShape.stadium(),
             ),
-            child:
-                Text("Upload", style: TextStyle(fontWeight: FontWeight.bold))),
+            child: Text(S.of(context).upload,
+                style: TextStyle(fontWeight: FontWeight.bold))),
       ));
 
   @override
   Widget get view => Scaffold(
       key: globalKey,
       backgroundColor: Colors.white,
-      appBar: NeumorphicAppBar(title: Text("Show Image")),
+      appBar: NeumorphicAppBar(title: Text(S.of(context).showImage)),
       body: ControlledWidgetBuilder<UploadController>(
           builder: (context, controller) {
         return Column(children: [submitButton(controller)]);

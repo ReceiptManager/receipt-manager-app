@@ -16,10 +16,8 @@
  */
 
 import 'package:flutter/services.dart';
-import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
-import 'package:receipt_manager/app/pages/home/home_controller.dart';
 
 class SimpleTextFieldWidget extends StatelessWidget {
   final Widget icon;
@@ -76,7 +74,6 @@ class SimpleTextFieldWidget extends StatelessWidget {
       return defaultTextField();
     else {
       return TypeAheadFormField(
-
         textFieldConfiguration: TextFieldConfiguration(
           autofocus: true,
           maxLines: 1,
@@ -118,7 +115,6 @@ class SimpleTextFieldWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[

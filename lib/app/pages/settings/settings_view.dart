@@ -20,6 +20,7 @@ import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:receipt_manager/app/pages/settings/settings_controller.dart';
 import 'package:receipt_manager/app/widgets/padding/padding_widget.dart';
+import 'package:receipt_manager/generated/l10n.dart';
 import 'package:settings_ui/settings_ui.dart';
 
 class SettingsPage extends View {
@@ -36,21 +37,21 @@ class _SettingsState extends ViewState<SettingsPage, SettingsController> {
       child: ControlledWidgetBuilder<SettingsController>(
           builder: (context, controller) => Scaffold(
               backgroundColor: Colors.white,
-              appBar: NeumorphicAppBar(title: Text("Settings")),
+              appBar: NeumorphicAppBar(title: Text(S.of(context).settings)),
               key: globalKey,
               body: PaddingWidget(
                   widget: SettingsList(
                 backgroundColor: Colors.white,
                 shrinkWrap: true,
                 sections: [
-                  SettingsSection(title: "Network settings", tiles: [
+                  SettingsSection(title: S.of(context).networkSettings, tiles: [
                     SettingsTile(
-                        title: "Server settings",
+                        title: S.of(context).serverSettings,
                         leading: Icon(Icons.wifi),
                         onPressed: (context) =>
                             controller.serverButtonPress(context)),
                     SettingsTile(
-                        title: "API Token",
+                        title: S.of(context).apiToken,
                         leading: Icon(Icons.vpn_key),
                         onPressed: controller.apiTokenButtonPress),
                     SettingsTile.switchTile(
@@ -60,22 +61,22 @@ class _SettingsState extends ViewState<SettingsPage, SettingsController> {
                         onToggle: (bool value) => controller.toggleHttps(value))
                   ]),
                   SettingsSection(
-                    title: "Camera settings",
+                    title: S.of(context).cameraSettings,
                     tiles: [
                       SettingsTile.switchTile(
-                          title: "Rotate Image",
+                          title: S.of(context).rotateImage,
                           leading: Icon(Icons.rotate_right_sharp),
                           switchValue: controller.rotateImage,
                           onToggle: (bool value) =>
                               controller.toggleRotateImage(value)),
                       SettingsTile.switchTile(
-                          title: "Grayscale Image",
+                          title: S.of(context).grayscaleImage,
                           leading: Icon(Icons.wb_incandescent_outlined),
                           switchValue: controller.grayscaleImage,
                           onToggle: (bool value) =>
                               controller.toggleGrayscaleImage(value)),
                       SettingsTile.switchTile(
-                          title: "Gaussian Blur",
+                          title: S.of(context).gaussianBlur,
                           leading: Icon(Icons.blur_on_outlined),
                           switchValue: controller.gaussianBlur,
                           onToggle: (bool value) =>
@@ -83,16 +84,16 @@ class _SettingsState extends ViewState<SettingsPage, SettingsController> {
                     ],
                   ),
                   SettingsSection(
-                    title: "Developer settings",
+                    title: S.of(context).developerSettings,
                     tiles: [
                       SettingsTile.switchTile(
-                          title: "Enable Debug Output",
+                          title: S.of(context).enableDebugOutput,
                           leading: Icon(Icons.bug_report),
                           switchValue: controller.debugOutput,
                           onToggle: (bool value) =>
                               controller.toggleDebugOutput(value)),
                       SettingsTile.switchTile(
-                          title: "Show Articles",
+                          title: S.of(context).showArticles,
                           leading: Icon(Icons.category),
                           switchValue: controller.showArticles,
                           onToggle: (bool value) =>

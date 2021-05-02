@@ -23,6 +23,7 @@ import 'package:receipt_manager/app/widgets/form/input_form.dart';
 import 'package:receipt_manager/app/widgets/stack/stack_bottom_widget.dart';
 import 'package:receipt_manager/app/widgets/stack/stack_column_widget.dart';
 import 'package:receipt_manager/data/repository/data_receipts_repository.dart';
+import 'package:receipt_manager/generated/l10n.dart';
 
 class HomePage extends View {
   @override
@@ -43,7 +44,7 @@ class _HomePageState extends ViewState<HomePage, HomeController> {
           foregroundWidget: Scaffold(
               key: globalKey,
               backgroundColor: Colors.white,
-              appBar: NeumorphicAppBar(title: Text("Add Receipt")),
+              appBar: NeumorphicAppBar(title: Text(S.of(context).addReceipt)),
               body: InputForm()),
           columnWidget: StackColumnWidget(),
           bottomWidget: BottomColumnWidget()));

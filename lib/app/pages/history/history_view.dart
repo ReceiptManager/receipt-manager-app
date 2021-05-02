@@ -28,6 +28,7 @@ import 'package:receipt_manager/app/widgets/icon/icon_tile.dart';
 import 'package:receipt_manager/app/widgets/slideable/slidable_widget.dart';
 import 'package:receipt_manager/data/repository/data_receipts_repository.dart';
 import 'package:receipt_manager/data/storage/scheme/holder_table.dart';
+import 'package:receipt_manager/generated/l10n.dart';
 
 class HistoryPage extends View {
   @override
@@ -56,7 +57,7 @@ class HistoryState extends ViewState<HistoryPage, HistoryController> {
                     "assets/empty.png",
                     fit: BoxFit.fill,
                   )),
-                  Center(child: Text("No receipts inserted."))
+                  Center(child: Text(S.of(context).noReceiptsInserted))
                 ]);
               }
 
@@ -81,10 +82,11 @@ class HistoryState extends ViewState<HistoryPage, HistoryController> {
                                         verticalOffset: 50.0,
                                         child: FadeInAnimation(
                                             child: SlidableHistoryWidget(
-                                                deleteText: "Delete",
+                                                deleteText:
+                                                    S.of(context).delete,
                                                 deleteMethod: () => controller
                                                     .deleteMethod(receipt),
-                                                editText: "Edit",
+                                                editText: S.of(context).edit,
                                                 editMethod: () =>
                                                     controller.editMethod(
                                                         receipt, context),
@@ -107,7 +109,7 @@ class HistoryState extends ViewState<HistoryPage, HistoryController> {
       foregroundWidget: Scaffold(
           key: globalKey,
           backgroundColor: Colors.white,
-          appBar: NeumorphicAppBar(title: Text("Receipt Overview")),
+          appBar: NeumorphicAppBar(title: Text(S.of(context).receiptOverview)),
           body: Column(children: [receiptVisualisation(context)])),
       columnWidget: Column(
         children: <Widget>[

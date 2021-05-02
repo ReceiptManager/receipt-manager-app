@@ -67,28 +67,6 @@ class NavigatorState extends State {
               },
             ),
             body: _children[currentIndex]));
-
-    /*CurvedNavigationBar(
-              backgroundColor: Colors.black,
-              buttonBackgroundColor: Colors.black,
-              color: Colors.white,
-              key: _bottomNavigationKey,
-              index: 0,
-              items: <Widget>[
-                navigatorWidget(Icons.add),
-                navigatorWidget(Icons.history),
-                navigatorWidget(Icons.analytics_outlined),
-                navigatorWidget(Icons.settings)
-              ],
-              animationCurve: Curves.easeInOut,
-              animationDuration: Duration(milliseconds: 300),
-              onTap: (index) {
-                setState(() {
-                  currentIndex = index;
-                });
-              },
-            ),
-            body: _children[currentIndex]));*/
   }
 
   Future<void> readSettings() async {

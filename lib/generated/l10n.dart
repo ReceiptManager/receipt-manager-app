@@ -327,16 +327,6 @@ class S {
     );
   }
 
-  /// `Expense overview`
-  String get expenseOverview {
-    return Intl.message(
-      'Expense overview',
-      name: 'expenseOverview',
-      desc: '',
-      args: [],
-    );
-  }
-
   /// `Weekly overview`
   String get weeklyOverview {
     return Intl.message(
