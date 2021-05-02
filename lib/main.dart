@@ -20,10 +20,12 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart' as pathProvider;
 import 'package:receipt_manager/app/pages/navigator.dart';
+import 'package:receipt_manager/generated/l10n.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -43,6 +45,16 @@ class ReceiptManagerApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return NeumorphicApp(
+        localizationsDelegates: [
+          S.delegate,
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+        ],
+        supportedLocales: [
+          const Locale('de', ''),
+          const Locale('en', ''),
+        ],
         debugShowCheckedModeBanner: false,
         themeMode: ThemeMode.light,
         theme: NeumorphicThemeData(
