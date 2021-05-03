@@ -29,19 +29,16 @@ class InputForm extends StatelessWidget {
   final ScrollController _scrollController = ScrollController();
 
   Widget storeNameTextField(BuildContext context, HomeController controller) =>
-      ScrollWidget(
-          enableScroll: false,
-          widget: PaddingWidget(
-              widget: SimpleTextFieldWidget(
-                  controller: controller.storeNameController,
-                  hintText: S.of(context).storeName,
-                  labelText: S.of(context).storeName,
-                  helperText: S.of(context).theReceiptStoreName,
-                  validator: controller.validateStoreName,
-                  getSuggestionList: controller.getStoreNames,
-                  readOnly: false,
-                  icon: Icon(Icons.store_mall_directory_outlined))),
-          controller: _scrollController);
+      PaddingWidget(
+          widget: SimpleTextFieldWidget(
+              controller: controller.storeNameController,
+              hintText: S.of(context).storeName,
+              labelText: S.of(context).storeName,
+              helperText: S.of(context).theReceiptStoreName,
+              validator: controller.validateStoreName,
+              getSuggestionList: controller.getStoreNames,
+              readOnly: false,
+              icon: Icon(Icons.store_mall_directory_outlined)));
 
   Widget tagTextField(BuildContext context, HomeController controller) =>
       ScrollWidget(
@@ -141,10 +138,6 @@ class InputForm extends StatelessWidget {
           )),
           controller: _scrollController);
 
-  spacer() => SizedBox(
-        height: 50,
-      );
-
   @override
   Widget build(BuildContext context) {
     HomeController controller =
@@ -152,7 +145,6 @@ class InputForm extends StatelessWidget {
 
     return SingleChildScrollView(
         controller: _scrollController,
-        reverse: true,
         child: Form(
           key: controller.formKey,
           child: Column(

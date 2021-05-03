@@ -75,7 +75,6 @@ class SimpleTextFieldWidget extends StatelessWidget {
     else {
       return TypeAheadFormField(
         textFieldConfiguration: TextFieldConfiguration(
-          autofocus: true,
           maxLines: 1,
           onTap: this.onTap,
           controller: controller,
@@ -85,13 +84,15 @@ class SimpleTextFieldWidget extends StatelessWidget {
             border: new OutlineInputBorder(
                 borderSide: new BorderSide(color: Colors.grey[100]!)),
             hintText: hintText,
-            //   labelText: labelText,
             helperText: helperText,
             prefixIcon: icon,
             prefixText: ' ',
           ),
         ),
         hideOnEmpty: true,
+        getImmediateSuggestions: true,
+        hideSuggestionsOnKeyboardHide: true,
+        suggestionsBoxDecoration: SuggestionsBoxDecoration(elevation: 0.0),
         suggestionsCallback: (pattern) async {
           return await getSuggestionList!(pattern);
         },

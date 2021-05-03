@@ -21,19 +21,13 @@ import 'package:flutter/scheduler.dart';
 class ScrollWidget extends StatelessWidget {
   final Widget widget;
   final ScrollController controller;
-  final bool enableScroll;
 
-  const ScrollWidget(
-      {required this.widget,
-      required this.controller,
-      this.enableScroll = true});
+  const ScrollWidget({required this.widget, required this.controller});
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
         onTap: () {
-          if (!enableScroll) return;
-
           SchedulerBinding.instance!.addPostFrameCallback((_) {
             controller.jumpTo(controller.position.maxScrollExtent);
           });
