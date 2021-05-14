@@ -22,7 +22,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
-import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:receipt_manager/app/pages/history/history_controller.dart';
 import 'package:receipt_manager/app/widgets/icon/icon_tile.dart';
 import 'package:receipt_manager/app/widgets/slideable/slidable_widget.dart';
@@ -73,27 +72,19 @@ class HistoryState extends ViewState<HistoryPage, HistoryController> {
                                 receipt.store.storeName,
                                 receipt.categorie.categoryName),
                             builder: (context, snap) {
-                              if (snap.connectionState ==
-                                  ConnectionState.done) {
-                                return AnimationConfiguration.staggeredList(
-                                    position: index,
-                                    duration: const Duration(milliseconds: 375),
-                                    child: SlideAnimation(
-                                        verticalOffset: 50.0,
-                                        child: FadeInAnimation(
-                                            child: SlidableHistoryWidget(
-                                                deleteText:
-                                                    S.of(context).delete,
-                                                deleteMethod: () => controller
-                                                    .deleteMethod(receipt),
-                                                editText: S.of(context).edit,
-                                                editMethod: () =>
-                                                    controller.editMethod(
-                                                        receipt, context),
-                                                image: snap.data as Image,
-                                                holder: receipt))));
+                              if (snapshot.hasData) {
+                                return SlidableHistoryWidget(
+                                    deleteText: S.of(context).delete,
+                                    deleteMethod: () =>
+                                        controller.deleteMethod(receipt),
+                                    editText: S.of(context).edit,
+                                    editMethod: () =>
+                                        controller.editMethod(receipt, context),
+                                    image: snap.data as Image,
+                                    holder: receipt);
+                              } else {
+                                return CircularProgressIndicator();
                               }
-                              return Container();
                             });
                       }));
             });
