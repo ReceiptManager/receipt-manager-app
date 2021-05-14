@@ -40,5 +40,7 @@
   "theReceiptTotal": "The receipt total",
   "receiptDate": "Receipt Date",
   "theReceiptDate": "The receipt date",
-  "submit": "Submit"
+  "submit": "Submit",
+  "clickOnReceipt": "Tippen Sie auf den Kassenbeleg um Ihn hinzufügen",
+  "receiptSuccessfullyAnalyzed": "Kassenbeleg wurde erfolgreich analysiert"
 }

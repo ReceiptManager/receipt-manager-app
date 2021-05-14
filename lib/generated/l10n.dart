@@ -476,6 +476,26 @@ class S {
       args: [],
     );
   }
+
+  /// `Tippen Sie auf den Kassenbeleg um Ihn hinzufügen`
+  String get clickOnReceipt {
+    return Intl.message(
+      'Tippen Sie auf den Kassenbeleg um Ihn hinzufügen',
+      name: 'clickOnReceipt',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Kassenbeleg wurde erfolgreich analysiert`
+  String get receiptSuccessfullyAnalyzed {
+    return Intl.message(
+      'Kassenbeleg wurde erfolgreich analysiert',
+      name: 'receiptSuccessfullyAnalyzed',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
