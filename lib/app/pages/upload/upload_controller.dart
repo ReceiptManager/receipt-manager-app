@@ -25,6 +25,7 @@ import 'package:receipt_manager/app/constants.dart';
 import 'package:receipt_manager/app/helper/notfifier.dart';
 import 'package:receipt_manager/data/repository/data_receipts_repository.dart';
 import 'package:receipt_manager/data/storage/scheme/insert_holder_table.dart';
+import 'package:receipt_manager/generated/l10n.dart';
 
 import 'upload.dart';
 
@@ -84,7 +85,7 @@ class UploadController extends Controller {
         ),
       );
     } catch (e) {
-      UserNotifier.fail(S.of(context).failedToUploadReceipt, getContext());
+      UserNotifier.fail(S.of(getContext()).failedToUploadReceipt, getContext());
     }
 
     FlutterUploader().progress.listen((progress) async {
