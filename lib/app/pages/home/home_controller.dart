@@ -18,6 +18,8 @@
 import 'dart:convert';
 import 'dart:io';
 
+// ignore: import_of_legacy_library_into_null_safe
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:currency_picker/currency_picker.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
@@ -80,12 +82,6 @@ class HomeController extends Controller {
       UserNotifier.fail(
           S.of(getContext()).failedUploadImage, this.getContext());
     });
-
-    InsertReceiptHolder? holder;
-
-    if (holder == null) {
-      return;
-    }
   }
 
   Future<void> galleryPicker() async {
@@ -127,7 +123,10 @@ class HomeController extends Controller {
       if (!storeNames.contains(store.storeName))
         storeNames.add(store.storeName);
     }
-    return storeNames.where((element) => element.startsWith(pattern)).toList();
+    return storeNames
+        .where((element) =>
+            element.toUpperCase().startsWith(pattern.toUpperCase()))
+        .toList();
   }
 
   Future<List<String>> getTagNames(String pattern) async {
@@ -137,7 +136,10 @@ class HomeController extends Controller {
       if (!tagNames.contains(tag.tagName) && tag.tagName.isNotEmpty)
         tagNames.add(tag.tagName);
     }
-    return tagNames.where((element) => element.startsWith(pattern)).toList();
+    return tagNames
+        .where((element) =>
+            element.toUpperCase().startsWith(pattern.toUpperCase()))
+        .toList();
   }
 
   Future<List<String>> getCategoryNames(String pattern) async {
@@ -178,7 +180,13 @@ class HomeController extends Controller {
   }
 
   @override
-  void initListeners() {}
+  void initListeners() {
+    AwesomeNotifications().isNotificationAllowed().then((isAllowed) {
+      if (!isAllowed) {
+        AwesomeNotifications().requestPermissionToSendNotifications();
+      }
+    });
+  }
 
   TextEditingController get storeNameController => _storeNameController;
 
@@ -235,6 +243,7 @@ class HomeController extends Controller {
     _receiptDateController.clear();
     _receiptTagController.clear();
     _receiptCategoryController.clear();
+
     UserNotifier.success(S.of(getContext()).invalidInput, getContext());
     refreshUI();
   }
@@ -297,6 +306,15 @@ class HomeController extends Controller {
     super.onDisposed();
   }
 
+  sendTestNotification() {
+    AwesomeNotifications().createNotification(
+        content: NotificationContent(
+            id: 10,
+            channelKey: 'receipt_manager_channel',
+            title: 'Simple Notification',
+            body: 'Simple body'));
+  }
+
   Future<void> getFileResult(PlatformFile file) async {
     Map results = await Navigator.of(this.getContext())
         .push(new MaterialPageRoute<dynamic>(
@@ -306,6 +324,13 @@ class HomeController extends Controller {
     ));
 
     if (results.containsKey('receipt')) {
+      AwesomeNotifications().createNotification(
+          content: NotificationContent(
+              id: 2,
+              channelKey: 'receipt_manager_channel',
+              title: S.of(getContext()).receiptSuccessfullyAnalyzed,
+              body: S.of(getContext()).clickOnReceipt));
+
       InsertReceiptHolder holder = results['receipt'];
 
       _storeNameController.text = holder.store.storeName.value;

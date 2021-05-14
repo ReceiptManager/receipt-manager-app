@@ -17,6 +17,7 @@
 
 import 'dart:io';
 
+// ignore: import_of_legacy_library_into_null_safe
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
@@ -89,7 +90,7 @@ class UploadController extends Controller {
     }
 
     FlutterUploader().progress.listen((progress) async {
-      var notification = await AwesomeNotifications().createNotification(
+      await AwesomeNotifications().createNotification(
           content: NotificationContent(
               id: 1,
               channelKey: 'receipt_manager_channel',
@@ -102,7 +103,7 @@ class UploadController extends Controller {
         AwesomeNotifications().createNotification(
             content: NotificationContent(
                 channelKey: 'receipt_manager_channel',
-                id: 1,
+                id: 3,
                 locked: false,
                 color: Colors.red,
                 title: "Kassenbeleg wurde erfolgreich hochgeladen"));
