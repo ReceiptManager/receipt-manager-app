@@ -39,12 +39,22 @@ void main() async {
     NotificationChannel(
         channelKey: 'receipt_manager_channel',
         channelName: 'Receipt Manager notifications',
-        defaultColor: Colors.red,
         locked: false,
         ledColor: Colors.red,
         enableLights: true,
         channelDescription: 'Receipt Manager upload notifications')
   ]);
+
+  AwesomeNotifications().setChannel(NotificationChannel(
+      channelKey: "receipt_manager_channel",
+      channelName: "receipt_manager_channel",
+      channelDescription: "A red colorful notification",
+      vibrationPattern: lowVibrationPattern,
+      defaultColor: Colors.red,
+      ledColor: Colors.red,
+      ledOnMs: 1000,
+      ledOffMs: 500));
+
   return runZonedGuarded(() async {
     runApp(ReceiptManagerApp());
   }, (error, stack) {
