@@ -18,6 +18,8 @@
 import 'dart:async';
 import 'dart:io';
 
+// ignore: import_of_legacy_library_into_null_safe
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -33,6 +35,16 @@ void main() async {
   Directory directory = await pathProvider.getApplicationDocumentsDirectory();
   Hive.init(directory.path);
 
+  AwesomeNotifications().initialize(null, [
+    NotificationChannel(
+        channelKey: 'receipt_manager_channel',
+        channelName: 'Receipt Manager notifications',
+        defaultColor: Colors.red,
+        locked: false,
+        ledColor: Colors.red,
+        enableLights: true,
+        channelDescription: 'Receipt Manager upload notifications')
+  ]);
   return runZonedGuarded(() async {
     runApp(ReceiptManagerApp());
   }, (error, stack) {
