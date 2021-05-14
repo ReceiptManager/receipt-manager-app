@@ -17,11 +17,13 @@
 
 import 'dart:io';
 
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 import 'package:flutter_uploader/flutter_uploader.dart';
 import 'package:hive/hive.dart';
 import 'package:receipt_manager/app/constants.dart';
+import 'package:receipt_manager/app/helper/notfifier.dart';
 import 'package:receipt_manager/data/repository/data_receipts_repository.dart';
 import 'package:receipt_manager/data/storage/scheme/insert_holder_table.dart';
 
@@ -73,17 +75,38 @@ class UploadController extends Controller {
   }
 
   Future<InsertReceiptHolder?> send(File image) async {
-    await FlutterUploader().enqueue(
-      MultipartFormDataUpload(
-        url:
-            "${_https ? "https" : "http"}://${_reverseProxy! ? "www." : ""}$_address${_reverseProxy! ? "" : ":8721"}/api/upload?access_token=$_token&grayscale_image=$_grayscaleImage&gaussian_blur=$_gaussianBlur&rotate=$_rotateImage",
-        files: [FileItem(path: image.path, field: "file")],
-        method: UploadMethod.POST,
-      ),
-    );
+    try {
+      await FlutterUploader().enqueue(
+        MultipartFormDataUpload(
+          url:
+              "${_https ? "https" : "http"}://${_reverseProxy! ? "www." : ""}$_address${_reverseProxy! ? "" : ":8721"}/api/upload?access_token=$_token&grayscale_image=$_grayscaleImage&gaussian_blur=$_gaussianBlur&rotate=$_rotateImage",
+          files: [FileItem(path: image.path, field: "file")],
+          method: UploadMethod.POST,
+        ),
+      );
+    } catch (e) {
+      UserNotifier.fail("Failed to upload receipt", getContext());
+    }
 
-    FlutterUploader().progress.listen((progress) {
-      print(progress);
+    FlutterUploader().progress.listen((progress) async {
+      var notification = await AwesomeNotifications().createNotification(
+          content: NotificationContent(
+              id: 1,
+              channelKey: 'receipt_manager_channel',
+              title: "Upload receipt",
+              notificationLayout: NotificationLayout.ProgressBar,
+              progress: progress.progress,
+              locked: true));
+
+      if (progress.progress == 100) {
+        AwesomeNotifications().createNotification(
+            content: NotificationContent(
+                channelKey: 'receipt_manager_channel',
+                id: 1,
+                locked: false,
+                color: Colors.red,
+                title: "Kassenbeleg wurde erfolgreich hochgeladen"));
+      }
     });
   }
 
