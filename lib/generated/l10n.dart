@@ -496,6 +496,26 @@ class S {
       args: [],
     );
   }
+
+  /// `Failed to upload receipt`
+  String get failedToUploadReceipt {
+    return Intl.message(
+      'Failed to upload receipt',
+      name: 'failedToUploadReceipt',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Kassenbeleg ist fertig`
+  String get receiptIsReady {
+    return Intl.message(
+      'Kassenbeleg ist fertig',
+      name: 'receiptIsReady',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

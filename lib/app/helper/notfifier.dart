@@ -18,6 +18,7 @@
 // ignore: import_of_legacy_library_into_null_safe
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
+import 'package:receipt_manager/generated/l10n.dart';
 
 class UserNotifier {
   static void fail(String msg, BuildContext context) {
@@ -36,7 +37,7 @@ class UserNotifier {
     ));
   }
 
-  static msg(String title, String body) async {
+  static msg(String title, String body, BuildContext context) async {
     await AwesomeNotifications().createNotification(
         content: NotificationContent(
             id: 120,
@@ -49,7 +50,7 @@ class UserNotifier {
         actionButtons: [
           NotificationActionButton(
               key: 'EDIT',
-              label: 'Editieren',
+              label: S.of(context).edit,
               buttonType: ActionButtonType.Default),
         ]);
   }

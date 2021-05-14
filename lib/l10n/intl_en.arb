@@ -42,5 +42,7 @@
   "theReceiptDate": "The receipt date",
   "submit": "Submit",
   "clickOnReceipt": "Tippen Sie auf den Kassenbeleg um Ihn hinzufügen",
-  "receiptSuccessfullyAnalyzed": "Kassenbeleg wurde erfolgreich analysiert"
+  "receiptSuccessfullyAnalyzed": "Kassenbeleg wurde erfolgreich analysiert",
+  "failedToUploadReceipt": "Failed to upload receipt",
+  "receiptIsReady": "Kassenbeleg ist fertig"
 }

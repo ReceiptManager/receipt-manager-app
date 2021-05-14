@@ -17,8 +17,6 @@
 
 import 'dart:io';
 
-// ignore: import_of_legacy_library_into_null_safe
-import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 import 'package:flutter_uploader/flutter_uploader.dart';
@@ -86,28 +84,11 @@ class UploadController extends Controller {
         ),
       );
     } catch (e) {
-      UserNotifier.fail("Failed to upload receipt", getContext());
+      UserNotifier.fail(S.of(context).failedToUploadReceipt, getContext());
     }
 
     FlutterUploader().progress.listen((progress) async {
-      await AwesomeNotifications().createNotification(
-          content: NotificationContent(
-              id: 1,
-              channelKey: 'receipt_manager_channel',
-              title: "Upload receipt",
-              notificationLayout: NotificationLayout.ProgressBar,
-              progress: progress.progress,
-              locked: true));
-
-      if (progress.progress == 100) {
-        AwesomeNotifications().createNotification(
-            content: NotificationContent(
-                channelKey: 'receipt_manager_channel',
-                id: 3,
-                locked: false,
-                color: Colors.red,
-                title: "Kassenbeleg wurde erfolgreich hochgeladen"));
-      }
+      if (progress.progress! > 0) UserNotifier.progress(progress.progress!);
     });
   }
 

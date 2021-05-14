@@ -75,8 +75,9 @@ class HomeController extends Controller {
         _receiptTotalController.text = r['receiptTotal'] ?? "";
         if (r['receiptTotal'] != null) {}
 
+        UserNotifier.msg(S.of(getContext()).receiptIsReady,
+            S.of(getContext()).receiptSuccessfullyAnalyzed, getContext());
         updated = true;
-        UserNotifier.success(result.response.toString(), this.getContext());
       }
     }, onError: (ex, stacktrace) {
       UserNotifier.fail(
