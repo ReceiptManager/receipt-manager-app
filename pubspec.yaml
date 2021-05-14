@@ -40,10 +40,11 @@ dependencies:
   flutter_typeahead: ^3.1.1
   file_picker: ^3.0.1
 
-  flutter_uploader: ^3.0.0-beta.1
-  flutter_local_notifications: ^5.0.0+1
-  gallery_saver: ^2.1.0
-  flutter_nord_theme: ^2.1.0
+  flutter_uploader: any
+  flutter_local_notifications: any
+  gallery_saver: any
+  flutter_nord_theme: any
+  awesome_notifications: any
 
 dev_dependencies:
   flutter_test:
