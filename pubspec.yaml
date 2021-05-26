@@ -1,7 +1,7 @@
 name: receipt_manager
 description: Receipt Manager
 
-version: 1.1.6+605
+version: 1.1.7+610
 
 environment:
   sdk: ">=2.12.0 <3.0.0"
