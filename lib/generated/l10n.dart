@@ -516,6 +516,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Kassenbeleg wurde erfolgreich hinzgefügt`
+  String get addedSuccessfully {
+    return Intl.message(
+      'Kassenbeleg wurde erfolgreich hinzgefügt',
+      name: 'addedSuccessfully',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

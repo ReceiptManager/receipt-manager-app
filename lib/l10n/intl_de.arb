@@ -45,5 +45,6 @@
   "clickOnReceipt": "Tippen Sie auf den Kassenbeleg um Ihn hinzufügen",
   "receiptSuccessfullyAnalyzed": "Kassenbeleg wurde erfolgreich analysiert",
   "failedToUploadReceipt": "Failed to upload receipt",
-  "receiptIsReady": "Kassenbeleg ist fertig"
+  "receiptIsReady": "Kassenbeleg ist fertig",
+  "addedSuccessfully": "Kassenbeleg wurde erfolgreich hinzgefügt"
 }

@@ -22,6 +22,7 @@ class MessageLookup extends MessageLookupByLibrary {
   final messages = _notInlinedMessages(_notInlinedMessages);
   static _notInlinedMessages(_) => <String, Function> {
     "addReceipt" : MessageLookupByLibrary.simpleMessage("Kassenbeleg hinzufügen"),
+    "addedSuccessfully" : MessageLookupByLibrary.simpleMessage("Kassenbeleg wurde erfolgreich hinzgefügt"),
     "analytics" : MessageLookupByLibrary.simpleMessage("Statistik"),
     "annualOverview" : MessageLookupByLibrary.simpleMessage("Jahres Übersicht"),
     "apiToken" : MessageLookupByLibrary.simpleMessage("API Token"),

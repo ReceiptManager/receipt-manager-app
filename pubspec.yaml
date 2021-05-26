@@ -43,8 +43,6 @@ dependencies:
   flutter_uploader: any
   flutter_local_notifications: any
   gallery_saver: any
-  flutter_nord_theme: any
-  awesome_notifications: any
 
 dev_dependencies:
   flutter_test:
