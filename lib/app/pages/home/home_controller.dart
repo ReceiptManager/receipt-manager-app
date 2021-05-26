@@ -239,7 +239,7 @@ class HomeController extends Controller {
     _receiptTagController.clear();
     _receiptCategoryController.clear();
 
-    UserNotifier.success(S.of(context).addedSuccessfully, getContext());
+    UserNotifier.success(S.of(getContext()).addedSuccessfully, getContext());
     refreshUI();
   }
 
